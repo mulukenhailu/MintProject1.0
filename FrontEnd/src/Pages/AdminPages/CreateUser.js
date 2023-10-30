@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Box, TextField, Button, Grid, Paper, Typography } from "@mui/material";
-
+import { Box, TextField, Button, Grid, Paper, Typography, Stack } from "@mui/material";
+import Sidebar from "../../Components/Sidebar";
+import Header from "../../Components/Header";
 const CreateUser = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -26,30 +27,30 @@ const CreateUser = () => {
   };
 
   return (
-    <Box
-      sx={{
-        paddingLeft: 40,
-        bgcolor: "#f7f7f7",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        height: "100vh",
-        overflowX: "hidden",
-      }}
-    >
+   
+     <Box>
+      <Header />
+      <Stack direction="row">
+        <Sidebar />
+        <Box flex={4}>
+          <Box padding={1}>
+            
       <Paper elevation={3} sx={{ padding: 2, width: "600px", margin: "20px" }}>
         <Typography variant="h6" gutterBottom>
           Create User
         </Typography>
         <form>
-          <TextField
-            label="First Name"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleFormChange}
-            fullWidth
-            margin="normal"
-          />
+          
+            <TextField
+              label="First Name"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleFormChange}
+              fullWidth
+              margin="normal"
+              sx={{ backgroundColor: "#f7f7f7" }}
+            />
+          
           <TextField
             label="Last Name"
             name="lastName"
@@ -57,6 +58,7 @@ const CreateUser = () => {
             onChange={handleFormChange}
             fullWidth
             margin="normal"
+            sx={{ backgroundColor: "#f7f7f7" }}
           />
           <TextField
             label="Phone Number"
@@ -65,6 +67,7 @@ const CreateUser = () => {
             onChange={handleFormChange}
             fullWidth
             margin="normal"
+            sx={{ backgroundColor: "#f7f7f7" }}
           />
           <TextField
             label="Job"
@@ -73,7 +76,8 @@ const CreateUser = () => {
             onChange={handleFormChange}
             fullWidth
             margin="normal"
-          />
+            sx={{ backgroundColor: "#f7f7f7" }}
+            />
           <TextField
             label="Username"
             name="username"
@@ -81,7 +85,8 @@ const CreateUser = () => {
             onChange={handleFormChange}
             fullWidth
             margin="normal"
-          />
+            sx={{ backgroundColor: "#f7f7f7" }}
+            />
           <TextField
             label="Password"
             name="password"
@@ -90,7 +95,8 @@ const CreateUser = () => {
             onChange={handleFormChange}
             fullWidth
             margin="normal"
-          />
+            sx={{ backgroundColor: "#f7f7f7" }}
+            />
           <TextField
             label="Role"
             name="role"
@@ -98,18 +104,24 @@ const CreateUser = () => {
             onChange={handleFormChange}
             fullWidth
             margin="normal"
-          />
+            sx={{ backgroundColor: "#f7f7f7", borderRadius: "16px" }}
+            />
           <Button
             variant="contained"
             sx={{ bgcolor: "#97dce6" }}
             onClick={handleCreateUser}
             fullWidth
-          >
+            >
             Create
           </Button>
         </form>
       </Paper>
-    </Box>
+            
+                        </Box>
+                      </Box>
+                    </Stack>
+                  </Box>
+    
   );
 };
 

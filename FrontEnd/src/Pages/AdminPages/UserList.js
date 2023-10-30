@@ -8,10 +8,14 @@ import {
   TableRow,
   Paper,
   IconButton,
-  Box
+  Box,
+  Stack,
+
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Sidebar from "../../Components/Sidebar";
+import Header from "../../Components/Header";
 
 const UsersTable = () => {
   const [users, setUsers] = useState([
@@ -65,26 +69,23 @@ const UsersTable = () => {
   };
 
   return (
-    <Box
-      sx={{
-        paddingLeft: 30,
-
-        bgcolor: "#f7f7f7",
-        display: "flex",
-        height: "100vh",
-        overflowX: "hidden",
-      }}
-    >
+    <Box>
+      <Header />
+      <Stack direction="row">
+        <Sidebar />
+        <Box flex={4}>
+          <Box padding={1}>
+            
       <TableContainer component={Paper} sx={{ bgcolor: "#f7f7f7" }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Job</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell sx={{ color: "#12596B" }}>Id</TableCell>
+              <TableCell sx={{ color: "#12596B" }}>Name</TableCell>
+              <TableCell sx={{ color: "#12596B" }}>Email</TableCell>
+              <TableCell sx={{ color: "#12596B" }}>Phone</TableCell>
+              <TableCell sx={{ color: "#12596B" }}>Job</TableCell>
+              <TableCell sx={{ color: "#12596B" }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -96,13 +97,14 @@ const UsersTable = () => {
                 <TableCell>{user.phone}</TableCell>
                 <TableCell>{user.Job}</TableCell>
                 <TableCell>
-                  <IconButton aria-label="Edit">
+                  <IconButton aria-label="Edit" sx={{ color: "#12596B" }}>
                     <EditIcon />
                   </IconButton>
                   <IconButton
+                    sx={{ color: "#EF9630" }}
                     aria-label="Delete"
                     onClick={() => handleDeleteUser(user.id)}
-                  >
+                    >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -111,7 +113,11 @@ const UsersTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Box>
+            </Box>
+          </Box>
+        </Stack>
+      </Box>
+    
   );
 };
 
