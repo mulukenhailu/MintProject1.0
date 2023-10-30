@@ -1,35 +1,45 @@
 import React from "react";
 import {
-  
   Card,
+  CardActions,
   CardContent,
   CardMedia,
+  Button,
   Typography,
 } from "@mui/material";
+
 const PropertyCard = () => {
   return (
     <Card
       sx={{
         marginTop: 5,
-        marginLeft: 40,
-        width: 250,
-        height: 250,
+        width: 200,
+        height: 200,
         background: "#97dce6",
+        boxShadow: "5px 10px 10px rgba(0, 0, 0, 0.3)",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <CardMedia
         component="img"
-        height="40%"
-        image="https://images.pexels.com/photos/4534200/pexels-photo-4534200.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-        alt="Paella dish"
+        height="60%"
+        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaklC027konJ_1YBEnWuuNm0Ck7nkBCp7uDmOucHmfuA&s"
+        alt="Property Image"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          Property description goes here.
         </Typography>
       </CardContent>
+      <CardActions sx={{ marginTop: "auto" }}>
+        <Button size="small" color="primary">
+          Order
+        </Button>
+        <Button size="small" color="primary">
+          Details
+        </Button>
+      </CardActions>
     </Card>
   );
 };

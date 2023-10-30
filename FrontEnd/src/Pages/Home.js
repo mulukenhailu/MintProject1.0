@@ -1,11 +1,23 @@
 import React from "react";
 import { Box, Grid } from "@mui/material";
 import Card from "../Components/PropertyCard";
-
+import Sidebar from "../Components/Sidebar";
 const Home = () => {
   return (
-    <Box sx={{ display: "flex", height: "100vh", overflowX: "hidden" }}>
-      <Box
+    <>
+   
+    <Box
+      sx={{
+        paddingLeft:40,
+        bgcolor: "#f7f7f7",
+        display: "flex",
+        height: "100vh",
+        overflowX: "hidden",
+      }}
+    >
+      
+
+      {/* <Box
         sx={{
           flexGrow: 1,
           overflowY: "auto",
@@ -14,25 +26,17 @@ const Home = () => {
           display:"flex",
           flexDirection:"row"
         }}
-      >
-        <Grid
-          container
-          spacing={0}
-          columns={{ xs: 4, sm: 8, md: 12 }} 
-        >
-          {Array.from(Array(12)).map(
-            (
-              _,
-              index 
-            ) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card />
-              </Grid>
-            )
-          )}
-        </Grid>
-      </Box>
+      > */}
+      <Grid container spacing={3}>
+        {Array.from(Array(16)).map((_, index) => (
+          <Grid item xs={3} key={index}>
+            <Card />
+          </Grid>
+        ))}
+      </Grid>
+      {/* </Box> */}
     </Box>
+    </>
   );
 };
 

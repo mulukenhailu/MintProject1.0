@@ -3,9 +3,7 @@ import {
   Lock,
   Group,
   Home,
-  Person,
-  Settings,
-  Storefront,
+  AddCircle
 } from "@mui/icons-material";
 import {
   Box,
@@ -26,16 +24,15 @@ const Sidebar = ({ }) => {
         sx={{
           backgroundColor: "#97dce6",
           height: "100%",
-          width:"18%",
+          width: "18%",
           boxShadow: "5px 0px 10px rgba(0, 0, 0, 0.3)",
           position: "fixed",
-          
         }}
       >
         <List>
           <ListItem disablePadding>
             <Link
-              to="/home"
+              to="/"
               sx={{ textDecoration: "none", color: "#000" }}
               component={ListItemButton}
             >
@@ -67,6 +64,18 @@ const Sidebar = ({ }) => {
                 <Group />
               </ListItemIcon>
               <ListItemText primary="Users" />
+            </Link>
+          </ListItem>
+          <ListItem disablePadding>
+            <Link
+              to="/create"
+              sx={{ textDecoration: "none", color: "#000" }}
+              component={ListItemButton}
+            >
+              <ListItemIcon>
+                <AddCircle />
+              </ListItemIcon>
+              <ListItemText primary="Create" />
             </Link>
           </ListItem>
           <ListItem disablePadding>

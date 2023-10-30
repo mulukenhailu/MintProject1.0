@@ -9,13 +9,19 @@ import {
 } from "react-router-dom";
 import LandingPage from "./Pages/LandingPage"
 import Home from "./Pages/Home"
+import Profile from "./Pages/Profile";
+import UserList from "./Pages/AdminPages/UserList";
+import CreateUsers from "./Pages/AdminPages/CreateUser"
 import RootLayout from "./Layout/RootLayout";
 function App() {
   
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
-        <Route  path="/home" element = {<Home /> }/>
+        <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/users" element={<UserList />} />
+        <Route path="/create" element={<CreateUsers />} />
         {/* <Route index element={<LandingPage />} /> */}
       </Route>
     )
