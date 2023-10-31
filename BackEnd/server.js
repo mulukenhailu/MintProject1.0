@@ -23,11 +23,7 @@ const cookieParser = require('cookie-parser')
 
 PORT=3001;
 const app=express();
-
-
 app.use(cookieParser())
-
-
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
@@ -42,15 +38,12 @@ app.get("/manager/requestToApprove", verifyAccessToken.verifyAccessToken, reques
 app.get("/manager/requestToApprove/:id", approveRequest.approveRequest)
 
 
-
-
-
 // validateapproval.validateApproval("8ca8ad8e-3dc5-422b-bdbf-5b4f9bdc898e");
 
 // hasuraCloud.test()
 // itemByItemNumber.itemByItemNumber(1, "11");
 // managerByusername.managerByusername("man10");
 
-app.listen(PORT, ()=>{
-console.log(`server started on port ${PORT}`)
-})
+app.listen(process.env.PORT || PORT, ()=>{
+    console.log(`server started on port ${PORT}`)
+});
