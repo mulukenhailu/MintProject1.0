@@ -15,7 +15,6 @@
 //   Drawer
 // } from "@mui/material";
 // import React, { useState } from "react";
-// import logo from "../assets/Logo.jpg";
 // const StyledToolbar = styled(Toolbar)({
 //   display: "flex",
 //   justifyContent: "space-between",
@@ -70,7 +69,7 @@
 //               borderRadius: 50,
 //             }}
 //             alt="Logo"
-//             src={logo}
+//             src="/assets/Logo.jpg"
 //           />
 //         </Link>
 //         {/* <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
@@ -130,7 +129,7 @@
 //     </AppBar>
 //   );
 // };
-
+// export default Header
 import React, { useState } from "react";
 import {
   AppBar,

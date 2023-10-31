@@ -43,7 +43,7 @@ console.log(activeItem)
   };
   return (
     <Box
-      flex={1}
+      
       height={"100vh"}
       width={"20%"}
       bgcolor={"#12596B"}
@@ -68,13 +68,16 @@ console.log(activeItem)
                 }}
                 onClick={() => handleItemClick("Home")}
               >
-                <ListItemIcon sx={{ color: "white" }}>
+                <ListItemIcon sx={{ color: "#EF9630" }}>
                   <HomeIcon sx={{ fontSize: "30px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Home"
                   color="secondary"
-                  primaryTypographyProps={{ fontSize: "25px", color: "white" }}
+                  primaryTypographyProps={{
+                    fontSize: "25px",
+                    color: "#EF9630",
+                  }}
                 />
               </ListItemButton>
             </Link>
@@ -92,12 +95,15 @@ console.log(activeItem)
                 }}
                 onClick={() => handleItemClick("Profile")}
               >
-                <ListItemIcon sx={{ color: "white" }}>
+                <ListItemIcon sx={{ color: "#EF9630" }}>
                   <PersonIcon sx={{ fontSize: "30px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Profile"
-                  primaryTypographyProps={{ fontSize: "25px", color: "white" }}
+                  primaryTypographyProps={{
+                    fontSize: "25px",
+                    color: "#EF9630",
+                  }}
                 />
               </ListItemButton>
             </Link>
@@ -105,7 +111,7 @@ console.log(activeItem)
           <ListItem disablePadding>
             <Link
               to="/users"
-              sx={{ textDecoration: "none", color: "#12596B" }}
+              sx={{ textDecoration: "none", color: "#EF9630" }}
               component={ListItemButton}
             >
               <ListItemButton
@@ -114,12 +120,15 @@ console.log(activeItem)
                 }}
                 onClick={() => handleItemClick("User")}
               >
-                <ListItemIcon sx={{ color: "white" }}>
+                <ListItemIcon sx={{ color: "#EF9630" }}>
                   <GroupIcon sx={{ fontSize: "30px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Users"
-                  primaryTypographyProps={{ fontSize: "25px", color: "white" }}
+                  primaryTypographyProps={{
+                    fontSize: "25px",
+                    color: "#EF9630",
+                  }}
                 />
               </ListItemButton>
             </Link>
@@ -137,12 +146,15 @@ console.log(activeItem)
                 }}
                 onClick={() => handleItemClick("Request")}
               >
-                <ListItemIcon sx={{ color: "white" }}>
+                <ListItemIcon sx={{ color: "#EF9630" }}>
                   <RequestPageIcon sx={{ fontSize: "30px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Requests"
-                  primaryTypographyProps={{ fontSize: "25px", color: "white" }}
+                  primaryTypographyProps={{
+                    fontSize: "25px",
+                    color: "#EF9630",
+                  }}
                 />
               </ListItemButton>
             </Link>
@@ -160,12 +172,12 @@ console.log(activeItem)
                 }}
                 onClick={() => handleItemClick("Store")}
               >
-                <ListItemIcon sx={{ color: "white" }}>
+                <ListItemIcon sx={{ color: "#EF9630" }}>
                   <StorefrontIcon sx={{ fontSize: "30px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Store"
-                  primaryTypographyProps={{ fontSize: "25px", color: "white" }}
+                  primaryTypographyProps={{ fontSize: "25px", color: "#EF9630" }}
                 />
               </ListItemButton>
             </Link>
@@ -183,12 +195,12 @@ console.log(activeItem)
                 }}
                 onClick={() => handleItemClick("History")}
               >
-                <ListItemIcon sx={{ color: "white" }}>
+                <ListItemIcon sx={{ color: "#EF9630" }}>
                   <HistoryIcon sx={{ fontSize: "30px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="History"
-                  primaryTypographyProps={{ fontSize: "25px", color: "white" }}
+                  primaryTypographyProps={{ fontSize: "25px", color: "#EF9630" }}
                 />
               </ListItemButton>
             </Link>
@@ -206,12 +218,12 @@ console.log(activeItem)
                 }}
                 onClick={() => handleItemClick("Create")}
               >
-                <ListItemIcon sx={{ color: "white" }}>
+                <ListItemIcon sx={{ color: "#EF9630" }}>
                   <HistoryIcon sx={{ fontSize: "30px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Create"
-                  primaryTypographyProps={{ fontSize: "25px", color: "white" }}
+                  primaryTypographyProps={{ fontSize: "25px", color: "#EF9630" }}
                 />
               </ListItemButton>
             </Link>
@@ -229,12 +241,12 @@ console.log(activeItem)
                 }}
                 onClick={() => handleItemClick("Logout")}
               >
-                <ListItemIcon sx={{ color: "white" }}>
+                <ListItemIcon sx={{ color: "#EF9630" }}>
                   <HistoryIcon sx={{ fontSize: "30px" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Logout"
-                  primaryTypographyProps={{ fontSize: "25px", color: "white" }}
+                  primaryTypographyProps={{ fontSize: "25px", color: "#EF9630" }}
                 />
               </ListItemButton>
             </Link>
