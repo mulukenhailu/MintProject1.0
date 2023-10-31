@@ -1,35 +1,59 @@
 import React from "react";
 import {
-  
   Card,
+  CardActions,
   CardContent,
   CardMedia,
+  Button,
   Typography,
+  
 } from "@mui/material";
-const PropertyCard = () => {
+import { Link  } from "react-router-dom";
+
+const PropertyCard = ({ id, name, image, type, location, price }) => {
+
   return (
     <Card
       sx={{
+        padding: 1,
         marginTop: 5,
-        marginLeft: 40,
-        width: 250,
-        height: 250,
-        background: "#97dce6",
+        width: 230,
+        height: 300,
+        background: "#fff",
+        boxShadow: "5px 10px 10px rgba(0, 0, 0, 0.3)",
+        display: "flex",
+        flexDirection: "column",
+        border: "1px solid #EF9630",
+        borderRadius: "15px",
       }}
     >
       <CardMedia
+        sx={{ borderRadius: "15px" }}
         component="img"
-        height="40%"
-        image="https://images.pexels.com/photos/4534200/pexels-photo-4534200.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-        alt="Paella dish"
+        height="80%"
+        image={image}
+        alt={name}
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+        <Typography variant="body2" sx={{ color: "#12596B" }}>
+          {name}, {type} in {location}
+        </Typography>
+        <Typography variant="body2" sx={{ color: "#12596B" }}>
+          Price: ${price}
         </Typography>
       </CardContent>
+      <CardActions sx={{ marginTop: "auto" }}>
+        <Link to= {`/order/${id}`}>
+          <Button size="small" sx={{ color: "#EF9630" }}>
+            Order
+          </Button>
+        </Link>
+        <Link to={`/details/${id}`} >
+          <Button size="small" sx={{ color: "#EF9630" }}>
+            Details
+          </Button>
+        </Link>
+      </CardActions>
     </Card>
   );
 };
