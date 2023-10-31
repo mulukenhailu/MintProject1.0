@@ -17,7 +17,6 @@
 //   Paper
 // } from "@mui/material";
 
-
 import React, { useState } from "react";
 import {
   Box,
@@ -34,16 +33,16 @@ import GroupIcon from "@mui/icons-material/Group";
 import RequestPageIcon from "@mui/icons-material/RequestPage";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import HistoryIcon from "@mui/icons-material/History";
+import ReorderIcon from "@mui/icons-material/Reorder";
 
 const SideBar = () => {
   const [activeItem, setActiveItem] = useState("Home");
-console.log(activeItem)
+  console.log(activeItem);
   const handleItemClick = (item) => {
     setActiveItem(item);
   };
   return (
     <Box
-      
       height={"100vh"}
       width={"20%"}
       bgcolor={"#12596B"}
@@ -177,7 +176,10 @@ console.log(activeItem)
                 </ListItemIcon>
                 <ListItemText
                   primary="Store"
-                  primaryTypographyProps={{ fontSize: "25px", color: "#EF9630" }}
+                  primaryTypographyProps={{
+                    fontSize: "25px",
+                    color: "#EF9630",
+                  }}
                 />
               </ListItemButton>
             </Link>
@@ -200,7 +202,10 @@ console.log(activeItem)
                 </ListItemIcon>
                 <ListItemText
                   primary="History"
-                  primaryTypographyProps={{ fontSize: "25px", color: "#EF9630" }}
+                  primaryTypographyProps={{
+                    fontSize: "25px",
+                    color: "#EF9630",
+                  }}
                 />
               </ListItemButton>
             </Link>
@@ -223,7 +228,10 @@ console.log(activeItem)
                 </ListItemIcon>
                 <ListItemText
                   primary="Create"
-                  primaryTypographyProps={{ fontSize: "25px", color: "#EF9630" }}
+                  primaryTypographyProps={{
+                    fontSize: "25px",
+                    color: "#EF9630",
+                  }}
                 />
               </ListItemButton>
             </Link>
@@ -246,7 +254,36 @@ console.log(activeItem)
                 </ListItemIcon>
                 <ListItemText
                   primary="Logout"
-                  primaryTypographyProps={{ fontSize: "25px", color: "#EF9630" }}
+                  primaryTypographyProps={{
+                    fontSize: "25px",
+                    color: "#EF9630",
+                  }}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+          <ListItem disablePadding>
+            <Link
+              to="/storerequest"
+              sx={{ textDecoration: "none", color: "#12596B" }}
+              component={ListItemButton}
+            >
+              <ListItemButton
+                sx={{
+                  background:
+                    activeItem === "Logout" ? "#00695F" : "transparent",
+                }}
+                onClick={() => handleItemClick("Logout")}
+              >
+                <ListItemIcon sx={{ color: "#EF9630" }}>
+                  <ReorderIcon sx={{ fontSize: "30px" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Store Request"
+                  primaryTypographyProps={{
+                    fontSize: "25px",
+                    color: "#EF9630",
+                  }}
                 />
               </ListItemButton>
             </Link>
