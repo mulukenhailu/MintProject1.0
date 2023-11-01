@@ -1,25 +1,23 @@
 import React, { useState } from "react";
-import { Box, TextField, Button, Grid, Paper, Typography, Stack } from "@mui/material";
-import Sidebar from "../Components/Sidebar"
-import Header from "../Components/Header"
+import {
+  Box,
+  TextField,
+  Button,
+  Grid,
+  Paper,
+  Typography,
+  Stack,
+} from "@mui/material";
+import Sidebar from "../Components/Sidebar";
+import Header from "../Components/Header";
 
 const Approve = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     phoneNumber: "",
-    model: "",
-    username: "",
-    password: "",
     role: "",
-    userRole: "",
-    directorRole:"",
-    directorFirstName: "",
-    directorLastName: "",
-
   });
-
-
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
@@ -28,24 +26,57 @@ const Approve = () => {
       [name]: value,
     });
   };
-  const [deviceData,setDeviceData]=useState({
-    serial:"",
-    type:"",
-    model:"",
-    quantity:"",
-    description:"",
-  })
-  const handleDeviceFormChange=(event)=>{
-    const {name,value}=event.target;
+
+  const [directorFormData, setDirectorFormData] = useState({
+    directorFirstName: "",
+    directorLastName: "",
+    directorRole: "",
+  });
+
+  const handleDirectorFormChange = (event) => {
+    const { name, value } = event.target;
+    setDirectorFormData({
+      ...directorFormData,
+      [name]: value,
+    });
+  };
+
+  const [userFormData, setUserFormData] = useState({
+    userFirstName: "",
+    userLastName: "",
+    userPhoneNumber: "",
+    userRole: "",
+  });
+
+  const handleUserFormChange = (event) => {
+    const { name, value } = event.target;
+    setUserFormData({
+      ...userFormData,
+      [name]: value,
+    });
+  };
+
+  const [deviceData, setDeviceData] = useState({
+    serial: "",
+    type: "",
+    model: "",
+    quantity: "",
+    description: "",
+  });
+
+  const handleDeviceFormChange = (event) => {
+    const { name, value } = event.target;
     setDeviceData({
       ...deviceData,
-      [name]:value,
+      [name]: value,
     });
-  }
+  };
+
   const handleApprove = () => {
     // Handle form submission here
     console.log(formData); // You can replace this with your API call or state update logic
   };
+
   return (
     <Box>
       <Header />
@@ -53,30 +84,26 @@ const Approve = () => {
         <Sidebar />
         <Box flex={4}>
           <Box padding={1}>
-            {/* <Paper elevation={3} sx={{ height: "100%" }}> */}
-              {/* <Box
+            <Paper elevation={3} sx={{ height: "100%" }}>
+              <Box
                 sx={{
-                  
                   bgcolor: "#f7f7f7",
                   display: "flex",
                   height: "100vh",
                   overflowX: "hidden",
                 }}
-              > */}
+              >
                 <Grid container>
                   <Paper sx={{ p: 7 }}>
-                  <Typography sx={{ marginLeft: 47 }} variant="h6" gutterBottom>
+                    <Typography sx={{ marginLeft: 47 }} variant="h6" gutterBottom>
                       Approval For Device
                     </Typography>
                     <form>
                       <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
-                        <Grid>
-                       
-                       <Typography variant="h6" gutterBottom>
-                     From
-                   </Typography>
-                   </Grid>
+                          <Typography variant="h6" gutterBottom>
+                            From Manager
+                          </Typography>
                           <TextField
                             label="First Name"
                             name="firstName"
@@ -102,109 +129,94 @@ const Approve = () => {
                             margin="normal"
                           />
                           <TextField
-                          label="Role"
-                          name="role"
-                          value={formData.role}
-                          onChange={handleFormChange}
-                          fullWidth
-                          margin="normal"
-                        />
+                            label="Role"
+                            name="role"
+                            value={formData.role}
+                            onChange={handleFormChange}
+                            fullWidth
+                            margin="normal"
+                          />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                        <Grid>
-                       
-                       <Typography variant="h6" gutterBottom>
-                     To
-                   </Typography>
-                   </Grid>
+                          <Typography variant="h6" gutterBottom>
+                            To Store Director
+                          </Typography>
                           <TextField
                             label="First Name"
                             name="directorFirstName"
-                            value={formData.directorFirstName}
-                            onChange={handleFormChange}
+                            value={directorFormData.directorFirstName}
+                            onChange={handleDirectorFormChange}
                             fullWidth
                             margin="normal"
                           />
                           <TextField
                             label="Last Name"
                             name="directorLastName"
-                            value={formData.directorLastName}
-                            onChange={handleFormChange}
+                            value={directorFormData.directorLastName}
+                            onChange={handleDirectorFormChange}
                             fullWidth
                             margin="normal"
                           />
                           <TextField
-                          label="Role"
-                          name="directorRole"
-                          value={formData.directorRole}
-                          onChange={handleFormChange}
-                          fullWidth
-                          margin="normal"
-                        />
+                            label="Role"
+                            name="directorRole"
+                            value={directorFormData.directorRole}
+                            onChange={handleDirectorFormChange}
+                            fullWidth
+                            margin="normal"
+                          />
                         </Grid>
                       </Grid>
 
-
-
-
-                      <Typography sx={{ marginLeft: 47, marginTop: 7,marginBottom:1 }} variant="h6" gutterBottom>
-                      Approved For
-                    </Typography>
-
-
+                      <Typography sx={{ marginLeft: 47, marginTop: 7, marginBottom: 1 }} variant="h6" gutterBottom>
+                        Approve For
+                      </Typography>
 
                       <Grid item xs={12} sx={{ p: 7 }}>
                         <TextField
-                          label="User First Name"
-                          name="firstName"
-                          value={formData.firstName}
-                          onChange={handleFormChange}
+                          label="First Name"
+                          name="userFirstName"
+                          value={userFormData.userFirstName}
+                          onChange={handleUserFormChange}
                           fullWidth
                           margin="normal"
                         />
                         <TextField
                           label="User Last Name"
-                          name="lastName"
-                          value={formData.lastName}
-                          onChange={handleFormChange}
+                          name="userLastName"
+                          value={userFormData.userLastName}
+                          onChange={handleUserFormChange}
                           fullWidth
                           margin="normal"
                         />
                         <TextField
-                          label="User Phone Number"
-                          name="phoneNumber"
-                          value={formData.phoneNumber}
-                          onChange={handleFormChange}
+                          label="Phone Number"
+                          name="userPhoneNumber"
+                          value={userFormData.userPhoneNumber}
+                          onChange={handleUserFormChange}
                           fullWidth
                           margin="normal"
                         />
-                       
                         <TextField
-                          label="User Role"
+                          label="Role"
                           name="userRole"
-                          value={formData.userRole}
-                          onChange={handleFormChange}
+                          value={userFormData.userRole}
+                          onChange={handleUserFormChange}
                           fullWidth
                           margin="normal"
                         />
                       </Grid>
-                     
 
-
-
-
-                      <Typography sx={{ marginLeft: 47, marginTop: 7,marginBottom:1 }} variant="h6" gutterBottom>
-                      Property Issued
-                    </Typography>
-
-
+                      <Typography sx={{ marginLeft: 47, marginTop: 7, marginBottom: 1 }} variant="h6" gutterBottom>
+                        Property Issued
+                      </Typography>
 
                       <Grid item xs={12} sx={{ p: 7 }}>
                         <TextField
                           label="Serial Number"
                           name="serial"
                           value={deviceData.serial}
-                          onChange={handleFormChange}
+                          onChange={handleDeviceFormChange}
                           fullWidth
                           margin="normal"
                         />
@@ -212,7 +224,7 @@ const Approve = () => {
                           label="Enter Type of Property"
                           name="type"
                           value={deviceData.type}
-                          onChange={handleFormChange}
+                          onChange={handleDeviceFormChange}
                           fullWidth
                           margin="normal"
                         />
@@ -220,7 +232,7 @@ const Approve = () => {
                           label="Enter Model"
                           name="model"
                           value={deviceData.model}
-                          onChange={handleFormChange}
+                          onChange={handleDeviceFormChange}
                           fullWidth
                           margin="normal"
                         />
@@ -228,7 +240,7 @@ const Approve = () => {
                           label="Enter Quantity"
                           name="quantity"
                           value={deviceData.quantity}
-                          onChange={handleFormChange}
+                          onChange={handleDeviceFormChange}
                           fullWidth
                           margin="normal"
                         />
@@ -236,13 +248,12 @@ const Approve = () => {
                           label="Enter Description"
                           name="description"
                           value={deviceData.description}
-                          onChange={handleFormChange}
+                          onChange={handleDeviceFormChange}
                           fullWidth
                           margin="normal"
                         />
-                       
-                       
                       </Grid>
+
                       <Button
                         variant="contained"
                         sx={{ bgcolor: "#EF9630" }}
@@ -254,8 +265,8 @@ const Approve = () => {
                     </form>
                   </Paper>
                 </Grid>
-              {/* </Box>
-            </Paper> */}
+              </Box>
+            </Paper>
           </Box>
         </Box>
       </Stack>
