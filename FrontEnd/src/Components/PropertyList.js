@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, CardActions, Grid } from "@mui/material";
 import Card from "./PropertyCard";
 
 const propertyList = [
@@ -94,13 +94,19 @@ const PropertyList = () => {
           {propertyList.map((property) => (
             <Grid item xs={3} key={property.id}>
               <Card
+
                 id={property.id}
                 name={property.name}
                 image={property.image}
                 type={property.type}
                 location={property.location}
                 price={property.price}
+                
               />
+              <CardActions 
+              
+              />
+              
             </Grid>
           ))}
         </Grid>
