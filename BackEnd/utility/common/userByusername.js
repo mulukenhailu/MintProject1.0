@@ -39,7 +39,7 @@ const requestHeaders = {
   'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
 }
 
- async function managerByusername(manager_username) {
+ async function userByusername(manager_username) {
 
     const variables={username:manager_username}
 
@@ -63,4 +63,4 @@ const requestHeaders = {
     
 };
 
-module.exports={managerByusername}
+module.exports={userByusername}

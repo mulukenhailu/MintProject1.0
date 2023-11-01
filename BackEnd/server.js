@@ -12,6 +12,8 @@ const verifyAccessToken=require("./middleware/verifyAccessToken")
 const approveRequest=require("./handler/manager/approveRequest")
 const cookieParser = require('cookie-parser')
 
+const addApprovalByManager=require("./utility/common/addApprovalByManager")
+
 
 // const validateapproval=require("./utility/Auth/validateRequest")
 
@@ -43,6 +45,10 @@ app.get("/manager/requestToApprove/:id", approveRequest.approveRequest)
 // hasuraCloud.test()
 // itemByItemNumber.itemByItemNumber(1, "11");
 // managerByusername.managerByusername("man10");
+
+// addApprovalByManager.addApprovalByManager()
+
+
 
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`server started on port ${PORT}`)

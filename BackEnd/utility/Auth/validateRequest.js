@@ -78,8 +78,7 @@ async function validateRequest(request_type, item_number, employee_user_name){
 
     }catch(error){
         console.log("Error while validating the Employee Request");
-        console.log(error);
-        return error;
+        throw error;
     }
   }
 
