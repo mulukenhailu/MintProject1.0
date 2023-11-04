@@ -2,6 +2,11 @@ const validateApproval=require("../../utility/Auth/validateRequest")
 const addApprovalByManager=require("../../utility/common/addApprovalByManager")
 
 function approveRequest(req, res){
+
+    if (req.body.decoded.role != "manager" ){
+        return res.sendStatus(401);
+    }
+    
     console.log(req.params)
     // check if the request exist in the employee request or not 
     validateApproval.validateApproval(req.params.id)

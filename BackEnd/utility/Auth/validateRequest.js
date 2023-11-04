@@ -77,10 +77,43 @@ async function validateRequest(request_type, item_number, employee_user_name){
         return data
 
     }catch(error){
-        console.log("Error while validating the Employee Request");
+        console.log("Error while validating the manager  Approval for the Employee Request");
         throw error;
     }
   }
 
 
-  module.exports={validateRequest, validateApproval}
+  async function validateApprovalofStorehead(requestId){
+
+                const doc=gql`
+                query MyQuery ($request_id:uuid){
+                    ManagerAppEmpRequest(where: {id: {_eq: $request_id}}) {
+                    id
+                    item_no
+                    item_name
+                    manager_username
+                    employee_username
+                    storehead_username
+                    quantity_requested
+                    is_approved
+                    confirmation_number
+                    }
+                }      
+                `
+
+                const variables={
+                    request_id:requestId
+                }
+
+                try{
+                    const data=await client.request(doc, variables, requestHeaders);
+                    return data
+                }catch(error){
+                    console.log("Error while validating Storehead Approval for the Employee Request");
+                    throw error
+                }
+
+  }
+
+
+  module.exports={validateRequest, validateApproval, validateApprovalofStorehead}

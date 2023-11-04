@@ -37,7 +37,7 @@ async function currentStoreHead(){
        }catch(error){
 
           console.log("Error while fetching current storehead");
-          return error
+          throw error
 
        }
 }

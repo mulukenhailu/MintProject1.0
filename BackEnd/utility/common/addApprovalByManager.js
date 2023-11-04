@@ -1,14 +1,7 @@
 const  { gql, GraphQLClient  }=require('graphql-request');
-const { userAggregate } = require('./userAggregate');
 const { currentStoreHead } = require('./currentStoreHead');
 
-const endpoint = `https://mint-intership.hasura.app/v1/graphql`
-
-
-const client = new GraphQLClient(endpoint, {
-    headers: {
-    },
-  })
+7
 
   const document=gql`
   mutation MyMutation (
@@ -68,7 +61,7 @@ const requestHeaders = {
                             const data = await client.request(document,variables,requestHeaders);
                             return data
                         }catch(error){
-                            console.log("Error while inserting request to the storeHead DB");
+                            console.log("Error while inserting request to the managerApprovedEmpRequest DB");
                             throw  error
                         }
         
