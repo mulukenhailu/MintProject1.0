@@ -1,5 +1,8 @@
 const  { gql, GraphQLClient  }=require('graphql-request');
 
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+
 const endpoint = `https://mint-intership.hasura.app/v1/graphql`
 
 const client = new GraphQLClient(endpoint, {
@@ -9,19 +12,11 @@ const client = new GraphQLClient(endpoint, {
 
 const doc = gql`
   mutation updateProfile(
-    $user_name:String!, 
-    $first_name: String!, 
-    $last_name: String!,
-    $email: String!, 
-    $phone_number: Int!, 
-    $department:String!
+    $newPassword:String!, 
+    $user_name:String!
     ){
     update_User_by_pk(pk_columns: {user_name: $user_name}, _set: 
-       {first_name:$first_name, 
-        last_name:$last_name, 
-        email:$email, 
-        phone_number:$phone_number, 
-        department:$department
+       {Password:$newPassword
       }) {
         first_name
         last_name
@@ -39,28 +34,31 @@ const requestHeaders = {
   'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
 }
 
-async function updateProfile(req, res) {
+async function resetPassword(req, res) {
 
   
-  let {first_name, last_name, email, phone_number, department}=req.body
+  let {newPassword, conNewPassword}=req.body
+
+  if(newPassword != conNewPassword){
+    res.send({"message":"Password do not Match"});
+  }
+
+  const hash = bcrypt.hashSync(newPassword, saltRounds);
 
   const variables = {
     user_name:req.body.decoded.user_name,
-    first_name,
-    last_name,
-    email,
-    phone_number,
-    department
+    newPassword:hash
    }
 
    try{
     const data = await client.request(doc,variables,requestHeaders);
     res.send(data);
    }catch(err){
-      console.log("error updating employee profile")
+      console.log("Error while Resetting Password");
       console.log(err);
+      res.sendStatus(500)
    }
     
   }
 
-   module.exports={updateProfile}
+   module.exports={resetPassword}

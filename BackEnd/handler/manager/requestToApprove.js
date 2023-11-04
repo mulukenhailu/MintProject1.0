@@ -45,7 +45,7 @@ async function requestToApprove(req, res){
         res.send(data.Employee_Request);
 
     }catch(err){
-        console.log("Error while connecting to the hasura cloud");
+        console.log("Error while fetching request for the manager");
         console.log(err.response.errors[0].message);
         return err
     }
