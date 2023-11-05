@@ -7,8 +7,6 @@ function register(req, res) {
   console.log(req.body);
   const hash = bcrypt.hashSync(password, saltRounds);
 
-  console.log(hash);
-
   addNewUser
     .addNewUser(user_name, hash, first_name, last_name, role_id)
     .then((data) => {

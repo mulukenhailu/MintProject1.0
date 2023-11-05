@@ -56,9 +56,12 @@ async function updateProfile(req, res) {
    try{
     const data = await client.request(doc,variables,requestHeaders);
     res.send(data);
-   }catch(err){
+   }catch(error){
       console.log("error updating employee profile")
-      console.log(err);
+      console.log(error.response.errors[0].message);
+      if(error.response.errors[0].message.includes("Uniqueness violation")){
+        res.send({"message":"Another Account already exist with the given Credientail."});
+    }
    }
     
   }

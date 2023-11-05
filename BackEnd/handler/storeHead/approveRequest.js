@@ -24,6 +24,7 @@ function approveRequestByStoreHead(req, res){
                         res.send(data)
                     })
                     .catch((error)=>{
+                        console.log(error);
                         if(error.response.errors[0].message.includes("Uniqueness violation")){
                             res.send({"message":"Already Approved"});
                         }
