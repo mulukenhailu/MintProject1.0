@@ -68,7 +68,7 @@ app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, req
 
 // addApprovalByManager.addApprovalByManager()
 
-
+app.get('/',(req,res)=>{res.send('welcome')})
 
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`server started on port ${PORT}`)
