@@ -1,32 +1,34 @@
 import { Button, Paper, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { CREATE_USER } from "../../State/ReduxSaga/Types/userTypes";
+import { useDispatch } from "react-redux";
 
 const CreateUser = () => {
-  const [image, setImage] = useState(null);
-  const [fileName, setFileName] = useState("Non Selected");
-
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    username: "",
-    job: "",
-    department: "",
+  const dispatch = useDispatch();
+  const [user, setUser] = useState({
+    first_name: "",
+    last_name: "",
+    user_name: "",
     password: "",
-    role: "",
+    role_id: "",
   });
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
+    setUser({
+      ...user,
       [name]: value,
     });
   };
 
-  const handleCreateUser = () => {
-    console.log(formData);
+  const handleCreateUser = (e) => {
+    e.preventDefault();
+    dispatch({type:CREATE_USER,user})
+    setUser({first_name: "",
+    last_name: "",
+    user_name: "",
+    password: "",
+    role_id: "",})
   };
   return (
     <Paper
@@ -43,8 +45,8 @@ const CreateUser = () => {
 
       <TextField
         label="First Name"
-        name="firstName"
-        value={formData.firstName}
+        name="first_name"
+        value={user.first_name}
         onChange={handleFormChange}
         fullWidth
         margin="normal"
@@ -53,55 +55,55 @@ const CreateUser = () => {
 
       <TextField
         label="Last Name"
-        name="lastName"
-        value={formData.lastName}
+        name="last_name"
+        value={user.last_name}
         onChange={handleFormChange}
         fullWidth
         margin="normal"
         sx={{ backgroundColor: "#f7f7f7" }}
       />
-      <TextField
+      {/* <TextField
         label="Phone Number"
         name="phoneNumber"
-        value={formData.phoneNumber}
+        value={user.phoneNumber}
         onChange={handleFormChange}
         fullWidth
         margin="normal"
         sx={{ backgroundColor: "#f7f7f7" }}
-      />
+      /> */}
       <TextField
         label="Username"
-        name="username"
-        value={formData.username}
+        name="user_name"
+        value={user.user_name}
         onChange={handleFormChange}
         fullWidth
         margin="normal"
         sx={{ backgroundColor: "#f7f7f7" }}
       />
-      <TextField
+      {/* <TextField
         label="Job"
         name="job"
-        value={formData.job}
+        value={user.job}
         onChange={handleFormChange}
         fullWidth
         margin="normal"
         sx={{ backgroundColor: "#f7f7f7" }}
-      />
-      <TextField
+      /> */}
+      {/* <TextField
         label="Department"
         name="department"
-        value={formData.department}
+        value={user.department}
         onChange={handleFormChange}
         fullWidth
         margin="normal"
         sx={{ backgroundColor: "#f7f7f7" }}
-      />
+      /> */}
 
       <TextField
         label="Password"
         name="password"
         type="password"
-        value={formData.password}
+        value={user.password}
         onChange={handleFormChange}
         fullWidth
         margin="normal"
@@ -109,14 +111,14 @@ const CreateUser = () => {
       />
       <TextField
         label="Role"
-        name="role"
-        value={formData.role}
+        name="role_id"
+        value={user.role_id}
         onChange={handleFormChange}
         fullWidth
         margin="normal"
         sx={{ backgroundColor: "#f7f7f7", borderRadius: "16px" }}
       />
-      <div
+      {/* <div
         style={{
           padding: "2rem",
           background: "#f0f0f0",
@@ -201,7 +203,7 @@ const CreateUser = () => {
             </div>
           )}
         </label>
-      </div>
+      </div> */}
       <Button
         variant="contained"
         size="large"
