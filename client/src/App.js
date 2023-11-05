@@ -14,6 +14,11 @@ import ForgetPasswordPage from "./pages/forgetPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import { Routes, Route } from "react-router-dom";
 import CreateProductPage from "./pages/StoreKeeper/CreateProductPage";
+import axios from "axios";
+
+axios.defaults.baseURL = `${process.env.REACT_APP_BASE_URL}`;
+// axios.defaults.withCredentials = true;
+console.log(document.cookie);
 
 function App() {
   return (
