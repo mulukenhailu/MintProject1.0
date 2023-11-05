@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
 function verifyAccessToken(req, res, next){
 
-    if(!(req.headers.cookies)){
+    if(!(req.cookies)){
         return res.status(401).send("Unauthorized request");
     }
 
-    const token=req.headers.cookies.accessToken;
+    const token=req.cookies.accessToken;
     console.log(">>>>>>>", token);
     if (!token) {
         return res.status(401).send("Access denied. No token provided.");
