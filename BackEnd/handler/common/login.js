@@ -44,13 +44,13 @@ function login(req, res){
             
         } else {
             console.log("No user found");
-            res.status(404);
+            res.sendStatus(404);
         }
     })
     .catch((error)=>{
         console.log("error after fetching  some data from User DB")
         console.log(error)
-        return 
+        res.sendStatus(500)
     })
     
 }
