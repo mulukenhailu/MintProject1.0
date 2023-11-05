@@ -31,7 +31,7 @@ function login(req, res){
                   console.log(token);
 
                   res.cookie("accessToken", token, {
-                    httpOnly: true,
+                    httpOnly: false,
                     sameSite: "strict",
                    });
 
