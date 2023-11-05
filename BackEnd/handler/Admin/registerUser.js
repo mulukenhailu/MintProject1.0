@@ -18,9 +18,6 @@ switch(role_id){
     role_id = 5
 }
 
-
-
-
   console.log(req.body);
   const hash = bcrypt.hashSync(password, saltRounds);
 
