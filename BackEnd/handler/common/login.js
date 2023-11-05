@@ -36,7 +36,8 @@ function login(req, res){
                    });
 
                 console.log("correct password");
-                res.send({"logged_in_user":data.User[0].Role.role_name});
+                console.log(data.User[0]);
+                res.send({"logged_in_user":data.User[0]});
             }else{
                 console.log("Incorrect password");
                 res.sendStatus(400)
@@ -44,13 +45,13 @@ function login(req, res){
             
         } else {
             console.log("No user found");
-            res.sendStatus(404);
+            res.status(404).send({"message":"User Not Found."})
         }
     })
     .catch((error)=>{
         console.log("error after fetching  some data from User DB")
-        console.log(error)
-        res.sendStatus(500)
+        console.log(error);
+        res.status(500).send({"message":"Wrong Password"});
     })
     
 }
