@@ -26,7 +26,7 @@ const requestTobeBlessed=require("./handler/storeKeeper/requestTobeBlessed");
 
 
 
-PORT=5000;
+PORT=3001;
 const app=express();
 app.use(cookieParser())
 
