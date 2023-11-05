@@ -24,7 +24,8 @@ const CreateUser = () => {
   const handleCreateUser = (e) => {
     e.preventDefault();
     dispatch({type:CREATE_USER,user})
-    setUser({first_name: "",
+    setUser({
+    first_name: "",
     last_name: "",
     user_name: "",
     password: "",

@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import OrderComponent from "./Order";
 
-const PropertyCard = ({ id, name, image, type, location, price }) => {
+const PropertyCard = ({ id, name, image, description, item_number, status, total }) => {
   const [openOrderModal, setOpenOrderModal] = useState(false);
   const CardContentItem = styled(Box)({
     height: "fit-content",
@@ -52,14 +52,14 @@ const PropertyCard = ({ id, name, image, type, location, price }) => {
           sx={{ color: "#12596B" }}
           textAlign={"left"}
         >
-          {name}, {type} in {location}
+          {name}, {status} in {description}
         </Typography>
         <CardContentItem>
           <Typography variant="body1" sx={{ color: "#12596B" }}>
             Price:
           </Typography>
           <Typography variant="body1" sx={{ color: "#12596B" }}>
-            {price}
+            {total}
           </Typography>
         </CardContentItem>
       </CardContent>
