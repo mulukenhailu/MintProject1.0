@@ -4,6 +4,12 @@ const saltRounds = 10;
 
 function register(req, res){
 
+    
+    if (req.body.decoded.role != "admin"){
+        return res.sendStatus(401);
+    }
+
+
     let {user_name, password, first_name, last_name, role_id}=req.body;
     const hash = bcrypt.hashSync(password, saltRounds);
      

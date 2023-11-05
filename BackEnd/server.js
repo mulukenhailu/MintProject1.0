@@ -13,11 +13,9 @@ const verifyAccessToken=require("./middleware/verifyAccessToken");
 const approveRequest=require("./handler/manager/approveRequest");
 const requestToApproveStoreHead=require("./handler/storeHead/requestToApprove");
 const approveRequestByStoreHead=require("./handler/storeHead/approveRequest");
+const cookieParser = require('cookie-parser');
 
-const cookieParser = require('cookie-parser')
-
-
-const addApprovalByManager=require("./utility/common/addApprovalByManager")
+const requestTobeBlessed=require("./handler/storeKeeper/requestTobeBlessed");
 
 
 // const validateapproval=require("./utility/Auth/validateRequest")
@@ -35,20 +33,23 @@ app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
 
-app.post("/register", register.register);
+
 app.post("/login", login.login);
 app.get("/getallitem", verifyAccessToken.verifyAccessToken, common.getAllItems);
 app.post("/updateprofile", verifyAccessToken.verifyAccessToken, updateProfile.updateProfile);
 app.post("/filterbyname", verifyAccessToken.verifyAccessToken, filterByName.filterByName);
 app.post("/resetpassword", verifyAccessToken.verifyAccessToken, resetPassword.resetPassword);
-
 app.post("/makerequest", verifyAccessToken.verifyAccessToken, makeRequest.makeRequest);
 
-app.post("/manager/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApprove.requestToApprove)
-app.post("/manager/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequest.approveRequest)
+app.post("/register", verifyAccessToken.verifyAccessToken, register.register);
 
-app.post("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApproveStoreHead.requestToApproveStoreHead)
-app.post("/storehead/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequestByStoreHead.approveRequestByStoreHead)
+app.post("/manager/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApprove.requestToApprove);
+app.post("/manager/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequest.approveRequest);
+
+app.post("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApproveStoreHead.requestToApproveStoreHead);
+app.post("/storehead/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequestByStoreHead.approveRequestByStoreHead);
+
+app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, requestTobeBlessed.requestTobeBlessed);
 
 // validateapproval.validateApproval("8ca8ad8e-3dc5-422b-bdbf-5b4f9bdc898e");
 

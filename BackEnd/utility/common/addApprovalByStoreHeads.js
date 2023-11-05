@@ -18,6 +18,7 @@ const client = new GraphQLClient(endpoint, {
         $storehead_username:String!, 
         $quantity_requested:Int!, 
         $confirmation_number:Int!
+        $is_approved:Boolean!
         ){
         insert_storeHeadApprovedEmpRequest_one(object: {
             id: $id, 
@@ -27,7 +28,8 @@ const client = new GraphQLClient(endpoint, {
             employee_username: $employee_username, 
             storehead_username: $storehead_username, 
             quantity_requested: $quantity_requested, 
-            confirmation_number: $confirmation_number
+            confirmation_number: $confirmation_number,
+            is_approved:$is_approved
         }) {
         id
         item_no
@@ -36,8 +38,8 @@ const client = new GraphQLClient(endpoint, {
         employee_username
         storehead_username
         quantity_requested
-        is_approved
         confirmation_number
+        is_approved
         }
     }
   `
@@ -58,7 +60,8 @@ const client = new GraphQLClient(endpoint, {
             manager_username:data.ManagerAppEmpRequest[0].manager_username, 
             employee_username:data.ManagerAppEmpRequest[0].employee_username, 
             confirmation_number:data.ManagerAppEmpRequest[0].confirmation_number, 
-            storehead_username: data.ManagerAppEmpRequest[0].storehead_username
+            storehead_username: data.ManagerAppEmpRequest[0].storehead_username, 
+            is_approved:true
             }
 
             console.log(variables);

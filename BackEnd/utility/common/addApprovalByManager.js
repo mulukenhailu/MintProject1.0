@@ -1,7 +1,14 @@
 const  { gql, GraphQLClient  }=require('graphql-request');
 const { currentStoreHead } = require('./currentStoreHead');
 
-7
+
+const endpoint = `https://mint-intership.hasura.app/v1/graphql`
+
+const client = new GraphQLClient(endpoint, {
+  headers: {
+  },
+})
+
 
   const document=gql`
   mutation MyMutation (
