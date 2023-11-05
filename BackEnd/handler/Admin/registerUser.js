@@ -4,6 +4,23 @@ const saltRounds = 10;
 
 function register(req, res) {
   let { user_name, password, first_name, last_name, role_id } = req.body;
+ 
+switch(role_id){
+  case "employee":
+    role_id = 1
+  case "manager":
+    role_id = 2
+  case "storehead":
+    role_id = 3
+  case "storekeeper":
+    role_id = 4
+  case "admin":
+    role_id = 5
+}
+
+
+
+
   console.log(req.body);
   const hash = bcrypt.hashSync(password, saltRounds);
 
