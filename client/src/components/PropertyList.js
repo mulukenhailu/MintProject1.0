@@ -93,21 +93,25 @@ import { useDispatch,useSelector } from "react-redux";
 const PropertyList = () => {
   const dispatch = useDispatch();
   const propertyList = useSelector((state)=>state.property.allProperty)
+  console.log(propertyList)
   useEffect(()=>{
     dispatch({type:GET_PROPERTIES})
   },[])
   return (
     <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
       <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        {propertyList?.map((property) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={property.id}>
+        {propertyList?.map((property, index) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
             <Card
-              id={property.id}
-              name={property.name}
-              image={property.image}
-              type={property.type}
-              location={property.location}
-              price={property.price}
+           
+              id={index}
+              name={property.item_name}
+              item_number = {property.item_number}
+              status = {property.status}
+              image={property.item_photo}
+              total={property.total_quantity_avilable}
+              description={property.description}
+              
             />
           </Grid>
         ))}
