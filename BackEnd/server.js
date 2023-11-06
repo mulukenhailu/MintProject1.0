@@ -37,7 +37,7 @@ PORT=3001;
 const app=express();
 app.use(cookieParser())
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
 
