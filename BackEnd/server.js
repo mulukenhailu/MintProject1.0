@@ -15,7 +15,8 @@ const requestToApproveStoreHead=require("./handler/storeHead/requestToApprove");
 const approveRequestByStoreHead=require("./handler/storeHead/approveRequest");
 const requestTobeBlessed=require("./handler/storeKeeper/requestTobeBlessed");
 
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
+
 const cors=require("cors");
 const corsOptions = {
     credentials: true,
@@ -35,15 +36,22 @@ const corsOptions = {
 
 PORT=3001;
 const app=express();
-app.use(cookieParser())
+// app.use(cookieParser())
 
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
 
 
-app.post("/login", login.login);
-app.get("/getallitem", verifyAccessToken.verifyAccessToken, common.getAllItems);
+// app.post("/login", login.login);
+
+app.post("/login",  login.login);
+
+// app.get("/getallitem", verifyAccessToken.verifyAccessToken, common.getAllItems);
+
+app.get("/getallitem", verifyAccessToken.verifyAccessToken);
+
+
 app.post("/updateprofile", verifyAccessToken.verifyAccessToken, updateProfile.updateProfile);
 app.post("/filterbyname", verifyAccessToken.verifyAccessToken, filterByName.filterByName);
 app.post("/resetpassword", verifyAccessToken.verifyAccessToken, resetPassword.resetPassword);

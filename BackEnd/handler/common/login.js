@@ -2,57 +2,69 @@ const { validateLogin } = require("../../utility/Auth/validateLogin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+var cookie = require('cookie');
+
 
 
 
 function login(req, res){
 
-    let{user_name, password} = req.body;
+    // let{user_name, password} = req.body;
 
-    if (!(user_name && password )) {
-        res.status(400).send("Please inset the required information");
-      }
+    // if (!(user_name && password )) {
+    //     res.status(400).send("Please inset the required information");
+    //   }
 
-    console.log(user_name, password);
+    // console.log(user_name, password);
 
-    validateLogin(user_name)
-    .then((data)=>{
+    // validateLogin(user_name)
+    // .then((data)=>{
         
-        if(data.User.length != 0){
+    //     if(data.User.length != 0){
 
-            isValid=bcrypt.compareSync(password, data.User[0].Password);
+    //         isValid=bcrypt.compareSync(password, data.User[0].Password);
             
-            if(isValid){
+    //         if(isValid){
 
-                const token = jwt.sign({ role:data.User[0].Role.role_name, user_name: data.User[0].user_name }, process.env.JWT_SECRET, {
-                    expiresIn: "7d",
-                  });
+    //             const token = jwt.sign({ role:data.User[0].Role.role_name, user_name: data.User[0].user_name }, process.env.JWT_SECRET, {
+    //                 expiresIn: "7d",
+    //               });
 
-                  console.log(token);
+    //               console.log(token);
 
-                  res.cookie("accessToken", token);
+    //               res.cookie("accessToken", token, {
+    //                 httpOnly: false,
+    //                 sameSite: false,
+    //                });
 
 
 
-                console.log("correct password");
-                console.log(data.User[0]);
-                res.send({"logged_in_user":data.User[0]});
-            }else{
-                console.log("Incorrect password");
-                res.sendStatus(400)
-            }
+    //             console.log("correct password");
+    //             console.log(data.User[0]);
+    //             res.send({"logged_in_user":data.User[0]});
+    //         }else{
+    //             console.log("Incorrect password");
+    //             res.sendStatus(400)
+    //         }
             
-        } else {
-            console.log("No user found");
-            res.status(404).send({"message":"User Not Found."})
-        }
-    })
-    .catch((error)=>{
-        console.log("error after fetching  some data from User DB")
-        console.log(error);
-        res.status(500).send({"message":"Wrong Password"});
-    })
-    
+    //     } else {
+    //         console.log("No user found");
+    //         res.status(404).send({"message":"User Not Found."})
+    //     }
+    // })
+    // .catch((error)=>{
+    //     console.log("error after fetching  some data from User DB")
+    //     console.log(error);
+    //     res.status(500).send({"message":"Wrong Password"});
+    // })
+
+    res.setHeader('Set-Cookie', cookie.serialize('name', "memem", {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7 // 1 week
+      }));
+
+    res.send("OK");
+
 }
 
 module.exports={login}
