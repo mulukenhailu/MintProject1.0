@@ -23,15 +23,15 @@ switch(role_id){
 
   addNewUser
     .addNewUser(user_name, hash, first_name, last_name, role_id)
-    .then((data) => {
-      console.log(data);
-      res.send(data);
-    })
-    .catch((error) => {
-      console.log("Unexpected error while adding new user to the database");
-      console.log(error);
-      return;
-    });
+        .then((data) => {
+          console.log(data);
+          res.send(data);
+        })
+        .catch((error) => {
+          console.log("Unexpected error while adding new user to the database");
+          console.log(error);
+          return;
+        });
 }
 
 module.exports = { register };

@@ -17,8 +17,6 @@ function verifyAccessToken(req, res, next){
       } catch (err) {
         res.status(400).send("Invalid token.");
     }
-
-    next();
 }
 
 module.exports={verifyAccessToken}
