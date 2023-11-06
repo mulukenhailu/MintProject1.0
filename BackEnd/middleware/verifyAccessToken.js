@@ -1,4 +1,6 @@
 const jwt = require("jsonwebtoken");
+
+
 function verifyAccessToken(req, res, next){
 
     if(!(req.cookies)){
@@ -7,6 +9,7 @@ function verifyAccessToken(req, res, next){
 
     const token=req.cookies.accessToken;
     console.log(">>>>>>>", token);
+    
     if (!token) {
         return res.status(401).send("Access denied. No token provided.");
       }
