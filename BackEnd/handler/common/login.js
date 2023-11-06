@@ -2,9 +2,6 @@ const { validateLogin } = require("../../utility/Auth/validateLogin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
-
-
 function login(req, res){
 
     let{user_name, password} = req.body;
@@ -30,13 +27,11 @@ function login(req, res){
 
                   console.log(token);
 
-                  res.cookie("accessToken", token, {
-                    httpOnly: true,
-                    sameSite: "strict",
-                   });
+                  res.cookie("accessToken", token, {httpOnly: true, SameSite:"None", secure:true });
 
                 console.log("correct password");
-                res.send({"logged_in_user":data.User[0].Role.role_name});
+                console.log(data.User[0]);
+                res.send({"logged_in_user":data.User[0]});
             }else{
                 console.log("Incorrect password");
                 res.sendStatus(400)
@@ -44,15 +39,16 @@ function login(req, res){
             
         } else {
             console.log("No user found");
-            res.status(404);
+            res.status(404).send({"message":"User Not Found."})
         }
     })
     .catch((error)=>{
         console.log("error after fetching  some data from User DB")
-        console.log(error)
-        return 
+        console.log(error);
+        res.status(500).send({"message":"Wrong Password"});
     })
-    
+
+
 }
 
 module.exports={login}

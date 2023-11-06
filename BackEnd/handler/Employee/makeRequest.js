@@ -3,7 +3,7 @@ const  { gql, GraphQLClient  }=require('graphql-request');
 const endpoint = `https://mint-intership.hasura.app/v1/graphql`
 
 const itemByItemNumber=require("../../utility/common/itemByItemNumber");
-const managerByusername=require("../../utility/common/managerByusername");
+const userByusername=require("../../utility/common/userByusername");
 const confirmationNumber=require("../../utility/Auth/confirmationNumber");
 const validateRequest=require("../../utility/Auth/validateRequest");
 
@@ -83,7 +83,7 @@ async function makeRequest(req, res){
 itemByItemNumber.itemByItemNumber(Number(item_no), Number(quantity_requested))
     .then((validItem)=>{
         if(validItem){
-            managerByusername.managerByusername(manager_username)
+            userByusername.userByusername(manager_username)
                 .then((validManager)=>{
                     if(validManager){
                         console.log("in the final step");

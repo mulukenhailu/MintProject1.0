@@ -22,7 +22,12 @@ const client = new GraphQLClient(endpoint, {
 const loginInfo=gql`
 query MyQuery($user_name:String!) @cached {
     User(where: {user_name: {_eq: $user_name}}) {
+      first_name
+      last_name
       user_name
+      department
+      email
+      phone_number
       Password
       Role {
         role_name
