@@ -17,6 +17,8 @@ const requestTobeBlessed=require("./handler/storeKeeper/requestTobeBlessed");
 
 const cookieParser = require('cookie-parser');
 const cors=require("cors");
+
+
 const corsOptions = {
     origin:'http://localhost:3000',
     credentials: true,
@@ -67,8 +69,6 @@ app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, req
 // managerByusername.managerByusername("man10");
 
 // addApprovalByManager.addApprovalByManager()
-
-app.get('/',(req,res)=>{res.send('welcome')})
 
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`server started on port ${PORT}`)
