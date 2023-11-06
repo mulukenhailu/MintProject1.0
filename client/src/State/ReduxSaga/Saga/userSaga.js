@@ -1,4 +1,10 @@
-import { createUserApi, loginApi, getAllUserApi, editUserApi, deleteUserApi } from "../Apis/userApi";
+import {
+  createUserApi,
+  loginApi,
+  getAllUserApi,
+  editUserApi,
+  deleteUserApi,
+} from "../Apis/userApi";
 import {
   createUserStart,
   createUserSuccess,
@@ -14,14 +20,20 @@ import {
   editUserFail,
   deleteUserStart,
   deleteUserSuccess,
-  deleteUserFail
+  deleteUserFail,
 } from "../../ReduxToolkit/Slices/userSlice";
-import { LOGIN_USER, CREATE_USER, GET_ALL_USERS, EDIT_USER, DELETE_USER } from "../Types/userTypes";
+import {
+  LOGIN_USER,
+  CREATE_USER,
+  GET_ALL_USERS,
+  EDIT_USER,
+  DELETE_USER,
+} from "../Types/userTypes";
 import { call, put, takeEvery } from "redux-saga/effects";
 
 export function* createUserSaga(action) {
   try {
-  console.log(action);
+    console.log(action);
     yield put(createUserStart());
     const user = yield call(createUserApi, action.user);
     console.log(user);
@@ -32,14 +44,11 @@ export function* createUserSaga(action) {
 }
 export function* loginUserSaga(action) {
   try {
-    console.log(action);
     yield put(loginUserStart());
     const user = yield call(loginApi, action.credentials);
-    console.log(user);
     yield put(loginUserSuccess(user.data));
   } catch (error) {
-    console.log(error);
-    yield put(loginUserFail(error.response.data.msg));
+    yield put(loginUserFail(error.response.data));
   }
 }
 
@@ -55,30 +64,29 @@ export function* getAllUsersSaga(action) {
 }
 
 export function* editUserSaga(action) {
-    try {
-      yield put(editUserStart());
-      const users = yield call(editUserApi, action.payload);
-      yield put(editUserSuccess(users.data));
-    } catch (error) {
-      yield put(editUserFail());
-    }
+  try {
+    yield put(editUserStart());
+    const users = yield call(editUserApi, action.payload);
+    yield put(editUserSuccess(users.data));
+  } catch (error) {
+    yield put(editUserFail());
   }
-  
-  export function* deleteUserSaga(action) {
-    try {
-      yield put(deleteUserStart());
-      const users = yield call(deleteUserApi);
-      yield put(deleteUserSuccess(users.data));
-    } catch (error) {
-      yield put(deleteUserFail());
-    }
+}
+
+export function* deleteUserSaga(action) {
+  try {
+    yield put(deleteUserStart());
+    const users = yield call(deleteUserApi);
+    yield put(deleteUserSuccess(users.data));
+  } catch (error) {
+    yield put(deleteUserFail());
   }
-  
+}
 
 export function* watchUsersAsync() {
   yield takeEvery(CREATE_USER, createUserSaga);
   yield takeEvery(LOGIN_USER, loginUserSaga);
   yield takeEvery(GET_ALL_USERS, getAllUsersSaga);
   yield takeEvery(EDIT_USER, editUserSaga);
-  yield takeEvery(DELETE_USER, deleteUserSaga)
+  yield takeEvery(DELETE_USER, deleteUserSaga);
 }
