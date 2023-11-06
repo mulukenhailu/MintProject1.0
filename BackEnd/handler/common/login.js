@@ -36,7 +36,7 @@ function login(req, res){
                 res.send({"logged_in_user":data.User[0]});
             }else{
                console.log("Incorrect password");
-               res.status(404).send({"message":"Wrong Password."})
+               res.sendStatus(400);
             }
             
         } else {
