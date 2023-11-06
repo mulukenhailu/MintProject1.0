@@ -21,10 +21,22 @@ const cookieParser = require('cookie-parser');
 const cors=require("cors");
 
 
-const corsOptions = {
-    origin:'http://localhost:3000',
-    credentials: true,
-};
+// const corsOptions = {
+//     origin:'http://localhost:3000'," https://mint-s0j6.onrender.com"
+//     credentials: true
+// };
+
+var whitelist = ['http://localhost:3000', " https://mint-s0j6.onrender.com"]
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true
+}
 
 
 PORT=3001;
