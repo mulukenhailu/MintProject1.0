@@ -14,6 +14,7 @@ const approveRequest=require("./handler/manager/approveRequest");
 const requestToApproveStoreHead=require("./handler/storeHead/requestToApprove");
 const approveRequestByStoreHead=require("./handler/storeHead/approveRequest");
 const requestTobeBlessed=require("./handler/storeKeeper/requestTobeBlessed");
+const credentials=require("./middleware/credentials")
 
 const cookieParser = require('cookie-parser');
 
@@ -28,8 +29,12 @@ const corsOptions = {
 
 PORT=3001;
 const app=express();
+
+
+
 app.use(cookieParser())
 
+app.use(credentials)
 app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: false }))
