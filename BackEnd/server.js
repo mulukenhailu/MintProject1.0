@@ -26,17 +26,6 @@ const corsOptions = {
 };
 
 
-<<<<<<< HEAD
-// const validateapproval=require("./utility/Auth/validateRequest")
-
-// const hasuraCloud=require("./utility/hasuraCloud")dot
-// const itemByItemNumber=require("./utility/common/itemByItemNumber");
-// const  managerByusername = require("./utility/common/managerByusername");
-
-
-=======
->>>>>>> 5f1091856a18e693c92999b538410f1e08ca9b40
-
 PORT=3001;
 const app=express();
 app.use(cookieParser())
@@ -64,16 +53,6 @@ app.post("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, req
 app.post("/storehead/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequestByStoreHead.approveRequestByStoreHead);
 
 app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, requestTobeBlessed.requestTobeBlessed);
-
-
-<<<<<<< HEAD
-// hasuraCloud.test()
-// itemByItemNumber.itemByItemNumber(1, "11");
-// managerByusername.managerByusername("man10");
-
-// addApprovalByManager.addApprovalByManager()
-=======
->>>>>>> 5f1091856a18e693c92999b538410f1e08ca9b40
 
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`server started on port ${PORT}`)
