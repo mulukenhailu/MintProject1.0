@@ -25,7 +25,7 @@ function login(req, res){
                     expiresIn: "7d",
                   });
 
-                  console.log(token);
+                  console.log("==>", token);
 
                   res.cookie("accessToken", token, {httpOnly: true, SameSite:"None", secure:true });
 
