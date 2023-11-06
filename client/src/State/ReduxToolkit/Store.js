@@ -7,13 +7,19 @@ import { rootSaga } from "../ReduxSaga/Saga/indexSaga";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+import userReducer from "./Slices/userSlice";
+import propertyReducer from "./Slices/propertySlice";
+
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
 };
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  user: userReducer,
+  property:propertyReducer ,
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

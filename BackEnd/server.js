@@ -19,6 +19,7 @@ const cookieParser = require('cookie-parser');
 
 const cors=require("cors");
 const corsOptions = {
+    origin:'http://localhost:3000',
     credentials: true,
 };
 
@@ -50,6 +51,7 @@ app.post("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, req
 app.post("/storehead/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequestByStoreHead.approveRequestByStoreHead);
 
 app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, requestTobeBlessed.requestTobeBlessed);
+
 
 
 app.listen(process.env.PORT || PORT, ()=>{

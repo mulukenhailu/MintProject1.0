@@ -27,14 +27,10 @@ function login(req, res){
 
                   console.log(token);
 
-                  res.cookie("accessToken", token, {
-                    httpOnly: true,
-                    sameSite: "None",
-                   });
 
                 console.log("correct password");
                 console.log(data.User[0]);
-                res.send({"logged_in_user":data.User[0]});
+                res.cookie("accessToken", token).send({"logged_in_user":data.User[0]});
             }else{
                 console.log("Incorrect password");
                 res.sendStatus(400)

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -6,6 +6,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
+import { LOGIN_USER } from "../State/ReduxSaga/Types/userTypes";
+import { useDispatch,useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -84,21 +86,36 @@ const ErrorComponent = styled.div`
 `;
 
 function LoginPage() {
+  const {user,loadingUser,errorUser} =useSelector((state)=>state.user)
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [submitClicked, setSubmitClicked] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  useEffect(() => {
+    setSubmitClicked(false);
+  }, [dispatch]);
+
   const [credentials, setCredentials] = useState({
-    username: "",
+    user_name: "",
     password: "",
   });
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    dispatch({type:LOGIN_USER, credentials})
+    setSubmitClicked(true);
+  };
+  
+  if (submitClicked && !loadingUser && !errorUser) {
     navigate("/home");
-  };
+  }
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
+  console.log(document.cookie);
 
   return (
     <Container>
@@ -117,9 +134,9 @@ function LoginPage() {
             label="Username"
             type="text"
             variant="standard"
-            value={credentials.username}
+            value={credentials.user_name}
             onChange={(e) =>
-              setCredentials({ ...credentials, username: e.target.value })
+              setCredentials({ ...credentials, user_name: e.target.value })
             }
           />
           <TextField
