@@ -43,14 +43,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
 
 
-// app.post("/login", login.login);
-
-app.post("/login",  login.login);
-
-// app.get("/getallitem", verifyAccessToken.verifyAccessToken, common.getAllItems);
-
-app.get("/getallitem", verifyAccessToken.verifyAccessToken);
-
+app.post("/login", login.login);
+app.get("/getallitem", verifyAccessToken.verifyAccessToken, common.getAllItems);
 
 app.post("/updateprofile", verifyAccessToken.verifyAccessToken, updateProfile.updateProfile);
 app.post("/filterbyname", verifyAccessToken.verifyAccessToken, filterByName.filterByName);
