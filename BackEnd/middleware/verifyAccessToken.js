@@ -1,11 +1,4 @@
 const jwt = require("jsonwebtoken");
-<<<<<<< HEAD
-
-
-function verifyAccessToken(req, res, next){
-=======
->>>>>>> 5f1091856a18e693c92999b538410f1e08ca9b40
-
 
 function verifyAccessToken(req, res, next){
     if(!(req.cookies)){
@@ -13,11 +6,8 @@ function verifyAccessToken(req, res, next){
     }
 
     const token=req.cookies.accessToken;
-<<<<<<< HEAD
     console.log(">>>>>>>", token);
     
-=======
->>>>>>> 5f1091856a18e693c92999b538410f1e08ca9b40
     if (!token) {
         return res.status(401).send("Access denied. No token provided.");
       }

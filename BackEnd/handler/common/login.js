@@ -29,7 +29,8 @@ function login(req, res){
                   
 
                   res.cookie("accessToken", token, {
-                    httpOnly: true
+                    httpOnly: true,
+                    SameSite:"None"
                    });
 
                 console.log("correct password");
