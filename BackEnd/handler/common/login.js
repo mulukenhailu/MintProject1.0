@@ -2,9 +2,6 @@ const { validateLogin } = require("../../utility/Auth/validateLogin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
-
-
 function login(req, res){
 
     let{user_name, password} = req.body;
@@ -30,9 +27,6 @@ function login(req, res){
 
                   console.log(token);
 
-               ;
-
-
 
                 console.log("correct password");
                 console.log(data.User[0]);
@@ -52,7 +46,8 @@ function login(req, res){
         console.log(error);
         res.status(500).send({"message":"Wrong Password"});
     })
-    
+
+
 }
 
 module.exports={login}
