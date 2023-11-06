@@ -30,10 +30,7 @@ function login(req, res){
 
                   console.log(token);
 
-                  res.cookie("accessToken", token, {
-                    httpOnly: true,
-                    sameSite: false,
-                   });
+                  res.cookie("accessToken", token);
 
 
 
