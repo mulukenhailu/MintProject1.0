@@ -7,18 +7,6 @@ const client = new GraphQLClient(endpoint, {
     },
   })
 
-// const loginInfo=gql`
-// query MyQuery ($user_name:String!){
-//     MinT_User(where: {user_name: {_eq: $user_name}}) {
-//         user_name
-//         Password
-//         Role {
-//           role_name
-//         }
-//     }
-//   }
-// `
-
 const loginInfo=gql`
 query MyQuery($user_name:String!) @cached {
     User(where: {user_name: {_eq: $user_name}}) {

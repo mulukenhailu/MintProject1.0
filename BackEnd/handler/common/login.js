@@ -34,14 +34,16 @@ function login(req, res){
                 console.log("correct password");
                 console.log(data.User[0]);
                 res.send({"logged_in_user":data.User[0]});
+
             }else{
+
                 console.log("Incorrect password");
-                res.sendStatus(400)
+                res.send({"message":"Incorrect Password"})
             }
             
         } else {
             console.log("No user found");
-            res.status(404).send({"message":"User Not Found."})
+            res.send({"message":"User Not Found."})
         }
     })
     .catch((error)=>{
