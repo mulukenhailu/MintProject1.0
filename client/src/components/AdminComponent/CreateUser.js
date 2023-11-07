@@ -1,4 +1,11 @@
-import { Box, Button, Paper, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Paper,
+  TextField,
+  Typography,
+  styled,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { CREATE_USER } from "../../State/ReduxSaga/Types/userTypes";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +17,14 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 const CreateUser = () => {
   const dispatch = useDispatch();
+
+  const CreateUserButton = styled(Button)({
+    marginTop: "20px",
+    background: "#12596B",
+    "&:hover": {
+      background: "#0F4F5F",
+    },
+  });
   const [user, setUser] = useState({
     first_name: "",
     last_name: "",
@@ -122,7 +137,7 @@ const CreateUser = () => {
         margin="normal"
         sx={{ backgroundColor: "#f7f7f7", borderRadius: "16px" }}
       />
-      <Button
+      <CreateUserButton
         variant="contained"
         size="large"
         onClick={handleCreateUser}
@@ -130,7 +145,7 @@ const CreateUser = () => {
         sx={{ marginTop: "20px", background: "#12596B" }}
       >
         Create
-      </Button>
+      </CreateUserButton>
       {errorUser && (
         <Box
           sx={{
