@@ -1,6 +1,7 @@
 import {
   createUserApi,
   loginApi,
+  getSingleUserApi,
   getAllUserApi,
   editUserApi,
   deleteUserApi,
@@ -12,6 +13,9 @@ import {
   loginUserStart,
   loginUserSuccess,
   loginUserFail,
+  getSingleUserStart,
+  getSingleUserSuccess,
+  getSingleUserFail,
   getAllUserStart,
   getAllUserSuccess,
   getAllUserFail,
@@ -25,6 +29,7 @@ import {
 import {
   LOGIN_USER,
   CREATE_USER,
+  GET_SINGLE_USER,
   GET_ALL_USERS,
   EDIT_USER,
   DELETE_USER,
@@ -33,13 +38,11 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 export function* createUserSaga(action) {
   try {
-    console.log(action);
     yield put(createUserStart());
     const user = yield call(createUserApi, action.user);
-    console.log(user);
-    yield put(createUserSuccess(user.data));
+    yield put(createUserSuccess(user.data.insert_User_one));
   } catch (error) {
-    yield put(createUserFail(error.response.data.msg));
+    yield put(createUserFail(error.response.data));
   }
 }
 export function* loginUserSaga(action) {
@@ -49,6 +52,19 @@ export function* loginUserSaga(action) {
     yield put(loginUserSuccess(user.data));
   } catch (error) {
     yield put(loginUserFail(error.response.data));
+  }
+}
+
+export function* getSingleUserSaga(action) {
+  try {
+    console.log(action);
+    yield put(getSingleUserStart());
+    const singleUser = yield call(getSingleUserApi, action.user_name);
+    console.log(singleUser);
+    yield put(getSingleUserSuccess(singleUser.data));
+  } catch (error) {
+    console.log(error);
+    yield put(getSingleUserFail(error));
   }
 }
 
@@ -86,6 +102,7 @@ export function* deleteUserSaga(action) {
 export function* watchUsersAsync() {
   yield takeEvery(CREATE_USER, createUserSaga);
   yield takeEvery(LOGIN_USER, loginUserSaga);
+  yield takeEvery(GET_SINGLE_USER, getSingleUserSaga);
   yield takeEvery(GET_ALL_USERS, getAllUsersSaga);
   yield takeEvery(EDIT_USER, editUserSaga);
   yield takeEvery(DELETE_USER, deleteUserSaga);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Table from "@mui/material/Table";
@@ -17,8 +17,17 @@ import {
   Avatar,
   Stack,
 } from "@mui/material";
+import { GET_SINGLE_USER } from "../State/ReduxSaga/Types/userTypes";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+  const { user_name } = useSelector((state) => state.user.user.logged_in_user);
+
+  useEffect(() => {
+    dispatch({ type: GET_SINGLE_USER, user_name });
+  }, []);
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -45,14 +54,15 @@ const ProfilePage = () => {
     // Handle form submission logic here
   };
 
+  const singleUser = useSelector((state) => state.user.singleUser);
+
   const userInformation = [
-    { label: "First Name", value: "User-1" },
-    { label: "Last Name", value: "User-2" },
-    { label: "Phone Number", value: "+251953263345" },
-    { label: "Email", value: "user@email.com" },
-    { label: "User Name", value: "User-Name-1" },
-    { label: "Job", value: "Mint-Manager" },
-    { label: "Department", value: "Department-1" },
+    { label: "First Name", value: singleUser?.first_name },
+    { label: "Last Name", value: singleUser?.last_name },
+    { label: "Phone Number", value: singleUser?.phone_number },
+    { label: "Email", value: singleUser?.email },
+    { label: "User Name", value: singleUser?.user_name },
+    { label: "Department", value: singleUser?.department },
   ];
 
   return (
