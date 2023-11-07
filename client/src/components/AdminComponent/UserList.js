@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Header from "../Header";
-import Sidebar from "../Sidebar";
 import {
   Table,
   TableBody,
@@ -11,94 +9,91 @@ import {
   Paper,
   IconButton,
   Box,
-  Modal,
-  styled,
-  ListItem,
-  List,
-  Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
+import UserDetailModal from "./UserDetailModal";
+import EditUserModal from "./EditUserModal";
+import DeleteUserModal from "./DeleteUserModal";
 
 const UserList = () => {
   const [detailModal, setDetailModal] = useState(false);
-  const UserDetailContainer = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const UserDetailContainerWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "20px",
-    padding: "20px",
-  });
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
 
-  const ListItemForModal = styled(ListItem)({
-    display: "flex",
-    alignItems: "center",
-  });
   const [users, setUsers] = useState([
     {
       UserName: "MinT - 1",
       name: "User 1",
       email: "user1@example.com",
       phone: "+251241472518",
-      Job: "computer Engineer",
+      department: "computer Engineer",
     },
     {
       UserName: "MinT - 2",
       name: "User 2",
       email: "user2@example.com",
       phone: "+251241472518",
-      Job: "computer Engineer",
+      department: "computer Engineer",
     },
     {
       UserName: "MinT - 3",
       name: "User 3",
       email: "user3@example.com",
       phone: "+251241472518",
-      Job: "computer Engineer",
+      department: "computer Engineer",
     },
     {
       UserName: "MinT - 4",
       name: "User 3",
       email: "user3@example.com",
       phone: "+251241472518",
-      Job: "computer Engineer",
+      department: "computer Engineer",
     },
     {
       UserName: "MinT - 5",
       name: "User 3",
       email: "user3@example.com",
       phone: "+251241472518",
-      Job: "computer Engineer",
+      department: "computer Engineer",
     },
     {
       UserName: " MinT - 6",
       name: "User 3",
       email: "user3@example.com",
       phone: "+251241472518",
-      Job: "computer Engineer",
+      department: "computer Engineer",
     },
   ]);
-  // Function to handle delete user
-  const handleDeleteUser = (userName) => {
-    setUsers(users.filter((user) => user.UserName !== userName));
-  };
+
   return (
     <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={3} paddingBottom={5}>
       <TableContainer component={Paper} sx={{ bgcolor: "#f7f7f7" }}>
         <Table>
           <TableHead sx={{ background: "#bbb", color: "#fff" }}>
             <TableRow>
-              <TableCell sx={{ color: "#12596B" }}>Name</TableCell>
-              <TableCell sx={{ color: "#12596B" }}>UserName</TableCell>
+              <TableCell
+                sx={{
+                  color: "#12596B",
+                  display: { xs: "none", sm: "table-cell" },
+                }}
+              >
+                First Name
+              </TableCell>
               <TableCell
                 sx={{
                   color: "#12596B",
                   display: { xs: "none", md: "table-cell" },
+                }}
+              >
+                Last Name
+              </TableCell>
+              <TableCell sx={{ color: "#12596B" }}>UserName</TableCell>
+              <TableCell
+                sx={{
+                  color: "#12596B",
+                  display: { xs: "none", lg: "table-cell" },
                 }}
               >
                 Email
@@ -106,7 +101,7 @@ const UserList = () => {
               <TableCell
                 sx={{
                   color: "#12596B",
-                  display: { xs: "none", md: "table-cell" },
+                  display: { xs: "none", lg: "table-cell" },
                 }}
               >
                 Phone
@@ -127,27 +122,34 @@ const UserList = () => {
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.UserName}</TableCell>
-                <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
-                  {user.email}
+                <TableCell sx={{ display: { xs: "none", sm: "table-cell" } }}>
+                  {user.name}
                 </TableCell>
                 <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
+                  {user.name}
+                </TableCell>
+                <TableCell>{user.UserName}</TableCell>
+                <TableCell sx={{ display: { xs: "none", lg: "table-cell" } }}>
+                  {user.email}
+                </TableCell>
+                <TableCell sx={{ display: { xs: "none", lg: "table-cell" } }}>
                   {user.phone}
                 </TableCell>
                 <TableCell sx={{ display: { xs: "none", lg: "table-cell" } }}>
-                  {user.Job}
+                  {user.department}
                 </TableCell>
                 <TableCell>
-                  <IconButton aria-label="Edit" sx={{ color: "#EF9630" }}>
+                  <IconButton
+                    sx={{ color: "#EF9630" }}
+                    onClick={() => setEditModal(true)}
+                  >
                     <EditIcon />
                   </IconButton>
                 </TableCell>
                 <TableCell>
                   <IconButton
                     sx={{ color: "red" }}
-                    aria-label="Delete"
-                    onClick={() => handleDeleteUser(user.UserName)}
+                    onClick={() => setDeleteModal(true)}
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -163,59 +165,15 @@ const UserList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <UserDetailContainer
-        open={detailModal}
-        onClose={() => setDetailModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <UserDetailContainerWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
-        >
-          <List>
-            <Typography
-              variant="h5"
-              textAlign={"center"}
-              marginBottom={"20px"}
-              sx={{ textDecoration: "underline" }}
-            >
-              User-Details
-            </Typography>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                User-Name
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                MinT-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Name
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                User-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Department
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                Department-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Manager-Name
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                Manager-1
-              </Typography>
-            </ListItemForModal>
-          </List>
-        </UserDetailContainerWrapper>
-      </UserDetailContainer>
+      <UserDetailModal
+        detailModal={detailModal}
+        setDetailModal={setDetailModal}
+      />
+      <EditUserModal editModal={editModal} setEditModal={setEditModal} />
+      <DeleteUserModal
+        deleteModal={deleteModal}
+        setDeleteModal={setDeleteModal}
+      />
     </Box>
   );
 };

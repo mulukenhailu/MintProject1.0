@@ -36,6 +36,13 @@ const PropertyCard = ({
     justifyContent: "center",
   });
   const OrderFormModalWrapper = styled(Box)({});
+  const CreateButton = styled(Button)({
+    background: "#12596B",
+    "&:hover": {
+      background: "#0F4F5F",
+    },
+  });
+
   return (
     <Card
       sx={{
@@ -72,14 +79,14 @@ const PropertyCard = ({
         </CardContentItem>
       </CardContent>
       <CardActions sx={{ marginTop: "auto" }}>
-        <Button
+        <CreateButton
           size="small"
-          sx={{ color: "#fff", marginRight: "5px", background: "#12596B" }}
+          sx={{ color: "#fff", marginRight: "5px" }}
           variant="contained"
           onClick={() => setOpenOrderModal(true)}
         >
           Order
-        </Button>
+        </CreateButton>
 
         <Link to={`/details/${id}`}>
           <Button

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   TextField,
   Button,
-  Grid,
+  styled,
   Box,
   Typography,
   Stack,
@@ -10,6 +10,12 @@ import {
 } from "@mui/material";
 
 const OrderComponent = () => {
+  const OrderButton = styled(Button)({
+    background: "#12596B",
+    "&:hover": {
+      background: "#0F4F5F",
+    },
+  });
   const [formData, setFormData] = useState({
     recieverAddress: "",
     userName: "",
@@ -92,14 +98,14 @@ const OrderComponent = () => {
           />
         </FormGroup>
 
-        <Button
+        <OrderButton
           variant="contained"
           onClick={handleOrder}
           fullWidth
           sx={{ marginTop: "30px", background: "#12596B" }}
         >
           Order Product
-        </Button>
+        </OrderButton>
       </Box>
     </Box>
   );

@@ -34,6 +34,12 @@ const OrderFormModalContainer = styled(Modal)({
   justifyContent: "center",
 });
 const OrderFormModalWrapper = styled(Box)({});
+const OrderButton = styled(Button)({
+  background: "#12596B",
+  "&:hover": {
+    background: "#0F4F5F",
+  },
+});
 
 const DetailsProductPage = ({}) => {
   const { id } = useParams();
@@ -139,14 +145,14 @@ const DetailsProductPage = ({}) => {
                       </Typography>
                     </CardContentItem>
 
-                    <Button
+                    <OrderButton
                       size="small"
                       variant="contained"
                       sx={{ margin: { xs: 1 }, background: "#12596B" }}
                       onClick={() => setOpenOrderModal(true)}
                     >
                       Order
-                    </Button>
+                    </OrderButton>
                     <Link to="/home">
                       <Button
                         variant="contained"

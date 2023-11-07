@@ -37,7 +37,7 @@ function App() {
         {role_name === "admin" && (
           <Route path="/createUser" element={<CreateUserPage />} />
         )}
-        {role_name === "storeHead" && (
+        {role_name === "storehead" && (
           <Route path="/storemanager" element={<AllStoreRequestPage />} />
         )}
         {role_name === "storekeeper" && (
