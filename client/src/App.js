@@ -18,9 +18,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
-// `${process.env.REACT_APP_BASE_URL}`;
-// axios.defaults.withCredentials = true;
-console.log(document.cookie);
 
 function App() {
   const user = useSelector((state) => state.user.user.logged_in_user);
