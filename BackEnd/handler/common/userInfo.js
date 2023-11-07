@@ -7,7 +7,7 @@ function userInfo(req, res){
     getUserInfo.getUserInfo(req.params.username)
         .then((data)=>{
             console.log(data);
-            res.send(data)
+            res.send(data.User[0]);
         })
         .catch((error)=>{
             console.log(error);
