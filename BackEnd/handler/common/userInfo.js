@@ -6,7 +6,13 @@ function userInfo(req, res){
 
     getUserInfo.getUserInfo(req.params.username)
         .then((data)=>{
+
             console.log(data);
+
+            if (data.User.length > 1 ){
+                res.status(500).json({error:"Unexpected Error has occured.Retry again."})
+            }
+            
             res.send(data.User[0]);
         })
         .catch((error)=>{
@@ -14,8 +20,6 @@ function userInfo(req, res){
             res.sendStatus(404)
         })
     
-
-
 }
 
 module.exports={userInfo}
