@@ -38,7 +38,7 @@ function login(req, res){
             }else{
 
                 console.log("Incorrect password");
-                res.send({"message":"Incorrect Password"})
+                res.status(401).json({ error: "Incorrect password" });
             }
             
         } else {

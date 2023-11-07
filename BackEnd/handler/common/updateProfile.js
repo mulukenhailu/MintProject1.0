@@ -42,7 +42,11 @@ const requestHeaders = {
 async function updateProfile(req, res) {
 
   
-  let {first_name, last_name, email, phone_number, department}=req.body
+  let {first_name, last_name, email, phone_number, department, password}=req.body
+
+  if((password) && (req.body.decoded.role != "admin")){
+    res.send({"msg":"Unauthorized.You are not allowed to do so."});
+  }
 
   const variables = {
     user_name:req.body.decoded.user_name,
@@ -50,7 +54,8 @@ async function updateProfile(req, res) {
     last_name,
     email,
     phone_number,
-    department
+    department, 
+    password
    }
 
    try{
