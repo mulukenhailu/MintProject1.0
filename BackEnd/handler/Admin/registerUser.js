@@ -3,18 +3,20 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 function register(req, res) {
-  let { user_name, password, first_name, last_name, role_id } = req.body;
+  let { user_name, password, first_name, last_name, role } = req.body;
+
+  console.log(req.body)
 
   console.log(user_name, password, first_name, last_name, role);
  
       if (role === "employee"){
-        role_id = 1
+        role = 1
       }else if(role === "manager"){
-        role_id = 2
+        role = 2
       }else if(role === "storehead"){
-        role_id = 3
+        role = 3
       }else if(role === "storekeeper"){
-        role_id = 4
+        role = 4
       }else if(role === "admin"){
         role = 5
       }else{
