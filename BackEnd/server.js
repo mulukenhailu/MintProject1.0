@@ -21,21 +21,27 @@ const cookieParser = require('cookie-parser');
 const cors=require("cors");
 
 
-// const corsOptions = {
-//     credentials: true
-// };
+const userInfo=require("./handler/common/userInfo")
 
-var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-  credentials: true
-}
+
+// const adminupdateProfile=require("./handler/Admin/adminUpdateProfile")
+
+
+const corsOptions = {
+    credentials: true
+};
+
+// var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   },
+//   credentials: true
+// }
 
 
 PORT=3001;
@@ -54,11 +60,12 @@ app.use(express.json());
 
 app.post("/login", login.login);
 app.get("/getallitem", verifyAccessToken.verifyAccessToken, common.getAllItems);
-
 app.post("/updateprofile", verifyAccessToken.verifyAccessToken, updateProfile.updateProfile);
 app.post("/filterbyname", verifyAccessToken.verifyAccessToken, filterByName.filterByName);
 app.post("/resetpassword", verifyAccessToken.verifyAccessToken, resetPassword.resetPassword);
+
 app.post("/makerequest", verifyAccessToken.verifyAccessToken, makeRequest.makeRequest);
+app.post("/getuserinfo/:username", userInfo.userInfo);
 
 app.post("/register", verifyAccessToken.verifyAccessToken, register.register);
 
@@ -69,6 +76,11 @@ app.post("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, req
 app.post("/storehead/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequestByStoreHead.approveRequestByStoreHead);
 
 app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, requestTobeBlessed.requestTobeBlessed);
+
+
+// app.post("/adminupdateprofile", verifyAccessToken.verifyAccessToken, adminupdateProfile.adminupdateProfile)
+
+
 
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`server started on port ${PORT}`)

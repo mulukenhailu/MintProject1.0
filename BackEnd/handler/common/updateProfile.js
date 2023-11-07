@@ -42,28 +42,21 @@ const requestHeaders = {
 async function updateProfile(req, res) {
 
   
-        let {first_name, last_name, email, phone_number, department, password}=req.body
+        let {first_name, last_name, email, phone_number, department}=req.body
 
-        var variables
+        console.log(req.body);
 
-        if((password) && (req.body.decoded.role != "admin")){
-          variables = {
-            user_name:req.body.decoded.user_name,
-            first_name,
-            last_name,
-            email,
-            phone_number,
-            department, 
-            password
-          }
-              res.status(401).json({error:"Unauthorized.You are not allowed."});
+        const variables = {
+          user_name:req.body.decoded.user_name,
+          first_name,
+          last_name,
+          email,
+          phone_number,
+          department
         }
 
-        
-        const data = await client.request(doc,variables,requestHeaders);
-
         try{
-          const data = await client.request(doc,variables,requestHeaders);
+          const data = await client.request(doc, variables, requestHeaders);
           res.send(data);
         }catch(error){
             console.log("error updating employee profile")

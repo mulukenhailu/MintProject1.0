@@ -8,18 +8,6 @@ const client = new GraphQLClient(endpoint, {
   },
 })
 
-// const document=gql`
-// query MyQuery ($username:String!){
-//     MinT_User(where: {user_name: {_eq:$username }}) {
-//       phone_number
-//       last_name
-//       first_name
-//       email
-//       department
-//     }
-//   }
-// `
-
 const document=gql`
     query MyQuery ($username:String!) {
       User(where: {user_name: {_eq: $username}}) {
