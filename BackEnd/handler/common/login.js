@@ -27,7 +27,9 @@ function login(req, res){
 
                   console.log("==>", token);
 
-                  res.cookie("accessToken", token, {httpOnly: true, sameSite:"None", secure:true });
+                  res.cookie("accessToken", token, {httpOnly: true, sameSite:"None", secure:true, 
+                  maxAge:24*60*60*60*1000
+                 });
 
                 console.log("correct password");
                 console.log(data.User[0]);
