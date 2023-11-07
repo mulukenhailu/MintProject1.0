@@ -38,12 +38,12 @@ function login(req, res){
             }else{
 
                 console.log("Incorrect password");
-                res.status(401).json({ error: "Incorrect password" });
+                res.status(400).json({ error: "Incorrect password" });
             }
             
         } else {
             console.log("No user found");
-            res.send({"message":"User Not Found."})
+            res.status(400).json({"message":"User Not Found."})
         }
     })
     .catch((error)=>{
