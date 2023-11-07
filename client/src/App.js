@@ -15,13 +15,17 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import { Routes, Route } from "react-router-dom";
 import CreateProductPage from "./pages/StoreKeeper/CreateProductPage";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-axios.defaults.baseURL = "https://mint-s0j6.onrender.com";
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 // `${process.env.REACT_APP_BASE_URL}`;
 // axios.defaults.withCredentials = true;
 console.log(document.cookie);
 
 function App() {
+  const user = useSelector((state) => state.user.user.logged_in_user);
+  const role_name = user ? user.Role.role_name : null;
+
   return (
     <div className="App">
       <Routes>
@@ -30,13 +34,29 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/details/:id" element={<DetailsProductPage />} />
-        <Route path="/usersList" element={<UsersListPage />} />
-        <Route path="/createUser" element={<CreateUserPage />} />
-        <Route path="/storemanager" element={<AllStoreRequestPage />} />
-        <Route path="/storekeeper" element={<AllOrderRequestKeeper />} />
-        <Route path="/manager" element={<AllManagersRequestPage />} />
-        <Route path="/createproduct" element={<CreateProductPage />} />
-        <Route path="/history" element={<HistoryPage />} />
+        {role_name === "admin" && (
+          <Route path="/usersList" element={<UsersListPage />} />
+        )}
+        {role_name === "admin" && (
+          <Route path="/createUser" element={<CreateUserPage />} />
+        )}
+        {role_name === "storeHead" && (
+          <Route path="/storemanager" element={<AllStoreRequestPage />} />
+        )}
+        {role_name === "storekeeper" && (
+          <Route path="/storekeeper" element={<AllOrderRequestKeeper />} />
+        )}
+        {role_name === "manager" && (
+          <Route path="/manager" element={<AllManagersRequestPage />} />
+        )}
+        {role_name === "storekeeper" && (
+          <Route path="/createproduct" element={<CreateProductPage />} />
+        )}
+
+        {role_name === "storekeeper" && (
+          <Route path="/history" element={<HistoryPage />} />
+        )}
+
         <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
         <Route path="/resetpassword" element={<ResetPasswordPage />} />
         <Route path="*" element={<ErrorPage />} />

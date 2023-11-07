@@ -35,8 +35,8 @@ function login(req, res){
                 console.log(data.User[0]);
                 res.send({"logged_in_user":data.User[0]});
             }else{
-               console.log("Incorrect password");
-               res.sendStatus(400);
+                console.log("Incorrect password");
+                res.sendStatus(400)
             }
             
         } else {
