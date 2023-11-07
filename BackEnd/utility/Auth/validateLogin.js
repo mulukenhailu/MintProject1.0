@@ -37,7 +37,7 @@ async function validateLogin(user_name){
         return data;
     }catch(error){
         console.log({"Error cheking user_name in the DB":error.response.errors[0].message});
-        return ({"response":"Uknown user Name"});
+        throw ({"response":"Uknown user Name"});
     }
 
 }

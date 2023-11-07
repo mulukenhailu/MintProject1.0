@@ -43,13 +43,13 @@ function login(req, res){
             
         } else {
             console.log("No user found");
-            res.status(400).json({"message":"User Not Found."})
+            res.status(400).json({error:"User Not Found."})
         }
     })
     .catch((error)=>{
         console.log("error after fetching  some data from User DB")
         console.log(error);
-        res.status(500).send({"message":"Wrong Password"});
+        res.status(400).json({error:"User Not Found."})
     })
 
 
