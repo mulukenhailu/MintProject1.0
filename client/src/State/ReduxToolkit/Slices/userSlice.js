@@ -27,41 +27,41 @@ const user = createSlice({
       return state;
     },
     editUserStart: (state) => {
-        state.loadingUser = true;
-        state.errorUser = false;
-        state.user = {};
-        return state;
-      },
-      editUserSuccess: (state, action) => {
-        state.loadingUser = false;
-        state.user = action.payload;
-        state.errorUser = false;
-        return state;
-      },
-      editUserFail: (state, action) => {
-        state.errorUser = action.payload;
-        state.loadingUser = false;
-        state.user = {};
-        return state;
-      },
-      deleteUserStart: (state) => {
-        state.loadingUser = true;
-        state.errorUser = false;
-        state.user = {};
-        return state;
-      },
-      deleteUserSuccess: (state, action) => {
-        state.loadingUser = false;
-        state.user = action.payload;
-        state.errorUser = false;
-        return state;
-      },
-      deleteUserFail: (state, action) => {
-        state.errorUser = action.payload;
-        state.loadingUser = false;
-        state.user = {};
-        return state;
-      },
+      state.loadingUser = true;
+      state.errorUser = false;
+      state.user = {};
+      return state;
+    },
+    editUserSuccess: (state, action) => {
+      state.loadingUser = false;
+      state.user = action.payload;
+      state.errorUser = false;
+      return state;
+    },
+    editUserFail: (state, action) => {
+      state.errorUser = action.payload;
+      state.loadingUser = false;
+      state.user = {};
+      return state;
+    },
+    deleteUserStart: (state) => {
+      state.loadingUser = true;
+      state.errorUser = false;
+      state.user = {};
+      return state;
+    },
+    deleteUserSuccess: (state, action) => {
+      state.loadingUser = false;
+      state.user = action.payload;
+      state.errorUser = false;
+      return state;
+    },
+    deleteUserFail: (state, action) => {
+      state.errorUser = action.payload;
+      state.loadingUser = false;
+      state.user = {};
+      return state;
+    },
     loginUserStart: (state) => {
       state.loadingUser = true;
       state.errorUser = false;
@@ -75,7 +75,9 @@ const user = createSlice({
       return state;
     },
     loginUserFail: (state, action) => {
-      state.errorUser = action.payload;
+      console.log("login fail");
+      console.log(action);
+      state.errorUser = action.payload.message;
       state.loadingUser = false;
       state.user = {};
       return state;

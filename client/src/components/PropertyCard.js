@@ -14,7 +14,15 @@ import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import OrderComponent from "./Order";
 
-const PropertyCard = ({ id, name, image, description, item_number, status, total }) => {
+const PropertyCard = ({
+  id,
+  name,
+  image,
+  description,
+  item_number,
+  status,
+  total,
+}) => {
   const [openOrderModal, setOpenOrderModal] = useState(false);
   const CardContentItem = styled(Box)({
     height: "fit-content",
@@ -36,14 +44,14 @@ const PropertyCard = ({ id, name, image, description, item_number, status, total
         background: "#fff",
         boxShadow: "5px 10px 10px rgba(0, 0, 0, 0.1)",
         border: "1px solid #333333",
-        borderRadius: "15px",
+        borderRadius: "10px",
       }}
     >
       <CardMedia
         sx={{ borderRadius: "15px", padding: "20px" }}
         component="img"
         height="80%"
-        image={image}
+        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvuIVMu5AmFIHw7ALCgBmZqWwNUFs0rUGWyQ&usqp=CAU"
         alt={name}
       />
       <CardContent>

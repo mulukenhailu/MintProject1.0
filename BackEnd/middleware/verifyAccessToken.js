@@ -25,4 +25,3 @@ function verifyAccessToken(req, res, next){
 }
 
 module.exports={verifyAccessToken}
-

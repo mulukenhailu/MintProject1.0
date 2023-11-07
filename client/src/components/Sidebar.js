@@ -27,6 +27,7 @@ import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "../appStore";
+import { useSelector, useDispatch } from "react-redux";
 
 const drawerWidth = "fit-content";
 
@@ -88,10 +89,14 @@ const LogOutContainer = styled(ListItem)({
 export default function Sidebar() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const open = useAppStore((state) => state.dopen);
   const location = useLocation();
 
   const isActive = (route) => location.pathname === `/${route}`;
+  const { role_name } = useSelector(
+    (state) => state.user.user.logged_in_user.Role
+  );
 
   const handleLogOut = () => {
     navigate("/");
@@ -186,309 +191,294 @@ export default function Sidebar() {
               />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            disablePadding
-            sx={{
-              display: "block",
-              padding: { md: "0px 5px 0px 0px" },
-              color: "black",
-              background: isActive("usersList") ? "lightgray" : "transparent",
-            }}
-            component={Link}
-            to="/usersList"
-          >
-            <ListItemButton
+          {role_name === "admin" && (
+            <ListItem
+              disablePadding
               sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                display: "block",
+                padding: { md: "0px 5px 0px 0px" },
+                color: "black",
+                background: isActive("usersList") ? "lightgray" : "transparent",
               }}
+              component={Link}
+              to="/usersList"
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <PeopleIcon sx={{ color: "#12596B" }} />
-              </ListItemIcon>
-              <ListItemText
-                primary="Users List"
-                sx={{
-                  opacity: open ? 1 : 0,
-                  display: { xs: "none", md: "block" },
-                  color: "gray",
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{
-              display: "block",
-              padding: { md: "0px 5px 0px 0px" },
-              color: "black",
-              background: isActive("createUser") ? "lightgray" : "transparent",
-            }}
-            component={Link}
-            to="/createUser"
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <PersonAddAlt1Icon sx={{ color: "#12596B" }} />
-              </ListItemIcon>
-              <ListItemText
-                primary="Create User"
-                sx={{
-                  opacity: open ? 1 : 0,
-                  display: { xs: "none", md: "block" },
-                  color: "gray",
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <PeopleIcon sx={{ color: "#12596B" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Users List"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: { xs: "none", md: "block" },
+                    color: "gray",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
 
-          <ListItem
-            disablePadding
-            sx={{
-              display: "block",
-              padding: { md: "0px 5px 0px 0px" },
-              color: "black",
-              background: isActive("propertieslist")
-                ? "lightgray"
-                : "transparent",
-            }}
-            component={Link}
-            to="/history"
-          >
-            <ListItemButton
+          {role_name === "admin" && (
+            <ListItem
+              disablePadding
               sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                display: "block",
+                padding: { md: "0px 5px 0px 0px" },
+                color: "black",
+                background: isActive("createUser")
+                  ? "lightgray"
+                  : "transparent",
               }}
+              component={Link}
+              to="/createUser"
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <StoreIcon sx={{ color: "#12596B" }} />
-              </ListItemIcon>
-              <ListItemText
-                primary="History"
-                sx={{
-                  opacity: open ? 1 : 0,
-                  display: { xs: "none", md: "block" },
-                  color: "gray",
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-          {/* <ListItem
-            disablePadding
-            sx={{
-              display: "block",
-              padding: { md: "0px 5px 0px 0px" },
-              color: "black",
-              background: isActive("history") ? "lightgray" : "transparent",
-            }}
-            component={Link}
-            to="/history"
-          >
-            <ListItemButton
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <PersonAddAlt1Icon sx={{ color: "#12596B" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Create User"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: { xs: "none", md: "block" },
+                    color: "gray",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
+          {role_name === "storekeeper" && (
+            <ListItem
+              disablePadding
               sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                display: "block",
+                padding: { md: "0px 5px 0px 0px" },
+                color: "black",
+                background: isActive("propertieslist")
+                  ? "lightgray"
+                  : "transparent",
               }}
+              component={Link}
+              to="/history"
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <WorkHistoryIcon color="#12596B" />
-              </ListItemIcon>
-              <ListItemText
-                primary="History"
-                sx={{
-                  opacity: open ? 1 : 0,
-                  display: { xs: "none", md: "block" },
-                }}
-              />
-            </ListItemButton>
-          </ListItem> */}
-          <ListItem
-            disablePadding
-            sx={{
-              display: "block",
-              padding: { md: "0px 5px 0px 0px" },
-              color: "black",
-              background: isActive("storemanager")
-                ? "lightgray"
-                : "transparent",
-            }}
-            component={Link}
-            to="/storemanager"
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <RequestPageIcon sx={{ color: "#12596B" }} />
-              </ListItemIcon>
-              <ListItemText
-                primary="SMRequest"
-                sx={{
-                  opacity: open ? 1 : 0,
-                  display: { xs: "none", md: "block" },
-                  color: "gray",
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{
-              display: "block",
-              padding: { md: "0px 5px 0px 0px" },
-              color: "black",
-              background: isActive("storekeeper") ? "lightgray" : "transparent",
-            }}
-            component={Link}
-            to="/storekeeper"
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <RequestPageIcon sx={{ color: "#12596B" }} />
-              </ListItemIcon>
-              <ListItemText
-                primary="SKRequest"
-                sx={{
-                  opacity: open ? 1 : 0,
-                  display: { xs: "none", md: "block" },
-                  color: "gray",
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{
-              display: "block",
-              padding: { md: "0px 5px 0px 0px" },
-              color: "black",
-              background: isActive("manager") ? "lightgray" : "transparent",
-            }}
-            component={Link}
-            to="/manager"
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <RequestPageIcon sx={{ color: "#12596B" }} />
-              </ListItemIcon>
-              <ListItemText
-                primary="MRequest"
-                sx={{
-                  opacity: open ? 1 : 0,
-                  display: { xs: "none", md: "block" },
-                  color: "gray",
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <StoreIcon sx={{ color: "#12596B" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="History"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: { xs: "none", md: "block" },
+                    color: "gray",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
 
-          <ListItem
-            disablePadding
-            sx={{
-              display: "block",
-              padding: { md: "0px 5px 0px 0px" },
-              color: "black",
-              background: isActive("createproduct")
-                ? "lightgray"
-                : "transparent",
-            }}
-            component={Link}
-            to="/createproduct"
-          >
-            <ListItemButton
+          {role_name === "storehead" && (
+            <ListItem
+              disablePadding
               sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                display: "block",
+                padding: { md: "0px 5px 0px 0px" },
+                color: "black",
+                background: isActive("storemanager")
+                  ? "lightgray"
+                  : "transparent",
               }}
+              component={Link}
+              to="/storemanager"
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <AddBusinessIcon sx={{ color: "#12596B" }} />
-              </ListItemIcon>
-              <ListItemText
-                primary="AddProduct"
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <RequestPageIcon sx={{ color: "#12596B" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="SMRequest"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: { xs: "none", md: "block" },
+                    color: "gray",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
+
+          {role_name === "storekeeper" && (
+            <ListItem
+              disablePadding
+              sx={{
+                display: "block",
+                padding: { md: "0px 5px 0px 0px" },
+                color: "black",
+                background: isActive("storekeeper")
+                  ? "lightgray"
+                  : "transparent",
+              }}
+              component={Link}
+              to="/storekeeper"
+            >
+              <ListItemButton
                 sx={{
-                  opacity: open ? 1 : 0,
-                  display: { xs: "none", md: "block" },
-                  color: "gray",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
-              />
-            </ListItemButton>
-          </ListItem>
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <RequestPageIcon sx={{ color: "#12596B" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="SKRequest"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: { xs: "none", md: "block" },
+                    color: "gray",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
+
+          {role_name === "manager" && (
+            <ListItem
+              disablePadding
+              sx={{
+                display: "block",
+                padding: { md: "0px 5px 0px 0px" },
+                color: "black",
+                background: isActive("manager") ? "lightgray" : "transparent",
+              }}
+              component={Link}
+              to="/manager"
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <RequestPageIcon sx={{ color: "#12596B" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="MRequest"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: { xs: "none", md: "block" },
+                    color: "gray",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
+
+          {role_name === "storekeeper" && (
+            <ListItem
+              disablePadding
+              sx={{
+                display: "block",
+                padding: { md: "0px 5px 0px 0px" },
+                color: "black",
+                background: isActive("createproduct")
+                  ? "lightgray"
+                  : "transparent",
+              }}
+              component={Link}
+              to="/createproduct"
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AddBusinessIcon sx={{ color: "#12596B" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="AddProduct"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: { xs: "none", md: "block" },
+                    color: "gray",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
 
           <LogOutContainer
             disablePadding

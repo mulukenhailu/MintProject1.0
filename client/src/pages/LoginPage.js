@@ -1,13 +1,15 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import styled from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LOGIN_USER } from "../State/ReduxSaga/Types/userTypes";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
+import { removeUserError } from "../State/ReduxToolkit/Slices/userSlice";
 
 const Container = styled.div`
   display: flex;
@@ -22,19 +24,11 @@ const Form = styled.form`
   flex-direction: column;
   border: 1px solid #ccc;
   padding: 20px 20px 60px 20px;
-  border-radius: 10px;
+  border-radius: 3px;
   background-color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   width: 350px;
   max-width: 80%;
-`;
-
-const Direction = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 0.5rem 0;
 `;
 
 const TextFieldWrapper = styled.div`
@@ -75,22 +69,49 @@ const EyeSpan = styled.span`
   transform: translateY(-50%);
 `;
 
+const LoadingComponent = styled.div`
+  text-align: center;
+`;
+
 const ErrorComponent = styled.div`
   background: red;
   color: white;
-  height: 35px;
   display: flex;
   align-items: center;
-  padding-left: 30px;
+  padding-left: 10px;
   justify-content: flex-start;
+  height: 35px;
+  overflow: hidden;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    background: white;
+    animation: decreaseWidth 4s forwards;
+  }
+
+  @keyframes decreaseWidth {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
 `;
+const ErrorComponentBottom = styled.div``;
 
 function LoginPage() {
-  const {user,loadingUser,errorUser} =useSelector((state)=>state.user)
+  const { loadingUser, errorUser } = useSelector((state) => state.user);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -98,7 +119,17 @@ function LoginPage() {
 
   useEffect(() => {
     setSubmitClicked(false);
+    dispatch(removeUserError());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (errorUser) {
+      setSubmitClicked(false);
+      setTimeout(() => {
+        dispatch(removeUserError());
+      }, 5000);
+    }
+  }, [errorUser]);
 
   const [credentials, setCredentials] = useState({
     user_name: "",
@@ -107,25 +138,42 @@ function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch({type:LOGIN_USER, credentials})
+    dispatch({ type: LOGIN_USER, credentials });
     setSubmitClicked(true);
   };
-  
+
   if (submitClicked && !loadingUser && !errorUser) {
     navigate("/home");
   }
 
-  console.log(document.cookie);
-
   return (
     <Container>
       <Form onSubmit={handleLogin}>
-        <Typography align="center" variant="h4" fontWeight={400}>
+        <Typography
+          align="center"
+          variant="h4"
+          fontWeight={400}
+          marginBottom={3}
+          sx={{ color: "gray" }}
+        >
           LOGIN
         </Typography>
-        {/* <ErrorComponent>
-          <Typography>Wrong password</Typography>
-        </ErrorComponent> */}
+        {errorUser && (
+          <ErrorComponent>
+            <Typography>{errorUser}</Typography>
+          </ErrorComponent>
+        )}
+        {loadingUser && (
+          <LoadingComponent>
+            <ClipLoader
+              color={"#36d7b7"}
+              loading={loadingUser}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </LoadingComponent>
+        )}
 
         <TextFieldWrapper>
           <TextField
@@ -167,17 +215,6 @@ function LoginPage() {
           </EyeSpan>
         </TextFieldWrapper>
         <ButtonStyled type="submit">Login</ButtonStyled>
-        <Link
-          style={{
-            textDecoration: "none",
-            textAlign: "right",
-            marginTop: "15px",
-            color: "#007bff",
-          }}
-          to="/forgetpassword"
-        >
-          Forget password?
-        </Link>
       </Form>
     </Container>
   );
