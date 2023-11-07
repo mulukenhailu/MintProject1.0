@@ -40,8 +40,7 @@ async function addNewUser(...userInfo){
         const data = await client.request(NewUser, variables, requestHeaders);
         return data;
     }catch(error){
-        console.log({"Error adding new User to the DB":error.response.errors[0].message});
-        return ({"response":"The User Name already used"});
+        throw error
     }
 
     

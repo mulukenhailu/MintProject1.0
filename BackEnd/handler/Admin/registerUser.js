@@ -18,7 +18,7 @@ function register(req, res) {
       }else if(role === "admin"){
         role = 5
       }else{
-        res.status(404).send({"msg":"Please choose the Correct role."})
+        res.status(404).send({error:"Please choose the Correct role."})
       }
 
   console.log(role);
@@ -32,8 +32,8 @@ function register(req, res) {
         })
         .catch((error) => {
           console.log("Unexpected error while adding new user to the database");
-          console.log(error);
-          return;
+          console.log({"Error adding new User to the DB":error.response.errors[0].message});
+          res.status(404).send({error:"The User Name already used"})
         });
 }
 
