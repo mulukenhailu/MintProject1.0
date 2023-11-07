@@ -42,32 +42,36 @@ const requestHeaders = {
 async function updateProfile(req, res) {
 
   
-  let {first_name, last_name, email, phone_number, department, password}=req.body
+        let {first_name, last_name, email, phone_number, department, password}=req.body
 
-  if((password) && (req.body.decoded.role != "admin")){
-    res.send({"msg":"Unauthorized.You are not allowed to do so."});
-  }
+        var variables
 
-  const variables = {
-    user_name:req.body.decoded.user_name,
-    first_name,
-    last_name,
-    email,
-    phone_number,
-    department, 
-    password
-   }
+        if((password) && (req.body.decoded.role != "admin")){
+          variables = {
+            user_name:req.body.decoded.user_name,
+            first_name,
+            last_name,
+            email,
+            phone_number,
+            department, 
+            password
+          }
+              res.status(401).json({error:"Unauthorized.You are not allowed."});
+        }
 
-   try{
-    const data = await client.request(doc,variables,requestHeaders);
-    res.send(data);
-   }catch(error){
-      console.log("error updating employee profile")
-      console.log(error.response.errors[0].message);
-      if(error.response.errors[0].message.includes("Uniqueness violation")){
-        res.send({"message":"Another Account already exist with the given Credientail."});
-    }
-   }
+        
+        const data = await client.request(doc,variables,requestHeaders);
+
+        try{
+          const data = await client.request(doc,variables,requestHeaders);
+          res.send(data);
+        }catch(error){
+            console.log("error updating employee profile")
+            console.log(error.response.errors[0].message);
+            if(error.response.errors[0].message.includes("Uniqueness violation")){
+              res.send({"message":"Another Account already exist with the given Credientail."});
+          }
+        }
     
   }
 
