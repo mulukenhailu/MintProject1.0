@@ -14,37 +14,48 @@ const approveRequest=require("./handler/manager/approveRequest");
 const requestToApproveStoreHead=require("./handler/storeHead/requestToApprove");
 const approveRequestByStoreHead=require("./handler/storeHead/approveRequest");
 const requestTobeBlessed=require("./handler/storeKeeper/requestTobeBlessed");
+const credentials=require("./middleware/credentials")
 
 const cookieParser = require('cookie-parser');
+
 const cors=require("cors");
-const corsOptions = {
-    origin:'http://localhost:3000',
-    credentials: true,
-};
 
 
+// const corsOptions = {
+//     origin:'http://localhost:3000'," https://mint-s0j6.onrender.com"
+//     credentials: true
+// };
 
-
-
-// const validateapproval=require("./utility/Auth/validateRequest")
-
-// const hasuraCloud=require("./utility/hasuraCloud")dot
-// const itemByItemNumber=require("./utility/common/itemByItemNumber");
-// const  managerByusername = require("./utility/common/managerByusername");
-
+var whitelist = ['http://localhost:3000', " https://mint-s0j6.onrender.com"]
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true
+}
 
 
 PORT=3001;
 const app=express();
+
+
+
 app.use(cookieParser())
 
+app.use(credentials)
 app.use(cors(corsOptions));
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
 
 
 app.post("/login", login.login);
 app.get("/getallitem", verifyAccessToken.verifyAccessToken, common.getAllItems);
+
 app.post("/updateprofile", verifyAccessToken.verifyAccessToken, updateProfile.updateProfile);
 app.post("/filterbyname", verifyAccessToken.verifyAccessToken, filterByName.filterByName);
 app.post("/resetpassword", verifyAccessToken.verifyAccessToken, resetPassword.resetPassword);
@@ -59,16 +70,6 @@ app.post("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, req
 app.post("/storehead/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequestByStoreHead.approveRequestByStoreHead);
 
 app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, requestTobeBlessed.requestTobeBlessed);
-
-// validateapproval.validateApproval("8ca8ad8e-3dc5-422b-bdbf-5b4f9bdc898e");
-
-// hasuraCloud.test()
-// itemByItemNumber.itemByItemNumber(1, "11");
-// managerByusername.managerByusername("man10");
-
-// addApprovalByManager.addApprovalByManager()
-
-app.get('/',(req,res)=>{res.send('welcome')})
 
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`server started on port ${PORT}`)

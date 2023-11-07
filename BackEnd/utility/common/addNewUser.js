@@ -34,6 +34,8 @@ async function addNewUser(...userInfo){
 
     const variables={user_name, password, first_name, last_name, role_id};
 
+    console.log(variables);
+
     try{
         const data = await client.request(NewUser, variables, requestHeaders);
         return data;
