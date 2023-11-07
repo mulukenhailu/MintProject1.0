@@ -22,11 +22,10 @@ const cors=require("cors");
 
 
 // const corsOptions = {
-//     origin:'http://localhost:3000'," https://mint-s0j6.onrender.com"
 //     credentials: true
 // };
 
-var whitelist = ['http://localhost:3000', " https://mint-s0j6.onrender.com"]
+var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
