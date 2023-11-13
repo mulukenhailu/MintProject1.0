@@ -35,7 +35,8 @@ async function validateRequest(request_type, item_number, employee_user_name){
 
         try{
             const data= await client.request(document, variables, requestHeaders);
-            console.log(data);
+
+            console.log("from the request validation ==> ", data);
 
             if(data.Employee_Request.length === 0){
                 return true;
@@ -45,7 +46,7 @@ async function validateRequest(request_type, item_number, employee_user_name){
 
         }catch(error){
             console.log("Error while validating the Employee Request");
-            return error;
+            throw error;
         }
 
   }

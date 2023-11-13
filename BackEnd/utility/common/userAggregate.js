@@ -15,11 +15,32 @@ const requestHeaders = {
 async function userAggregate(id, user_name){
 
             if (arguments.length === 0){
-              console.log("No parameter provided for the userAggregate function.")
-              return 
+              const doc=gql`
+                query MyQuery {
+                  User {
+                    first_name
+                    last_name
+                    user_name
+                    department
+                    email
+                    phone_number
+                    Role {
+                      role_name
+                    }
+                  }
+                }
+              `
+              try{
+                const data= await client.request(doc, {}, requestHeaders);
+                return data
+              }catch(error){
+                console.log("Error inside user Aggregate by role-id");
+                throw error
+              }
+
             }
 
-            if(arguments.length === 1){
+            else if(arguments.length === 1){
 
                      const doc=gql`
                     query MyQuery ($role_id:Int!)@cached {
@@ -40,7 +61,7 @@ async function userAggregate(id, user_name){
                       return data
                     }catch(error){
                       console.log("Error inside user Aggregate by role-id");
-                      return error
+                      throw error
                     }
 
             }
@@ -68,7 +89,7 @@ async function userAggregate(id, user_name){
                 return data
               }catch(error){
                 console.log("Error inside user Aggregate");
-                return error
+                throw error
               }
 
             }

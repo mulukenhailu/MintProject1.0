@@ -14,14 +14,15 @@ const doc = gql`
     $last_name: String!,
     $email: String!, 
     $phone_number: Int!, 
-    $department:String!
+    $department:String!,
     ){
     update_User_by_pk(pk_columns: {user_name: $user_name}, _set: 
-       {first_name:$first_name, 
+       {
+        first_name:$first_name, 
         last_name:$last_name, 
         email:$email, 
         phone_number:$phone_number, 
-        department:$department
+        department:$department,
       }) {
         first_name
         last_name
@@ -59,13 +60,11 @@ async function updateProfile(req, res) {
           const data = await client.request(doc, variables, requestHeaders);
           res.send(data);
         }catch(error){
-            console.log("error updating employee profile")
-            console.log(error.response.errors[0].message);
-            if(error.response.errors[0].message.includes("Uniqueness violation")){
-              res.send({"message":"Another Account already exist with the given Credientail."});
+          console.log("error updating employee profile")
+          console.log(error);
+          res.status(400).json({error:"Network error.Retry again!"});
           }
-        }
+    }
     
-  }
 
    module.exports={updateProfile}

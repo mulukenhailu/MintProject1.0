@@ -16,8 +16,8 @@ function userInfo(req, res){
             res.send(data.User[0]);
         })
         .catch((error)=>{
-            console.log(error);
-            res.sendStatus(404)
+            console.log("Error From userInfo", error);
+            res.status(500).json({error:"Unexpected Error has occured.Retry again."})
         })
     
 }

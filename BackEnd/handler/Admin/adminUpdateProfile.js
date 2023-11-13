@@ -18,13 +18,12 @@ const doc = gql`
     $password:String!
     ){
     update_User_by_pk(pk_columns: {user_name: $user_name}, _set: 
-       {
-        first_name:$first_name, 
+       {first_name:$first_name, 
         last_name:$last_name, 
         email:$email, 
         phone_number:$phone_number, 
         department:$department,
-        Password:$Password
+        Password:$password
       }) {
         first_name
         last_name
@@ -45,19 +44,18 @@ const requestHeaders = {
 async function adminupdateProfile(req, res) {
 
   
-        let {first_name, last_name, email, phone_number, department, Password}=req.body
+        let {user_name, first_name, last_name, email, phone_number, department, password}=req.body
 
-        console.log(req.body.Password);
-        console.log(typeof req.body.Password);
+        console.log(req.body);
 
         const variables = {
-          user_name:req.body.decoded.user_name,
+          user_name,
           first_name,
           last_name,
           email,
           phone_number,
           department, 
-          Password
+          password
         }
 
         try{
@@ -65,10 +63,8 @@ async function adminupdateProfile(req, res) {
           res.send(data);
         }catch(error){
             console.log("error updating employee profile")
-            console.log(error.response.errors[0].message);
-            if(error.response.errors[0].message.includes("Uniqueness violation")){
-              res.send({"message":"Another Account already exist with the given Credientail."});
-          }
+            console.log(error);
+            res.status(400).json({"message":"Another Account already exist with the given Credientail."});
         }
     
   }

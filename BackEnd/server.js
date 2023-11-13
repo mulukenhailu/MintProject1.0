@@ -7,13 +7,22 @@ const makeRequest=require("./handler/Employee/makeRequest");
 const register=require("./handler/Admin/registerUser");
 const login=require("./handler/common/login");
 const resetPassword=require("./handler/common/resetPassword");
-const common=require("./handler/common/allitemAvailable");
+
 const requestToApprove=require("./handler/manager/requestToApprove");
 const verifyAccessToken=require("./middleware/verifyAccessToken");
 const approveRequest=require("./handler/manager/approveRequest");
 const requestToApproveStoreHead=require("./handler/storeHead/requestToApprove");
 const approveRequestByStoreHead=require("./handler/storeHead/approveRequest");
 const requestTobeBlessed=require("./handler/storeKeeper/requestTobeBlessed");
+
+const getAllItem=require("./handler/item/getAllItem");
+const getItem=require("./handler/item/getItem");
+const deleteItem=require("./handler/item/deleteItem")
+
+
+const getAllUser=require("./handler/common/getAllUser")
+
+
 const credentials=require("./middleware/credentials")
 
 const cookieParser = require('cookie-parser');
@@ -21,10 +30,10 @@ const cookieParser = require('cookie-parser');
 const cors=require("cors");
 
 
-const userInfo=require("./handler/common/userInfo")
+const userInfo=require("./handler/common/userInfo");
 
 
-// const adminupdateProfile=require("./handler/Admin/adminUpdateProfile")
+const adminupdateProfile=require("./handler/Admin/adminUpdateProfile");
 
 
 // const corsOptions = {
@@ -59,10 +68,14 @@ app.use(express.json());
 
 
 app.post("/login", login.login);
-app.get("/getallitem", verifyAccessToken.verifyAccessToken, common.getAllItems);
+app.get("/getallitem", verifyAccessToken.verifyAccessToken, getAllItem.getAllItem);
 app.post("/updateprofile", verifyAccessToken.verifyAccessToken, updateProfile.updateProfile);
 app.post("/filterbyname", verifyAccessToken.verifyAccessToken, filterByName.filterByName);
 app.post("/resetpassword", verifyAccessToken.verifyAccessToken, resetPassword.resetPassword);
+
+app.get("/user", getAllUser.getAllUser);
+
+app.post("/adminupdateprofile", verifyAccessToken.verifyAccessToken, adminupdateProfile.adminupdateProfile);
 
 app.post("/makerequest", verifyAccessToken.verifyAccessToken, makeRequest.makeRequest);
 app.post("/getuserinfo/:username", userInfo.userInfo);
@@ -76,9 +89,11 @@ app.post("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, req
 app.post("/storehead/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequestByStoreHead.approveRequestByStoreHead);
 
 app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, requestTobeBlessed.requestTobeBlessed);
+app.get("/storekeeper/getitem/:itemNo", verifyAccessToken.verifyAccessToken, getItem.getItem);
+app.post("/storekeeper/delete/:itemNo", verifyAccessToken.verifyAccessToken, deleteItem.deleteItem);
 
 
-// app.post("/adminupdateprofile", verifyAccessToken.verifyAccessToken, adminupdateProfile.adminupdateProfile)
+
 
 
 
