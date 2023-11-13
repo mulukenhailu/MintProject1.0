@@ -142,9 +142,11 @@ function LoginPage() {
     setSubmitClicked(true);
   };
 
-  if (submitClicked && !loadingUser && !errorUser) {
-    navigate("/home");
-  }
+  useEffect(() => {
+    if (submitClicked && !loadingUser && !errorUser) {
+      navigate("/home");
+    }
+  }, [submitClicked, loadingUser, errorUser]);
 
   return (
     <Container>

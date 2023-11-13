@@ -18,9 +18,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
-// `${process.env.REACT_APP_BASE_URL}`;
-// axios.defaults.withCredentials = true;
-console.log(document.cookie);
 
 function App() {
   const user = useSelector((state) => state.user.user.logged_in_user);
@@ -40,7 +37,7 @@ function App() {
         {role_name === "admin" && (
           <Route path="/createUser" element={<CreateUserPage />} />
         )}
-        {role_name === "storeHead" && (
+        {role_name === "storehead" && (
           <Route path="/storemanager" element={<AllStoreRequestPage />} />
         )}
         {role_name === "storekeeper" && (

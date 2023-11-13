@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Table from "@mui/material/Table";
@@ -15,10 +15,30 @@ import {
   TextField,
   Button,
   Avatar,
-  Stack,
+  styled,
 } from "@mui/material";
+import { GET_SINGLE_USER } from "../State/ReduxSaga/Types/userTypes";
+import { useDispatch, useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const UpdateButton = styled(Button)({
+  marginTop: "20px",
+  background: "#12596B",
+  "&:hover": {
+    background: "#0F4F5F",
+  },
+});
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+  const { user, loadingUser } = useSelector((state) => state.user);
+  const user_name = user.logged_in_user.user_name;
+  console.log(user_name);
+
+  useEffect(() => {
+    dispatch({ type: GET_SINGLE_USER, user_name });
+  }, []);
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -45,14 +65,15 @@ const ProfilePage = () => {
     // Handle form submission logic here
   };
 
+  const singleUser = useSelector((state) => state.user.singleUser);
+
   const userInformation = [
-    { label: "First Name", value: "User-1" },
-    { label: "Last Name", value: "User-2" },
-    { label: "Phone Number", value: "+251953263345" },
-    { label: "Email", value: "user@email.com" },
-    { label: "User Name", value: "User-Name-1" },
-    { label: "Job", value: "Mint-Manager" },
-    { label: "Department", value: "Department-1" },
+    { label: "First Name", value: singleUser?.first_name },
+    { label: "Last Name", value: singleUser?.last_name },
+    { label: "Phone Number", value: singleUser?.phone_number },
+    { label: "Email", value: singleUser?.email },
+    { label: "User Name", value: singleUser?.user_name },
+    { label: "Department", value: singleUser?.department },
   ];
 
   return (
@@ -103,6 +124,20 @@ const ProfilePage = () => {
                         marginBottom: 4,
                       }}
                     />
+                    <Box
+                      sx={{
+                        textAlign: "center",
+                        width: "100%",
+                      }}
+                    >
+                      <ClipLoader
+                        color={"#36d7b7"}
+                        loading={loadingUser}
+                        size={50}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                      />
+                    </Box>
                     <TableContainer sx={{ width: "100%" }}>
                       <Table>
                         <TableBody>
@@ -252,7 +287,7 @@ const ProfilePage = () => {
                         </label>
                       </div>
 
-                      <Button
+                      <UpdateButton
                         type="submit"
                         variant="contained"
                         fullWidth
@@ -262,7 +297,7 @@ const ProfilePage = () => {
                         }}
                       >
                         Update Profile
-                      </Button>
+                      </UpdateButton>
                     </form>
                   </Box>
                 </Paper>

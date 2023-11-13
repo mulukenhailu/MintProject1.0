@@ -6,10 +6,17 @@ import {
   Paper,
   Typography,
   Box,
+  styled,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const CreateProduct = () => {
+  const CreateButton = styled(Button)({
+    background: "#12596B",
+    "&:hover": {
+      background: "#0F4F5F",
+    },
+  });
   const [image, setImage] = useState(null);
   const [fileName, setFileName] = useState("Non Selected");
 
@@ -215,7 +222,7 @@ const CreateProduct = () => {
           </label>
         </div>
 
-        <Button
+        <CreateButton
           variant="contained"
           size="large"
           onClick={handleCreateUser}
@@ -223,7 +230,7 @@ const CreateProduct = () => {
           sx={{ marginTop: "20px", background: "#12596B" }}
         >
           Create
-        </Button>
+        </CreateButton>
       </Paper>
     </Box>
   );
