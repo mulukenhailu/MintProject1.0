@@ -17,7 +17,9 @@ const requestTobeBlessed=require("./handler/storeKeeper/requestTobeBlessed");
 
 const getAllItem=require("./handler/item/getAllItem");
 const getItem=require("./handler/item/getItem");
-const deleteItem=require("./handler/item/deleteItem")
+const deleteItem=require("./handler/item/deleteItem");
+
+const createItem=require("./handler/item/createItem")
 
 
 const getAllUser=require("./handler/common/getAllUser")
@@ -36,21 +38,21 @@ const userInfo=require("./handler/common/userInfo");
 const adminupdateProfile=require("./handler/Admin/adminUpdateProfile");
 
 
-// const corsOptions = {
-//     credentials: true
-// };
+const corsOptions = {
+    credentials: true
+};
 
-var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-  credentials: true
-}
+// var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   },
+//   credentials: true
+// }
 
 
 PORT=3001;
@@ -92,9 +94,7 @@ app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, req
 app.get("/storekeeper/getitem/:itemNo", verifyAccessToken.verifyAccessToken, getItem.getItem);
 app.post("/storekeeper/delete/:itemNo", verifyAccessToken.verifyAccessToken, deleteItem.deleteItem);
 
-
-
-
+app.post("/createitem", createItem.createItem)
 
 
 app.listen(process.env.PORT || PORT, ()=>{

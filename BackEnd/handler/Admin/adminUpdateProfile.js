@@ -10,20 +10,19 @@ const client = new GraphQLClient(endpoint, {
 const doc = gql`
   mutation updateProfile(
     $user_name:String!, 
-    $first_name: String!, 
+    $first_name: String, 
     $last_name: String!,
     $email: String!, 
     $phone_number: Int!, 
     $department:String!,
-    $password:String!
     ){
     update_User_by_pk(pk_columns: {user_name: $user_name}, _set: 
-       {first_name:$first_name, 
+       {
+        first_name:$first_name, 
         last_name:$last_name, 
         email:$email, 
         phone_number:$phone_number, 
         department:$department,
-        Password:$password
       }) {
         first_name
         last_name
@@ -44,7 +43,7 @@ const requestHeaders = {
 async function adminupdateProfile(req, res) {
 
   
-        let {user_name, first_name, last_name, email, phone_number, department, password}=req.body
+        let {user_name, first_name, last_name, email, phone_number, department}=req.body
 
         console.log(req.body);
 
@@ -55,7 +54,6 @@ async function adminupdateProfile(req, res) {
           email,
           phone_number,
           department, 
-          password
         }
 
         try{
