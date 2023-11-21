@@ -30,61 +30,61 @@ async function createItem(req, res){
 
         bulkinsert=[]
         serial.forEach(element => {
-          bulkinsert.push({"modelNumber":model_number, "'serialNumber'":parseInt(element)})
+          bulkinsert.push({"modelNumber":model_number, "serialNumber":parseInt(element)})
         });
 
-        console.log({"bulk":bulkinsert})
+        console.log({"bulk":bulkinsert}.bulk)
 
   doc=gql`
-      mutation MyMutation(
-        $kind:Int!, 
-        $donatedOrPurchased:Int!, 
-        $model_number:Int!, 
-        $item_name:String!, 
-        $item_photo:String!, 
-        $status:String!, 
-        $total_quantity_avilable:Int!, 
-        $description:String!
-      
-        ){
-        insert_Items(objects: {
-          kind:  $kind, 
-          donatedOrPurchased:  $donatedOrPurchased, 
-          model_number:  $model_number, 
-          item_name: $item_name, 
-          item_photo: $item_photo, 
-          status: $status, 
-          total_quantity_avilable:  $total_quantity_avilable
-          description:  $description
-        }) {
-          returning {
-            description
-            item_name
-            item_number
-            model_number
-          }
-        }
-            insert_ItemsserialNumber(objects: 
-              $bulk
-                ) {
-                returning {
-                  modelNumber
-                  serialNumber
-                }
+          mutation MyMutation(
+            $kind:Int!, 
+            $donatedOrPurchased:Int!, 
+            $model_number:Int!, 
+            $item_name:String!, 
+            $item_photo:String!, 
+            $status:String!, 
+            $total_quantity_avilable:Int!, 
+            $description:String!
+            $bulk: [ItemsserialNumber_insert_input!]!
+            ){
+            insert_Items(objects: {
+              kind:  $kind, 
+              donatedOrPurchased:  $donatedOrPurchased, 
+              model_number:  $model_number, 
+              item_name: $item_name, 
+              item_photo: $item_photo, 
+              status: $status, 
+              total_quantity_avilable:  $total_quantity_avilable
+              description:  $description
+            }) {
+              returning {
+                description
+                item_name
+                item_number
+                model_number
               }
-      }
+            }
+                insert_ItemsserialNumber(objects: 
+                  $bulk
+                    ) {
+                    returning {
+                      modelNumber
+                      serialNumber
+                    }
+                  }
+          }
   `
 
   const variables={
-    kind, 
-    donatedOrPurchased, 
-    model_number, 
-    item_name, 
-    item_photo, 
-    status, 
-    total_quantity_avilable, 
-    description, 
-    bulk:{"bulk":bulkinsert}
+    "kind": kind,
+    "donatedOrPurchased": donatedOrPurchased,
+    "model_number": model_number,
+    "item_name": item_name,
+    "item_photo": item_photo,
+    "status": status,
+    "total_quantity_avilable": total_quantity_avilable,
+    "description": description,
+    "bulk": {"bulk":bulkinsert}.bulk
   }
 
 console.log(variables);

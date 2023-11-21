@@ -20,8 +20,13 @@ const client = new GraphQLClient(endpoint, {
 
 
 const EmployeeRequest=gql`
-mutation MyMutation ($item_name:String!, $item_no:Int!, $manager_username:String!, 
-                    $quantity_requested:Int!, $employee_username:String!, $Otp:Int!){
+mutation MyMutation (
+    $item_name:String!, 
+    $item_no:Int!, 
+    $manager_username:String!, 
+    $quantity_requested:Int!, 
+    $employee_username:String!, 
+    $Otp:Int!){
                     insert_Employee_Request_one(object: {
                                 item_name: $item_name, 
                                 item_no: $item_no, 
