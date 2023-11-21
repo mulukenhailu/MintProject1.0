@@ -62,7 +62,7 @@ async function adminupdateProfile(req, res) {
         }catch(error){
             console.log("error updating employee profile")
             console.log(error);
-            res.status(400).json({"message":"Another Account already exist with the given Credientail."});
+            res.status(400).json({error:"Another Account already exist with the given Credientail."});
         }
     
   }

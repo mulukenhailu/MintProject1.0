@@ -47,7 +47,7 @@ async function createItem(req, res){
             $description:String!
             $bulk: [ItemsserialNumber_insert_input!]!
             ){
-            insert_Items(objects: {
+            insert_Item(objects: {
               kind:  $kind, 
               donatedOrPurchased:  $donatedOrPurchased, 
               model_number:  $model_number, 
