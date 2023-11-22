@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Box from "@mui/material/Box";
 import PropertyList from "../components/PropertyList";
+import SearchForm from "../components/SearchForm";
 
 const HomePage = () => {
   return (

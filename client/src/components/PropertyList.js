@@ -4,6 +4,7 @@ import Card from "./PropertyCard";
 import { GET_PROPERTIES } from "../State/ReduxSaga/Types/propertyType";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
+import SearchForm from "./SearchForm";
 
 const PropertyList = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const PropertyList = () => {
   }, []);
   return (
     <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
+      <SearchForm />
       {loadingProperty ? (
         <Box
           sx={{
@@ -34,21 +36,27 @@ const PropertyList = () => {
           />
         </Box>
       ) : (
-        <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          {allProperty?.map((property, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <Card
-                id={index}
-                name={property.item_name}
-                item_number={property.item_number}
-                status={property.status}
-                image={property.item_photo}
-                total={property.total_quantity_avilable}
-                description={property.description}
-              />
-            </Grid>
-          ))}
-        </Grid>
+        <>
+          <Grid
+            container
+            rowSpacing={7}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          >
+            {allProperty.Item?.map((property, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                <Card
+                  id={index}
+                  name={property.item_name}
+                  item_number={property.item_number}
+                  status={property.status}
+                  image={property.item_photo}
+                  total={property.total_quantity_avilable}
+                  description={property.description}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </>
       )}
     </Box>
   );

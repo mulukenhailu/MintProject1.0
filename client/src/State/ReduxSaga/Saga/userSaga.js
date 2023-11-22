@@ -4,6 +4,7 @@ import {
   getSingleUserApi,
   getAllUserApi,
   editUserApi,
+  editUserByAdminApi,
   deleteUserApi,
 } from "../Apis/userApi";
 import {
@@ -32,6 +33,7 @@ import {
   GET_SINGLE_USER,
   GET_ALL_USERS,
   EDIT_USER,
+  EDIT_USER_BY_ADMIN,
   DELETE_USER,
 } from "../Types/userTypes";
 import { call, put, takeEvery } from "redux-saga/effects";
@@ -57,35 +59,50 @@ export function* loginUserSaga(action) {
 
 export function* getSingleUserSaga(action) {
   try {
-    console.log(action);
     yield put(getSingleUserStart());
     const singleUser = yield call(getSingleUserApi, action.user_name);
-    console.log(singleUser);
     yield put(getSingleUserSuccess(singleUser.data));
   } catch (error) {
-    console.log(error);
     yield put(getSingleUserFail(error));
   }
 }
 
 export function* getAllUsersSaga(action) {
   try {
+    console.log(action);
     yield put(getAllUserStart());
-    const currentUserId = { currentUserId: action.currentUserId };
-    const otherUsers = yield call(getAllUserApi, currentUserId);
-    yield put(getAllUserSuccess(otherUsers.data));
+    const users = yield call(getAllUserApi);
+    console.log(users);
+    yield put(getAllUserSuccess(users.data));
   } catch (error) {
+    console.log(error);
     yield put(getAllUserFail());
   }
 }
 
 export function* editUserSaga(action) {
   try {
+    console.log(action);
     yield put(editUserStart());
-    const users = yield call(editUserApi, action.payload);
-    yield put(editUserSuccess(users.data));
+    const user = yield call(editUserApi, action.profileInfo);
+    console.log(user.data);
+    yield put(editUserSuccess(user.data.update_User_by_pk));
   } catch (error) {
-    yield put(editUserFail());
+    console.log(error);
+    yield put(editUserFail(error.response.data));
+  }
+}
+
+export function* editUserbyAdminSaga(action) {
+  try {
+    console.log(action);
+    yield put(editUserStart());
+    const users = yield call(editUserByAdminApi, action.user);
+    console.log(users.data);
+    yield put(editUserSuccess(users.data.update_User_by_pk));
+  } catch (error) {
+    console.log(error);
+    yield put(editUserFail(error.response.data));
   }
 }
 
@@ -105,5 +122,6 @@ export function* watchUsersAsync() {
   yield takeEvery(GET_SINGLE_USER, getSingleUserSaga);
   yield takeEvery(GET_ALL_USERS, getAllUsersSaga);
   yield takeEvery(EDIT_USER, editUserSaga);
+  yield takeEvery(EDIT_USER_BY_ADMIN, editUserbyAdminSaga);
   yield takeEvery(DELETE_USER, deleteUserSaga);
 }

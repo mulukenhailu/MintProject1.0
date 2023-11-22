@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, List, Typography, Modal, styled, ListItem } from "@mui/material";
+import { useSelector } from "react-redux";
 
-const UserDetailModal = ({ detailModal, setDetailModal }) => {
+const UserDetailModal = ({ detailModal, setDetailModal, currentUserId }) => {
   const UserDetailModalContainer = styled(Modal)({
     display: "flex",
     alignItems: "center",
@@ -18,6 +19,14 @@ const UserDetailModal = ({ detailModal, setDetailModal }) => {
     display: "flex",
     alignItems: "center",
   });
+
+  const { allUser } = useSelector((state) => state.user);
+  const currentUser = allUser.filter(
+    (user) => user.user_name === currentUserId
+  );
+
+  console.log(currentUser[0]);
+
   return (
     <Box>
       <UserDetailModalContainer
@@ -43,7 +52,7 @@ const UserDetailModal = ({ detailModal, setDetailModal }) => {
                 First Name
               </Typography>
               <Typography variant="body2" flex={1}>
-                first-name-1
+                {currentUser[0]?.first_name}
               </Typography>
             </ListItemForModal>
             <ListItemForModal>
@@ -51,7 +60,7 @@ const UserDetailModal = ({ detailModal, setDetailModal }) => {
                 Last Name
               </Typography>
               <Typography variant="body2" flex={1}>
-                last-name-1
+                {currentUser[0]?.last_name}
               </Typography>
             </ListItemForModal>
             <ListItemForModal>
@@ -59,7 +68,7 @@ const UserDetailModal = ({ detailModal, setDetailModal }) => {
                 User-Name
               </Typography>
               <Typography variant="body2" flex={1}>
-                MinT-1
+                {currentUser[0]?.user_name}
               </Typography>
             </ListItemForModal>
             <ListItemForModal>
@@ -67,7 +76,7 @@ const UserDetailModal = ({ detailModal, setDetailModal }) => {
                 Email
               </Typography>
               <Typography variant="body2" flex={1}>
-                test@gmail.com
+                {currentUser[0]?.email}
               </Typography>
             </ListItemForModal>
             <ListItemForModal>
@@ -75,7 +84,7 @@ const UserDetailModal = ({ detailModal, setDetailModal }) => {
                 Phone Number
               </Typography>
               <Typography variant="body2" flex={1}>
-                0982010318
+                {currentUser[0]?.phone_number}
               </Typography>
             </ListItemForModal>
             <ListItemForModal>
@@ -83,12 +92,20 @@ const UserDetailModal = ({ detailModal, setDetailModal }) => {
                 Department
               </Typography>
               <Typography variant="body2" flex={1}>
-                Department-1
+                {currentUser[0]?.department}
               </Typography>
             </ListItemForModal>
             <ListItemForModal>
               <Typography variant="body1" flex={2}>
-                Manager-Name
+                Position
+              </Typography>
+              <Typography variant="body2" flex={1}>
+                {currentUser[0]?.Role.role_name}
+              </Typography>
+            </ListItemForModal>
+            <ListItemForModal>
+              <Typography variant="body1" flex={2}>
+                Manager
               </Typography>
               <Typography variant="body2" flex={1}>
                 Manager-1

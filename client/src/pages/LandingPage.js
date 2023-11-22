@@ -110,10 +110,10 @@ function LandingPage() {
             alt="Ministry of Innovation and Technology"
           />
         </Anchor>
-        <div>
-          <h1>Welcome to Ministry of Innovation and Technology</h1>
-        </div>
       </Header>
+      <div style={{ marginTop: "40px" }}>
+        <h1 style={{ color: "gray" }}>Welcome to MinT Store</h1>
+      </div>
       <Main>
         <div style={{ width: "25%" }}>
           <Lottie animationData={animationData} />
@@ -123,7 +123,15 @@ function LandingPage() {
 
           <div>
             <Link to="/login">
-              <StyledButton variant="contained">Get Started</StyledButton>
+              <StyledButton
+                variant="contained"
+                sx={{
+                  background: "#12596b",
+                  "&:hover": { background: "#0f4f5f" },
+                }}
+              >
+                Get Started
+              </StyledButton>
             </Link>
           </div>
         </Hero>
