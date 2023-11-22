@@ -4,8 +4,10 @@ const user = createSlice({
   name: "user",
   initialState: {
     user: {},
+    editUser: null,
     newUser: null,
     singleUser: null,
+    allUser: [],
     loadingUser: false,
     errorUser: false,
   },
@@ -17,6 +19,7 @@ const user = createSlice({
       return state;
     },
     createUserSuccess: (state, action) => {
+      console.log(action);
       state.loadingUser = false;
       state.newUser = action.payload;
       state.errorUser = false;
@@ -63,35 +66,36 @@ const user = createSlice({
     },
     getAllUserStart: (state) => {
       state.errorUser = false;
-      state.allOtherUsers = [];
+      state.allUser = [];
       state.loadingUser = true;
     },
     getAllUserSuccess: (state, action) => {
       state.errorUser = false;
-      state.allOtherUsers = action.payload;
+      state.allUser = action.payload;
       state.loadingUser = false;
     },
     getAllUserFail: (state) => {
       state.errorUser = true;
-      state.allOtherUsers = [];
+      state.allUser = [];
       state.loadingUser = false;
     },
     editUserStart: (state) => {
       state.loadingUser = true;
       state.errorUser = false;
-      state.user = {};
+      state.editUser = null;
       return state;
     },
     editUserSuccess: (state, action) => {
       state.loadingUser = false;
-      state.user = action.payload;
+      state.editUser = action.payload;
       state.errorUser = false;
       return state;
     },
     editUserFail: (state, action) => {
-      state.errorUser = action.payload;
+      console.log(action);
+      state.errorUser = action.payload.error;
       state.loadingUser = false;
-      state.user = {};
+      state.editUser = null;
       return state;
     },
     deleteUserStart: (state) => {
@@ -120,6 +124,10 @@ const user = createSlice({
       state.newUser = null;
       return state;
     },
+    removeEditUser: (state) => {
+      state.editUser = null;
+      return state;
+    },
   },
 });
 export const {
@@ -143,5 +151,6 @@ export const {
   deleteUserFail,
   removeUserError,
   removeNewUser,
+  removeEditUser,
 } = user.actions;
 export default user.reducer;

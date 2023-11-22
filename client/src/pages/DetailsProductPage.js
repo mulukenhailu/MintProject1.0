@@ -68,7 +68,7 @@ const DetailsProductPage = ({}) => {
                     <CardMedia
                       sx={{ borderRadius: "15px", padding: "20px" }}
                       component="img"
-                      image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaklC027konJ_1YBEnWuuNm0Ck7nkBCp7uDmOucHmfuA&s"
+                      image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvuIVMu5AmFIHw7ALCgBmZqWwNUFs0rUGWyQ&usqp=CAU"
                     />
                   </Grid>
                   <Grid item xs={12} md={6} padding={"50px"}>

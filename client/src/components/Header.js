@@ -186,7 +186,7 @@ export default function Header() {
             <Avatar
               alt="MinT"
               src="/assets/Logo.jpg"
-              sx={{ width: 45, height: 45, border: "2px solid #12596B" }}
+              sx={{ width: 45, height: 45 }}
             />
           </IconButton>
           <Typography

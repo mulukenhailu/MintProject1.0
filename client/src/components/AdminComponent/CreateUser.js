@@ -5,6 +5,7 @@ import {
   TextField,
   Typography,
   styled,
+  MenuItem,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { CREATE_USER } from "../../State/ReduxSaga/Types/userTypes";
@@ -65,6 +66,13 @@ const CreateUser = () => {
       }, 5000);
     }
   }, [errorUser, newUser, dispatch]);
+
+  const roleType = [
+    { value: "manager", label: "Manager" },
+    { value: "storehead", label: "Store Head" },
+    { value: "storekeeper", label: "Store Keeper" },
+    { value: "employee", label: "Employee" },
+  ];
 
   return (
     <Paper
@@ -136,7 +144,15 @@ const CreateUser = () => {
         fullWidth
         margin="normal"
         sx={{ backgroundColor: "#f7f7f7", borderRadius: "16px" }}
-      />
+        select
+      >
+        {roleType.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
+
       <CreateUserButton
         variant="contained"
         size="large"

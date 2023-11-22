@@ -17,8 +17,12 @@ import {
   Avatar,
   styled,
 } from "@mui/material";
-import { GET_SINGLE_USER } from "../State/ReduxSaga/Types/userTypes";
+import { GET_SINGLE_USER, EDIT_USER } from "../State/ReduxSaga/Types/userTypes";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  removeUserError,
+  removeEditUser,
+} from "../State/ReduxToolkit/Slices/userSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const UpdateButton = styled(Button)({
@@ -31,41 +35,27 @@ const UpdateButton = styled(Button)({
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const { user, loadingUser } = useSelector((state) => state.user);
+  const { user, loadingUser, errorUser, editUser } = useSelector(
+    (state) => state.user
+  );
   const user_name = user.logged_in_user.user_name;
-  console.log(user_name);
-
-  useEffect(() => {
-    dispatch({ type: GET_SINGLE_USER, user_name });
-  }, []);
-
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    location: "",
-  });
-
+  const singleUser = useSelector((state) => state.user.singleUser);
   const [image, setImage] = useState(null);
   const [fileName, setFileName] = useState("Non Selected");
 
-  const handleFormChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  let [profileInfo, setProfileInfo] = useState({
+    first_name: singleUser ? singleUser.first_name : "",
+    last_name: singleUser ? singleUser.last_name : "",
+    password: singleUser ? singleUser.password : "",
+    user_name: singleUser ? singleUser.user_name : "",
+    // role: singleUser ? singleUser.Role.role_name : "",
+    department: singleUser ? singleUser.department : "",
+    email: singleUser ? singleUser.email : "",
+    phone_number: singleUser ? singleUser.phone_number : "",
+    profile_picture: singleUser ? singleUser.profile_picture : "",
+  });
 
-  const handleImageUpload = (event) => {
-    // Handle image upload logic here
-  };
-
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic here
-  };
-
-  const singleUser = useSelector((state) => state.user.singleUser);
+  console.log(singleUser);
 
   const userInformation = [
     { label: "First Name", value: singleUser?.first_name },
@@ -75,6 +65,39 @@ const ProfilePage = () => {
     { label: "User Name", value: singleUser?.user_name },
     { label: "Department", value: singleUser?.department },
   ];
+  const handleImageUpload = (event) => {
+    // Handle image upload logic here
+  };
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setProfileInfo({
+      ...profileInfo,
+      [name]: value,
+    });
+  };
+
+  useEffect(() => {
+    dispatch({ type: GET_SINGLE_USER, user_name });
+  }, [dispatch]);
+  useEffect(() => {
+    if (editUser) {
+      dispatch({ type: GET_SINGLE_USER, user_name });
+    }
+  }, [dispatch, editUser, user_name]);
+
+  useEffect(() => {
+    if (errorUser || editUser) {
+      setTimeout(() => {
+        dispatch(removeEditUser());
+        dispatch(removeUserError());
+      }, 5000);
+    }
+  }, [errorUser, editUser, dispatch]);
+
+  const handleprofileInfo = (e) => {
+    e.preventDefault();
+    dispatch({ type: EDIT_USER, profileInfo });
+  };
 
   return (
     <>
@@ -116,7 +139,7 @@ const ProfilePage = () => {
                   >
                     <Avatar
                       alt="User Image"
-                      src=""
+                      src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D"
                       sx={{
                         width: { xs: 100, md: 120, xl: 150 },
                         height: { xs: 100, md: 120, xl: 150 },
@@ -166,28 +189,68 @@ const ProfilePage = () => {
                 <Paper elevation={3} sx={{ height: "100%" }}>
                   <Box p={2}>
                     <Typography variant="h5">Update Profile</Typography>
-                    <form onSubmit={handleFormSubmit}>
+                    {loadingUser && (
+                      <Box sx={{ textAlign: "center" }}>
+                        <ClipLoader
+                          color={"#36d7b7"}
+                          loading={loadingUser}
+                          size={50}
+                          aria-label="Loading Spinner"
+                          data-testid="loader"
+                        />
+                      </Box>
+                    )}
+
+                    {errorUser && (
+                      <Box
+                        sx={{
+                          backgroundColor: "red",
+                          color: "white",
+                          fontSize: " 18px",
+                          padding: " 5px 15px",
+                          marginTop: "20px",
+                          textAlign: "center",
+                        }}
+                      >
+                        {errorUser}
+                      </Box>
+                    )}
+                    {editUser && (
+                      <Box
+                        sx={{
+                          backgroundColor: "#12596B",
+                          color: "white",
+                          fontSize: " 18px",
+                          padding: " 5px 15px",
+                          marginTop: "20px",
+                          textAlign: "center",
+                        }}
+                      >
+                        User Updated Successfully
+                      </Box>
+                    )}
+                    <form onSubmit={handleprofileInfo}>
                       <TextField
                         fullWidth
                         label="First Name"
-                        name="firstname"
-                        value={formData.firstname}
+                        name="first_name"
+                        value={profileInfo.first_name}
                         onChange={handleFormChange}
                         sx={{ backgroundColor: "#f7f7f7", marginTop: 3 }}
                       />
                       <TextField
                         fullWidth
                         label="Last Name"
-                        name="lastname"
-                        value={formData.lastname}
+                        name="last_name"
+                        value={profileInfo.last_name}
                         onChange={handleFormChange}
                         sx={{ backgroundColor: "#f7f7f7", marginTop: 3 }}
                       />
                       <TextField
                         fullWidth
                         label="Phone Number"
-                        name="phone"
-                        value={formData.phone}
+                        name="phone_number"
+                        value={profileInfo.phone_number}
                         onChange={handleFormChange}
                         sx={{ backgroundColor: "#f7f7f7", marginTop: 3 }}
                       />
@@ -195,7 +258,7 @@ const ProfilePage = () => {
                         fullWidth
                         label="Email"
                         name="email"
-                        value={formData.email}
+                        value={profileInfo.email}
                         onChange={handleFormChange}
                         sx={{ backgroundColor: "#f7f7f7", marginTop: 3 }}
                       />
