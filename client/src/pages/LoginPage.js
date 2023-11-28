@@ -44,7 +44,7 @@ const TextFieldWrapper = styled.div`
 const ButtonStyled = styled(Button)`
   && {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #12596b;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -53,7 +53,7 @@ const ButtonStyled = styled(Button)`
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #0056b3;
+      background-color: #0f4f5f;
     }
   }
 `;
