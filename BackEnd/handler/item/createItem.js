@@ -106,7 +106,6 @@ console.log(variables);
         else{
           res.status(500).send({error:"Internal server Error."})
         }
-        res.status(500).send({error:"Internal server Error."})
     }
                   
 
