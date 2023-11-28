@@ -9,13 +9,13 @@ const client = new GraphQLClient(endpoint, {
 
   const document=gql`
     query MyQuery @cached {
-        Item (where: {status: {_eq: "available"}}) {
-            item_name
+        Item (where: {productstatus: {_eq: "available"}}) {
+            productname
             item_number
-            status
-            total_quantity_avilable
-            item_photo
-            description
+            productstatus
+            productquantitynumber
+            productphoto
+            productdescription
         }
     }
   `
