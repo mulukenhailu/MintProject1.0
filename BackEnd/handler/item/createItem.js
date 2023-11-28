@@ -29,6 +29,19 @@ async function createItem(req, res){
         }= req.body
 
 
+        console.log(
+          productsource, 
+          productstandardtype, 
+          productmodelnumber, 
+          productname, 
+          productphoto, 
+          productstatus, 
+          productquantitynumber, 
+          productdescription, 
+          productmodel,
+          productserialnumbers
+        )
+
         bulkinsert=[]
         productserialnumbers.forEach(element => {
           bulkinsert.push({"modelNumber":productmodelnumber, "serialNumber":parseInt(element)})
