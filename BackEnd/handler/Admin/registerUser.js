@@ -34,7 +34,7 @@ function register(req, res) {
         })
         .catch((error) => {
           console.log("Unexpected error while adding new user to the database");
-          console.log({"Error adding new User to the DB":error.response.errors[0].message});
+          console.log({"Error adding new User to the DB":error});
           res.status(404).send({error:"The User Name already used"})
         });
 }

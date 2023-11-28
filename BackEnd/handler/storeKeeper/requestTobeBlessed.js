@@ -42,10 +42,9 @@ const requestHeaders = {
     try{
         const data= await client.request(doc, {}, requestHeaders);
         res.send(data)
-
     }catch(error){
         console.log("Error while Fetching Request for the storeKeeper.");
-        throw error
+        res.status(501).send(error)
     }
 
   }
