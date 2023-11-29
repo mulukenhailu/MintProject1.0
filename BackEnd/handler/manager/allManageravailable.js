@@ -6,6 +6,7 @@ async function allManagersAvailable(req, res){
 
     userAggregate.userAggregate(2)
         .then((data)=>{
+            console.log(data)
             res.send(data)
         })
         .catch((error)=>{
