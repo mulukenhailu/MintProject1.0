@@ -7,7 +7,7 @@ async function allManagersAvailable(req, res){
     userAggregate.userAggregate(2)
         .then((data)=>{
             console.log(data)
-            res.send(data)
+            res.send(data.User)
         })
         .catch((error)=>{
             console.log(error)
@@ -15,7 +15,7 @@ async function allManagersAvailable(req, res){
         })
 
 
-        console.log(res)
+    console.log(res)
 }
 
 module.exports={allManagersAvailable}
