@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -8,14 +8,23 @@ import {
   Stack,
   FormGroup,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_ALL_MANAGERS } from "../State/ReduxSaga/Types/mangerType";
 
+const OrderButton = styled(Button)({
+  background: "#12596B",
+  "&:hover": {
+    background: "#0F4F5F",
+  },
+});
 const OrderComponent = () => {
-  const OrderButton = styled(Button)({
-    background: "#12596B",
-    "&:hover": {
-      background: "#0F4F5F",
-    },
-  });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: GET_ALL_MANAGERS });
+  }, []);
+  const test = useSelector((state) => state.manager);
+  console.log(test);
   const [formData, setFormData] = useState({
     recieverAddress: "",
     userName: "",

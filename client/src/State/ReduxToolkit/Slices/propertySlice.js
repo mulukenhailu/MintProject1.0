@@ -4,6 +4,7 @@ const property = createSlice({
   name: "property",
   initialState: {
     property: {},
+    newProperty: null,
     allProperty: [],
     loadingProperty: false,
     errorProperty: false,
@@ -12,19 +13,19 @@ const property = createSlice({
     createPropertyStart: (state) => {
       state.loadingProperty = true;
       state.errorProperty = false;
-      state.property = {};
+      state.newProperty = null;
       return state;
     },
     createPropertySuccess: (state, action) => {
       state.loadingProperty = false;
-      state.property = action.payload;
+      state.newProperty = action.payload;
       state.errorProperty = false;
       return state;
     },
     createPropertyFail: (state, action) => {
-      state.errorProperty = action.payload;
+      state.errorProperty = true;
       state.loadingProperty = false;
-      state.property = {};
+      state.newProperty = null;
       return state;
     },
 
@@ -34,6 +35,7 @@ const property = createSlice({
       state.loadingProperty = true;
     },
     getAllPropertySuccess: (state, action) => {
+      console.log(action);
       state.errorProperty = false;
       state.allProperty = action.payload;
       state.loadingProperty = false;
@@ -78,6 +80,10 @@ const property = createSlice({
     removePropertyError: (state) => {
       state.errorProperty = false;
     },
+    removeNewProperty: (state) => {
+      state.newProperty = null;
+      return state;
+    },
   },
 });
 export const {
@@ -94,5 +100,6 @@ export const {
   deletePropertySuccess,
   deletePropertyFail,
   removePropertyError,
+  removeNewProperty,
 } = property.actions;
 export default property.reducer;

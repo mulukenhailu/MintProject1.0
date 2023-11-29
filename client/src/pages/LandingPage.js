@@ -103,14 +103,14 @@ const Bounce = styled.h1`
 function LandingPage() {
   return (
     <Container>
-      <Header>
+      {/* <Header>
         <Anchor href="https://mint.gov.et">
           <img
             src="/assets/mint.jpeg"
             alt="Ministry of Innovation and Technology"
           />
         </Anchor>
-      </Header>
+      </Header> */}
       <div style={{ marginTop: "40px" }}>
         <h1 style={{ color: "gray" }}>Welcome to MinT Store</h1>
       </div>

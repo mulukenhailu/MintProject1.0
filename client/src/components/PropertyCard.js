@@ -15,13 +15,11 @@ import styled from "@emotion/styled";
 import OrderComponent from "./Order";
 
 const PropertyCard = ({
-  id,
-  name,
-  image,
-  description,
+  productname,
   item_number,
-  status,
-  total,
+  productphoto,
+  productquantitynumber,
+  productdescription,
 }) => {
   const [openOrderModal, setOpenOrderModal] = useState(false);
   const CardContentItem = styled(Box)({
@@ -59,22 +57,55 @@ const PropertyCard = ({
         component="img"
         height="80%"
         image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvuIVMu5AmFIHw7ALCgBmZqWwNUFs0rUGWyQ&usqp=CAU"
-        alt={name}
+        alt={"property image"}
       />
       <CardContent>
-        <Typography
-          variant="body1"
-          sx={{ color: "#12596B" }}
-          textAlign={"left"}
-        >
-          {name}, {status} in {description}
-        </Typography>
         <CardContentItem>
-          <Typography variant="body1" sx={{ color: "#12596B" }}>
-            Price:
+          <Typography
+            variant="body1"
+            sx={{ color: "#12596B" }}
+            fontWeight={900}
+          >
+            Name:
           </Typography>
-          <Typography variant="body1" sx={{ color: "#12596B" }}>
-            {total}
+          <Typography
+            variant="body1"
+            sx={{ color: "#12596B" }}
+            fontWeight={400}
+          >
+            {productname}
+          </Typography>
+        </CardContentItem>
+        <CardContentItem>
+          <Typography
+            variant="body1"
+            sx={{ color: "#12596B" }}
+            fontWeight={900}
+          >
+            Model:
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ color: "#12596B" }}
+            fontWeight={400}
+          >
+            corei7
+          </Typography>
+        </CardContentItem>
+        <CardContentItem>
+          <Typography
+            variant="body1"
+            sx={{ color: "#12596B" }}
+            fontWeight={900}
+          >
+            Available:
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ color: "#12596B" }}
+            fontWeight={400}
+          >
+            {productquantitynumber}
           </Typography>
         </CardContentItem>
       </CardContent>
@@ -88,7 +119,7 @@ const PropertyCard = ({
           Order
         </CreateButton>
 
-        <Link to={`/details/${id}`}>
+        <Link to={`/details/${item_number}`}>
           <Button
             size="small"
             sx={{ color: "#fff" }}

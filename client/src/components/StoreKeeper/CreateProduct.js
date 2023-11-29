@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MenuItem,
   TextField,
@@ -9,8 +9,16 @@ import {
   styled,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { CREATE_PROPERTY } from "../../State/ReduxSaga/Types/propertyType";
+import { useDispatch, useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
+import {
+  removePropertyError,
+  removeNewProperty,
+} from "../../State/ReduxToolkit/Slices/propertySlice";
 
 const CreateProduct = () => {
+  const dispatch = useDispatch();
   const CreateButton = styled(Button)({
     background: "#12596B",
     "&:hover": {
@@ -29,26 +37,82 @@ const CreateProduct = () => {
     { value: 4529, label: "4529" },
     { value: 4521, label: "4521" },
   ];
-  const [formData, setFormData] = useState({
-    productName: "",
-    productModel: "",
-    productSource: "",
-    productMainType: "",
-    productType: "",
-    productQuantityNumber: "",
+  const productStatus = [
+    { value: "available", label: "Available" },
+    { value: "unavailable", label: "Unavailable" },
+  ];
+
+  const [property, setProperty] = useState({
+    productname: "",
+    productmodel: "",
+    productsource: "",
+    productstandardtype: "",
+    productmodelnumber: "",
+    productstatus: "",
+    productquantitynumber: "",
+    productintialserialnumber: "",
+    productdescription: "",
+    productphoto: "",
+    productserialnumbers: [],
   });
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
+    setProperty({
+      ...property,
       [name]: value,
     });
   };
 
-  const handleCreateUser = () => {
-    console.log(formData);
+  const handleCreateProduct = () => {
+    const productSerialNumbers = [];
+    console.log(property);
+    const {
+      productsource,
+      productstandardtype,
+      productmodelnumber,
+      productquantitynumber,
+    } = property;
+
+    if (property.productintialserialnumber && property.productquantitynumber) {
+      for (let i = 1; i <= parseInt(property.productquantitynumber); i++) {
+        productSerialNumbers.push(
+          (parseInt(property.productintialserialnumber) + i).toString()
+        );
+      }
+    }
+
+    setProperty({
+      ...property,
+      productsource: parseInt(productsource),
+      productstandardtype: parseInt(productstandardtype),
+      productmodelnumber: parseInt(productmodelnumber),
+      productquantitynumber: parseInt(productquantitynumber),
+      productserialnumbers: productSerialNumbers,
+      productphoto: "test",
+    });
+    setButtonClicked(true);
+
+    console.log(property);
   };
+  if (buttonClicked) {
+    dispatch({ type: CREATE_PROPERTY, property });
+    setButtonClicked(false);
+  }
+
+  const { newProperty, errorProperty, loadingProperty } = useSelector(
+    (state) => state.property
+  );
+
+  useEffect(() => {
+    if (errorProperty || newProperty) {
+      setTimeout(() => {
+        dispatch(removeNewProperty());
+        dispatch(removePropertyError());
+      }, 5000);
+    }
+  }, [errorProperty, newProperty, dispatch]);
 
   return (
     <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
@@ -63,10 +127,21 @@ const CreateProduct = () => {
         <Typography variant="h6" gutterBottom>
           Create Product
         </Typography>
+        {loadingProperty && (
+          <Box sx={{ textAlign: "center" }}>
+            <ClipLoader
+              color={"#36d7b7"}
+              loading={loadingProperty}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </Box>
+        )}
         <TextField
           label="Product Name"
-          name="productName"
-          value={formData.productName}
+          name="productname"
+          value={property.productname}
           onChange={handleFormChange}
           fullWidth
           margin="normal"
@@ -74,8 +149,8 @@ const CreateProduct = () => {
         />
         <TextField
           label="Product Model"
-          name="productModel"
-          value={formData.productModel}
+          name="productmodel"
+          value={property.productmodel}
           onChange={handleFormChange}
           fullWidth
           margin="normal"
@@ -84,8 +159,8 @@ const CreateProduct = () => {
         <Box sx={{ display: "flex", gap: "15px" }}>
           <TextField
             label="Product Source"
-            name="productSource"
-            value={formData.productSource}
+            name="productsource"
+            value={property.productsource}
             onChange={handleFormChange}
             fullWidth
             margin="normal"
@@ -101,8 +176,8 @@ const CreateProduct = () => {
 
           <TextField
             label="Product Standard Type"
-            name="productMainType"
-            value={formData.productMainType}
+            name="productstandardtype"
+            value={property.productstandardtype}
             onChange={handleFormChange}
             fullWidth
             margin="normal"
@@ -117,24 +192,63 @@ const CreateProduct = () => {
           </TextField>
 
           <TextField
-            label="Product Type"
-            name="productType"
-            value={formData.productType}
+            label="Product Model Number"
+            name="productmodelnumber"
+            value={property.productmodelnumber}
             onChange={handleFormChange}
             fullWidth
             margin="normal"
             sx={{ backgroundColor: "#f7f7f7", flex: 2 }}
           />
         </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <TextField
+            label="Product Status"
+            name="productstatus"
+            value={property.productstatus}
+            onChange={handleFormChange}
+            fullWidth
+            margin="normal"
+            sx={{ backgroundColor: "#f7f7f7" }}
+            select
+          >
+            {productStatus.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            label="Product Quantity Number"
+            name="productquantitynumber"
+            value={property.productquantitynumber}
+            onChange={handleFormChange}
+            fullWidth
+            margin="normal"
+            sx={{ backgroundColor: "#f7f7f7" }}
+          />
+          <TextField
+            label="Product Intial Serial Number"
+            name="productintialserialnumber"
+            value={property.productintialserialnumber}
+            onChange={handleFormChange}
+            fullWidth
+            margin="normal"
+            sx={{ backgroundColor: "#f7f7f7" }}
+          />
+        </Box>
         <TextField
-          label="Product Quantity Number"
-          name="productQuantityNumber"
-          value={formData.productQuantityNumber}
+          label="Product Description"
+          name="productdescription"
+          value={property.productdescription}
           onChange={handleFormChange}
           fullWidth
+          multiline
+          rows={6}
           margin="normal"
           sx={{ backgroundColor: "#f7f7f7" }}
         />
+
         <div
           style={{
             padding: "2rem",
@@ -225,12 +339,40 @@ const CreateProduct = () => {
         <CreateButton
           variant="contained"
           size="large"
-          onClick={handleCreateUser}
+          onClick={handleCreateProduct}
           fullWidth
           sx={{ marginTop: "20px", background: "#12596B" }}
         >
           Create
         </CreateButton>
+        {errorProperty && (
+          <Box
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              fontSize: " 18px",
+              padding: " 5px 15px",
+              marginTop: "20px",
+              textAlign: "center",
+            }}
+          >
+            Error While Creating Property
+          </Box>
+        )}
+        {newProperty && (
+          <Box
+            sx={{
+              backgroundColor: "#12596B",
+              color: "white",
+              fontSize: " 18px",
+              padding: " 5px 15px",
+              marginTop: "20px",
+              textAlign: "center",
+            }}
+          >
+            New Property Created Successfully
+          </Box>
+        )}
       </Paper>
     </Box>
   );
