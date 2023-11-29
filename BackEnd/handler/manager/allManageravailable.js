@@ -2,7 +2,7 @@ const userAggregate=require("../../utility/common/userAggregate")
 
 async function allManagersAvailable(req, res){
 
-    console.log("yyyyyyyyyymmmmmmmmmmmmmmmmmm")
+    console.log(req)
 
     userAggregate.userAggregate(2)
         .then((data)=>{
