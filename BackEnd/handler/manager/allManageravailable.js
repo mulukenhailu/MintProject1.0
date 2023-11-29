@@ -14,6 +14,7 @@ async function allManagersAvailable(req, res){
         })
 
 
+        console.log(res)
 }
 
 module.exports={allManagersAvailable}
