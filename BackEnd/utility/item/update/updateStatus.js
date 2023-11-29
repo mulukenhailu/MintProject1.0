@@ -10,11 +10,11 @@ const client = new GraphQLClient(endpoint, {
 
   const doc=gql`
         mutation MyMutation($item_number:Int)  {
-            update_Item(where: {item_number: {_eq: $item_number}}, _set: {status: "unavailable"}) {
+            update_Item(where: {item_number: {_eq: $item_number}}, _set: {productstatus: "unavailable"}) {
             returning {
-                item_name
+                productname
                 item_number
-                item_photo
+                productphoto
             }
             }
         }

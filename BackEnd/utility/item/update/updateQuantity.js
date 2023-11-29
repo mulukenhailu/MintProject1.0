@@ -15,13 +15,10 @@ const client = new GraphQLClient(endpoint, {
             $item_number:Int!, 
             $quantityRequested:Int!) 
             {
-            update_Item(where: {
-                item_number: {_eq: $item_number}},
-            _inc: {
-                total_quantity_avilable: $quantityRequested}) 
-                {
+            update_Item(where: {item_number: {_eq: $item_number}},
+            _inc: {productquantitynumber: $quantityRequested}){
             returning {
-                total_quantity_avilable
+                productquantitynumber
             }
             }
         }
@@ -42,7 +39,7 @@ const client = new GraphQLClient(endpoint, {
         const data= await client.request(doc, variables, requestHeaders);
         console.log("from updating qunatity of item ==>", data);
 
-        if(data.update_Item.returning[0].total_quantity_avilable === 0){
+        if(data.update_Item.returning[0].productquantitynumber === 0){
             //make the status unavailable
             updateStatus.updateStatus(item_number)
                 .then((data)=>{
@@ -54,7 +51,7 @@ const client = new GraphQLClient(endpoint, {
                 })
 
         }
-        return data.update_Item.returning[0].total_quantity_avilable
+        return data.update_Item.returning[0].productquantitynumber
     }catch(error){
         throw error
     }

@@ -13,11 +13,11 @@ const document = gql`
     query MyQuery ($item_number:Int!) @cached {
         Item(where: {item_number: {_eq: $item_number}}) {
         item_number
-        item_name
-        item_photo
-        status
-        total_quantity_avilable
-        description
+        productname
+        productphoto
+        productstatus
+        productquantitynumber
+        productdescription
         }
     }
 `
@@ -41,7 +41,7 @@ const requestHeaders = {
         const data = await client.request(document, variables, requestHeaders);
         console.log(data.Item)
 
-        if(data.Item[0].status === "available" && data.Item[0].total_quantity_avilable >= Number(quantity_requested)){
+        if(data.Item[0].productstatus === "available" && data.Item[0].productquantitynumber >= Number(quantity_requested)){
             updateQuantity.updateQuantity(item_number, quantity_requested)
                 .then((data)=>{
                     console.log("from item by item number", data);

@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser= require("body-parser");
+
 const filterByName=require("./handler/common/filterByName");
 const updateProfile=require("./handler/common/updateProfile");
 const makeRequest=require("./handler/Employee/makeRequest");
@@ -25,6 +26,9 @@ const allManagersAvailable=require("./handler/manager/allManageravailable")
 const getAllUser=require("./handler/common/getAllUser")
 
 
+
+
+
 const credentials=require("./middleware/credentials")
 
 const cookieParser = require('cookie-parser');
@@ -38,21 +42,21 @@ const userInfo=require("./handler/common/userInfo");
 const adminupdateProfile=require("./handler/Admin/adminUpdateProfile");
 
 
-// const corsOptions = {
-//     credentials: true
-// };
+const corsOptions = {
+    credentials: true
+};
 
-var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-  credentials: true
-}
+// var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   },
+//   credentials: true
+// }
 
 
 PORT=3001;
@@ -67,6 +71,9 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
+
+app.use(express.static(__dirname + '/public'));
+app.use('/uploads', express.static('uploads'));
 
 
 app.post("/login", login.login);
