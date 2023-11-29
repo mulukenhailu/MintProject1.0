@@ -19,9 +19,9 @@ const getAllItem=require("./handler/item/getAllItem");
 const getItem=require("./handler/item/getItem");
 const deleteItem=require("./handler/item/deleteItem");
 
-const createItem=require("./handler/item/createItem")
+const createItem=require("./handler/item/createItem");
 
-
+const allManagersAvailable=require("./handler/manager/allManageravailable")
 const getAllUser=require("./handler/common/getAllUser")
 
 
@@ -84,6 +84,8 @@ app.post("/getuserinfo/:username", userInfo.userInfo);
 
 app.post("/register", verifyAccessToken.verifyAccessToken, register.register);
 
+
+app.get("/managers/all", verifyAccessToken.verifyAccessToken, allManagersAvailable.allManagersAvailable)
 app.post("/manager/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApprove.requestToApprove);
 app.post("/manager/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequest.approveRequest);
 
