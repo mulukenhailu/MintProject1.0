@@ -14,19 +14,20 @@ import { Link, useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import OrderComponent from "../components/Order";
+import { useSelector } from "react-redux";
 
-const CardContentItem = styled(Box)({
+const CardContents = styled(Box)({
   height: "fit-content",
+  display: "flex",
+  justifyContent: "center",
+  flexDirection: "column",
+  gap: "10px",
+});
+const CardContentItem = styled(Box)({
   display: "flex",
   alignItems: "center",
   gap: "10px",
 });
-const CardItemDescription = styled(Box)(({ theme }) => ({
-  display: "block",
-  [theme.breakpoints.up("lg")]: {
-    display: "flex",
-  },
-}));
 
 const OrderFormModalContainer = styled(Modal)({
   display: "flex",
@@ -41,8 +42,14 @@ const OrderButton = styled(Button)({
   },
 });
 
-const DetailsProductPage = ({}) => {
+const DetailsProductPage = () => {
   const { id } = useParams();
+  const { allProperty } = useSelector((state) => state.property);
+  const singleProperty = allProperty.find(
+    (item) => item.item_number === parseInt(id)
+  );
+  console.log(singleProperty);
+
   const [openOrderModal, setOpenOrderModal] = useState(false);
   return (
     <>
@@ -53,129 +60,124 @@ const DetailsProductPage = ({}) => {
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5}>
             <Paper elevation={4}>
-              <Box
-                sx={{
-                  bgcolor: "#f7f7f7",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: "fit-content",
-                  width: "100%",
-                }}
-              >
-                <Grid container>
-                  <Grid item xs={12} md={6}>
-                    <CardMedia
-                      sx={{ borderRadius: "15px", padding: "20px" }}
-                      component="img"
-                      image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvuIVMu5AmFIHw7ALCgBmZqWwNUFs0rUGWyQ&usqp=CAU"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6} padding={"50px"}>
-                    <Typography
-                      variant="h5"
-                      sx={{ mb: 2, color: "#12596B" }}
-                      fontWeight={700}
-                    >
-                      Elegant Mansion
-                    </Typography>
+              <Grid container>
+                <Grid item xs={12} md={6}>
+                  <CardMedia
+                    sx={{ borderRadius: "15px", padding: "20px" }}
+                    component="img"
+                    image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvuIVMu5AmFIHw7ALCgBmZqWwNUFs0rUGWyQ&usqp=CAU"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  md={6}
+                  padding={"50px"}
+                  sx={{ display: "flex" }}
+                  flexDirection={"column"}
+                >
+                  <Typography
+                    variant="h4"
+                    sx={{ mb: 2, color: "#12596B" }}
+                    fontWeight={700}
+                    textAlign={"center"}
+                  >
+                    Property Details
+                  </Typography>
+                  <CardContents>
                     <CardContentItem>
                       <Typography
                         variant="body1"
                         sx={{ color: "#12596B" }}
-                        fontWeight={700}
+                        fontWeight={900}
                       >
-                        Type:
+                        Name:
                       </Typography>
-                      <Typography variant="body1" sx={{ color: "#12596B" }}>
-                        Computer
-                      </Typography>
-                    </CardContentItem>
-                    <CardItemDescription>
                       <Typography
                         variant="body1"
                         sx={{ color: "#12596B" }}
-                        fontWeight={700}
-                        textAlign={"left"}
+                        fontWeight={400}
                       >
-                        description:
-                      </Typography>
-                      <Typography variant="body1" sx={{ color: "#12596B" }}>
-                        Lorem Ipsum is simply dummy text of the printing. Lorem
-                        Ipsum is simply dummy text of the printing. Lorem Ipsum
-                        is simply dummy text of the printing. Lorem Ipsum is
-                        simply dummy text of the printing. Lorem Ipsum is simply
-                        dummy text of the printing.
-                      </Typography>
-                    </CardItemDescription>
-                    <CardContentItem>
-                      <Typography
-                        variant="body1"
-                        sx={{ color: "#12596B" }}
-                        fontWeight={700}
-                      >
-                        Location:
-                      </Typography>
-                      <Typography variant="body1" sx={{ color: "#12596B" }}>
-                        Store
+                        {singleProperty.productname}
                       </Typography>
                     </CardContentItem>
                     <CardContentItem>
                       <Typography
                         variant="body1"
                         sx={{ color: "#12596B" }}
-                        fontWeight={700}
+                        fontWeight={900}
                       >
-                        Price:
+                        Model:
                       </Typography>
-                      <Typography variant="body1" sx={{ color: "#12596B" }}>
-                        $800
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        corei7
                       </Typography>
                     </CardContentItem>
                     <CardContentItem>
                       <Typography
                         variant="body1"
                         sx={{ color: "#12596B" }}
-                        fontWeight={700}
+                        fontWeight={900}
                       >
-                        Price:
+                        Description:
                       </Typography>
-                      <Typography variant="body1" sx={{ color: "#12596B" }}>
-                        $800
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {singleProperty.productdescription}
                       </Typography>
                     </CardContentItem>
-
+                    <CardContentItem>
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        Available:
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {singleProperty.productquantitynumber} items are in
+                        store
+                      </Typography>
+                    </CardContentItem>
+                  </CardContents>
+                  <Box sx={{ display: "flex", gap: "15px", marginTop: "20px" }}>
                     <OrderButton
                       size="small"
                       variant="contained"
-                      sx={{ margin: { xs: 1 }, background: "#12596B" }}
+                      sx={{ background: "#12596B" }}
                       onClick={() => setOpenOrderModal(true)}
                     >
                       Order
                     </OrderButton>
                     <Link to="/home">
-                      <Button
-                        variant="contained"
-                        size="small"
-                        sx={{ margin: { lg: 1 } }}
-                        color="warning"
-                      >
+                      <Button variant="contained" size="small" color="warning">
                         back to main page
                       </Button>
                     </Link>
-                  </Grid>
+                  </Box>
                 </Grid>
-                <OrderFormModalContainer
-                  open={openOrderModal}
-                  onClose={() => setOpenOrderModal(false)}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <OrderFormModalWrapper>
-                    <OrderComponent />
-                  </OrderFormModalWrapper>
-                </OrderFormModalContainer>
-              </Box>
+              </Grid>
+              <OrderFormModalContainer
+                open={openOrderModal}
+                onClose={() => setOpenOrderModal(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <OrderFormModalWrapper>
+                  <OrderComponent />
+                </OrderFormModalWrapper>
+              </OrderFormModalContainer>
             </Paper>
           </Box>
         </Box>

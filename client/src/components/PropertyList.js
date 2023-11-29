@@ -13,7 +13,7 @@ const PropertyList = () => {
   );
   useEffect(() => {
     dispatch({ type: GET_PROPERTIES });
-  }, []);
+  }, [dispatch]);
   return (
     <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
       <SearchForm />
@@ -42,16 +42,14 @@ const PropertyList = () => {
             rowSpacing={7}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            {allProperty.Item?.map((property, index) => (
+            {allProperty?.map((property, index) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                 <Card
-                  id={index}
-                  name={property.item_name}
+                  productname={property.productname}
                   item_number={property.item_number}
-                  status={property.status}
-                  image={property.item_photo}
-                  total={property.total_quantity_avilable}
-                  description={property.description}
+                  productphoto={property.productphoto}
+                  productquantitynumber={property.productquantitynumber}
+                  productdescription={property.productdescription}
                 />
               </Grid>
             ))}
