@@ -23,6 +23,7 @@ const deleteItem=require("./handler/item/deleteItem");
 const createItem=require("./handler/item/createItem");
 
 const allManagersAvailable=require("./handler/manager/allManageravailable")
+const acceptance=require("./handler/manager/acceptedRequest")
 const getAllUser=require("./handler/common/getAllUser")
 
 
@@ -95,6 +96,7 @@ app.post("/register", verifyAccessToken.verifyAccessToken, register.register);
 app.get("/managers/all", verifyAccessToken.verifyAccessToken, allManagersAvailable.allManagersAvailable)
 app.post("/manager/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApprove.requestToApprove);
 app.post("/manager/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequest.approveRequest);
+app.get("/manager/acceptedrequest", verifyAccessToken.verifyAccessToken, acceptance.acceptance)
 
 app.post("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApproveStoreHead.requestToApproveStoreHead);
 app.post("/storehead/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequestByStoreHead.approveRequestByStoreHead);
