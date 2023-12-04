@@ -94,7 +94,7 @@ app.post("/register", verifyAccessToken.verifyAccessToken, register.register);
 
 
 app.get("/managers/all", verifyAccessToken.verifyAccessToken, allManagersAvailable.allManagersAvailable)
-app.post("/manager/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApprove.requestToApprove);
+app.get("/manager/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApprove.requestToApprove);
 app.post("/manager/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequest.approveRequest);
 app.get("/manager/acceptedrequest", verifyAccessToken.verifyAccessToken, acceptance.acceptance)
 
