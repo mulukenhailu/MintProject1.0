@@ -28,6 +28,9 @@ const getAllUser=require("./handler/common/getAllUser")
 
 const storeHeadacceptance=require("./handler/storeHead/acceptedRequest")
 
+const upload=require("./utility/ImageUpload/configupload")
+const uploadfunc=require("./utility/ImageUpload/imageupload")
+
 
 
 
@@ -111,6 +114,8 @@ app.get("/storekeeper/getitem/:itemNo", verifyAccessToken.verifyAccessToken, get
 app.post("/storekeeper/delete/:itemNo", verifyAccessToken.verifyAccessToken, deleteItem.deleteItem);
 
 app.post("/createitem", createItem.createItem)
+
+app.post('/profile-upload-single', upload.single('profile-file'), uploadfunc.uploadfunc)
 
 
 app.listen(process.env.PORT || PORT, ()=>{
