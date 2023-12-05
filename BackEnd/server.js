@@ -115,7 +115,7 @@ app.post("/storekeeper/delete/:itemNo", verifyAccessToken.verifyAccessToken, del
 
 app.post("/createitem", createItem.createItem)
 
-app.post('/profile-upload-single', upload.single('profile-file'), uploadfunc.uploadfunc)
+app.post("/profile-upload-single", upload.single("image"), uploadfunc.uploadfunc)
 
 
 app.listen(process.env.PORT || PORT, ()=>{
