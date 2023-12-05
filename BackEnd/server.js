@@ -23,8 +23,12 @@ const deleteItem=require("./handler/item/deleteItem");
 const createItem=require("./handler/item/createItem");
 
 const allManagersAvailable=require("./handler/manager/allManageravailable")
-const acceptance=require("./handler/manager/acceptedRequest")
+const manageracceptance=require("./handler/manager/acceptedRequest")
 const getAllUser=require("./handler/common/getAllUser")
+
+const storeHeadacceptance=require("./handler/storeHead/acceptedRequest")
+
+
 
 
 
@@ -43,21 +47,21 @@ const userInfo=require("./handler/common/userInfo");
 const adminupdateProfile=require("./handler/Admin/adminUpdateProfile");
 
 
-// const corsOptions = {
-//     credentials: true
-// };
+const corsOptions = {
+    credentials: true
+};
 
-var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-  credentials: true
-}
+// var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   },
+//   credentials: true
+// }
 
 
 PORT=3001;
@@ -96,9 +100,10 @@ app.post("/register", verifyAccessToken.verifyAccessToken, register.register);
 app.get("/managers/all", verifyAccessToken.verifyAccessToken, allManagersAvailable.allManagersAvailable)
 app.get("/manager/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApprove.requestToApprove);
 app.post("/manager/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequest.approveRequest);
-app.get("/manager/acceptedrequest", verifyAccessToken.verifyAccessToken, acceptance.acceptance)
+app.get("/manager/acceptedrequest", verifyAccessToken.verifyAccessToken, manageracceptance.acceptance)
 
-app.post("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApproveStoreHead.requestToApproveStoreHead);
+app.get("/storehead/acceptedrequest", verifyAccessToken.verifyAccessToken, storeHeadacceptance.acceptance)
+app.get("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApproveStoreHead.requestToApproveStoreHead);
 app.post("/storehead/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequestByStoreHead.approveRequestByStoreHead);
 
 app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, requestTobeBlessed.requestTobeBlessed);

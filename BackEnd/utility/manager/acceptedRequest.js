@@ -10,9 +10,8 @@ const client = new GraphQLClient(endpoint, {
 
 
   const doc=gql`
-  query MyQuery ($manager_username:String!) @cached {
+  query MyQuery($manager_username: String!) @cached {
     ManagerAppEmpRequest(where: {manager_username: {_eq: $manager_username}}) {
-      employee_username
       id
       is_approved
       item_name
@@ -21,8 +20,30 @@ const client = new GraphQLClient(endpoint, {
       quantity_requested
       storehead_username
       confirmation_number
+      employeeRequest {
+      User {
+        first_name
+        last_name
+        email
+        department
+        phone_number
+        profile_picture
+        role_id
+        user_name
+      }
     }
   }
+      User(where: {user_name: {_eq: $manager_username}}) {
+        first_name
+        last_name
+        email
+        department
+        phone_number
+        profile_picture
+        role_id
+        user_name
+      }
+    }
   `
 
   const requestHeaders = {

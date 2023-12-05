@@ -14,6 +14,12 @@ query MyQuery($managerName:String!) @cached {
       User {
         first_name
         last_name
+        email
+        department
+        phone_number
+        profile_picture
+        role_id
+        user_name
       }
       id
       item_no

@@ -8,19 +8,31 @@ const client = new GraphQLClient(endpoint, {
   })
 
   const doc=gql`
-    query MyQuery @cached {
-        ManagerAppEmpRequest {
-        id
-        item_no
-        item_name
-        quantity_requested
-        manager_username
-        employee_username
-        storehead_username
-        confirmation_number
-        is_approved
+  query MyQuery @cached {
+    ManagerAppEmpRequest {
+      employeeRequest {
+        User {
+          first_name
+          last_name
+          email
+          department
+          phone_number
+          profile_picture
+          role_id
+          user_name
         }
+      }
+      id
+      item_no
+      item_name
+      quantity_requested
+      manager_username
+      employee_username
+      storehead_username
+      confirmation_number
+      is_approved
     }
+  }
   `
 
   const requestHeaders = {
