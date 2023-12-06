@@ -28,8 +28,11 @@ const getAllUser=require("./handler/common/getAllUser")
 
 const storeHeadacceptance=require("./handler/storeHead/acceptedRequest")
 
-const upload=require("./utility/ImageUpload/configupload")
-const uploadfunc=require("./utility/ImageUpload/imageupload")
+// const upload=require("./utility/ImageUpload/configupload")
+// const uploadfunc=require("./utility/ImageUpload/imageupload")
+
+const path = require("path");
+const multer = require("multer");
 
 
 
@@ -50,21 +53,21 @@ const userInfo=require("./handler/common/userInfo");
 const adminupdateProfile=require("./handler/Admin/adminUpdateProfile");
 
 
-// const corsOptions = {
-//     credentials: true
-// };
+const corsOptions = {
+    credentials: true
+};
 
-var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-  credentials: true
-}
+// var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   },
+//   credentials: true
+// }
 
 
 PORT=3001;
@@ -80,8 +83,8 @@ app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
 
-app.use(express.static(__dirname + '/public'));
-app.use('/uploads', express.static('uploads'));
+app.use(express.static('/public'));
+app.use('/uploads', express.static(__dirname + '/public/assets/images'));
 
 
 app.post("/login", login.login);
@@ -115,8 +118,23 @@ app.post("/storekeeper/delete/:itemNo", verifyAccessToken.verifyAccessToken, del
 
 app.post("/createitem", createItem.createItem)
 
-app.post("/profile-upload-single", upload.single("image"), uploadfunc.uploadfunc)
-
+// app.post("/profile-upload-single", upload.single("image"), uploadfunc.uploadfunc)
+const storage = multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, path.join(__dirname, "./public/assets/images"));
+    },
+    filename(req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname);
+    },
+  });
+  
+  const upload = multer({ storage });
+  
+  app.post("/upload", upload.single("image"), (req, res) => {
+    console.log(req.file);
+    res.send(req.file.filename);
+  });
+  
 
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`server started on port ${PORT}`)
