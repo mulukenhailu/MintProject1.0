@@ -109,7 +109,7 @@ app.get("/storehead/acceptedrequest", verifyAccessToken.verifyAccessToken, store
 app.get("/storehead/requestToApprove", verifyAccessToken.verifyAccessToken, requestToApproveStoreHead.requestToApproveStoreHead);
 app.post("/storehead/requestToApprove/:id", verifyAccessToken.verifyAccessToken, approveRequestByStoreHead.approveRequestByStoreHead);
 
-app.post("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, requestTobeBlessed.requestTobeBlessed);
+app.get("/storekeeper/requestTobless", verifyAccessToken.verifyAccessToken, requestTobeBlessed.requestTobeBlessed);
 app.get("/storekeeper/getitem/:itemNo", verifyAccessToken.verifyAccessToken, getItem.getItem);
 app.post("/storekeeper/delete/:itemNo", verifyAccessToken.verifyAccessToken, deleteItem.deleteItem);
 
