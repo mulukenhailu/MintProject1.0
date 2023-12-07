@@ -94,9 +94,8 @@ export default function Sidebar() {
   const location = useLocation();
 
   const isActive = (route) => location.pathname === `/${route}`;
-  const { role_name } = useSelector(
-    (state) => state.user.user.logged_in_user.Role
-  );
+  const user = useSelector((state) => state.user.user);
+  const role_name = user.Role ? user.Role.role_name : null;
 
   const handleLogOut = () => {
     navigate("/");

@@ -20,8 +20,10 @@ import { useSelector } from "react-redux";
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 function App() {
-  const user = useSelector((state) => state.user.user.logged_in_user);
-  const role_name = user ? user.Role.role_name : null;
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
+  const role_name = user.Role ? user.Role.role_name : null;
+  console.log(role_name);
 
   return (
     <div className="App">
