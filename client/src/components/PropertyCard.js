@@ -40,6 +40,9 @@ const PropertyCard = ({
       background: "#0F4F5F",
     },
   });
+  const handleClickModal = () => {
+    setOpenOrderModal(true);
+  };
 
   return (
     <Card
@@ -57,7 +60,7 @@ const PropertyCard = ({
         component="img"
         height="80%"
         image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvuIVMu5AmFIHw7ALCgBmZqWwNUFs0rUGWyQ&usqp=CAU"
-        alt={"property image"}
+        alt="property image"
       />
       <CardContent>
         <CardContentItem>
@@ -114,7 +117,7 @@ const PropertyCard = ({
           size="small"
           sx={{ color: "#fff", marginRight: "5px" }}
           variant="contained"
-          onClick={() => setOpenOrderModal(true)}
+          onClick={() => handleClickModal()}
         >
           Order
         </CreateButton>
@@ -137,7 +140,11 @@ const PropertyCard = ({
         aria-describedby="modal-modal-description"
       >
         <OrderFormModalWrapper>
-          <OrderComponent />
+          <OrderComponent
+            productname={productname}
+            item_number={item_number}
+            setOpenOrderModal={setOpenOrderModal}
+          />
         </OrderFormModalWrapper>
       </OrderFormModalContainer>
     </Card>

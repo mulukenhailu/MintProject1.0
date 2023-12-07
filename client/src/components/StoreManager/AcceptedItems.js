@@ -12,33 +12,42 @@ import {
   Modal,
   Box,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_ALL_ACCEPTED_REQUEST_FOR_STOREHEAD } from "../../State/ReduxSaga/Types/storeHeadRequestTypes";
+
+const DetailModalContainer = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const DetailModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px",
+});
+const ListItemForModal = styled(ListItem)({
+  display: "flex",
+  alignItems: "center",
+});
+const DetailButton = styled(Button)({
+  marginRight: "10px",
+  background: "orange",
+  borderRadius: "2px",
+  "&:hover": {
+    background: "#473c10",
+  },
+});
 
 const AcceptedItemsComponent = () => {
   const [detailModal, setDetailModal] = useState(false);
-  const DetailModalContainer = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const DetailModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "5px",
-    padding: "20px",
-  });
-  const ListItemForModal = styled(ListItem)({
-    display: "flex",
-    alignItems: "center",
-  });
-  const DetailButton = styled(Button)({
-    marginRight: "10px",
-    background: "orange",
-    borderRadius: "2px",
-    "&:hover": {
-      background: "#473c10",
-    },
-  });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: GET_ALL_ACCEPTED_REQUEST_FOR_STOREHEAD });
+  }, [dispatch]);
+
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       <Grid item xs={12} sm={6} lg={4}>

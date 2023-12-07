@@ -19,59 +19,62 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_ALL_PENDING_REQUEST_FOR_STOREKEEPER } from "../../State/ReduxSaga/Types/storeKeeperRequestType";
+
+const AcceptButton = styled(Button)({
+  marginRight: "10px",
+  background: "#12596B",
+  "&:hover": {
+    background: "#10471f",
+  },
+});
+const DetailButton = styled(Button)({
+  marginRight: "10px",
+  background: "orange",
+  "&:hover": {
+    background: "#473c10",
+  },
+});
+const SendButton = styled(Button)({
+  marginTop: "20px",
+  color: "#fff",
+  "&:hover": {
+    background: "#10471f",
+  },
+});
+const DetailModalContainer = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const DetailModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px",
+});
+const ListItemForModal = styled(ListItem)({
+  display: "flex",
+  alignItems: "center",
+});
+const AcceptModal = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const AcceptModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px 20px 30px 20px",
+});
 
 const StorekeeperPendingItems = () => {
   const [detailModal, setDetailModal] = useState(false);
   const [acceptModal, setAcceptModal] = useState(false);
-
-  const AcceptButton = styled(Button)({
-    marginRight: "10px",
-    background: "#12596B",
-    "&:hover": {
-      background: "#10471f",
-    },
-  });
-  const DetailButton = styled(Button)({
-    marginRight: "10px",
-    background: "orange",
-    "&:hover": {
-      background: "#473c10",
-    },
-  });
-  const SendButton = styled(Button)({
-    marginTop: "20px",
-    color: "#fff",
-    "&:hover": {
-      background: "#10471f",
-    },
-  });
-  const DetailModalContainer = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const DetailModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "5px",
-    padding: "20px",
-  });
-  const ListItemForModal = styled(ListItem)({
-    display: "flex",
-    alignItems: "center",
-  });
-  const AcceptModal = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const AcceptModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "5px",
-    padding: "20px 20px 30px 20px",
-  });
+  const dispatch = useDispatch();
 
   const Sources = [
     { value: 101, label: "101" },
@@ -82,6 +85,10 @@ const StorekeeperPendingItems = () => {
     { value: 4531, label: "4531" },
     { value: 4529, label: "4529" },
   ];
+
+  useEffect(() => {
+    dispatch({ type: GET_ALL_PENDING_REQUEST_FOR_STOREKEEPER });
+  }, []);
 
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

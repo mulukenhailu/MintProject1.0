@@ -1,6 +1,4 @@
 import axios from "axios";
 
-export const getAllManagersApi = async () => {
-  console.log("test");
+export const getAllManagersApi = async () =>
   axios.get("/managers/all", { withCredentials: true });
-};

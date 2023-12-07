@@ -3,21 +3,26 @@ import { createSlice } from "@reduxjs/toolkit";
 const manager = createSlice({
   name: "manager",
   initialState: {
-    allManager: [],
+    allManagers: [],
   },
   reducers: {
-    getAllManagerStart: (state) => {
-      state.allManager = [];
+    getAllManagersStart: (state) => {
+      state.allManagers = [];
+      return state;
     },
-    getAllManagerSuccess: (state, action) => {
-      console.log(action);
-      state.allManager = action.payload;
+    getAllManagersSuccess: (state, action) => {
+      state.allManagers = action.payload;
+      return state;
     },
-    getAllManagerFail: (state) => {
-      state.allManager = [];
+    getAllManagersFail: (state) => {
+      state.allManagers = [];
+      return state;
     },
   },
 });
-export const { getAllManagerStart, getAllManagerSuccess, getAllManagerFail } =
-  manager.actions;
+export const {
+  getAllManagersStart,
+  getAllManagersSuccess,
+  getAllManagersFail,
+} = manager.actions;
 export default manager.reducer;
