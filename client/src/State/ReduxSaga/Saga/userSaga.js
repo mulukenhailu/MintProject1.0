@@ -51,6 +51,7 @@ export function* loginUserSaga(action) {
   try {
     yield put(loginUserStart());
     const user = yield call(loginApi, action.credentials);
+    console.log(user);
     yield put(loginUserSuccess(user.data));
   } catch (error) {
     yield put(loginUserFail(error.response.data));
