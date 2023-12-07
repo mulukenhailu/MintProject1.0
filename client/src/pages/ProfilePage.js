@@ -38,7 +38,7 @@ const ProfilePage = () => {
   const { user, loadingUser, errorUser, editUser } = useSelector(
     (state) => state.user
   );
-  const user_name = user.logged_in_user.user_name;
+  const user_name = user.user_name;
   const singleUser = useSelector((state) => state.user.singleUser);
   const [image, setImage] = useState(null);
   const [fileName, setFileName] = useState("Non Selected");
