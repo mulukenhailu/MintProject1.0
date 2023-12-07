@@ -97,6 +97,19 @@ const ProfilePage = () => {
   const handleprofileInfo = (e) => {
     e.preventDefault();
     dispatch({ type: EDIT_USER, profileInfo });
+    setProfileInfo({
+      first_name: "",
+      last_name: "",
+      password: "",
+      user_name: "",
+      department: "",
+      email: "",
+      phone_number: "",
+      profile_picture: "",
+    });
+
+    setImage(null);
+    setFileName("Non Selected");
   };
 
   return (

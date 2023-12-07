@@ -43,6 +43,12 @@ const CreateProduct = () => {
     { value: "unavailable", label: "Unavailable" },
   ];
 
+  const { newProperty, errorProperty, loadingProperty } = useSelector(
+    (state) => state.property
+  );
+
+  const uploadedImage = useSelector((state) => state.upload.image);
+
   const [property, setProperty] = useState({
     productname: "",
     productmodel: "",
@@ -114,7 +120,7 @@ const CreateProduct = () => {
       productmodelnumber: parseInt(productmodelnumber),
       productquantitynumber: parseInt(productquantitynumber),
       productserialnumbers: productSerialNumbers,
-      productphoto: "test",
+      productphoto: uploadedImage,
     });
     setButtonClicked(true);
 
@@ -124,10 +130,6 @@ const CreateProduct = () => {
     dispatch({ type: CREATE_PROPERTY, property });
     setButtonClicked(false);
   }
-
-  const { newProperty, errorProperty, loadingProperty } = useSelector(
-    (state) => state.property
-  );
 
   useEffect(() => {
     if (errorProperty || newProperty) {
