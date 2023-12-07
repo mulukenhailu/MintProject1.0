@@ -19,7 +19,7 @@ import {
   deleteOrderFail,
   removeOrderError,
   removeNewOrder,
-} from "../../ReduxToolkit/Slices/propertySlice";
+} from "../../ReduxToolkit/Slices/orderSlice";
 import {
   CREATE_ORDER,
   GET_ORDERS,
@@ -32,7 +32,7 @@ export function* createOrderSaga(action) {
   try {
     console.log(action);
     yield put(createOrderStart());
-    const Order = yield call(createOrderApi, action.Order);
+    const Order = yield call(createOrderApi, action.order);
     console.log(Order.data);
     yield put(createOrderSuccess(Order.data));
   } catch (error) {
@@ -45,7 +45,7 @@ export function* getAllOrderSaga(action) {
   try {
     console.log(action);
     yield put(getAllOrderStart());
-    const allProperties = yield call(getAllPropertiesApi);
+    const allProperties = yield call(getAllOrderApi);
     console.log(allProperties);
     yield put(getAllOrderSuccess(allProperties.data.Item));
   } catch (error) {

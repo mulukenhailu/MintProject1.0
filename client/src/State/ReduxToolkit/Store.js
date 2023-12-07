@@ -10,6 +10,8 @@ import storage from "redux-persist/lib/storage";
 import userReducer from "./Slices/userSlice";
 import propertyReducer from "./Slices/propertySlice";
 import managerReducer from "./Slices/managerSlice";
+import requestReducer from "./Slices/requestSlice";
+import uploadReducer from "./Slices/uploadImageSlice";
 
 const persistConfig = {
   key: "root",
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   property: propertyReducer,
   manager: managerReducer,
+  request: requestReducer,
+  upload: uploadReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

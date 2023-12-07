@@ -14,185 +14,195 @@ import {
   Typography,
 } from "@mui/material";
 import Textarea from "@mui/joy/Textarea";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_ALL_PENDING_REQUEST_FOR_MANAGER } from "../../State/ReduxSaga/Types/managerRequestType";
+
+const DeclineButton = styled(Button)({
+  marginRight: "10px",
+  background: "red",
+  borderRadius: "2px",
+  "&:hover": {
+    background: "#471010",
+  },
+});
+const AcceptButton = styled(Button)({
+  marginRight: "10px",
+  background: "#12596B",
+  "&:hover": {
+    background: "#10471f",
+  },
+});
+const DetailButton = styled(Button)({
+  marginRight: "10px",
+  background: "orange",
+  "&:hover": {
+    background: "#473c10",
+  },
+});
+const SendButton = styled(Button)({
+  marginTop: "50px",
+  color: "#fff",
+});
+const DetailModalContainer = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const DetailModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px",
+});
+const ListItemForModal = styled(ListItem)({
+  display: "flex",
+  alignItems: "center",
+});
+const AcceptModal = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const AcceptModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px 20px 50px 20px",
+});
+const DeclineModal = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const DeclineModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px 20px 40px 20px",
+});
 
 const ManagerRequestPending = () => {
   const [detailModal, setDetailModal] = useState(false);
   const [acceptModal, setAcceptModal] = useState(false);
   const [declineModal, setDeclineModal] = useState(false);
+  const dispatch = useDispatch();
 
-  const DeclineButton = styled(Button)({
-    marginRight: "10px",
-    background: "red",
-    borderRadius: "2px",
-    "&:hover": {
-      background: "#471010",
-    },
-  });
-  const AcceptButton = styled(Button)({
-    marginRight: "10px",
-    background: "#12596B",
-    "&:hover": {
-      background: "#10471f",
-    },
-  });
-  const DetailButton = styled(Button)({
-    marginRight: "10px",
-    background: "orange",
-    "&:hover": {
-      background: "#473c10",
-    },
-  });
-  const SendButton = styled(Button)({
-    marginTop: "50px",
-    color: "#fff",
-  });
-  const DetailModalContainer = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const DetailModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "5px",
-    padding: "20px",
-  });
-  const ListItemForModal = styled(ListItem)({
-    display: "flex",
-    alignItems: "center",
-  });
-  const AcceptModal = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const AcceptModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "5px",
-    padding: "20px 20px 50px 20px",
-  });
-  const DeclineModal = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const DeclineModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "5px",
-    padding: "20px 20px 40px 20px",
-  });
+  useEffect(() => {
+    dispatch({ type: GET_ALL_PENDING_REQUEST_FOR_MANAGER });
+  }, [dispatch]);
+
+  const { loadingRequest, errorRequest, allRequest } = useSelector(
+    (state) => state.request
+  );
+
+  console.log(allRequest);
+
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      <Grid item xs={12} sm={6} lg={4}>
-        <Card
-          sx={{
-            border: "2px solid black",
-            borderRadius: "10px",
-            padding: "20px 5px",
-          }}
-        >
-          <CardMedia
-            component="img"
-            alt="green iguana"
-            height="250px"
-            src="https://www.simplilearn.com/ice9/free_resources_article_thumb/How_to_become_a_marketing_manager.jpg"
-          />
-          <CardContent>
-            <List>
-              <ListItem
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px",
-                }}
-              >
-                <Typography variant="body1" marginRight={1} fontWeight={600}>
-                  Name:
-                </Typography>
-                <Typography variant="body3" color={"gray"}>
-                  User-1
-                </Typography>
-              </ListItem>
-              <ListItem
-                sx={{ display: "flex", alignItems: "center", gap: "5px" }}
-              >
-                <Typography variant="body1" marginRight={1} fontWeight={600}>
-                  Department:
-                </Typography>
-                <Typography variant="body3" color={"gray"}>
-                  Department-1
-                </Typography>
-              </ListItem>
-              <ListItem
-                sx={{ display: "flex", alignItems: "center", gap: "5px" }}
-              >
-                <Typography variant="body1" marginRight={1} fontWeight={600}>
-                  Manager-Name:
-                </Typography>
-                <Typography variant="body3" color={"gray"}>
-                  manager-1
-                </Typography>
-              </ListItem>
-              <ListItem
-                sx={{ display: "flex", alignItems: "center", gap: "5px" }}
-              >
-                <Typography variant="body1" marginRight={1} fontWeight={600}>
-                  Product Name:
-                </Typography>
-                <Typography variant="body3" color={"gray"}>
-                  Product-1
-                </Typography>
-              </ListItem>
-              <ListItem
-                sx={{ display: "flex", alignItems: "center", gap: "5px" }}
-              >
-                <Typography variant="body1" marginRight={1} fontWeight={600}>
-                  Quantity:
-                </Typography>
-                <Typography variant="body3" color={"gray"}>
-                  quantity-1
-                </Typography>
-              </ListItem>
-              <ListItem
-                sx={{ display: "flex", alignItems: "center", gap: "5px" }}
-              >
-                <Typography variant="body1" marginRight={1} fontWeight={600}>
-                  Order Date:
-                </Typography>
-                <Typography variant="body3" color={"gray"}>
-                  Date-1
-                </Typography>
-              </ListItem>
-            </List>
-          </CardContent>
-          <CardActions>
-            <ButtonGroup fullWidth>
-              <DeclineButton
-                variant="contained"
-                size="small"
-                onClick={() => setDeclineModal(true)}
-              >
-                Decline
-              </DeclineButton>
-              <AcceptButton
-                variant="contained"
-                onClick={() => setAcceptModal(true)}
-              >
-                Accept
-              </AcceptButton>
-              <DetailButton
-                variant="contained"
-                onClick={() => setDetailModal(true)}
-              >
-                Details
-              </DetailButton>
-            </ButtonGroup>
-          </CardActions>
-        </Card>
-      </Grid>
+      {allRequest?.map((item) => (
+        <Grid item xs={12} sm={6} lg={4}>
+          <Card
+            sx={{
+              border: "2px solid black",
+              borderRadius: "10px",
+              padding: "20px 5px",
+            }}
+          >
+            <CardMedia
+              component="img"
+              alt="green iguana"
+              height="250px"
+              src="https://www.simplilearn.com/ice9/free_resources_article_thumb/How_to_become_a_marketing_manager.jpg"
+            />
+            <CardContent>
+              <List>
+                <ListItem
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                  }}
+                >
+                  <Typography variant="body1" marginRight={1} fontWeight={600}>
+                    First Name:
+                  </Typography>
+                  <Typography variant="body3" color={"gray"}>
+                    {item.User?.first_name}
+                  </Typography>
+                </ListItem>
+                <ListItem
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                  }}
+                >
+                  <Typography variant="body1" marginRight={1} fontWeight={600}>
+                    Last Name:
+                  </Typography>
+                  <Typography variant="body3" color={"gray"}>
+                    {item.User?.last_name}
+                  </Typography>
+                </ListItem>
+                <ListItem
+                  sx={{ display: "flex", alignItems: "center", gap: "5px" }}
+                >
+                  <Typography variant="body1" marginRight={1} fontWeight={600}>
+                    Property-Name:
+                  </Typography>
+                  <Typography variant="body3" color={"gray"}>
+                    {item.item_name}
+                  </Typography>
+                </ListItem>
+                <ListItem
+                  sx={{ display: "flex", alignItems: "center", gap: "5px" }}
+                >
+                  <Typography variant="body1" marginRight={1} fontWeight={600}>
+                    Quantity Requested:
+                  </Typography>
+                  <Typography variant="body3" color={"gray"}>
+                    {item.quantity_requested}
+                  </Typography>
+                </ListItem>
+                <ListItem
+                  sx={{ display: "flex", alignItems: "center", gap: "5px" }}
+                >
+                  <Typography variant="body1" marginRight={1} fontWeight={600}>
+                    Order Date:
+                  </Typography>
+                  <Typography variant="body3" color={"gray"}>
+                    Date-1
+                  </Typography>
+                </ListItem>
+              </List>
+            </CardContent>
+            <CardActions>
+              <ButtonGroup fullWidth>
+                <DeclineButton
+                  variant="contained"
+                  size="small"
+                  onClick={() => setDeclineModal(true)}
+                >
+                  Decline
+                </DeclineButton>
+                <AcceptButton
+                  variant="contained"
+                  onClick={() => setAcceptModal(true)}
+                >
+                  Accept
+                </AcceptButton>
+                <DetailButton
+                  variant="contained"
+                  onClick={() => setDetailModal(true)}
+                >
+                  Details
+                </DetailButton>
+              </ButtonGroup>
+            </CardActions>
+          </Card>
+        </Grid>
+      ))}
       <DetailModalContainer
         open={detailModal}
         onClose={() => setDetailModal(false)}

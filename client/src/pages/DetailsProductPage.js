@@ -175,7 +175,11 @@ const DetailsProductPage = () => {
                 aria-describedby="modal-modal-description"
               >
                 <OrderFormModalWrapper>
-                  <OrderComponent />
+                  <OrderComponent
+                    productname={singleProperty.productname}
+                    item_number={singleProperty.item_number}
+                    setOpenOrderModal={setOpenOrderModal}
+                  />
                 </OrderFormModalWrapper>
               </OrderFormModalContainer>
             </Paper>

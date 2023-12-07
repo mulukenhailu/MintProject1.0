@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const createOrderApi = async (order) =>
-  axios.post("/createorder", order, { withCredentials: true });
+  axios.post("/makerequest", order, { withCredentials: true });
 export const getAllOrderApi = async () =>
   axios.get("/getallorder", { withCredentials: true });
 export const editOrderApi = async ({ id, newOrder }) =>

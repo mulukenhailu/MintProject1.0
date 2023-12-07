@@ -14,79 +14,87 @@ import {
   Typography,
 } from "@mui/material";
 import Textarea from "@mui/joy/Textarea";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_ALL_PENDING_REQUEST_FOR_STOREHEAD } from "../../State/ReduxSaga/Types/storeHeadRequestTypes";
+
+const DeclineButton = styled(Button)({
+  marginRight: "10px",
+  background: "red",
+  borderRadius: "2px",
+  "&:hover": {
+    background: "#471010",
+  },
+});
+const AcceptButton = styled(Button)({
+  marginRight: "10px",
+  background: "#12596B",
+  "&:hover": {
+    background: "#10471f",
+  },
+});
+const DetailButton = styled(Button)({
+  marginRight: "10px",
+  background: "orange",
+  "&:hover": {
+    background: "#473c10",
+  },
+});
+const SendButton = styled(Button)({
+  marginTop: "30px",
+  color: "#fff",
+  "&:hover": {
+    background: "#10471f",
+  },
+});
+const DetailModalContainer = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const DetailModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px",
+});
+const ListItemForModal = styled(ListItem)({
+  display: "flex",
+  alignItems: "center",
+});
+const AcceptModal = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const AcceptModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px",
+});
+const DeclineModal = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const DeclineModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px",
+});
 
 const PendingItemComponent = () => {
+  const dispatch = useDispatch();
   const [detailModal, setDetailModal] = useState(false);
   const [acceptModal, setAcceptModal] = useState(false);
   const [declineModal, setDeclineModal] = useState(false);
 
-  const DeclineButton = styled(Button)({
-    marginRight: "10px",
-    background: "red",
-    borderRadius: "2px",
-    "&:hover": {
-      background: "#471010",
-    },
-  });
-  const AcceptButton = styled(Button)({
-    marginRight: "10px",
-    background: "#12596B",
-    "&:hover": {
-      background: "#10471f",
-    },
-  });
-  const DetailButton = styled(Button)({
-    marginRight: "10px",
-    background: "orange",
-    "&:hover": {
-      background: "#473c10",
-    },
-  });
-  const SendButton = styled(Button)({
-    marginTop: "30px",
-    color: "#fff",
-    "&:hover": {
-      background: "#10471f",
-    },
-  });
-  const DetailModalContainer = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const DetailModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "5px",
-    padding: "20px",
-  });
-  const ListItemForModal = styled(ListItem)({
-    display: "flex",
-    alignItems: "center",
-  });
-  const AcceptModal = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const AcceptModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "5px",
-    padding: "20px",
-  });
-  const DeclineModal = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const DeclineModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "5px",
-    padding: "20px",
-  });
+  useEffect(() => {
+    dispatch({ type: GET_ALL_PENDING_REQUEST_FOR_STOREHEAD });
+  }, [dispatch]);
+
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       <Grid item xs={12} sm={6} lg={4}>

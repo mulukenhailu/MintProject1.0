@@ -16,6 +16,7 @@ import {
   removePropertyError,
   removeNewProperty,
 } from "../../State/ReduxToolkit/Slices/propertySlice";
+import { UPLOAD_IMAGE } from "../../State/ReduxSaga/Types/uploadImageType";
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
@@ -63,6 +64,29 @@ const CreateProduct = () => {
       ...property,
       [name]: value,
     });
+  };
+
+  const handleImageUpload = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (!file) {
+      return;
+    }
+    setFileName(file?.name);
+    const formData = new FormData();
+    formData.append("image", file);
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const imageUrl = event.target.result;
+        setImage(imageUrl);
+      };
+
+      reader.readAsDataURL(file);
+    }
+    const sendImage = formData.get("image");
+    dispatch({ type: UPLOAD_IMAGE, sendImage });
   };
 
   const handleCreateProduct = () => {
@@ -284,19 +308,7 @@ const CreateProduct = () => {
               accept="image/*"
               style={{ display: "none" }}
               onChange={(e) => {
-                const file = e.target.files[0];
-                setFileName(file?.name);
-
-                if (file) {
-                  const reader = new FileReader();
-
-                  reader.onload = (event) => {
-                    const imageUrl = event.target.result;
-                    setImage(imageUrl);
-                  };
-
-                  reader.readAsDataURL(file);
-                }
+                handleImageUpload(e);
               }}
             />
             {image ? (
