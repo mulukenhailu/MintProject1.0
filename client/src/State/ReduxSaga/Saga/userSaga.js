@@ -52,7 +52,7 @@ export function* loginUserSaga(action) {
     yield put(loginUserStart());
     const user = yield call(loginApi, action.credentials);
     console.log(user);
-    yield put(loginUserSuccess(user.data));
+    yield put(loginUserSuccess(user.data.logged_in_user));
   } catch (error) {
     yield put(loginUserFail(error.response.data));
   }
