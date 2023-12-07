@@ -57,7 +57,7 @@ const adminupdateProfile=require("./handler/Admin/adminUpdateProfile");
 //     credentials: true
 // };
 
-var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com']
+var whitelist = ['http://localhost:3001', 'http://localhost:3000', 'https://mint-s0j6.onrender.com', "http://localhost:3001/uploads/"]
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
