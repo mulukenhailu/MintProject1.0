@@ -16,6 +16,7 @@ const client = new GraphQLClient(endpoint, {
             productquantitynumber
             productphoto
             productdescription
+            productmodel
         }
     }
   `
