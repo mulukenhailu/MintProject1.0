@@ -11,6 +11,8 @@ const itemByItemNumber=require("../../utility/common/itemByItemNumber");
 const userByusername=require("../../utility/common/userByusername");
 const confirmationNumber=require("../../utility/Auth/confirmationNumber");
 const validateRequest=require("../../utility/Auth/validateRequest");
+const userAggregate=require("../../utility/common/userAggregate")
+const updateQuantity=require("../../utility/item/update/updateQuantity")
 
 
 const client = new GraphQLClient(endpoint, {
@@ -55,13 +57,13 @@ const requestHeaders = {
 
 async function makeRequest(req, res){
 
-    let { item_no, item_name, quantity_requested, manager_username}=req.body;
-
+    let { item_no, item_name, quantity_requested}=req.body;
+    
     const variables={
         item_no, 
         item_name, 
         quantity_requested,
-        manager_username,
+        manager_username:await userAggregate.userAggregate(1, req.body.decoded.user_name).then(data=>data.User[0].manager_username),
         employee_username:req.body.decoded.user_name,
         Otp:confirmationNumber.confirmationNumber()
     }
@@ -69,39 +71,55 @@ async function makeRequest(req, res){
 itemByItemNumber.itemByItemNumber(Number(item_no), Number(quantity_requested))
     .then((validItem)=>{
         if(validItem){
-            userByusername.userByusername(manager_username)
-                .then((validManager)=>{
-                    if(validManager){
-                        console.log("in the final step");
-                        validateRequest.validateRequest("Employee_Request", Number(item_no), req.body.decoded.user_name)
-                            .then(async (validateRequest)=>{
-                                console.log(validateRequest);
-                                if(validateRequest){
-                                    try{
-                                        const data= await client.request(EmployeeRequest, variables, requestHeaders);
-                                        console.log("we are here!");
-                                        console.log(data);
-                                        res.send({"Your confirmation number":data.insert_Employee_Request_one.confirmation_number});
-                                    }catch(error){
-                                        console.log("error while inserting request");
-                                        console.log(error);
-                                        res.status(500).json({error:"Internal server Error"});
-                                        return error;
-                                    }
-                                }else{
-                                    res.status(400).json({error:"Request already existed"});
-                                    return;
-                                }
-                            })
-                            .catch((error)=>{
-                                console.log("while looking for the item");
-                                console.log(error);
-                                res.sendStatus(500);
-                            })
-                    }else{
-                        res.sendStatus(500);
-                        return;
+            userAggregate.userAggregate(1, req.body.decoded.user_name)
+                .then((data)=>{
+                    if(data.User.length===0 || data.User[0].manager_username===""){
+                        res.status(401).send({error:"NO manager found to approve."})
                     }
+                    console.log(req.body.decoded.user_name)
+                    console.log("==========>",data)
+                    userByusername.userByusername(data.User[0].manager_username)
+                        .then((validManager)=>{
+                            if(validManager){
+                                console.log("in the final step");
+                                validateRequest.validateRequest("Employee_Request", Number(item_no), req.body.decoded.user_name)
+                                    .then(async (validateRequest)=>{
+                                        console.log("==>", validateRequest);
+                                        if(validateRequest){
+                                            updateQuantity.updateQuantity(Number(item_no), Number(quantity_requested))
+                                                .then(async (data)=>{
+                                                    console.log(data)
+                                                    try{
+                                                        const data= await client.request(EmployeeRequest, variables, requestHeaders);
+                                                        console.log("we are here!");
+                                                        console.log(data);
+                                                        res.send({"Your confirmation number":data.insert_Employee_Request_one.confirmation_number});
+                                                    }catch(error){
+                                                        console.log("error while inserting request");
+                                                        console.log(error);
+                                                        res.status(500).json({error:"Internal server Error"});
+                                                        return error;
+                                                    }
+                                                })
+                                                .catch((error)=>{
+                                                    console.log("error while updating total quantity of  item After requested has been made.", error)
+                                                    return  error
+                                                })
+
+                                            
+                                        }else{
+                                            res.status(400).json({error:"Request already existed"});
+                                            return;
+                                        }
+                                    })
+                                    .catch((error)=>{
+                                        console.log("while looking for the item:");
+                                        console.log(error);
+                                        res.sendStatus(500);
+                                    })
+                            }else{
+                                res.status(500).send({error:"NO manager Found to approve.Connect with the Database Adminstrator."});
+                            }
                 })
                 .catch((error)=>{
                     console.log("while looking for the item");
@@ -109,6 +127,13 @@ itemByItemNumber.itemByItemNumber(Number(item_no), Number(quantity_requested))
                     res.sendStatus(500);
                     return;
                 })
+                })
+        .catch((error)=>{
+            console.log(error)
+            res.status(500).json({error:"Unable to find Manager"});
+        })
+
+            
         }else{
             res.status(500).json({error:"Invalid Input"});
             return 

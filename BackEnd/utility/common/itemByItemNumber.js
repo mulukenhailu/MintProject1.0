@@ -42,14 +42,14 @@ const requestHeaders = {
         console.log(data.Item)
 
         if(data.Item[0].productstatus === "available" && data.Item[0].productquantitynumber >= Number(quantity_requested)){
-            updateQuantity.updateQuantity(item_number, quantity_requested)
-                .then((data)=>{
-                    console.log("from item by item number", data);
-                })
-                .catch((error)=>{
-                    console.log("error while updating total quantity of  item After requested has been made.", error)
-                    return  error
-                })
+            // updateQuantity.updateQuantity(item_number, quantity_requested)
+            //     .then((data)=>{
+            //         console.log("from item by item number", data);
+            //     })
+            //     .catch((error)=>{
+            //         console.log("error while updating total quantity of  item After requested has been made.", error)
+            //         return  error
+            //     })
             console.log("true");
             return true
         }else{

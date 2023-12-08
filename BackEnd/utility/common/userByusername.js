@@ -46,7 +46,7 @@ const requestHeaders = {
 
       }catch(error){
         console.log("error while finding manager by user name:")
-        return error;
+        throw error;
       }
     
 };

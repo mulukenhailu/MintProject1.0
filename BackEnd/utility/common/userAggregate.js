@@ -75,6 +75,7 @@ async function userAggregate(id, user_name){
                       last_name
                       role_id
                       user_name
+                      manager_username
                     }
                   }              
               `

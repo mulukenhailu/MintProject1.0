@@ -9,8 +9,8 @@ const client = new GraphQLClient(endpoint, {
   })
 
 const NewUser=gql`
-    mutation MyMutation($user_name:String!, $password:String!, $first_name:String!, $last_name:String!, $role_id:Int!){
-        insert_User_one(object: {user_name: $user_name, Password: $password, first_name: $first_name, last_name: $last_name, role_id: $role_id}) {
+    mutation MyMutation($user_name:String!, $password:String!, $first_name:String!, $last_name:String!, $role_id:Int!, $manager_username:String!){
+        insert_User_one(object: {user_name: $user_name, Password: $password, first_name: $first_name, last_name: $last_name, role_id: $role_id, manager_username: $manager_username}) {
         user_name
         first_name
         last_name
@@ -29,9 +29,9 @@ async function addNewUser(...userInfo){
 
     console.log({"New user to be Registerd":userInfo});
 
-    [user_name, password, first_name, last_name, role_id]=userInfo;
+    [user_name, password, first_name, last_name, role_id, manager_username]=userInfo;
 
-    const variables={user_name, password, first_name, last_name, role_id};
+    const variables={user_name, password, first_name, last_name, role_id, manager_username};
 
     console.log(variables);
 

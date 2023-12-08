@@ -28,8 +28,6 @@ async function validateRequest(request_type, item_number, employee_user_name){
             }
         `
 
-
-
         const variables={
             item_number,
             employee_user_name

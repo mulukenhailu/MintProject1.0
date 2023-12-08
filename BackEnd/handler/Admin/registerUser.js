@@ -3,11 +3,11 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 function register(req, res) {
-  let { user_name, password, first_name, last_name, role } = req.body;
+  let { user_name, password, first_name, last_name, role, manager_username} = req.body;
 
   console.log(req.body)
 
-  console.log(user_name, password, first_name, last_name, role);
+  console.log(user_name, password, first_name, last_name, role, manager_username);
  
       if (role === "employee"){
         role = 1
@@ -28,7 +28,7 @@ function register(req, res) {
   const hash = bcrypt.hashSync(password, saltRounds);
 
   addNewUser
-    .addNewUser(user_name, hash, first_name, last_name, role)
+    .addNewUser(user_name, hash, first_name, last_name, role, manager_username)
         .then((data) => {
           res.send(data);
         })
