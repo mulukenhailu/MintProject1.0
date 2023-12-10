@@ -16,19 +16,24 @@ async function userAggregate(id, user_name){
 
             if (arguments.length === 0){
               const doc=gql`
-                query MyQuery {
-                  User {
-                    first_name
-                    last_name
-                    user_name
-                    department
-                    email
-                    phone_number
-                    Role {
-                      role_name
-                    }
+              query MyQuery {
+                User {
+                  first_name
+                  last_name
+                  user_name
+                  department
+                  email
+                  phone_number
+                  manager_username
+                  profile_picture
+                  created_at
+                  updated_at
+                  Role {
+                    role_name
                   }
                 }
+              }
+              
               `
               try{
                 const data= await client.request(doc, {}, requestHeaders);

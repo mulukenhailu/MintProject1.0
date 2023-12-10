@@ -50,45 +50,25 @@ async function createItem(req, res){
         console.log({"bulk":bulkinsert}.bulk)
 
   doc=gql`
-          mutation MyMutation(
-            $productsource:Int!, 
-            $productstandardtype:Int!, 
-            $productmodelnumber:Int!, 
-            $productmodel:String!,
-            $productname:String!, 
-            $productphoto:String!, 
-            $productstatus:String!, 
-            $productquantitynumber:Int!, 
-            $productdescription:String!
-            $bulk: [ItemsserialNumber_insert_input!]!
-            ){
-            insert_Item(objects: {
-              productsource:  $productsource, 
-              productstandardtype:  $productstandardtype, 
-              productmodelnumber:  $productmodelnumber, 
-              productmodel: $productmodel,
-              productname: $productname, 
-              productphoto: $productphoto, 
-              productstatus: $productstatus, 
-              productquantitynumber:  $productquantitynumber
-              productdescription:  $productdescription
-            }) {
-              returning {
-                productdescription
-                productname
-                productmodelnumber
-                item_number
-              }
-            }
-                insert_ItemsserialNumber(objects: 
-                  $bulk
-                    ) {
-                    returning {
-                      modelNumber
-                      serialNumber
-                    }
-                  }
-          }
+  mutation MyMutation($productsource: Int!, $productstandardtype: Int!, $productmodelnumber: Int!, $productmodel: String!, $productname: String!, $productphoto: String!, $productstatus: String!, $productquantitynumber: Int!, $productdescription: String!, $bulk: [ItemsserialNumber_insert_input!]!) {
+    insert_Item(objects: {productsource: $productsource, productstandardtype: $productstandardtype, productmodelnumber: $productmodelnumber, productmodel: $productmodel, productname: $productname, productphoto: $productphoto, productstatus: $productstatus, productquantitynumber: $productquantitynumber, productdescription: $productdescription}) {
+      returning {
+        productdescription
+        productname
+        productmodelnumber
+        item_number
+        created_at
+        updated_at
+      }
+    }
+    insert_ItemsserialNumber(objects: $bulk) {
+      returning {
+        modelNumber
+        serialNumber
+      }
+    }
+  }
+  
   `
 
   const variables={

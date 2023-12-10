@@ -14,6 +14,7 @@ const doc = gql`
     $last_name: String!,
     $email: String!, 
     $phone_number: Int!, 
+    $profile_picture:String!
     ){
     update_User_by_pk(pk_columns: {user_name: $user_name}, _set: 
        {
@@ -21,6 +22,7 @@ const doc = gql`
         last_name:$last_name, 
         email:$email, 
         phone_number:$phone_number, 
+        profile_picture:$profile_picture
       }) {
         first_name
         last_name
@@ -41,7 +43,7 @@ const requestHeaders = {
 async function updateProfile(req, res) {
 
   
-        let {first_name, last_name, email, phone_number}=req.body
+        let {first_name, last_name, email, phone_number, profile_picture}=req.body
 
         console.log(req.body);
 
@@ -51,6 +53,7 @@ async function updateProfile(req, res) {
           last_name,
           email,
           phone_number,
+          profile_picture
         }
 
         try{

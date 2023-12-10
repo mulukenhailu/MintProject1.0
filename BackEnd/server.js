@@ -312,11 +312,6 @@ app.post(
 app.post("/createitem", createItem.createItem);
 
 
-userAggregate.userAggregate(1, "test")
-  .then((data)=>{
-    console.log(data)
-  })
-
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, path.join(__dirname, "./public/assets/images"));
