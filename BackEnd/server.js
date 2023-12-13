@@ -287,7 +287,7 @@ app.get(
 app.get(
   "/manager/pendingrequest",
   verifyAccessToken.verifyAccessToken,
-  managerRejection.EmployeeManagerRejectedRequest
+  managerRejection.EmployeesManagerRejectedRequest
 );
 
 

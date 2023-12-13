@@ -1,6 +1,6 @@
 const EmployeeManagerRejectedRequest=require("../../../../utility/employee/rejectedRequest/rejectedByManager/rejectedByManager")
 
-function EmployeeManagerRejectedRequest(req, res){
+function EmployeesManagerRejectedRequest(req, res){
     EmployeeManagerRejectedRequest.EmployeeManagerRejectedRequest()
         .then((data)=>{
             res.send(data.Employee_Request)
@@ -11,4 +11,4 @@ function EmployeeManagerRejectedRequest(req, res){
         })
 }
 
-module.exports={EmployeeManagerRejectedRequest}
+module.exports={EmployeesManagerRejectedRequest}
