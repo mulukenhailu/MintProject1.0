@@ -2,7 +2,7 @@
 //using the username of currently logged in manager 
 //filter out the request for that manager
 
-const acceptedRequest=require("../../utility/manager/acceptedRequest")
+const acceptedRequest=require("../../../utility/manager/acceptedRequest/acceptedRequest")
 
 
 

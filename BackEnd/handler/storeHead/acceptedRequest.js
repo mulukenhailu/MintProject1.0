@@ -1,4 +1,4 @@
-const acceptedRequest=require("../../utility/storeHead/acceptedRequest")
+const acceptedRequest=require("../../utility/storeHead/acceptedRequest/acceptedRequest")
 
 
 
@@ -17,5 +17,4 @@ function acceptance(req, res){
             res.status(500).send({error:"Please Retry Again."})
         })
 }
-
 module.exports={acceptance}

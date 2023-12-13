@@ -11,6 +11,7 @@ function approveRequest(req, res){
     // check if the request exist in the employee request or not 
     validateApproval.validateApproval(req.params.id)
         .then((data)=>{
+            console.log(data)
                 // if it exists add the request to the manager approved employee requeat DB using the same request id 
             if (data.Employee_Request && data.Employee_Request.length === 1){
                 addApprovalByManager.addApprovalByManager(req.params.id, data)

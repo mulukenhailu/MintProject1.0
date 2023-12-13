@@ -56,16 +56,22 @@ async function validateRequest(request_type, item_number, employee_user_name){
   async function validateApproval(requestId){
 
     const doc= gql`
-    query MyQuery ($request_id:uuid!){
+    query MyQuery($request_id: uuid!) {
         Employee_Request(where: {id: {_eq: $request_id}}) {
-        item_no
-        item_name
-        quantity_requested
-        manager_username
-        employee_username
-        confirmation_number
+          item_no
+          item_name
+          quantity_requested
+          manager_username
+          employee_username
+          confirmation_number
+          isApprovedByManager
+          isApprovedByStoreHead
+          isRejectedByManager
+          isRejectedByStoreHead
+          is_approved
         }
-    }
+      }
+      
   `
    
     const variables={
@@ -76,10 +82,9 @@ async function validateRequest(request_type, item_number, employee_user_name){
         const data= await client.request(doc, variables, requestHeaders);
         console.log(data);
         return data
-
     }catch(error){
-        console.log("Error while validating the manager  Approval for the Employee Request");
-        throw error;
+        console.log("Error while validating the manager And StoreHead Approval for the Employee Request");
+        throw error
     }
   }
 

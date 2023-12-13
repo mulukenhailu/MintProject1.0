@@ -11,24 +11,33 @@ const client = new GraphQLClient(endpoint, {
 
 
   const document=gql`
-  mutation MyMutation (
-    $id:uuid!, 
-    $item_no:Int!, 
-    $item_name:String!, 
-    $quantity_requested:Int!, 
-    $manager_username:String!, 
-    $employee_username:String!, 
-    $confirmation_number:Int!, 
-    $storehead_username:String!){
+  mutation MyMutation($id: uuid!, 
+    $item_no: Int!, 
+    $item_name: String!, 
+    $quantity_requested: Int!, 
+    $manager_username: String!, 
+    $employee_username: String!, 
+    $confirmation_number: Int!, 
+    $storehead_username: String!
+    $isApprovedByManager: Boolean!,
+    $isApprovedByStoreHead: Boolean!,
+    $isRejectedByManager: Boolean!,
+    $isRejectedByStoreHead: Boolean!
+    ) {
     insert_ManagerAppEmpRequest_one(object: {
-        id: $id, 
-        item_no: $item_no, 
-        item_name: $item_name, 
-        quantity_requested:$quantity_requested, 
-        manager_username: $manager_username, 
-        employee_username: $employee_username, 
-        confirmation_number: $confirmation_number, 
-        storehead_username: $storehead_username}) {
+      id: $id, 
+      item_no: $item_no, 
+      item_name: $item_name, 
+      quantity_requested: $quantity_requested, 
+      manager_username: $manager_username, 
+      employee_username: $employee_username, 
+      confirmation_number: $confirmation_number, 
+      storehead_username: $storehead_username
+      isApprovedByManager: $isApprovedByManager,
+      isApprovedByStoreHead: $isApprovedByStoreHead,
+      isRejectedByManager: $isRejectedByManager,
+      isRejectedByStoreHead: $isRejectedByStoreHead
+    }) {
       id
       item_no
       item_name
@@ -37,9 +46,17 @@ const client = new GraphQLClient(endpoint, {
       employee_username
       storehead_username
       confirmation_number
-      is_approved 
+      isApprovedByManager
+      isApprovedByStoreHead
+      isRejectedByManager
+      isRejectedByStoreHead
+      is_approved
+    }
+    update_Employee_Request(where: {id: {_eq: $id}}, _set: {isApprovedByManager: true}) {
+      affected_rows
     }
   }
+  
 `
 
 const requestHeaders = {
@@ -59,7 +76,11 @@ const requestHeaders = {
                             manager_username:data.Employee_Request[0].manager_username, 
                             employee_username:data.Employee_Request[0].employee_username, 
                             confirmation_number:data.Employee_Request[0].confirmation_number, 
-                            storehead_username: await currentStoreHead()
+                            storehead_username: await currentStoreHead(),
+                            isApprovedByManager:true,
+                            isApprovedByStoreHead:data.Employee_Request[0].isApprovedByStoreHead,
+                            isRejectedByManager:data.Employee_Request[0].isRejectedByManager,
+                            isRejectedByStoreHead:data.Employee_Request[0].isRejectedByStoreHead
                             }
 
                         console.log(variables);

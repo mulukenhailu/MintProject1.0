@@ -155,7 +155,7 @@ const register = require("./handler/Admin/registerUser");
 const login = require("./handler/common/login");
 const resetPassword = require("./handler/common/resetPassword");
 
-const requestToApprove = require("./handler/manager/requestToApprove");
+const requestToApprove = require("./handler/manager/pendingRequest/requestToApprove");
 const verifyAccessToken = require("./middleware/verifyAccessToken");
 const approveRequest = require("./handler/manager/approveRequest");
 const requestToApproveStoreHead = require("./handler/storeHead/requestToApprove");
@@ -169,8 +169,9 @@ const deleteItem = require("./handler/item/deleteItem");
 const createItem = require("./handler/item/createItem");
 
 const allManagersAvailable = require("./handler/manager/allManageravailable");
-const manageracceptance = require("./handler/manager/acceptedRequest");
+const manageracceptance = require("./handler/manager/acceptedRequest/acceptedRequest");
 const getAllUser = require("./handler/common/getAllUser");
+const managerRejection =require("./handler/Employee/Rejected.js/rejectedByManager/rejectedByManager")
 
 const storeHeadacceptance = require("./handler/storeHead/acceptedRequest");
 
@@ -187,7 +188,6 @@ const userInfo = require("./handler/common/userInfo");
 
 const adminupdateProfile = require("./handler/Admin/adminUpdateProfile");
 
-const userAggregate=require("./utility/common/userAggregate")
 
 var whitelist = [
   "http://localhost:3001",
@@ -276,6 +276,21 @@ app.get(
   verifyAccessToken.verifyAccessToken,
   manageracceptance.acceptance
 );
+
+app.get(
+  "/manager/rejectedrequest/:id/:item_no",
+  verifyAccessToken.verifyAccessToken,
+  manageracceptance.acceptance
+);
+
+
+app.get(
+  "/manager/pendingrequest",
+  verifyAccessToken.verifyAccessToken,
+  managerRejection.EmployeeManagerRejectedRequest
+);
+
+
 
 app.get(
   "/storehead/acceptedrequest",
