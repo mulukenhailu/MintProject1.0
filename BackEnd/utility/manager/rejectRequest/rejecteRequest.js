@@ -7,8 +7,6 @@ const client = new GraphQLClient(endpoint, {
     },
   })
 
-const validateRejection=require("../../Auth/validateRequest")
-
 const doc=gql`
 mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int!) {
   update_Employee_Request(where: {_and: {id: {_eq: $request_id}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}}},
@@ -38,7 +36,6 @@ mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int
   }
 }
 
-  
 `
 const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
@@ -46,38 +43,27 @@ const requestHeaders = {
 
 
 
-  async  function rejectRequestByManager(request_id, item_no){
+ async function rejectRequestByManager(request_id, item_no, quantity_requested){
 
-    validateRejection.validateApproval(request_id)
-        .then(async (data)=>{
+    console.log(request_id, item_no, quantity_requested)
 
-            if (data.Employee_Request && data.Employee_Request.length === 1){
+    const variables={
+      request_id,
+      item_no,
+      quantity_requested
+    }
 
-              const variables={
-                request_id,
-                item_no,
-                quantity_request:data.Employee_Request.quantity_requested
-               }
+    console.log(variables)
 
-                try{
-                    const data=await client.request(doc, variables, requestHeaders)
-                    return data
-                }catch(error){
-                    console.log("Error from the Manager Rejecting Request.")
-                    throw error
-                }
-                   
-            }
-            else{
-                res.send({"message":"NO request found tobe approved"})
-            }
+    try{
+      const data=await client.request(doc, variables, requestHeaders)
+      return data
 
-        })
-        .catch((error)=>{
-          console.log(error)
-          res.status(500).send({error:"Retry Again."})
-        })
+    }catch(error){
+      throw error
+    }
 
+    
 
   }
 

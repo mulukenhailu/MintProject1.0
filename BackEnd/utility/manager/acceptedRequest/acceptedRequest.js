@@ -10,8 +10,8 @@ const client = new GraphQLClient(endpoint, {
 
 
   const doc=gql`
-  query MyQuery($managerName: String!) @cached {
-    Employee_Request(where: {_and: {manager_username: {_eq: $managerName}, isApprovedByManager: {_eq: true}}}) {
+  query MyQuery($manager_username: String!) @cached {
+    Employee_Request(where: {_and: {manager_username: {_eq: $manager_username}, isApprovedByManager: {_eq: true}}}) {
       User {
         first_name
         last_name
@@ -53,7 +53,7 @@ const client = new GraphQLClient(endpoint, {
 
 
     const variables={
-        manager_username:manager_username
+        manager_username
     }
 
     try{

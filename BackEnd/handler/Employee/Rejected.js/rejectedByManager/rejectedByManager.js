@@ -3,7 +3,11 @@ const EmployeeManagerRejectedRequest=require("../../../../utility/employee/rejec
 function EmployeesManagerRejectedRequest(req, res){
     EmployeeManagerRejectedRequest.EmployeeManagerRejectedRequest()
         .then((data)=>{
-            res.send(data.Employee_Request)
+            if(data.Employee_Request.length !==0 ){
+                res.send(data.Employee_Request)
+            }else{
+                res.send("Empty")
+            }
         })
         .catch((error)=>{
             console.log(error)

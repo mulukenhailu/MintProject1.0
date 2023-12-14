@@ -80,7 +80,6 @@ async function validateRequest(request_type, item_number, employee_user_name){
 
     try{
         const data= await client.request(doc, variables, requestHeaders);
-        console.log(data);
         return data
     }catch(error){
         console.log("Error while validating the manager And StoreHead Approval for the Employee Request");

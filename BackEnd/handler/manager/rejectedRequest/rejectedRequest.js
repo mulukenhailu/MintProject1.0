@@ -1,6 +1,7 @@
-const EmployeeRequestRejectionByManager=require("../../../utility/manager/rejectRequest/rejecteRequest")
+const rejectRequestByManager=require("../../../utility/manager/rejectRequest/rejecteRequest")
 async function managerRejectRequest(req, res){
-    EmployeeRequestRejectionByManager.rejectRequestByManager(req.params.id, req.params.item_no)
+    
+    rejectRequestByManager.rejectRequestByManager(req.params.id, req.params.item_no, req.params.quantity_requested)
         .then((data)=>{
             console.log(data)
             res.send(data)

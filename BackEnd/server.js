@@ -171,7 +171,8 @@ const createItem = require("./handler/item/createItem");
 const allManagersAvailable = require("./handler/manager/allManageravailable");
 const manageracceptance = require("./handler/manager/acceptedRequest/acceptedRequest");
 const getAllUser = require("./handler/common/getAllUser");
-const managerRejection =require("./handler/Employee/Rejected.js/rejectedByManager/rejectedByManager")
+const managerDeclines =require("./handler/Employee/Rejected.js/rejectedByManager/rejectedByManager")
+const managerReject=require("./handler/manager/rejectedRequest/rejectedRequest")
 
 const storeHeadacceptance = require("./handler/storeHead/acceptedRequest");
 
@@ -277,17 +278,17 @@ app.get(
   manageracceptance.acceptance
 );
 
-app.get(
-  "/manager/rejectedrequest/:id/:item_no",
+app.post(
+  "/manager/rejectedrequest/:id/:item_no/:quantity_requested",
   verifyAccessToken.verifyAccessToken,
-  manageracceptance.acceptance
+  managerReject.managerRejectRequest
 );
 
 
 app.get(
-  "/manager/pendingrequest",
+  "/manager/rejectedrequest",
   verifyAccessToken.verifyAccessToken,
-  managerRejection.EmployeesManagerRejectedRequest
+  managerDeclines.EmployeesManagerRejectedRequest
 );
 
 
