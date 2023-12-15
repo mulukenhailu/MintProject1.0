@@ -11,35 +11,50 @@ const client = new GraphQLClient(endpoint, {
   const doc=gql`
   query MyQuery {
     storeHeadApprovedEmpRequest(where: {_and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}) {
-      id
-      is_approved
-      item_name
-      item_no
-      manager_username
-      quantity_requested
-      storehead_username
-      confirmation_number
-      employee_username
-      isApprovedByManager
-      isApprovedByStoreHead
-      isRejectedByManager
-      isRejectedByStoreHead
-      item {
-        created_at
-        item_number
-        productdescription
-        productmodel
-        productmodelnumber
-        productname
-        productphoto
-        productquantitynumber
-        productsource
-        productstandardtype
-        productstatus
+            id
+            is_approved
+            item_name
+            item_no
+            manager_username
+            quantity_requested
+            storehead_username
+            confirmation_number
+            employee_username
+            isApprovedByManager
+            isApprovedByStoreHead
+            isRejectedByManager
+            isRejectedByStoreHead
+            item {
+              created_at
+              item_number
+              productdescription
+              productmodel
+              productmodelnumber
+              productname
+              productphoto
+              productquantitynumber
+              productsource
+              productstandardtype
+              productstatus
+              updated_at
+              request {
+                User {
+                  created_at
+                  department
+                  email
+                  first_name
+                  last_name
+                  manager_username
+                  phone_number
+                  profile_picture
+                  role_id
+                  updated_at
+                  user_name
+          }
+        }
       }
     }
   }
-  
   
   `
 

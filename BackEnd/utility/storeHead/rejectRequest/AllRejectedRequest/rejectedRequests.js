@@ -36,10 +36,25 @@ const client = new GraphQLClient(endpoint, {
           productstandardtype
           productstatus
           updated_at
+          request {
+            User {
+              created_at
+              department
+              email
+              first_name
+              last_name
+              manager_username
+              phone_number
+              profile_picture
+              user_name
+              updated_at
+            }
+          }
         }
       }
     }
   }
+  
   
   `
 
