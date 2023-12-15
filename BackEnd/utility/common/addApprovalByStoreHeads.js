@@ -18,7 +18,11 @@ const client = new GraphQLClient(endpoint, {
         $storehead_username:String!, 
         $quantity_requested:Int!, 
         $confirmation_number:Int!
-        $is_approved:Boolean!
+        $is_approved:Boolean:Boolean!
+        $isApprovedByManager:Boolean!
+        $isApprovedByStoreHead:Boolean!
+        $isRejectedByManager:Boolean!
+        $isRejectedByStoreHead:Boolean!
         ){
         insert_storeHeadApprovedEmpRequest_one(object: {
             id: $id, 
@@ -29,7 +33,11 @@ const client = new GraphQLClient(endpoint, {
             storehead_username: $storehead_username, 
             quantity_requested: $quantity_requested, 
             confirmation_number: $confirmation_number,
-            is_approved:$is_approved
+            is_approved:$is_approved,
+            isApprovedByManager: $is_approved,
+            isApprovedByStoreHead:$isApprovedByStoreHead,
+            isRejectedByManager:$isRejectedByManager,
+            isRejectedByStoreHead:$isRejectedByStoreHead
         }) {
         id
         item_no
@@ -40,6 +48,10 @@ const client = new GraphQLClient(endpoint, {
         quantity_requested
         confirmation_number
         is_approved
+        isApprovedByManager
+        isApprovedByStoreHead
+        isRejectedByManager
+        isRejectedByStoreHead
         }
     }
   `
@@ -61,7 +73,12 @@ const client = new GraphQLClient(endpoint, {
             employee_username:data.ManagerAppEmpRequest[0].employee_username, 
             confirmation_number:data.ManagerAppEmpRequest[0].confirmation_number, 
             storehead_username: data.ManagerAppEmpRequest[0].storehead_username, 
-            is_approved:true
+            is_approved:data.ManagerAppEmpRequest[0].is_approved,
+            isApprovedByManager:data.ManagerAppEmpRequest[0].isApprovedByManager,
+            isApprovedByStoreHead:data.ManagerAppEmpRequest[0].isApprovedByStoreHead,
+            isRejectedByManager:data.ManagerAppEmpRequest[0].isRejectedByManager,
+            isRejectedByStoreHead:data.ManagerAppEmpRequest[0].isRejectedByStoreHead
+
             }
 
             console.log(variables);

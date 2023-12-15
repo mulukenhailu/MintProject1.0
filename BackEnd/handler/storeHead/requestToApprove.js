@@ -9,7 +9,7 @@ const client = new GraphQLClient(endpoint, {
 
   const doc=gql`
   query MyQuery @cached {
-    ManagerAppEmpRequest {
+    ManagerAppEmpRequest(where: {_and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}) {
       employeeRequest {
         User {
           first_name
@@ -21,6 +21,10 @@ const client = new GraphQLClient(endpoint, {
           role_id
           user_name
         }
+        isApprovedByManager
+        isApprovedByStoreHead
+        isRejectedByManager
+        isRejectedByStoreHead
       }
       id
       item_no
@@ -33,6 +37,7 @@ const client = new GraphQLClient(endpoint, {
       is_approved
     }
   }
+  
   `
 
   const requestHeaders = {

@@ -55,8 +55,10 @@ async function validateRequest(request_type, item_number, employee_user_name){
 
   async function validateApproval(requestId){
 
+    console.log(">>>>>>>>>", requestId)
+
     const doc= gql`
-    query MyQuery($request_id: uuid!) {
+    query MyQuery($request_id: uuid!) @cached {
         Employee_Request(where: {id: {_eq: $request_id}}) {
           item_no
           item_name
@@ -70,8 +72,7 @@ async function validateRequest(request_type, item_number, employee_user_name){
           isRejectedByStoreHead
           is_approved
         }
-      }
-      
+      }      
   `
    
     const variables={

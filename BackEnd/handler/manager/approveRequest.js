@@ -31,7 +31,7 @@ function approveRequest(req, res){
         })
         .catch((error)=>{
             console.log(error)
-            res.sendStatus(404);
+            res.status(500).send({error:"Retry Again."});
         })
 
 }

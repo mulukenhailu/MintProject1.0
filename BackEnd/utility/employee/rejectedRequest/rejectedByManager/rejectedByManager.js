@@ -10,11 +10,7 @@ const client = new GraphQLClient(endpoint, {
 
   const doc=gql`
   query MyQuery @cached {
-    Employee_Request(where: {
-        isApprovedByManager: {_eq: false}, 
-        isApprovedByStoreHead: {_eq: false}, 
-        isRejectedByManager: {_eq: true}, 
-        isRejectedByStoreHead: {_eq: false}}) {
+    Employee_Request(where: {isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: true}, isRejectedByStoreHead: {_eq: false}}) {
       id
       isApprovedByManager
       isApprovedByStoreHead
@@ -27,8 +23,34 @@ const client = new GraphQLClient(endpoint, {
       confirmation_number
       created_at
       employee_username
+      User {
+        first_name
+        last_name
+        email
+        department
+        updated_at
+        user_name
+        profile_picture
+        phone_number
+        manager_username
+        role_id
+        created_at
+      }
+      Item {
+        item_number
+        productdescription
+        productmodel
+        productmodelnumber
+        productname
+        productphoto
+        productquantitynumber
+        productsource
+        productstandardtype
+        productstatus
+      }
     }
   }
+  
   
   `
 

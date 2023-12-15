@@ -18,6 +18,7 @@ function approveRequestByStoreHead(req, res){
 
     validateApprovalofStorehead.validateApprovalofStorehead(req.params.id)
         .then((data)=>{
+            console.log(data)
             if(data.ManagerAppEmpRequest && data.ManagerAppEmpRequest.length === 1){
                 addApprovalByStoreHead.addApprovalByStoreHead(req.params.id, data)
                     .then((data)=>{
