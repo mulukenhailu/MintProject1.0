@@ -11,7 +11,7 @@ const client = new GraphQLClient(endpoint, {
   const doc=gql`
   query MyQuery @cached {
     Employee_Request(where: {
-        isApprovedByManager: {_eq: false}, 
+        isApprovedByManager: {_eq: true}, 
         isApprovedByStoreHead: {_eq: false}, 
         isRejectedByManager: {_eq: false}, 
         isRejectedByStoreHead: {_eq: true}}) {

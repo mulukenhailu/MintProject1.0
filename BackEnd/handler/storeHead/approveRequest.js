@@ -18,7 +18,7 @@ function approveRequestByStoreHead(req, res){
 
     validateApprovalofStorehead.validateApprovalofStorehead(req.params.id)
         .then((data)=>{
-            console.log(data)
+            console.log(">>>>", data)
             if(data.ManagerAppEmpRequest && data.ManagerAppEmpRequest.length === 1){
                 addApprovalByStoreHead.addApprovalByStoreHead(req.params.id, data)
                     .then((data)=>{
@@ -37,7 +37,7 @@ function approveRequestByStoreHead(req, res){
         })
         .catch((error)=>{
             console.log(error.response.errors[0].message);
-            res.send({"message":"No Request found tobe approved"});
+            res.send({error:"No Request found tobe approved"});
         })
 
 }

@@ -148,6 +148,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const userInfo = require("./handler/common/userInfo");
 const filterByName = require("./handler/common/filterByName");
 const updateProfile = require("./handler/common/updateProfile");
 const makeRequest = require("./handler/Employee/makeRequest");
@@ -158,7 +159,7 @@ const resetPassword = require("./handler/common/resetPassword");
 const requestToApprove = require("./handler/manager/pendingRequest/requestToApprove");
 const verifyAccessToken = require("./middleware/verifyAccessToken");
 const approveRequest = require("./handler/manager/approveRequest");
-const requestToApproveStoreHead = require("./handler/storeHead/requestToApprove");
+const storeHeadPendings = require("./handler/storeHead/requestToApprove");
 const approveRequestByStoreHead = require("./handler/storeHead/approveRequest");
 const requestTobeBlessed = require("./handler/storeKeeper/requestTobeBlessed");
 
@@ -175,6 +176,7 @@ const managerDeclines =require("./handler/Employee/Rejected.js/rejectedByManager
 const managerReject=require("./handler/manager/rejectedRequest/rejectedRequest")
 
 const storeHeadacceptance = require("./handler/storeHead/acceptedRequest");
+const storeHeadRejectEmployeeReq=require("./handler/storeHead/rejectRequest")
 
 const path = require("path");
 const multer = require("multer");
@@ -185,7 +187,7 @@ const cookieParser = require("cookie-parser");
 
 const cors = require("cors");
 
-const userInfo = require("./handler/common/userInfo");
+
 
 const adminupdateProfile = require("./handler/Admin/adminUpdateProfile");
 
@@ -301,13 +303,21 @@ app.get(
 app.get(
   "/storehead/requestToApprove",
   verifyAccessToken.verifyAccessToken,
-  requestToApproveStoreHead.requestToApproveStoreHead
+  storeHeadPendings.storeHeadPendings
 );
 app.post(
   "/storehead/requestToApprove/:id",
   verifyAccessToken.verifyAccessToken,
   approveRequestByStoreHead.approveRequestByStoreHead
 );
+
+app.post(
+  "/storehead/rejectedrequest/:id/:item_no/:quantity_requested",
+  verifyAccessToken.verifyAccessToken,
+  storeHeadRejectEmployeeReq.storeHeadRejectEmployeeReq
+);
+
+
 
 app.get(
   "/storekeeper/requestTobless",

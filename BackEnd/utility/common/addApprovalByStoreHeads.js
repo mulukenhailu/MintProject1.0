@@ -9,51 +9,31 @@ const client = new GraphQLClient(endpoint, {
 
 
   const doc=gql`
-    mutation MyMutation (
-        $id:uuid!, 
-        $item_no:Int!, 
-        $item_name:String!, 
-        $manager_username:String!,
-        $employee_username:String!, 
-        $storehead_username:String!, 
-        $quantity_requested:Int!, 
-        $confirmation_number:Int!
-        $is_approved:Boolean:Boolean!
-        $isApprovedByManager:Boolean!
-        $isApprovedByStoreHead:Boolean!
-        $isRejectedByManager:Boolean!
-        $isRejectedByStoreHead:Boolean!
-        ){
-        insert_storeHeadApprovedEmpRequest_one(object: {
-            id: $id, 
-            item_no: $item_no, 
-            item_name: $item_name, 
-            manager_username: $manager_username, 
-            employee_username: $employee_username, 
-            storehead_username: $storehead_username, 
-            quantity_requested: $quantity_requested, 
-            confirmation_number: $confirmation_number,
-            is_approved:$is_approved,
-            isApprovedByManager: $is_approved,
-            isApprovedByStoreHead:$isApprovedByStoreHead,
-            isRejectedByManager:$isRejectedByManager,
-            isRejectedByStoreHead:$isRejectedByStoreHead
-        }) {
-        id
-        item_no
-        item_name
-        manager_username
-        employee_username
-        storehead_username
-        quantity_requested
-        confirmation_number
-        is_approved
-        isApprovedByManager
-        isApprovedByStoreHead
-        isRejectedByManager
-        isRejectedByStoreHead
-        }
+  mutation MyMutation($id: uuid!, $item_no: Int!, $item_name: String!, $manager_username: String!, $employee_username: String!, $storehead_username: String!, $quantity_requested: Int!, $confirmation_number: Int!, $is_approved: Boolean!, $isApprovedByManager: Boolean!, $isApprovedByStoreHead: Boolean!, $isRejectedByManager: Boolean!, $isRejectedByStoreHead: Boolean!) {
+    insert_storeHeadApprovedEmpRequest_one(object: {id: $id, item_no: $item_no, item_name: $item_name, manager_username: $manager_username, employee_username: $employee_username, storehead_username: $storehead_username, quantity_requested: $quantity_requested, confirmation_number: $confirmation_number, is_approved: $is_approved, isApprovedByManager: $isApprovedByManager, isApprovedByStoreHead: $isApprovedByStoreHead, isRejectedByManager: $isRejectedByManager, isRejectedByStoreHead: $isRejectedByStoreHead}) {
+      id
+      item_no
+      item_name
+      manager_username
+      employee_username
+      storehead_username
+      quantity_requested
+      confirmation_number
+      is_approved
+      isApprovedByManager
+      isApprovedByStoreHead
+      isRejectedByManager
+      isRejectedByStoreHead
     }
+    update_ManagerAppEmpRequest(where: {id: {_eq: $id}, isApprovedByStoreHead: {_eq: false}, isApprovedByManager: {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}, _set: {isApprovedByStoreHead: true}) {
+      affected_rows
+    }
+    update_Employee_Request(where: {id: {_eq: $id}}, _set: {isApprovedByStoreHead: true}) {
+      affected_rows
+    }
+  }
+  
+  
   `
 
   const requestHeaders = {
@@ -75,7 +55,7 @@ const client = new GraphQLClient(endpoint, {
             storehead_username: data.ManagerAppEmpRequest[0].storehead_username, 
             is_approved:data.ManagerAppEmpRequest[0].is_approved,
             isApprovedByManager:data.ManagerAppEmpRequest[0].isApprovedByManager,
-            isApprovedByStoreHead:data.ManagerAppEmpRequest[0].isApprovedByStoreHead,
+            isApprovedByStoreHead:true,
             isRejectedByManager:data.ManagerAppEmpRequest[0].isRejectedByManager,
             isRejectedByStoreHead:data.ManagerAppEmpRequest[0].isRejectedByStoreHead
 

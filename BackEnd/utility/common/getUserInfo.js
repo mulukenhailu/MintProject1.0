@@ -13,18 +13,23 @@ const requestHeaders = {
 }
 
 const doc=gql`
-              query MyQuery ($user_name:String!)@cached {
-                User(where: {user_name: {_eq: $user_name}}) {
-                    first_name
-                    last_name
-                    user_name
-                    email
-                    phone_number
-                    department
-                    profile_picture
-                }
-              }              
-              `
+query MyQuery($user_name: String!) @cached {
+  User(where: {user_name: {_eq: $user_name}}) {
+    first_name
+    last_name
+    user_name
+    email
+    phone_number
+    department
+    profile_picture
+    manager_username
+    updated_at
+    created_at
+    Role {
+      role_name
+    }
+  }
+}  `
 
 async function getUserInfo(user_name){
 
