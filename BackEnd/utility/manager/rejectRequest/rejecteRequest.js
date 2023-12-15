@@ -9,8 +9,7 @@ const client = new GraphQLClient(endpoint, {
 
 const doc=gql`
 mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int!) {
-  update_Employee_Request(where: {_and: {id: {_eq: $request_id}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}}},
-     _set: {isRejectedByManager: true}) {
+  update_Employee_Request(where: {_and: {id: {_eq: $request_id}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}}}, _set: {isRejectedByManager: true}) {
     returning {
       Item {
         created_at
@@ -24,6 +23,7 @@ mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int
         productsource
         productstandardtype
         productstatus
+        updated_at
       }
       manager_username
       quantity_requested
@@ -35,6 +35,7 @@ mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int
     }
   }
 }
+
 
 `
 const requestHeaders = {

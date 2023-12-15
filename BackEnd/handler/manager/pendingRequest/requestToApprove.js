@@ -10,36 +10,44 @@ const client = new GraphQLClient(endpoint, {
 
 const document=gql`
 query MyQuery($managerName: String!) @cached {
-                    Employee_Request(where: {_and: {manager_username: {_eq: $managerName}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}) {
-                      User {
-                        first_name
-                        last_name
-                        email
-                        department
-                        phone_number
-                        profile_picture
-                        role_id
-                        user_name
-                      }
-                      id
-                      item_no
-                      item_name
-                      quantity_requested
-                      Item {
-                        item_number
-                        productdescription
-                        productmodel
-                        productmodelnumber
-                        productname
-                        productphoto
-                        productquantitynumber
-                        productsource
-                        productstandardtype
-                        productstatus
-                        created_at
-                      }
-                    }
-                  }
+              Employee_Request(where: {_and: {manager_username: {_eq: $managerName}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}) {
+                User {
+                  first_name
+                  last_name
+                  email
+                  department
+                  phone_number
+                  profile_picture
+                  role_id
+                  user_name
+                  created_at
+                  manager_username
+                  updated_at
+                }
+                id
+                item_no
+                item_name
+                quantity_requested
+                Item {
+                  item_number
+                  productdescription
+                  productmodel
+                  productmodelnumber
+                  productname
+                  productphoto
+                  productquantitynumber
+                  productsource
+                  productstandardtype
+                  productstatus
+                  created_at
+                }
+                created_at
+                employee_username
+                is_approved
+                manager_username
+                confirmation_number
+              }
+            }
 `
 
 const requestHeaders = {

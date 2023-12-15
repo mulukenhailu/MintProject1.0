@@ -21,6 +21,9 @@ const client = new GraphQLClient(endpoint, {
         profile_picture
         role_id
         user_name
+        created_at
+        manager_username
+        updated_at
       }
       id
       item_no
@@ -38,9 +41,16 @@ const client = new GraphQLClient(endpoint, {
         productstandardtype
         productstatus
         created_at
+        updated_at
       }
+      confirmation_number
+      created_at
+      employee_username
+      is_approved
+      manager_username
     }
   }
+  
   
   `
 

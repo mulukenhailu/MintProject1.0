@@ -8,32 +8,24 @@ const client = new GraphQLClient(endpoint, {
 })
 
 const doc = gql`
-  mutation updateProfile(
-    $user_name:String!, 
-    $first_name: String!, 
-    $last_name: String!,
-    $email: String!, 
-    $phone_number: Int!, 
-    $profile_picture:String!
-    ){
-    update_User_by_pk(pk_columns: {user_name: $user_name}, _set: 
-       {
-        first_name:$first_name, 
-        last_name:$last_name, 
-        email:$email, 
-        phone_number:$phone_number, 
-        profile_picture:$profile_picture
-      }) {
-        first_name
-        last_name
-        profile_picture
-        email
-        department
-        Role {
-          role_name
-        }
-      }
+mutation updateProfile($user_name: String!, $first_name: String!, $last_name: String!, $email: String!, $phone_number: Int!, $profile_picture: String!) {
+  update_User_by_pk(pk_columns: {user_name: $user_name}, _set: {first_name: $first_name, last_name: $last_name, email: $email, phone_number: $phone_number, profile_picture: $profile_picture}) {
+    first_name
+    last_name
+    profile_picture
+    email
+    department
+    Role {
+      role_name
+    }
+    manager_username
+    phone_number
+    user_name
+    created_at
+    updated_at
   }
+}
+
 `
 
 const requestHeaders = {
