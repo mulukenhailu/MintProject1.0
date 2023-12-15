@@ -23,9 +23,24 @@ const client = new GraphQLClient(endpoint, {
         created_at
         employee_username
         quantity_requested
+        Item {
+          created_at
+          item_number
+          productdescription
+          productmodel
+          productmodelnumber
+          productname
+          productphoto
+          productquantitynumber
+          productsource
+          productstandardtype
+          productstatus
+          updated_at
+        }
       }
     }
   }
+  
   `
 
   const requestHeaders = {

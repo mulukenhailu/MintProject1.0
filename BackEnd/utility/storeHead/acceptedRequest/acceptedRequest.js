@@ -9,7 +9,7 @@ const client = new GraphQLClient(endpoint, {
   })
 
   const doc=gql`
-  query MyQuery @cached {
+  query MyQuery {
     storeHeadApprovedEmpRequest(where: {_and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}) {
       id
       is_approved
@@ -24,8 +24,22 @@ const client = new GraphQLClient(endpoint, {
       isApprovedByStoreHead
       isRejectedByManager
       isRejectedByStoreHead
+      item {
+        created_at
+        item_number
+        productdescription
+        productmodel
+        productmodelnumber
+        productname
+        productphoto
+        productquantitynumber
+        productsource
+        productstandardtype
+        productstatus
+      }
     }
   }
+  
   
   `
 
