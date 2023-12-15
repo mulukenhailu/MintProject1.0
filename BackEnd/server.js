@@ -177,6 +177,7 @@ const managerReject=require("./handler/manager/rejectedRequest/rejectedRequest")
 
 const storeHeadacceptance = require("./handler/storeHead/acceptedRequest");
 const storeHeadRejectEmployeeReq=require("./handler/storeHead/rejectRequest")
+const storeheadRejection=require("./handler/storeHead/allRejectedRequests")
 
 const path = require("path");
 const multer = require("multer");
@@ -300,6 +301,13 @@ app.get(
   verifyAccessToken.verifyAccessToken,
   storeHeadacceptance.acceptance
 );
+
+app.get(
+  "/storehead/rejectedrequest",
+  verifyAccessToken.verifyAccessToken,
+  storeheadRejection.storeHeadRejection
+);
+
 app.get(
   "/storehead/requestToApprove",
   verifyAccessToken.verifyAccessToken,
