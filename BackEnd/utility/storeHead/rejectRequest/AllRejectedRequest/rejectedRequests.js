@@ -10,7 +10,7 @@ const client = new GraphQLClient(endpoint, {
 
   const doc=gql`
   query MyQuery {
-    ManagerAppEmpRequest(where: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}) {
+    ManagerAppEmpRequest(where: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: true}}) {
       employee_username
       id
       is_approved
