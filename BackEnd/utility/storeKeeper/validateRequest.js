@@ -9,7 +9,7 @@ const client = new GraphQLClient(endpoint, {
   })
 
   const doc=gql`
-  query MyQuery($request_id:uuid){
+  query MyQuery($request_id: uuid) {
     storeHeadApprovedEmpRequest(where: {id: {_eq: $request_id}}) {
       id
       item {
@@ -27,12 +27,15 @@ const client = new GraphQLClient(endpoint, {
         updated_at
       }
       manager_username
-      quantity_requested
+      employee_username
       storehead_username
       item_no
       item_name
+      quantity_requested
+      confirmation_number  
     }
   }
+  
   `
   const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,

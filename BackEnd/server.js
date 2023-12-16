@@ -179,6 +179,9 @@ const storeHeadacceptance = require("./handler/storeHead/acceptedRequest");
 const storeHeadRejectEmployeeReq=require("./handler/storeHead/rejectRequest")
 const storeheadRejection=require("./handler/storeHead/allRejectedRequests")
 
+const validateRequestForStoreKeeper=require("./handler/storeKeeper/storeKeeperBlessing")
+const transactions=require("./handler/storeKeeper/pastTransaction")
+
 const path = require("path");
 const multer = require("multer");
 
@@ -327,6 +330,12 @@ app.post(
 
 
 
+
+app.get("/storekeeper/blessing/:id/:confirmation_number", 
+verifyAccessToken.verifyAccessToken, 
+validateRequestForStoreKeeper.RequestForTheStoreKeeper
+)
+
 app.get(
   "/storekeeper/requestTobless",
   verifyAccessToken.verifyAccessToken,
@@ -342,6 +351,11 @@ app.post(
   verifyAccessToken.verifyAccessToken,
   deleteItem.deleteItem
 );
+
+app.get("/storekeeper/transactions", 
+verifyAccessToken.verifyAccessToken,
+transactions.history
+)
 
 app.post("/createitem", createItem.createItem);
 

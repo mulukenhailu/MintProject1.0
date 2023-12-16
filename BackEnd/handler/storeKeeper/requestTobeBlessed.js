@@ -19,40 +19,56 @@ const requestHeaders = {
 
   const doc=gql`
   query MyQuery {
-    storeHeadApprovedEmpRequest(where: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}) {
-            id
-            item_no
-            item_name
-            quantity_requested
+    storeHeadApprovedEmpRequest(where: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead:
+       {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}) {
+      id
+      item_no
+      item_name
+      quantity_requested
+      manager_username
+      employee_username
+      storehead_username
+      is_approved
+      confirmation_number
+      item {
+        item_number
+        productdescription
+        productmodel
+        productmodelnumber
+        productname
+        productphoto
+        productquantitynumber
+        productsource
+        productstandardtype
+        productstatus
+        request {
+          created_at
+          id
+          is_approved
+          item_name
+          item_no
+          manager_username
+          quantity_requested
+          User {
+            created_at
+            department
+            email
+            first_name
+            last_name
             manager_username
-            employee_username
-            storehead_username
-            is_approved
-            confirmation_number
-            item {
-              item_number
-              productdescription
-              productmodel
-              productmodelnumber
-              productname
-              productphoto
-              productquantitynumber
-              productsource
-              productstandardtype
-              productstatus
-              request {
-                created_at
-                employee_username
-                id
-                is_approved
-                item_name
-                item_no
-                manager_username
-                quantity_requested
+            phone_number
+            profile_picture
+            updated_at
+            user_name
+            Role {
+              role_name
+            }
+          }
         }
       }
     }
-  }  
+  }
+  
   `
 
   async function requestTobeBlessed(req, res){
@@ -66,7 +82,7 @@ const requestHeaders = {
         res.send(data)
     }catch(error){
         console.log("Error while Fetching Request for the storeKeeper.");
-        res.status(501).send(error)
+        res.status(501).send({error:"Retry Again."})
     }
 
   }

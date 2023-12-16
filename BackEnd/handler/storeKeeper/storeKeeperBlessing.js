@@ -3,12 +3,32 @@
 //if it match , insert the data with the additional parameter of ----> (storeKeeper user_name ) into the History DB.
 
 const validateRequestForStoreKeeper=require("../../utility/storeKeeper/validateRequest")
+const storekeeperConfirmEmpReq=require("../../utility/storeKeeper/confirmRequest")
 
-async  function RequestForTheStoreKeeper(request_id){
-    conso
-    validateRequestForStoreKeeper.validateRequestForStoreKeeper()
+async  function RequestForTheStoreKeeper(req, res){
+
+    if (req.body.decoded.role != "storekeeper" ){
+        return res.sendStatus(401);
+    }
+
+    validateRequestForStoreKeeper.validateRequestForStoreKeeper(req.params.id)
         .then((data)=>{
             console.log(data)
+            console.log(typeof  data.storeHeadApprovedEmpRequest[0].confirmation_number)
+            console.log(typeof Number(req.params.confirmation_number))
+            if (data.storeHeadApprovedEmpRequest[0].confirmation_number === Number(req.params.confirmation_number)){
+                storekeeperConfirmEmpReq.finalize(data, req.body.decoded.user_name)
+                    .then((data)=>{
+                        res.send(data)
+                    })
+                    .catch((error)=>{
+                        console.log(error)
+                        res.status(500).send({error:"Retry Again."})
+                    })
+            }
+            else{
+                res.send("Wrong password")
+            }
         })
         .catch((error)=>{
             console.log(error)
