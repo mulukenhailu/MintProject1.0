@@ -19,8 +19,7 @@ const requestHeaders = {
 
   const doc=gql`
   query MyQuery {
-    storeHeadApprovedEmpRequest(where: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead:
-       {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}) {
+    storeHeadApprovedEmpRequest(where: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}, is_approved: {_eq: false}}) {
       id
       item_no
       item_name
@@ -68,6 +67,7 @@ const requestHeaders = {
       }
     }
   }
+  
   
   `
 
