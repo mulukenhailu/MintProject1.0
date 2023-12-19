@@ -18,20 +18,20 @@ export function* getAllPendingRequestForStoreKeeperSaga(action) {
     console.log(action);
     yield put(getAllRequestStart());
     const request = yield call(getAllPendingRequestForStoreKeeperApi);
-    console.log(request);
+    console.log("store keeper pending", request);
     yield put(getAllRequestSuccess(request.data.storeHeadApprovedEmpRequest));
   } catch (error) {
     console.log(error);
     yield put(getAllRequestFail());
   }
 }
-export function* getAllSAcceptedRequestForStoreKeeperSaga(action) {
+export function* getAllAcceptedRequestForStoreKeeperSaga(action) {
   try {
     console.log(action);
     yield put(getAllRequestStart());
     const request = yield call(getAllAcceptedRequestForStoreKeeperApi);
-    console.log(request);
-    yield put(getAllRequestSuccess(request.data));
+    console.log("store keeper", request);
+    yield put(getAllRequestSuccess(request.data.History));
   } catch (error) {
     console.log(error);
     yield put(getAllRequestFail());
@@ -45,6 +45,6 @@ export function* watchStoreKeeperRequestAsync() {
   );
   yield takeEvery(
     GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER,
-    getAllSAcceptedRequestForStoreKeeperSaga
+    getAllAcceptedRequestForStoreKeeperSaga
   );
 }

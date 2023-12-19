@@ -1,31 +1,64 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, List, Typography, Modal, styled, ListItem } from "@mui/material";
 import { useSelector } from "react-redux";
+import { GET_ALL_MANAGERS } from "../../State/ReduxSaga/Types/mangerType";
+import { useDispatch } from "react-redux";
+
+const UserDetailModalContainer = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+
+const UserDetailModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px 5px",
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 1)",
+});
+
+const ListItemForModal = styled(ListItem)({
+  display: "flex",
+  alignItems: "center",
+  gap: "25px",
+});
+
+const Label = styled(Typography)({
+  fontWeight: "bold",
+  color: "#12596B",
+  marginRight: "10px",
+  minWidth: "100px",
+});
+
+const Value = styled(Typography)({
+  flex: 1,
+  color: "#333",
+});
 
 const UserDetailModal = ({ detailModal, setDetailModal, currentUserId }) => {
-  const UserDetailModalContainer = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const UserDetailModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "5px",
-    padding: "20px",
-  });
-
-  const ListItemForModal = styled(ListItem)({
-    display: "flex",
-    alignItems: "center",
-  });
-
+  const dispatch = useDispatch();
+  const [userManager, setUserManager] = useState({});
   const { allUser } = useSelector((state) => state.user);
-  const currentUser = allUser.filter(
-    (user) => user.user_name === currentUserId
-  );
+  const currentUser = allUser.find((user) => user.user_name === currentUserId);
 
-  console.log(currentUser[0]);
+  useEffect(() => {
+    dispatch({ type: GET_ALL_MANAGERS });
+  }, []);
+
+  const { allManagers } = useSelector((state) => state.manager);
+
+  useEffect(() => {
+    if (currentUser?.manager_username) {
+      setUserManager(
+        allManagers.find(
+          (item) => item.user_name === currentUser.manager_username
+        )
+      );
+    }
+  }, [allManagers, currentUser]);
+
+  console.log("user mnager", userManager);
 
   return (
     <Box>
@@ -36,80 +69,52 @@ const UserDetailModal = ({ detailModal, setDetailModal, currentUserId }) => {
         aria-describedby="modal-modal-description"
       >
         <UserDetailModalWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "30%" }}
         >
           <List>
             <Typography
               variant="h5"
               textAlign={"center"}
-              marginBottom={"20px"}
-              sx={{ textDecoration: "underline", color: "gray" }}
+              marginBottom={"10px"}
+              sx={{ textDecoration: "underline", color: "#12596B" }}
             >
               User-Details
             </Typography>
             <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                First Name
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                {currentUser[0]?.first_name}
-              </Typography>
+              <Label>First Name</Label>
+              <Value>{currentUser?.first_name || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Last Name
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                {currentUser[0]?.last_name}
-              </Typography>
+              <Label>Last Name</Label>
+              <Value>{currentUser?.last_name || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                User-Name
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                {currentUser[0]?.user_name}
-              </Typography>
+              <Label>User-Name</Label>
+              <Value>{currentUser?.user_name || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Email
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                {currentUser[0]?.email}
-              </Typography>
+              <Label>Email</Label>
+              <Value>{currentUser?.email || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Phone Number
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                {currentUser[0]?.phone_number}
-              </Typography>
+              <Label>Phone Number</Label>
+              <Value>{currentUser?.phone_number || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Department
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                {currentUser[0]?.department}
-              </Typography>
+              <Label>Department</Label>
+              <Value>{currentUser?.department || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Position
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                {currentUser[0]?.Role.role_name}
-              </Typography>
+              <Label>Position</Label>
+              <Value>{currentUser?.Role.role_name || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Manager
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                Manager-1
-              </Typography>
+              <Label>Manager</Label>
+              <Value>
+                {userManager
+                  ? userManager.first_name + userManager.last_name
+                  : "Manager not assigned"}
+              </Value>
             </ListItemForModal>
           </List>
         </UserDetailModalWrapper>

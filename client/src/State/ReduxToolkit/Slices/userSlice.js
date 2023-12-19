@@ -93,7 +93,7 @@ const user = createSlice({
     },
     editUserFail: (state, action) => {
       console.log(action);
-      state.errorUser = action.payload.error;
+      state.errorUser = true;
       state.loadingUser = false;
       state.editUser = null;
       return state;
@@ -128,6 +128,9 @@ const user = createSlice({
       state.editUser = null;
       return state;
     },
+    removeSingleUser: (state) => {
+      state.singleUser = null;
+    },
   },
 });
 export const {
@@ -152,5 +155,6 @@ export const {
   removeUserError,
   removeNewUser,
   removeEditUser,
+  removeSingleUser,
 } = user.actions;
 export default user.reducer;

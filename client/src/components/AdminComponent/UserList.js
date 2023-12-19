@@ -16,14 +16,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
 import UserDetailModal from "./UserDetailModal";
-import EditUserModal from "./EditUserModal";
 import DeleteUserModal from "./DeleteUserModal";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_ALL_USERS } from "../../State/ReduxSaga/Types/userTypes";
+import { useNavigate } from "react-router-dom";
 
 const UserList = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [detailModal, setDetailModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -34,23 +35,13 @@ const UserList = () => {
   }, [dispatch, editModal]);
 
   const { allUser, loadingUser } = useSelector((state) => state.user);
-  console.log(allUser);
+  const sortedUser = [...allUser].sort(
+    (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
+  );
 
-  const UserEditModalContainer = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const UserEditModalWrapper = styled(Box)({
-    background: "#fff",
-    height: "90vh",
-    overflowY: "scroll",
-    borderRadius: "5px",
-    padding: "20px",
-    "&::-webkit-scrollbar": {
-      width: "0px",
-    },
-  });
+  const handleEditUser = (user_name) => {
+    navigate(`/edituser/${user_name}`);
+  };
 
   return (
     <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={3} paddingBottom={5}>
@@ -137,7 +128,7 @@ const UserList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {allUser.map((user) => (
+              {sortedUser.map((user) => (
                 <TableRow key={user.user_name}>
                   <TableCell
                     sx={{
@@ -184,8 +175,7 @@ const UserList = () => {
                     <IconButton
                       sx={{ color: "#EF9630" }}
                       onClick={() => {
-                        setEditModal(true);
-                        setCurrentUserId(user.user_name);
+                        handleEditUser(user.user_name);
                       }}
                     >
                       <EditIcon />
@@ -220,18 +210,6 @@ const UserList = () => {
         setDetailModal={setDetailModal}
         currentUserId={currentUserId}
       />
-      <UserEditModalContainer
-        open={editModal}
-        onClose={() => setEditModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <UserEditModalWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
-        >
-          <EditUserModal currentUserId={currentUserId} />
-        </UserEditModalWrapper>
-      </UserEditModalContainer>
       <DeleteUserModal
         deleteModal={deleteModal}
         setDeleteModal={setDeleteModal}

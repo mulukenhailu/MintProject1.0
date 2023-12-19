@@ -11,6 +11,9 @@ const PropertyList = () => {
   const { allProperty, loadingProperty, errorProperty } = useSelector(
     (state) => state.property
   );
+  const sortedProperty = [...allProperty].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
   useEffect(() => {
     dispatch({ type: GET_PROPERTIES });
   }, [dispatch]);
@@ -42,11 +45,12 @@ const PropertyList = () => {
             rowSpacing={7}
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}
           >
-            {allProperty?.map((property, index) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+            {sortedProperty?.map((property, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
                 <Card
                   productname={property.productname}
                   item_number={property.item_number}
+                  productmodel={property.productmodel}
                   productphoto={property.productphoto}
                   productquantitynumber={property.productquantitynumber}
                   productdescription={property.productdescription}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Table,
@@ -18,25 +18,31 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
+import { GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER } from "../../State/ReduxSaga/Types/storeKeeperRequestType";
+import { useSelector, useDispatch } from "react-redux";
 
+const HistoryContainer = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const HistoryWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "20px",
+  padding: "20px",
+});
+
+const ListItemForModal = styled(ListItem)({
+  display: "flex",
+  alignItems: "center",
+});
 const History = () => {
+  const dispatch = useDispatch();
   const [detailModal, setDetailModal] = useState(false);
-  const HistoryContainer = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const HistoryWrapper = styled(Box)({
-    background: "#fff",
-    height: "fit-content",
-    borderRadius: "20px",
-    padding: "20px",
-  });
-
-  const ListItemForModal = styled(ListItem)({
-    display: "flex",
-    alignItems: "center",
-  });
+  useEffect(() => {
+    dispatch({ type: GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER });
+  }, []);
 
   const [products, setProducts] = useState([
     {
@@ -82,85 +88,35 @@ const History = () => {
       StoreKeeper: "keeper-2",
     },
   ]);
-  // Function to handle delete Product
-  const handleDeleteProduct = (ProductSerial) => {
-    setProducts(
-      products.filter((product) => product.ProductSerial !== ProductSerial)
-    );
-  };
 
   return (
     <Box>
-      <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={3} paddingBottom={5}>
+      <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={4} paddingBottom={5}>
         <TableContainer component={Paper} sx={{ bgcolor: "#f7f7f7" }}>
           <Table>
             <TableHead sx={{ background: "#bbb", color: "#fff" }}>
               <TableRow>
-                <TableCell sx={{ color: "#12596B" }}>ProductSerial</TableCell>
                 <TableCell sx={{ color: "#12596B" }}>ProductName</TableCell>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    display: { xs: "none", md: "table-cell" },
-                  }}
-                >
-                  Availability
+                <TableCell sx={{ color: "#12596B" }}>ProductModel</TableCell>
+                <TableCell sx={{ color: "#12596B" }}>OwnedBy</TableCell>
+                <TableCell sx={{ color: "#12596B" }}>MangerName</TableCell>
+                <TableCell sx={{ color: "#12596B" }}>StoreHead</TableCell>
+                <TableCell sx={{ color: "#12596B" }}>StoreKeeper</TableCell>
+                <TableCell sx={{ color: "#12596B" }}>
+                  Confirmation Number
                 </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    display: { xs: "none", md: "table-cell" },
-                  }}
-                >
-                  OwnedBy
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    display: { xs: "none", lg: "table-cell" },
-                  }}
-                >
-                  StoreKeeper
-                </TableCell>
-                <TableCell sx={{ color: "#12596B" }}>Edit</TableCell>
-                <TableCell sx={{ color: "#12596B" }}>Delete</TableCell>
-                <TableCell sx={{ color: "#12596B" }}>Details</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {products.map((product) => (
-                <TableRow key={product.ProductSerial}>
-                  <TableCell>{product.ProductSerial}</TableCell>
+              {products.map((product, index) => (
+                <TableRow key={index}>
                   <TableCell>{product.ProductName}</TableCell>
-                  <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
-                    {product.Availability}
-                  </TableCell>
-                  <TableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
-                    {product.OwnedBy}
-                  </TableCell>
-                  <TableCell sx={{ display: { xs: "none", lg: "table-cell" } }}>
-                    {product.StoreKeeper}
-                  </TableCell>
-                  <TableCell>
-                    <IconButton aria-label="Edit" sx={{ color: "#EF9630" }}>
-                      <EditIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                    <IconButton
-                      sx={{ color: "red" }}
-                      aria-label="Delete"
-                      onClick={() => handleDeleteProduct(product.ProductSerial)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                    <SettingsAccessibilityIcon
-                      sx={{ color: "blue" }}
-                      onClick={() => setDetailModal(true)}
-                    />
-                  </TableCell>
+                  <TableCell>Model</TableCell>
+                  <TableCell>mrsX</TableCell>
+                  <TableCell>managerX</TableCell>
+                  <TableCell>storeHeadX</TableCell>
+                  <TableCell>storeKeeperX</TableCell>
+                  <TableCell>1234</TableCell>
                 </TableRow>
               ))}
             </TableBody>

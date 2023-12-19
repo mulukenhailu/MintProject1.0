@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -17,6 +17,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useAppStore } from "../appStore";
 import { Avatar } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { GET_SINGLE_USER } from "../State/ReduxSaga/Types/userTypes";
 
 const AppBar = styled(
   MuiAppBar,
@@ -69,9 +72,22 @@ export default function Header() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const updateOpen = useAppStore((state) => state.updateOpen);
   const dopen = useAppStore((state) => state.dopen);
+  const dispatch = useDispatch();
+
+  const { user_name } = useSelector((state) => state.user.user);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  useEffect(() => {
+    dispatch({ type: GET_SINGLE_USER, user_name });
+  }, []);
+
+  const { profile_picture } =
+    useSelector((state) => state.user.singleUser) || {};
+
+  console.log(profile_picture);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -107,7 +123,9 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose} component={Link} to="/profile">
+        Profile
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
@@ -149,7 +167,7 @@ export default function Header() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem component={Link} to="/profile" onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -172,7 +190,7 @@ export default function Header() {
         style={{
           backgroundColor: "white",
           color: "black",
-          height: "60px",
+          height: "70px",
         }}
       >
         <Toolbar>
@@ -186,7 +204,7 @@ export default function Header() {
             <Avatar
               alt="MinT"
               src="/assets/Logo.jpg"
-              sx={{ width: 45, height: 45 }}
+              sx={{ width: 55, height: 55 }}
             />
           </IconButton>
           <Typography
@@ -219,7 +237,13 @@ export default function Header() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle sx={{ color: "gray" }} />
+              {profile_picture && (
+                <Avatar
+                  alt="MinT"
+                  src={`${PF}${profile_picture}`}
+                  sx={{ width: 45, height: 45 }}
+                />
+              )}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

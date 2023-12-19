@@ -1,41 +1,58 @@
-import React, { useState, useEffect } from "react";
 import {
   Box,
-  styled,
-  Typography,
   Button,
-  TextField,
   MenuItem,
+  Paper,
+  TextField,
+  Typography,
+  styled,
 } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
 import { EDIT_USER_BY_ADMIN } from "../../State/ReduxSaga/Types/userTypes";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  removeEditUser,
   removeUserError,
+  removeEditUser,
 } from "../../State/ReduxToolkit/Slices/userSlice";
+import { useParams, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import { GET_ALL_MANAGERS } from "../../State/ReduxSaga/Types/mangerType";
 
-const EditUserModal = ({ currentUserId }) => {
+const EditUserButton = styled(Button)({
+  marginTop: "20px",
+  background: "#12596B",
+  "&:hover": {
+    background: "#0F4F5F",
+  },
+});
+
+const EditUserComponent = () => {
   const dispatch = useDispatch();
-  const CreateButton = styled(Button)({
-    marginTop: "20px",
-    background: "#12596B",
-    "&:hover": {
-      background: "#0F4F5F",
-    },
-  });
+  const params = useParams();
+  const navigate = useNavigate();
 
-  const roleType = [
-    { value: "manager", label: "Manager" },
-    { value: "storehead", label: "Store Head" },
-    { value: "storekeeper", label: "Store Keeper" },
-    { value: "employee", label: "Employee" },
-  ];
+  const username = params.username;
 
   const { allUser, editUser, errorUser, loadingUser } = useSelector(
     (state) => state.user
   );
-  const currentUser = allUser.find((user) => user.user_name === currentUserId);
+  const currentUser = allUser.find((user) => user.user_name === username);
+  const [buttonClicked, setButtonClicked] = useState(false);
+  console.log("currentuser", currentUser);
+
+  useEffect(() => {
+    dispatch({ type: GET_ALL_MANAGERS });
+  }, []);
+
+  const { allManagers } = useSelector((state) => state.manager);
+
+  const managersList = [
+    { value: null, label: "Select Manager" },
+    ...allManagers?.map((item) => ({
+      value: `${item.user_name}`,
+      label: `${item.first_name} ${item.last_name}`,
+    })),
+  ];
 
   useEffect(() => {
     if (errorUser || editUser) {
@@ -44,18 +61,21 @@ const EditUserModal = ({ currentUserId }) => {
         dispatch(removeUserError());
       }, 5000);
     }
-  }, [errorUser, editUser, dispatch]);
+  }, [errorUser, editUser]);
 
-  let [user, setUser] = useState({
+  const [user, setUser] = useState({
     first_name: currentUser ? currentUser.first_name : "",
     last_name: currentUser ? currentUser.last_name : "",
-    password: currentUser ? currentUser.password : "",
+    Password: "",
     user_name: currentUser ? currentUser.user_name : "",
     // role: currentUser ? currentUser.Role.role_name : "",
     department: currentUser ? currentUser.department : "",
     email: currentUser ? currentUser.email : "",
     phone_number: currentUser ? currentUser.phone_number : "",
+    manager_username: managersList ? managersList.manager_username : null,
   });
+
+  console.log("user", user);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -68,10 +88,35 @@ const EditUserModal = ({ currentUserId }) => {
   const handleEditUser = (e) => {
     e.preventDefault();
     dispatch({ type: EDIT_USER_BY_ADMIN, user });
+    setButtonClicked(true);
   };
 
+  useEffect(() => {
+    if (!errorUser && !loadingUser && buttonClicked && editUser) {
+      setUser({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone_number: "",
+        department: "",
+        manager_username: "",
+        Password: "",
+      });
+      setTimeout(() => {
+        navigate("/usersList");
+      }, 6000);
+    }
+  }, [editUser]);
+
   return (
-    <Box sx={{ width: "80%", margin: "auto", padding: "10px 10px" }}>
+    <Paper
+      elevation={3}
+      sx={{
+        padding: 5,
+        width: { xs: "100%", sm: "70%", md: "60%", lg: "40%" },
+        margin: "auto",
+      }}
+    >
       <Typography variant="h4" textAlign={"center"} color={"gray"}>
         Update User
       </Typography>
@@ -129,6 +174,7 @@ const EditUserModal = ({ currentUserId }) => {
       />
       <TextField
         id="last_name"
+        type="text"
         label="Last Name"
         name="last_name"
         value={user.last_name}
@@ -139,6 +185,7 @@ const EditUserModal = ({ currentUserId }) => {
       />
       <TextField
         id="email"
+        type="email"
         label="Email"
         name="email"
         value={user.email}
@@ -149,6 +196,7 @@ const EditUserModal = ({ currentUserId }) => {
       />
       <TextField
         id="phone_number"
+        type="text"
         label="Phone Number"
         name="phone_number"
         value={user.phone_number}
@@ -159,6 +207,7 @@ const EditUserModal = ({ currentUserId }) => {
       />
       <TextField
         id="department"
+        type="text"
         label="Department"
         name="department"
         value={user.department}
@@ -167,34 +216,46 @@ const EditUserModal = ({ currentUserId }) => {
         margin="normal"
         sx={{ backgroundColor: "#f7f7f7" }}
       />
-
-      {/* <TextField
-        id="role"
-        label="Role"
-        name="role"
-        value={user.role}
+      <TextField
+        id="password"
+        type="text"
+        label="Password"
+        name="Password"
+        value={user.Password}
         onChange={handleFormChange}
         fullWidth
         margin="normal"
-        sx={{ backgroundColor: "#f7f7f7", borderRadius: "16px" }}
+        sx={{ backgroundColor: "#f7f7f7" }}
+      />
+      <TextField
+        id="manager"
+        type="text"
+        label="Manager"
+        name="manager_username"
+        value={user.manager_username}
+        onChange={handleFormChange}
+        fullWidth
+        margin="normal"
+        sx={{ backgroundColor: "#f7f7f7" }}
         select
       >
-        {roleType.map((option) => (
+        {managersList?.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
         ))}
-      </TextField> */}
-      <CreateButton
+      </TextField>
+
+      <EditUserButton
         variant="contained"
         size="large"
         onClick={handleEditUser}
         fullWidth
       >
         Update
-      </CreateButton>
-    </Box>
+      </EditUserButton>
+    </Paper>
   );
 };
 
-export default EditUserModal;
+export default EditUserComponent;
