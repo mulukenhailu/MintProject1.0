@@ -8,7 +8,7 @@ const storekeeperConfirmEmpReq=require("../../utility/storeKeeper/confirmRequest
 async  function RequestForTheStoreKeeper(req, res){
 
     if (req.body.decoded.role != "storekeeper" ){
-        return res.sendStatus(401);
+        return res.status(401).send("Unauthorized");
     }
 
     validateRequestForStoreKeeper.validateRequestForStoreKeeper(req.params.id)
