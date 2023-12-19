@@ -8,8 +8,8 @@ const client = new GraphQLClient(endpoint, {
   })
 
 const doc=gql`
-mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int!) {
-  update_Employee_Request(where: {_and: {id: {_eq: $request_id}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}}}, _set: {isRejectedByManager: true}) {
+mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int!, $reasonOfRejection: String!) {
+  update_Employee_Request(where: {_and: {id: {_eq: $request_id}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}}}, _set: {isRejectedByManager: true, ReasonOfRejection: $reasonOfRejection}) {
     returning {
       Item {
         created_at
@@ -24,6 +24,9 @@ mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int
         productstandardtype
         productstatus
         updated_at
+        request {
+          ReasonOfRejection
+        }
       }
       manager_username
       quantity_requested
@@ -35,8 +38,6 @@ mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int
     }
   }
 }
-
-
 `
 const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
@@ -44,14 +45,15 @@ const requestHeaders = {
 
 
 
- async function rejectRequestByManager(request_id, item_no, quantity_requested){
+ async function rejectRequestByManager(request_id, item_no, quantity_requested, reasonOfRejection){
 
-    console.log(request_id, item_no, quantity_requested)
+    console.log(request_id, item_no, quantity_requested, reasonOfRejection)
 
     const variables={
       request_id,
       item_no,
-      quantity_requested
+      quantity_requested,
+      reasonOfRejection
     }
 
     console.log(variables)
@@ -63,8 +65,6 @@ const requestHeaders = {
     }catch(error){
       throw error
     }
-
-    
 
   }
 

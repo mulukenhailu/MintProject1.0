@@ -1,8 +1,11 @@
 const storeHeadRejectEmployeeRequest=require("../../utility/storeHead/rejectRequest/rejectRequest")
 
 async function storeHeadRejectEmployeeReq(req, res){
-    console.log(req.params.id, req.params.item_no, req.params.quantity_requested)
-    storeHeadRejectEmployeeRequest.rejectRequestByStoreHead(req.params.id, req.params.item_no, req.params.quantity_requested)
+
+    let{reason}=req.body
+    console.log(req.params.id, req.params.item_no, req.params.quantity_requested, reason)
+    
+    storeHeadRejectEmployeeRequest.rejectRequestByStoreHead(req.params.id, req.params.item_no, req.params.quantity_requested, reason)
         .then((data)=>{
             console.log(data)
             res.send(data)

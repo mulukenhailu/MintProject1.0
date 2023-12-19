@@ -331,7 +331,7 @@ app.post(
 
 
 
-app.get("/storekeeper/blessing/:id/:confirmation_number", 
+app.post("/storekeeper/blessing/:id/:confirmation_number", 
 verifyAccessToken.verifyAccessToken, 
 validateRequestForStoreKeeper.RequestForTheStoreKeeper
 )

@@ -9,8 +9,8 @@ const client = new GraphQLClient(endpoint, {
   })
 
   const doc=gql`
-  mutation MyMutation($request_id: uuid!, $item_no:Int!, $quantity_requested:Int!) {
-    update_Employee_Request(where: {id: {_eq: $request_id}, _and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}, _set: {isRejectedByStoreHead: true}) {
+  mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int!, $reasonOfRejection: String!) {
+    update_Employee_Request(where: {id: {_eq: $request_id}, _and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}, _set: {isRejectedByStoreHead: true, ReasonOfRejection: $reasonOfRejection}) {
       returning {
         item_name
         item_no
@@ -38,10 +38,17 @@ const client = new GraphQLClient(endpoint, {
           productstandardtype
           productstatus
           updated_at
+          request {
+            ReasonOfRejection
+            isApprovedByManager
+            isApprovedByStoreHead
+            isRejectedByManager
+            isRejectedByStoreHead
+          }
         }
       }
     }
-    update_ManagerAppEmpRequest(where: {id: {_eq: $request_id}, _and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}, _set: {isRejectedByStoreHead: true}) {
+    update_ManagerAppEmpRequest(where: {id: {_eq: $request_id}, _and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}, _set: {isRejectedByStoreHead: true, reasonOfRejection: $reasonOfRejection}) {
       returning {
         manager_username
         quantity_requested
@@ -81,32 +88,34 @@ const client = new GraphQLClient(endpoint, {
             productname
             productmodelnumber
             productmodel
+            request {
+              ReasonOfRejection
+            }
           }
         }
       }
     }
     update_Item(where: {item_number: {_eq: $item_no}}, _inc: {productquantitynumber: $quantity_requested}) {
-        returning {
-          productquantitynumber
-        }
+      returning {
+        productquantitynumber
       }
+    }
   }
+  
   `
 
   const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
   }
 
-//   const validateRejection=require("../../Auth/validateRequest")
 
-
-  async function rejectRequestByStoreHead(request_id, item_no, quantity_requested){
-
+  async function rejectRequestByStoreHead(request_id, item_no, quantity_requested, reasonOfRejection){
 
     const variables={
         request_id,
         item_no, 
-        quantity_requested
+        quantity_requested,
+        reasonOfRejection
     };
 
     try{
