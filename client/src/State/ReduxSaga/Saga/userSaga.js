@@ -40,8 +40,10 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 export function* createUserSaga(action) {
   try {
+    console.log(action);
     yield put(createUserStart());
     const user = yield call(createUserApi, action.user);
+    console.log(user);
     yield put(createUserSuccess(user.data.insert_User_one));
   } catch (error) {
     yield put(createUserFail(error.response.data));
@@ -60,8 +62,10 @@ export function* loginUserSaga(action) {
 
 export function* getSingleUserSaga(action) {
   try {
+    console.log(action);
     yield put(getSingleUserStart());
     const singleUser = yield call(getSingleUserApi, action.user_name);
+    console.log("singleuser", singleUser);
     yield put(getSingleUserSuccess(singleUser.data));
   } catch (error) {
     yield put(getSingleUserFail(error));
@@ -85,7 +89,7 @@ export function* editUserSaga(action) {
   try {
     console.log(action);
     yield put(editUserStart());
-    const user = yield call(editUserApi, action.profileInfo);
+    const user = yield call(editUserApi, action.updatedProfileInfo);
     console.log(user.data);
     yield put(editUserSuccess(user.data.update_User_by_pk));
   } catch (error) {

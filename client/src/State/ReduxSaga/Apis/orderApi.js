@@ -8,3 +8,5 @@ export const editOrderApi = async ({ id, newOrder }) =>
   axios.patch(`/order/${id}`, newOrder, { withCredentials: true });
 export const deleteOrderApi = async (id) =>
   axios.delete(`/test/${id}`, { withCredentials: true });
+export const deleOrderApi = async (id) =>
+  axios.delete(`/test/${id}`, { withCredentials: true });

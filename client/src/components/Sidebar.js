@@ -344,7 +344,7 @@ export default function Sidebar() {
                   <RequestPageIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="SMRequest"
+                  primary="Requests"
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
@@ -386,7 +386,7 @@ export default function Sidebar() {
                   <RequestPageIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="SKRequest"
+                  primary="Requests"
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
@@ -426,7 +426,7 @@ export default function Sidebar() {
                   <RequestPageIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="MRequest"
+                  primary="Requests"
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },

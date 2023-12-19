@@ -22,26 +22,36 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_ALL_PENDING_REQUEST_FOR_STOREKEEPER } from "../../State/ReduxSaga/Types/storeKeeperRequestType";
+import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const AcceptButton = styled(Button)({
   marginRight: "10px",
   background: "#12596B",
+  transition: "transform 0.3s ease-in-out",
   "&:hover": {
-    background: "#10471f",
+    background: "#12596B",
+    transform: "scale(1.05)",
   },
 });
+
 const DetailButton = styled(Button)({
   marginRight: "10px",
-  background: "orange",
+  background: "#FFC107",
+  borderRadius: "2px",
+  transition: "transform 0.3s ease-in-out",
   "&:hover": {
-    background: "#473c10",
+    background: "#FFC107",
+    transform: "scale(1.05)",
   },
 });
 const SendButton = styled(Button)({
   marginTop: "20px",
-  color: "#fff",
+  background: "#12596B",
+  transition: "transform 0.3s ease-in-out",
   "&:hover": {
-    background: "#10471f",
+    background: "#12596B",
+    transform: "scale(1.01)",
   },
 });
 const DetailModalContainer = styled(Modal)({
@@ -58,6 +68,12 @@ const DetailModalWrapper = styled(Box)({
 const ListItemForModal = styled(ListItem)({
   display: "flex",
   alignItems: "center",
+  gap: "20px",
+});
+const ListItemForModalDescription = styled(ListItem)({
+  display: "flex",
+  alignItems: "flex-start",
+  gap: "20px",
 });
 const AcceptModal = styled(Modal)({
   display: "flex",
@@ -72,9 +88,14 @@ const AcceptModalWrapper = styled(Box)({
 });
 
 const StorekeeperPendingItems = () => {
-  const [detailModal, setDetailModal] = useState(false);
-  const [acceptModal, setAcceptModal] = useState(false);
   const dispatch = useDispatch();
+  const [detailModals, setDetailModals] = useState([]);
+  const [acceptModals, setAcceptModals] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [response, setResponse] = useState(null);
+  const [confirmationNumber, setConfirmationNumber] = useState(null);
+  const { allRequest } = useSelector((state) => state.request);
 
   const Sources = [
     { value: 101, label: "101" },
@@ -86,228 +107,439 @@ const StorekeeperPendingItems = () => {
     { value: 4529, label: "4529" },
   ];
 
+  const handleDetailModalOpen = (index) => {
+    const updatedDetailModals = [...detailModals];
+    updatedDetailModals[index] = true;
+    setDetailModals(updatedDetailModals);
+  };
+
+  const handleDetailModalClose = (index) => {
+    const updatedDetailModals = [...detailModals];
+    updatedDetailModals[index] = false;
+    setDetailModals(updatedDetailModals);
+  };
+
+  const handleAcceptModalOpen = (index) => {
+    const updatedAcceptedModals = [...acceptModals];
+    updatedAcceptedModals[index] = true;
+    setAcceptModals(updatedAcceptedModals);
+  };
+
+  const handleAcceptModalClose = (index) => {
+    const updatedAcceptedModals = [...acceptModals];
+    updatedAcceptedModals[index] = false;
+    setAcceptModals(updatedAcceptedModals);
+  };
+
+  const handleInsertConfirmationNumber = (id) => {
+    setLoading(true);
+    axios
+      .post(`/storekeeper/blessing/${id}/${confirmationNumber}`, null, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setLoading(false);
+        setError(false);
+        setResponse(response.data);
+        setTimeout(() => {
+          setResponse(false);
+          setAcceptModals(false);
+        }, 5000);
+        console.log(response);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(true);
+        setTimeout(() => {
+          setError(false);
+          setAcceptModals(false);
+        }, 5000);
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     dispatch({ type: GET_ALL_PENDING_REQUEST_FOR_STOREKEEPER });
   }, []);
 
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  if (allRequest.length === 0 || allRequest === "Empty") {
+    return <Box>No order requested</Box>;
+  }
+
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      <Grid item xs={12} sm={6} lg={4}>
-        <Card
-          sx={{
-            border: "2px solid black",
-            borderRadius: "10px",
-            padding: "20px",
-          }}
-        >
-          <CardMedia
-            component="img"
-            alt="green iguana"
-            height="250px"
-            src="https://media.istockphoto.com/id/1295841884/photo/stock-taking-beautiful-young-woman-worker-of-furniture-store-with-surgical-mask-in-covid-19.jpg?s=612x612&w=0&k=20&c=9gGV9n_1lrW15AAhiaevjqEGHI2kJBWD1zUvoT4PAYE="
-          />
-          <CardContent>
-            <List>
-              <ListItem sx={{ display: "flex", alignItems: "center" }}>
-                <Typography variant="body1" marginRight={1} fontWeight={500}>
-                  Name:
-                </Typography>
-                <Typography variant="body3" color={"gray"}>
-                  User-1
-                </Typography>
-              </ListItem>
-              <ListItem sx={{ display: "flex", alignItems: "center" }}>
-                <Typography variant="body1" marginRight={1} fontWeight={500}>
-                  Department:
-                </Typography>
-                <Typography variant="body3" color={"gray"}>
-                  Department-1
-                </Typography>
-              </ListItem>
-              <ListItem sx={{ display: "flex", alignItems: "center" }}>
-                <Typography variant="body1" marginRight={1} fontWeight={500}>
-                  Property-Name:
-                </Typography>
-                <Typography variant="body3" color={"gray"}>
-                  Property-1
-                </Typography>
-              </ListItem>
-            </List>
-          </CardContent>
-          <CardActions>
-            <ButtonGroup fullWidth>
-              <AcceptButton
-                variant="contained"
-                onClick={() => setAcceptModal(true)}
-              >
-                Accept
-              </AcceptButton>
-              <DetailButton
-                variant="contained"
-                onClick={() => setDetailModal(true)}
-              >
-                Details
-              </DetailButton>
-            </ButtonGroup>
-          </CardActions>
-        </Card>
-      </Grid>
-      <DetailModalContainer
-        open={detailModal}
-        onClose={() => setDetailModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <DetailModalWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
-        >
-          <List>
-            <Typography
-              variant="h5"
-              textAlign={"center"}
-              marginBottom={"20px"}
-              sx={{ textDecoration: "underline" }}
+      {allRequest?.map((item, index) => (
+        <React.Fragment>
+          <Grid item xs={12} sm={6} lg={4}>
+            <Card
+              sx={{
+                border: "2px solid black",
+                borderRadius: "10px",
+              }}
             >
-              ORDER-DETAILED
-            </Typography>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Name
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                User-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Department
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                Department-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Manager-Name
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                Manager-Name-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Product-Name
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                Product-Name-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Product-Serial
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                Product-Serial-1
-              </Typography>
-            </ListItemForModal>
-          </List>
-        </DetailModalWrapper>
-      </DetailModalContainer>
-      <AcceptModal
-        open={acceptModal}
-        onClose={() => setAcceptModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <AcceptModalWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "70%" }}
-        >
-          <Typography
-            variant="h5"
-            textAlign={"center"}
-            marginBottom={"20px"}
-            sx={{ textDecoration: "underline" }}
-          >
-            Bin-Card
-          </Typography>
-          <FormGroup>
-            {/* box-1 */}
-            <Box sx={{ display: "flex", gap: "20px", marginBottom: "8px" }}>
-              <TextField label="Name" name="name" sx={{ flex: 1 }} />
-              <TextField
-                label="Department"
-                name="department"
-                sx={{ flex: 1 }}
+              <CardMedia
+                component="img"
+                alt="green iguana"
+                height="250px"
+                src={`${PF}${item?.item?.productphoto}`}
               />
-            </Box>
-            {/* box-2 */}
-            <Box sx={{ display: "flex", gap: "20px", marginBottom: "8px" }}>
-              <TextField
-                label="Property Name"
-                name="propertyname"
-                sx={{ flex: 1 }}
-              />
-            </Box>
-            {/* box-3 */}
-            <Box sx={{ display: "flex", gap: "5px", marginBottom: "8px" }}>
-              <TextField label="MinT" sx={{ flex: 1 }} />
-              <TextField label="" select sx={{ flex: 1 }}>
-                {Sources.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField label="" select sx={{ flex: 1 }}>
-                {Items.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField label="Department" sx={{ flex: 2 }} />
-              <TextField label="Item" sx={{ flex: 1 }} />
-              <TextField label="Quantity" sx={{ flex: 1 }} />
-            </Box>
-            {/* box-4 */}
-            <Box sx={{ display: "flex", gap: "15px", marginBottom: "8px" }}>
-              <TextField label="Unit" sx={{ flex: 1 }} />
-              <TextField label="Quantity" sx={{ flex: 1 }} />
-            </Box>
-            {/* box-5 */}
-            <Box sx={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  slotProps={{ textField: { placeholder: "Output Date" } }}
-                />
-              </LocalizationProvider>
-              <TextField label="Output Number" sx={{ flex: 1 }} />
-
-              <TextField label="Output Single Price" sx={{ flex: 1 }} />
-              <TextField label="Output Total Price" sx={{ flex: 1 }} />
-            </Box>
-            {/* box-6 */}
-            <Box sx={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  slotProps={{ textField: { placeholder: "Input Date" } }}
-                />
-              </LocalizationProvider>
-              <TextField label="Input Number" sx={{ flex: 1 }} />
-              <TextField label="Input Single Price" sx={{ flex: 1 }} />
-              <TextField label="Input Total Price" sx={{ flex: 1 }} />
-            </Box>
-          </FormGroup>
-
-          <SendButton
-            variant="contained"
-            sx={{ background: "#12596B" }}
-            fullWidth
+              <CardContent>
+                <List>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant="body1"
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      Employee First Name:
+                    </Typography>
+                    <Typography
+                      variant="body3"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.request[0]?.User?.first_name}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant="body1"
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      Employee Last Name:
+                    </Typography>
+                    <Typography
+                      variant="body3"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.request[0]?.User?.last_name}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant="body1"
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      Product Name:
+                    </Typography>
+                    <Typography
+                      variant="body3"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.productname}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant="body1"
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      Product Model:
+                    </Typography>
+                    <Typography
+                      variant="body3"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.productmodel}
+                    </Typography>
+                  </ListItem>
+                </List>
+              </CardContent>
+              <CardActions>
+                <ButtonGroup fullWidth>
+                  <AcceptButton
+                    variant="contained"
+                    onClick={() => handleAcceptModalOpen(index)}
+                  >
+                    Accept
+                  </AcceptButton>
+                  <DetailButton
+                    variant="contained"
+                    onClick={() => handleDetailModalOpen(index)}
+                  >
+                    Details
+                  </DetailButton>
+                </ButtonGroup>
+              </CardActions>
+            </Card>
+          </Grid>
+          <DetailModalContainer
+            open={detailModals[index] || false}
+            onClose={() => handleDetailModalClose(index)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
           >
-            Send Property to user
-          </SendButton>
-        </AcceptModalWrapper>
-      </AcceptModal>
+            <DetailModalWrapper
+              width={{ xs: "90%", sm: "70%", md: "50%", lg: "60%" }}
+            >
+              <List>
+                <Typography
+                  variant="h5"
+                  textAlign={"center"}
+                  marginBottom={"20px"}
+                  sx={{ textDecoration: "underline", color: "#12596B" }}
+                >
+                  Request Details
+                </Typography>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Employee First Name:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.item?.request[0]?.User?.first_name}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Employee Last Name:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.item?.request[0]?.User?.last_name}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Employee Email:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.item?.request[0]?.User?.email
+                      ? item?.item?.request[0]?.User?.email
+                      : "Email not provided"}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Employee Phone Number:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.item?.request[0]?.User?.phone_number
+                      ? item?.item?.request[0]?.User?.phone_number
+                      : "Phone not provided"}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Department
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.item?.request[0]?.User?.department
+                      ? item?.item?.request[0]?.User?.department
+                      : "Dept... not provided"}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Product Name:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.item?.productname}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Product Model:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.item?.productmodel}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModalDescription>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Product Description
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.item?.productdescription}
+                  </Typography>
+                </ListItemForModalDescription>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Quantity Requested
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.quantity_requested}
+                  </Typography>
+                </ListItemForModal>
+              </List>
+            </DetailModalWrapper>
+          </DetailModalContainer>
+          <AcceptModal
+            open={acceptModals[index] || false}
+            onClose={() => handleAcceptModalClose(index)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <AcceptModalWrapper
+              width={{ xs: "90%", sm: "70%", md: "50%", lg: "30%" }}
+            >
+              <Typography
+                variant="h5"
+                textAlign={"center"}
+                marginBottom={"20px"}
+                sx={{ textDecoration: "underline", color: "#12596B" }}
+              >
+                Insert confirmation number
+              </Typography>
+              {loading && (
+                <Box sx={{ textAlign: "center" }}>
+                  <ClipLoader
+                    color={"#36d7b7"}
+                    loading={loading}
+                    size={50}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </Box>
+              )}
+              {error && (
+                <Box
+                  sx={{
+                    backgroundColor: "red",
+                    color: "white",
+                    fontSize: " 18px",
+                    padding: " 5px 15px",
+                    marginY: "10px",
+                    textAlign: "center",
+                  }}
+                >
+                  Error Occurred
+                </Box>
+              )}
+              {response && (
+                <Box
+                  sx={{
+                    backgroundColor: "#12596B",
+                    color: "white",
+                    fontSize: " 18px",
+                    padding: " 5px 15px",
+                    marginY: "10px",
+                    textAlign: "center",
+                  }}
+                >
+                  Request Done Successfully
+                </Box>
+              )}
+              <TextField
+                name="confirmation"
+                fullWidth
+                label="Confirmation number"
+                onChange={(e) => setConfirmationNumber(e.target.value)}
+              />
+              <SendButton
+                variant="contained"
+                sx={{ background: "#12596B" }}
+                fullWidth
+                onClick={() => {
+                  handleInsertConfirmationNumber(item.id);
+                }}
+              >
+                Confirm
+              </SendButton>
+            </AcceptModalWrapper>
+          </AcceptModal>
+        </React.Fragment>
+      ))}
     </Grid>
   );
 };

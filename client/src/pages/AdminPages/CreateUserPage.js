@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  TextField,
-  Button,
-  Grid,
-  Paper,
-  Typography,
-  Stack,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import CreateUser from "../../components/AdminComponent/CreateUser";

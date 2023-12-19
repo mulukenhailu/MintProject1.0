@@ -15,24 +15,38 @@ import {
   removeNewUser,
 } from "../../State/ReduxToolkit/Slices/userSlice";
 import ClipLoader from "react-spinners/ClipLoader";
+import { GET_ALL_MANAGERS } from "../../State/ReduxSaga/Types/mangerType";
+
+const CreateUserButton = styled(Button)({
+  marginTop: "20px",
+  background: "#12596B",
+  "&:hover": {
+    background: "#0F4F5F",
+  },
+});
 
 const CreateUser = () => {
   const dispatch = useDispatch();
 
-  const CreateUserButton = styled(Button)({
-    marginTop: "20px",
-    background: "#12596B",
-    "&:hover": {
-      background: "#0F4F5F",
-    },
-  });
   const [user, setUser] = useState({
     first_name: "",
     last_name: "",
     user_name: "",
     password: "",
+    department: "",
     role: "",
+    manager_username: "",
   });
+
+  useEffect(() => {
+    dispatch({ type: GET_ALL_MANAGERS });
+  }, []);
+
+  const { errorUser, newUser, loadingUser } = useSelector(
+    (state) => state.user
+  );
+
+  const { allManagers } = useSelector((state) => state.manager);
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
@@ -43,21 +57,22 @@ const CreateUser = () => {
   };
 
   const handleCreateUser = (e) => {
+    console.log(user);
     e.preventDefault();
     dispatch({ type: CREATE_USER, user });
+  };
+
+  useEffect(() => {
     setUser({
       first_name: "",
       last_name: "",
       user_name: "",
       password: "",
+      department: "",
       role: "",
+      manager_username: "",
     });
-  };
-
-  const { errorUser, newUser, loadingUser } = useSelector(
-    (state) => state.user
-  );
-
+  }, [newUser]);
   useEffect(() => {
     if (errorUser || newUser) {
       setTimeout(() => {
@@ -73,6 +88,15 @@ const CreateUser = () => {
     { value: "storekeeper", label: "Store Keeper" },
     { value: "employee", label: "Employee" },
   ];
+
+  const managersList = [];
+
+  allManagers?.forEach((item) => {
+    managersList.push({
+      value: `${item.user_name}`,
+      label: `${item.first_name} ${item.last_name}`,
+    });
+  });
 
   return (
     <Paper
@@ -97,7 +121,34 @@ const CreateUser = () => {
           />
         </Box>
       )}
-
+      {errorUser && (
+        <Box
+          sx={{
+            backgroundColor: "red",
+            color: "white",
+            fontSize: " 18px",
+            padding: " 5px 15px",
+            marginTop: "20px",
+            textAlign: "center",
+          }}
+        >
+          {errorUser}
+        </Box>
+      )}
+      {newUser && (
+        <Box
+          sx={{
+            backgroundColor: "#12596B",
+            color: "white",
+            fontSize: " 18px",
+            padding: " 5px 15px",
+            marginTop: "20px",
+            textAlign: "center",
+          }}
+        >
+          New User Created Successfully
+        </Box>
+      )}
       <TextField
         label="First Name"
         name="first_name"
@@ -137,6 +188,16 @@ const CreateUser = () => {
         sx={{ backgroundColor: "#f7f7f7" }}
       />
       <TextField
+        label="Department"
+        name="department"
+        type="department"
+        value={user.department}
+        onChange={handleFormChange}
+        fullWidth
+        margin="normal"
+        sx={{ backgroundColor: "#f7f7f7" }}
+      />
+      <TextField
         label="Role"
         name="role"
         value={user.role}
@@ -152,6 +213,23 @@ const CreateUser = () => {
           </MenuItem>
         ))}
       </TextField>
+      <TextField
+        label="Manager"
+        name="manager_username"
+        type="text"
+        value={user.manager_username}
+        onChange={handleFormChange}
+        fullWidth
+        margin="normal"
+        sx={{ backgroundColor: "#f7f7f7" }}
+        select
+      >
+        {managersList?.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
 
       <CreateUserButton
         variant="contained"
@@ -162,34 +240,6 @@ const CreateUser = () => {
       >
         Create
       </CreateUserButton>
-      {errorUser && (
-        <Box
-          sx={{
-            backgroundColor: "red",
-            color: "white",
-            fontSize: " 18px",
-            padding: " 5px 15px",
-            marginTop: "20px",
-            textAlign: "center",
-          }}
-        >
-          {errorUser}
-        </Box>
-      )}
-      {newUser && (
-        <Box
-          sx={{
-            backgroundColor: "#12596B",
-            color: "white",
-            fontSize: " 18px",
-            padding: " 5px 15px",
-            marginTop: "20px",
-            textAlign: "center",
-          }}
-        >
-          New User Created Successfully
-        </Box>
-      )}
     </Paper>
   );
 };

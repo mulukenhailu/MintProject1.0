@@ -9,7 +9,7 @@ const AllStoreKeeperRequest = () => {
   const [activeItem, setActiveItem] = useState("pending");
   const ButtonContainer = styled(ButtonGroup)({
     position: "sticky",
-    top: "60px",
+    top: "73px",
     height: "35px",
     marginBottom: "30px",
     zIndex: "10",

@@ -10,8 +10,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_ALL_MANAGERS } from "../State/ReduxSaga/Types/mangerType";
 import { CREATE_ORDER } from "../State/ReduxSaga/Types/orderType";
+import {
+  removeNewOrder,
+  removeOrderError,
+} from "../State/ReduxToolkit/Slices/orderSlice";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const OrderButton = styled(Button)({
   background: "#12596B",
@@ -21,26 +25,13 @@ const OrderButton = styled(Button)({
 });
 const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
   const dispatch = useDispatch();
+  const { newOrder, errorOrder, loadingOrder } = useSelector(
+    (state) => state.order
+  );
   console.log(productname, item_number);
 
-  useEffect(() => {
-    dispatch({ type: GET_ALL_MANAGERS });
-  }, []);
-  const { allManagers } = useSelector((state) => state.manager);
-
-  const managersList = [];
-
-  allManagers?.forEach((item) => {
-    managersList.push({
-      value: `${item.user_name}`,
-      label: `${item.first_name} ${item.last_name}`,
-    });
-  });
-
-  console.log(managersList);
   const [formData, setFormData] = useState({
     quantity: "",
-    managername: "",
   });
 
   const handleFormChange = (event) => {
@@ -57,18 +48,66 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
       item_name: productname,
       item_no: item_number.toString(),
       quantity_requested: formData.quantity,
-      manager_username: formData.managername,
     };
     console.log(order);
     dispatch({ type: CREATE_ORDER, order });
-    setOpenOrderModal(false);
   };
+
+  useEffect(() => {
+    if (newOrder || errorOrder) {
+      setTimeout(() => {
+        dispatch(removeNewOrder());
+        dispatch(removeOrderError());
+        setOpenOrderModal(false);
+      }, 5000);
+    }
+  }, [newOrder, errorOrder]);
+
   return (
     <Box bgcolor={"white"} borderRadius={"5px"} width={"400px"} padding={4}>
       <Box>
         <Typography variant="h5" gutterBottom textAlign={"center"}>
           Move Order
         </Typography>
+        {loadingOrder && (
+          <Box sx={{ textAlign: "center" }}>
+            <ClipLoader
+              color={"#36d7b7"}
+              loading={loadingOrder}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </Box>
+        )}
+        {errorOrder && (
+          <Box
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              fontSize: " 18px",
+              padding: " 5px 15px",
+              marginBottom: "20px",
+              textAlign: "center",
+            }}
+          >
+            Error while creating order
+          </Box>
+        )}
+        {newOrder && (
+          <Box
+            sx={{
+              backgroundColor: "#12596B",
+              color: "white",
+              fontSize: " 18px",
+              padding: " 5px 15px",
+              marginBottom: "20px",
+              textAlign: "center",
+            }}
+          >
+            New Order Created Successfully
+          </Box>
+        )}
 
         <FormGroup>
           <TextField
@@ -79,21 +118,6 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
             fullWidth
             sx={{ margin: "0px", marginBottom: "10px" }}
           />
-          <TextField
-            label="Manager Name"
-            name="managername"
-            value={formData.managername}
-            onChange={handleFormChange}
-            fullWidth
-            sx={{ margin: "0px", marginBottom: "10px" }}
-            select
-          >
-            {managersList?.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
         </FormGroup>
 
         <OrderButton

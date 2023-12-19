@@ -20,6 +20,7 @@ const PropertyCard = ({
   productphoto,
   productquantitynumber,
   productdescription,
+  productmodel,
 }) => {
   const [openOrderModal, setOpenOrderModal] = useState(false);
   const CardContentItem = styled(Box)({
@@ -50,18 +51,27 @@ const PropertyCard = ({
     <Card
       sx={{
         padding: "20px 10px",
-        height: "fit-content",
+        height: "500px",
         background: "#fff",
-        boxShadow: "5px 10px 10px rgba(0, 0, 0, 0.1)",
-        border: "1px solid #333333",
-        borderRadius: "10px",
+        boxShadow: "5px 10px 10px rgba(0, 0, 0, 0.2)",
+        border: "1px solid #12596B",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "start",
+        gap: "10px",
       }}
     >
       <CardMedia
-        sx={{ borderRadius: "15px", padding: "20px" }}
+        sx={{
+          borderRadius: "5px",
+          padding: "0px 5px",
+          objectFit: "fill",
+          height: "70%",
+          width: "100%",
+          overflow: "hidden",
+        }}
         component="img"
-        height="80%"
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHz4IOnUyFqAALnSJVShWu5euyuYzgmFDJUQ&usqp=CAU"
+        image={`${PF}${productphoto}`}
         alt="property image"
       />
       <CardContent>
@@ -94,7 +104,7 @@ const PropertyCard = ({
             sx={{ color: "#12596B" }}
             fontWeight={400}
           >
-            corei7
+            {productmodel}
           </Typography>
         </CardContentItem>
         <CardContentItem>
@@ -114,7 +124,7 @@ const PropertyCard = ({
           </Typography>
         </CardContentItem>
       </CardContent>
-      <CardActions sx={{ marginTop: "auto" }}>
+      <CardActions>
         <CreateButton
           size="small"
           sx={{ color: "#fff", marginRight: "5px" }}

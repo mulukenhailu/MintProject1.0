@@ -17,6 +17,7 @@ import {
   removeNewProperty,
 } from "../../State/ReduxToolkit/Slices/propertySlice";
 import { UPLOAD_IMAGE } from "../../State/ReduxSaga/Types/uploadImageType";
+import { removeUploadImage } from "../../State/ReduxToolkit/Slices/uploadImageSlice";
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,9 @@ const CreateProduct = () => {
     (state) => state.property
   );
 
-  const uploadedImage = useSelector((state) => state.upload.image);
+  const { uploadedImage, errorImage, loadingUploadingImage } = useSelector(
+    (state) => state.upload
+  );
 
   const [property, setProperty] = useState({
     productname: "",
@@ -140,6 +143,9 @@ const CreateProduct = () => {
     }
   }, [errorProperty, newProperty, dispatch]);
 
+  useEffect(() => {
+    dispatch(removeUploadImage());
+  }, []);
   return (
     <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
       <Paper
@@ -162,6 +168,59 @@ const CreateProduct = () => {
               aria-label="Loading Spinner"
               data-testid="loader"
             />
+          </Box>
+        )}
+        {loadingUploadingImage && (
+          <Box sx={{ textAlign: "center" }}>
+            <ClipLoader
+              color={"#36d7b7"}
+              loading={loadingUploadingImage}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </Box>
+        )}
+        {errorProperty && (
+          <Box
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              fontSize: " 18px",
+              padding: " 5px 15px",
+              marginTop: "20px",
+              textAlign: "center",
+            }}
+          >
+            Error While Creating Property
+          </Box>
+        )}
+        {errorImage && (
+          <Box
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              fontSize: " 18px",
+              padding: " 5px 15px",
+              marginTop: "20px",
+              textAlign: "center",
+            }}
+          >
+            Error While Uploading Image
+          </Box>
+        )}
+        {newProperty && (
+          <Box
+            sx={{
+              backgroundColor: "#12596B",
+              color: "white",
+              fontSize: " 18px",
+              padding: " 5px 15px",
+              marginTop: "20px",
+              textAlign: "center",
+            }}
+          >
+            New Property Created Successfully
           </Box>
         )}
         <TextField
@@ -359,34 +418,6 @@ const CreateProduct = () => {
         >
           Create
         </CreateButton>
-        {errorProperty && (
-          <Box
-            sx={{
-              backgroundColor: "red",
-              color: "white",
-              fontSize: " 18px",
-              padding: " 5px 15px",
-              marginTop: "20px",
-              textAlign: "center",
-            }}
-          >
-            Error While Creating Property
-          </Box>
-        )}
-        {newProperty && (
-          <Box
-            sx={{
-              backgroundColor: "#12596B",
-              color: "white",
-              fontSize: " 18px",
-              padding: " 5px 15px",
-              marginTop: "20px",
-              textAlign: "center",
-            }}
-          >
-            New Property Created Successfully
-          </Box>
-        )}
       </Paper>
     </Box>
   );
