@@ -29,7 +29,7 @@ async  function RequestForTheStoreKeeper(req, res){
                         })
                 }
                 else{
-                    res.status(400).send("Incorrect.Retry Again.")
+                    res.status(400).send({error:"Incorrect.Retry Again."})
                 }
             }
             else{
@@ -38,6 +38,7 @@ async  function RequestForTheStoreKeeper(req, res){
         })
         .catch((error)=>{
             console.log(error)
+            res.status(500).send({error:"Retry Again."})
         })
 }
 
