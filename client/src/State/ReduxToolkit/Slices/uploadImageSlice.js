@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const upload = createSlice({
   name: "upload",
   initialState: {
-    image: "",
+    uploadedImage: "",
     loadingUploadingImage: false,
     errorImage: false,
   },
@@ -11,26 +11,26 @@ const upload = createSlice({
     uploadImageStart: (state) => {
       state.loadingUploadingImage = true;
       state.errorImage = false;
-      state.image = "";
+      state.uploadedImage = "";
       return state;
     },
     uploadImageSuccess: (state, action) => {
       state.loadingUploadingImage = false;
-      state.image = action.payload;
+      state.uploadedImage = action.payload;
       state.errorImage = false;
       return state;
     },
     uploadImageFail: (state, action) => {
       state.errorImage = action.payload;
       state.loadingUploadingImage = false;
-      state.image = "";
+      state.uploadedImage = "";
       return state;
     },
     removeUploadError: (state) => {
       state.errorImage = false;
     },
-    setUploadIntially: (state) => {
-      state.image = "";
+    removeUploadImage: (state) => {
+      state.uploadedImage = "";
     },
   },
 });
@@ -39,6 +39,6 @@ export const {
   uploadImageSuccess,
   uploadImageFail,
   removeUploadError,
-  setUploadIntially,
+  removeUploadImage,
 } = upload.actions;
 export default upload.reducer;

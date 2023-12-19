@@ -10,6 +10,7 @@ import CreateUserPage from "./pages/AdminPages/CreateUserPage";
 import AllStoreRequestPage from "./pages/StoreManager/AllOrderRequests";
 import AllOrderRequestKeeper from "./pages/StoreKeeper/AllOrderRequestKeeper";
 import AllManagersRequestPage from "./pages/ManagerPages/AllManagersRequestPage";
+import EditUserPage from "./pages/AdminPages/UpdateUserPage";
 import ForgetPasswordPage from "./pages/forgetPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import { Routes, Route } from "react-router-dom";
@@ -38,6 +39,9 @@ function App() {
         )}
         {role_name === "admin" && (
           <Route path="/createUser" element={<CreateUserPage />} />
+        )}
+        {role_name === "admin" && (
+          <Route path="/edituser/:username" element={<EditUserPage />} />
         )}
         {role_name === "storehead" && (
           <Route path="/storemanager" element={<AllStoreRequestPage />} />

@@ -25,7 +25,6 @@ const CardContents = styled(Box)({
 });
 const CardContentItem = styled(Box)({
   display: "flex",
-  alignItems: "center",
   gap: "10px",
 });
 
@@ -49,6 +48,7 @@ const DetailsProductPage = () => {
     (item) => item.item_number === parseInt(id)
   );
   console.log(singleProperty);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const [openOrderModal, setOpenOrderModal] = useState(false);
   return (
@@ -61,20 +61,29 @@ const DetailsProductPage = () => {
           <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5}>
             <Paper elevation={4}>
               <Grid container>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} sx={{ padding: "20px" }}>
                   <CardMedia
-                    sx={{ borderRadius: "15px", padding: "20px" }}
+                    sx={{
+                      borderRadius: "15px",
+                      padding: "20px",
+                      height: "450px",
+                      width: "100%",
+                      overflow: "hidden",
+                    }}
                     component="img"
-                    image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvuIVMu5AmFIHw7ALCgBmZqWwNUFs0rUGWyQ&usqp=CAU"
+                    image={`${PF}${singleProperty.productphoto}`}
                   />
                 </Grid>
                 <Grid
                   item
                   xs={12}
                   md={6}
-                  padding={"50px"}
-                  sx={{ display: "flex" }}
-                  flexDirection={"column"}
+                  sx={{
+                    display: "flex",
+                    padding: "40px 0px",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
                 >
                   <Typography
                     variant="h4"
@@ -114,7 +123,7 @@ const DetailsProductPage = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        corei7
+                        {singleProperty.productmodel}
                       </Typography>
                     </CardContentItem>
                     <CardContentItem>

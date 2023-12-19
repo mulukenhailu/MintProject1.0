@@ -15,6 +15,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_ALL_ACCEPTED_REQUEST_FOR_MANAGER } from "../../State/ReduxSaga/Types/managerRequestType";
+import { removeAllRequest } from "../../State/ReduxToolkit/Slices/requestSlice";
 
 const DetailModalContainer = styled(Modal)({
   display: "flex",
@@ -30,205 +31,350 @@ const DetailModalWrapper = styled(Box)({
 const ListItemForModal = styled(ListItem)({
   display: "flex",
   alignItems: "center",
+  gap: "20px",
+});
+const ListItemForModalDescription = styled(ListItem)({
+  display: "flex",
+  alignItems: "flex-start",
+  gap: "20px",
 });
 const DetailButton = styled(Button)({
   marginRight: "10px",
-  background: "orange",
+  background: "#E5953D",
   borderRadius: "2px",
+  transition: "transform 0.3s ease-in-out",
   "&:hover": {
-    background: "#473c10",
+    background: "#E5953D",
+    transform: "scale(0.99)",
   },
 });
-
 const ManagerRequestAccepted = () => {
-  const [detailModal, setDetailModal] = useState(false);
   const dispatch = useDispatch();
+  const [detailModals, setDetailModals] = useState([]);
 
   useEffect(() => {
+    dispatch(removeAllRequest());
     dispatch({ type: GET_ALL_ACCEPTED_REQUEST_FOR_MANAGER });
-  }, [dispatch]);
+  }, []);
+
   const { loadingRequest, errorRequest, allRequest } = useSelector(
     (state) => state.request
   );
 
-  console.log(allRequest);
+  if (allRequest.length === 0 || allRequest === "Empty") {
+    return <Box>No requests available</Box>;
+  }
+
+  const sortedAllRequest = [...allRequest].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
+
+  const handleDetailModalOpen = (index) => {
+    const updatedDetailModals = [...detailModals];
+    updatedDetailModals[index] = true;
+    setDetailModals(updatedDetailModals);
+  };
+
+  const handleDetailModalClose = (index) => {
+    const updatedDetailModals = [...detailModals];
+    updatedDetailModals[index] = false;
+    setDetailModals(updatedDetailModals);
+  };
+
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      {allRequest?.map((item) => (
-        <Grid item xs={12} sm={6} lg={4}>
-          <Card
-            sx={{
-              border: "2px solid black",
-              borderRadius: "10px",
-              padding: "20px",
-            }}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              height="250"
-              image="https://www.simplilearn.com/ice9/free_resources_article_thumb/How_to_become_a_marketing_manager.jpg"
-            />
-            <CardContent>
-              <List>
-                <ListItem sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography variant="body1" marginRight={1} fontWeight={500}>
-                    First Name:
-                  </Typography>
-                  <Typography variant="body2" color={"gray"}>
-                    User-1
-                  </Typography>
-                </ListItem>
-                <ListItem sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography variant="body1" marginRight={1} fontWeight={500}>
-                    Last Name:
-                  </Typography>
-                  <Typography variant="body2" color={"gray"}>
-                    User-1
-                  </Typography>
-                </ListItem>
-                <ListItem sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography variant="body1" marginRight={1} fontWeight={500}>
-                    Department:
-                  </Typography>
-                  <Typography variant="body2" color={"gray"}>
-                    Department-1
-                  </Typography>
-                </ListItem>
-                <ListItem sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography variant="body1" marginRight={1} fontWeight={500}>
-                    Manager-name:
-                  </Typography>
-                  <Typography variant="body2" color={"gray"}>
-                    Manager-1
-                  </Typography>
-                </ListItem>
-                <ListItem sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography variant="body1" marginRight={1} fontWeight={500}>
-                    Product-name:
-                  </Typography>
-                  <Typography variant="body2" color={"gray"}>
-                    Product-1
-                  </Typography>
-                </ListItem>
-                <ListItem sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography variant="body1" marginRight={1} fontWeight={500}>
-                    Quantity:
-                  </Typography>
-                  <Typography variant="body2" color={"gray"}>
-                    Quantity-1
-                  </Typography>
-                </ListItem>
-              </List>
-            </CardContent>
-            <CardActions>
-              <DetailButton
-                variant="contained"
-                fullWidth
-                type="small"
-                onClick={() => setDetailModal(true)}
-              >
-                Details
-              </DetailButton>
-            </CardActions>
-          </Card>
-        </Grid>
-      ))}
-
-      <DetailModalContainer
-        open={detailModal}
-        onClose={() => setDetailModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <DetailModalWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
-        >
-          <List>
-            <Typography
-              variant="h5"
-              textAlign={"center"}
-              marginBottom={"20px"}
-              sx={{ textDecoration: "underline" }}
+      {sortedAllRequest?.map((item, index) => (
+        <React.Fragment key={index}>
+          <Grid item xs={12} sm={6} lg={4}>
+            <Card
+              sx={{
+                border: "1px solid #12596B",
+                borderRadius: "10px",
+                paddingBottom: "10px",
+              }}
             >
-              Move order details
-            </Typography>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Name
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                User-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Department
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                Department-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Manager
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                Manager-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Product-name
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                Product-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Product-id
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                Product-is-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Quantity
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                Quantity-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Model
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                Model-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Order-date
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                date-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2} fontWeight={500}>
-                Accepted-date
-              </Typography>
-              <Typography variant="body2" flex={1} color={"gray"}>
-                date-1
-              </Typography>
-            </ListItemForModal>
-          </List>
-        </DetailModalWrapper>
-      </DetailModalContainer>
+              <CardMedia
+                component="img"
+                alt="green iguana"
+                height="250"
+                image={`${PF}${item.Item.productphoto}`}
+              />
+              <CardContent>
+                <List>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant="body1"
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      First Name:
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.User.first_name}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant="body1"
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      Last Name:
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.User.last_name}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant="body1"
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      Product-name:
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.Item.productname}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant="body1"
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      Quantity:
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.quantity_requested}
+                    </Typography>
+                  </ListItem>
+                </List>
+              </CardContent>
+              <CardActions>
+                <DetailButton
+                  variant="contained"
+                  fullWidth
+                  type="small"
+                  onClick={() => handleDetailModalOpen(index)}
+                >
+                  Details
+                </DetailButton>
+              </CardActions>
+            </Card>
+          </Grid>
+          <DetailModalContainer
+            open={detailModals[index] || false}
+            onClose={() => handleDetailModalClose(index)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <DetailModalWrapper
+              width={{ xs: "90%", sm: "70%", md: "50%", lg: "60%" }}
+            >
+              {console.log(item.User.first_name)}
+              <List>
+                <Typography
+                  variant="h5"
+                  textAlign={"center"}
+                  marginBottom={"20px"}
+                  sx={{ textDecoration: "underline", color: "#12596B" }}
+                >
+                  Accepted Details
+                </Typography>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Employee First Name:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item.User.first_name}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Employee Last Name:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item.User.last_name}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Employee Email:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item.User.email ? item.User.email : "Email not provided"}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Employee Phone Number:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item.User.phone_number
+                      ? item.User.phone_number
+                      : "Phone not provided"}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Department
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item.User.department
+                      ? item.User.department
+                      : "Depar... not provided"}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Product Name:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item.Item.productname}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Product Model:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item.Item.productmodel}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModalDescription>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Product Description
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item.Item.productdescription}
+                  </Typography>
+                </ListItemForModalDescription>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Quantity Requested
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={4}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item.quantity_requested}
+                  </Typography>
+                </ListItemForModal>
+              </List>
+            </DetailModalWrapper>
+          </DetailModalContainer>
+        </React.Fragment>
+      ))}
     </Grid>
   );
 };
