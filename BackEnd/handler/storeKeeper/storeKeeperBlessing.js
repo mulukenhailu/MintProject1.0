@@ -27,7 +27,7 @@ async  function RequestForTheStoreKeeper(req, res){
                     })
             }
             else{
-                res.send("Incorrect Confirmation Password.")
+                res.send("Incorrect.Retry Again.")
             }
         })
         .catch((error)=>{
