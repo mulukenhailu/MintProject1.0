@@ -10,7 +10,7 @@ const client = new GraphQLClient(endpoint, {
 
   const doc=gql`
   query MyQuery($request_id: uuid) {
-    storeHeadApprovedEmpRequest(where: {id: {_eq: $request_id}}) {
+    storeHeadApprovedEmpRequest(where: {id: {_eq: $request_id}, is_approved: {_eq: false}}) {
       id
       item {
         item_number
@@ -32,7 +32,7 @@ const client = new GraphQLClient(endpoint, {
       item_no
       item_name
       quantity_requested
-      confirmation_number  
+      confirmation_number
     }
   }
   

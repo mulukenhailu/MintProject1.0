@@ -14,21 +14,27 @@ async  function RequestForTheStoreKeeper(req, res){
     validateRequestForStoreKeeper.validateRequestForStoreKeeper(req.params.id)
         .then((data)=>{
             console.log(data)
-            console.log(typeof  data.storeHeadApprovedEmpRequest[0].confirmation_number)
-            console.log(typeof Number(req.params.confirmation_number))
-            if (data.storeHeadApprovedEmpRequest[0].confirmation_number === Number(req.params.confirmation_number)){
-                storekeeperConfirmEmpReq.finalize(data, req.body.decoded.user_name)
-                    .then((data)=>{
-                        res.send(data)
-                    })
-                    .catch((error)=>{
-                        console.log(error)
-                        res.status(500).send({error:"Retry Again."})
-                    })
+            // console.log(typeof  data.storeHeadApprovedEmpRequest[0].confirmation_number)
+            // console.log(typeof Number(req.params.confirmation_number))
+
+            if (data.storeHeadApprovedEmpRequest.length !==0 ){
+                if (data.storeHeadApprovedEmpRequest[0].confirmation_number === Number(req.params.confirmation_number)){
+                    storekeeperConfirmEmpReq.finalize(data, req.body.decoded.user_name)
+                        .then((data)=>{
+                            res.send(data)
+                        })
+                        .catch((error)=>{
+                            console.log(error)
+                            res.status(500).send({error:"Retry Again."})
+                        })
+                }
+                else{
+                    res.send("Incorrect.Retry Again.")
+                }
             }
             else{
-                res.send("Incorrect.Retry Again.")
-            }
+                res.status(400).send({error:"No Request Found."})
+            }  
         })
         .catch((error)=>{
             console.log(error)
