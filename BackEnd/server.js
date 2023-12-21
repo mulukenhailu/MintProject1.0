@@ -151,10 +151,14 @@ const bodyParser = require("body-parser");
 const userInfo = require("./handler/common/userInfo");
 const filterByName = require("./handler/common/filterByName");
 const updateProfile = require("./handler/common/updateProfile");
-const makeRequest = require("./handler/Employee/makeRequest");
 const register = require("./handler/Admin/registerUser");
 const login = require("./handler/common/login");
 const resetPassword = require("./handler/common/resetPassword");
+
+const makeRequest = require("./handler/Employee/makeRequest");
+const allNotifications=require("./handler/Employee/Notification/Allnotification")
+const allOrdersMade=require("./handler/Employee/AllRequest/allRequests")
+const getupdateOfViwedNotificaion=require("./handler/Employee/Notification/updateNotifications")
 
 const requestToApprove = require("./handler/manager/pendingRequest/requestToApprove");
 const verifyAccessToken = require("./middleware/verifyAccessToken");
@@ -226,20 +230,6 @@ app.get("/welcome", (req, res) => {
 
 app.post("/login", login.login);
 
-
-
-// app.get(
-//   "/getitem/:itemNo",
-//   verifyAccessToken.verifyAccessToken,
-//   getItem.getItem
-// );
-
-// app.get(
-//   "/getallitem",
-//   verifyAccessToken.verifyAccessToken,
-//   getAllItem.getAllItem
-// );
-
 app.post(
   "/updateprofile",
   verifyAccessToken.verifyAccessToken,
@@ -269,6 +259,26 @@ app.post(
   verifyAccessToken.verifyAccessToken,
   makeRequest.makeRequest
 );
+
+app.get(
+  "/employee/notifications",
+  verifyAccessToken.verifyAccessToken,
+  allNotifications.getAllNotification
+)
+
+app.get(
+  "/employee/notifications/update/:notify_id",
+  verifyAccessToken.verifyAccessToken,
+  getupdateOfViwedNotificaion.getupdateOfViwedNotificaion
+)
+
+
+app.get("/employee/orders",
+verifyAccessToken.verifyAccessToken,
+allOrdersMade.getAllRequestMade
+)
+
+
 app.post("/getuserinfo/:username", userInfo.userInfo);
 
 app.post("/register", verifyAccessToken.verifyAccessToken, register.register);

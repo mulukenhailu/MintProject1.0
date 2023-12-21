@@ -3,7 +3,7 @@ const addApprovalByManager=require("../../utility/common/addApprovalByManager")
 
 function approveRequest(req, res){
 
-    let{receiver, remark}=req.body
+    let{remark}=req.body
 
     if (req.body.decoded.role != "manager" ){
         return res.sendStatus(401);
@@ -16,7 +16,7 @@ function approveRequest(req, res){
             console.log(data)
                 // if it exists add the request to the manager approved employee requeat DB using the same request id 
             if (data.Employee_Request && data.Employee_Request.length === 1){
-                addApprovalByManager.addApprovalByManager(req.params.id, data, receiver, remark)
+                addApprovalByManager.addApprovalByManager(req.params.id, data, remark)
                     .then((data)=>{
                         res.send(data);
                     })

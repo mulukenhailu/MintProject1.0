@@ -9,8 +9,39 @@ const client = new GraphQLClient(endpoint, {
 
 
   const doc=gql`
-  mutation MyMutation($id: uuid!, $item_no: Int!, $item_name: String!, $manager_username: String!, $employee_username: String!, $storehead_username: String!, $quantity_requested: Int!, $confirmation_number: Int!, $is_approved: Boolean!, $isApprovedByManager: Boolean!, $isApprovedByStoreHead: Boolean!, $isRejectedByManager: Boolean!, $isRejectedByStoreHead: Boolean!) {
-    insert_storeHeadApprovedEmpRequest_one(object: {id: $id, item_no: $item_no, item_name: $item_name, manager_username: $manager_username, employee_username: $employee_username, storehead_username: $storehead_username, quantity_requested: $quantity_requested, confirmation_number: $confirmation_number, is_approved: $is_approved, isApprovedByManager: $isApprovedByManager, isApprovedByStoreHead: $isApprovedByStoreHead, isRejectedByManager: $isRejectedByManager, isRejectedByStoreHead: $isRejectedByStoreHead}) {
+  mutation MyMutation(
+    $id: uuid!, 
+    $item_no: Int!, 
+    $item_name: String!, 
+    $manager_username: String!, 
+    $employee_username: String!, 
+    $storehead_username: String!, 
+    $quantity_requested: Int!, 
+    $confirmation_number: Int!, 
+    $is_approved: Boolean!, 
+    $isApprovedByManager: Boolean!, 
+    $isApprovedByStoreHead: Boolean!, 
+    $isRejectedByManager: Boolean!, 
+    $isRejectedByStoreHead: Boolean!,
+    $sender:String!, 
+    $receiver:String!, 
+    $description:String!
+    ) {
+    insert_storeHeadApprovedEmpRequest_one(object: {
+      id: $id, 
+      item_no: $item_no, 
+      item_name: $item_name, 
+      manager_username: $manager_username, 
+      employee_username: $employee_username, 
+      storehead_username: $storehead_username, 
+      quantity_requested: $quantity_requested, 
+      confirmation_number: $confirmation_number, 
+      is_approved: $is_approved, 
+      isApprovedByManager: $isApprovedByManager, 
+      isApprovedByStoreHead: $isApprovedByStoreHead, 
+      isRejectedByManager: $isRejectedByManager, 
+      isRejectedByStoreHead: $isRejectedByStoreHead
+    }) {
       id
       item_no
       item_name
@@ -25,22 +56,36 @@ const client = new GraphQLClient(endpoint, {
       isRejectedByManager
       isRejectedByStoreHead
     }
-    update_ManagerAppEmpRequest(where: {id: {_eq: $id}, isApprovedByStoreHead: {_eq: false}, isApprovedByManager: {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}, _set: {isApprovedByStoreHead: true}) {
-      affected_rows
-    }
-    update_Employee_Request(where: {id: {_eq: $id}}, _set: {isApprovedByStoreHead: true}) {
-      affected_rows
-    }
-  }
-  
-  
+        update_ManagerAppEmpRequest(where: {id: {_eq: $id}, isApprovedByStoreHead: {_eq: false}, isApprovedByManager: {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}, _set: {isApprovedByStoreHead: true}) {
+          affected_rows
+        }
+        update_Employee_Request(where: {id: {_eq: $id}}, _set: {isApprovedByStoreHead: true}) {
+          affected_rows
+        }
+      
+        insert_notification(objects: {
+          sender: $sender, 
+          receiver: $receiver, 
+          description: $description,
+          item_no:$item_no,
+          quantity_requested:$quantity_requested
+        }) {
+        returning {
+          Notify_Id
+          sender
+          receiver
+          description
+          isViwed
+        }
+      }
+      }
   `
 
   const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
   }
 
-  async function addApprovalByStoreHead(id, data){
+  async function addApprovalByStoreHead(id, data, remark){
 
     console.log(id, data);
 
@@ -57,8 +102,10 @@ const client = new GraphQLClient(endpoint, {
             isApprovedByManager:data.ManagerAppEmpRequest[0].isApprovedByManager,
             isApprovedByStoreHead:true,
             isRejectedByManager:data.ManagerAppEmpRequest[0].isRejectedByManager,
-            isRejectedByStoreHead:data.ManagerAppEmpRequest[0].isRejectedByStoreHead
-
+            isRejectedByStoreHead:data.ManagerAppEmpRequest[0].isRejectedByStoreHead,
+            sender:data.ManagerAppEmpRequest[0].manager_username, 
+            receiver:data.ManagerAppEmpRequest[0].employee_username,  
+            description: remark ? remark : "Accepted."
             }
 
             console.log(variables);

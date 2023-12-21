@@ -81,7 +81,7 @@ const requestHeaders = {
   }
 
 
-  async function addApprovalByManager(id, data, receiver, remark){
+  async function addApprovalByManager(id, data, remark){
             
             console.log(data.Employee_Request[0]);
 

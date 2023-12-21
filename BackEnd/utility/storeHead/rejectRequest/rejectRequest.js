@@ -9,8 +9,23 @@ const client = new GraphQLClient(endpoint, {
   })
 
   const doc=gql`
-  mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int!, $reasonOfRejection: String!) {
-    update_Employee_Request(where: {id: {_eq: $request_id}, _and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}, _set: {isRejectedByStoreHead: true, ReasonOfRejection: $reasonOfRejection}) {
+  mutation MyMutation(
+    $request_id: uuid!, 
+    $item_no: Int!, 
+    $quantity_requested: Int!, 
+    $sender:String!,
+    $receiver:String!,
+    $description:String!
+    ) {
+    update_Employee_Request(where: {
+      id: {_eq: $request_id}, 
+      _and: {isApprovedByManager: {_eq: true}, 
+            isApprovedByStoreHead: {_eq: false}, 
+            isRejectedByManager: {_eq: false}, 
+            isRejectedByStoreHead: {_eq: false}}}, 
+      _set: {
+        isRejectedByStoreHead: true
+      }) {
       returning {
         item_name
         item_no
@@ -39,7 +54,6 @@ const client = new GraphQLClient(endpoint, {
           productstatus
           updated_at
           request {
-            ReasonOfRejection
             isApprovedByManager
             isApprovedByStoreHead
             isRejectedByManager
@@ -48,7 +62,7 @@ const client = new GraphQLClient(endpoint, {
         }
       }
     }
-    update_ManagerAppEmpRequest(where: {id: {_eq: $request_id}, _and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}, _set: {isRejectedByStoreHead: true, reasonOfRejection: $reasonOfRejection}) {
+    update_ManagerAppEmpRequest(where: {id: {_eq: $request_id}, _and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}, _set: {isRejectedByStoreHead: true}) {
       returning {
         manager_username
         quantity_requested
@@ -88,20 +102,35 @@ const client = new GraphQLClient(endpoint, {
             productname
             productmodelnumber
             productmodel
-            request {
-              ReasonOfRejection
-            }
           }
         }
       }
     }
-    update_Item(where: {item_number: {_eq: $item_no}}, _inc: {productquantitynumber: $quantity_requested}) {
-      returning {
-        productquantitynumber
+          update_Item(where: {item_number: {_eq: $item_no}}, _inc: {productquantitynumber: $quantity_requested}) {
+            returning {
+              productquantitynumber
+            }
+          }
+
+
+          insert_notification(objects: {
+            sender: $sender, 
+            receiver: $receiver, 
+            description: $description, 
+            item_no:$item_no,
+            quantity_requested:$quantity_requested
+              }) {
+            returning {
+              Notify_Id
+              sender
+              receiver
+              description
+              isViwed
+              created_at
+              updated_at
+            }
+          }
       }
-    }
-  }
-  
   `
 
   const requestHeaders = {
@@ -109,13 +138,15 @@ const client = new GraphQLClient(endpoint, {
   }
 
 
-  async function rejectRequestByStoreHead(request_id, item_no, quantity_requested, reasonOfRejection){
+  async function rejectRequestByStoreHead(request_id, item_no, quantity_requested, reasonOfRejection, sender, receiver){
 
     const variables={
         request_id,
         item_no, 
         quantity_requested,
-        reasonOfRejection
+        sender, 
+        receiver,
+        description:reasonOfRejection
     };
 
     try{
