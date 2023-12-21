@@ -225,11 +225,21 @@ app.get("/welcome", (req, res) => {
 });
 
 app.post("/login", login.login);
-app.get(
-  "/getallitem",
-  verifyAccessToken.verifyAccessToken,
-  getAllItem.getAllItem
-);
+
+
+
+// app.get(
+//   "/getitem/:itemNo",
+//   verifyAccessToken.verifyAccessToken,
+//   getItem.getItem
+// );
+
+// app.get(
+//   "/getallitem",
+//   verifyAccessToken.verifyAccessToken,
+//   getAllItem.getAllItem
+// );
+
 app.post(
   "/updateprofile",
   verifyAccessToken.verifyAccessToken,
@@ -346,6 +356,12 @@ app.get(
   verifyAccessToken.verifyAccessToken,
   getItem.getItem
 );
+
+app.get(
+  "/storekeeper/getallitem",
+  verifyAccessToken.verifyAccessToken,
+  getAllItem.getAllItem
+);
 app.post(
   "/storekeeper/delete/:itemNo",
   verifyAccessToken.verifyAccessToken,
@@ -356,6 +372,8 @@ app.get("/storekeeper/transactions",
 verifyAccessToken.verifyAccessToken,
 transactions.history
 )
+
+
 
 app.post("/createitem", createItem.createItem);
 

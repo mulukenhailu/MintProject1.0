@@ -50,8 +50,6 @@ const client = new GraphQLClient(endpoint, {
       manager_username
     }
   }
-  
-  
   `
 
   const requestHeaders = {
@@ -60,10 +58,8 @@ const client = new GraphQLClient(endpoint, {
 
   async function acceptedRequest(manager_username){
 
-
-
     const variables={
-        manager_username
+        manager_username,
     }
 
     try{

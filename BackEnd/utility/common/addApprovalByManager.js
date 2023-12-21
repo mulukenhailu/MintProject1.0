@@ -9,9 +9,9 @@ const client = new GraphQLClient(endpoint, {
   },
 })
 
-
   const document=gql`
-  mutation MyMutation($id: uuid!, 
+  mutation MyMutation(
+    $id: uuid!, 
     $item_no: Int!, 
     $item_name: String!, 
     $quantity_requested: Int!, 
@@ -22,7 +22,10 @@ const client = new GraphQLClient(endpoint, {
     $isApprovedByManager: Boolean!,
     $isApprovedByStoreHead: Boolean!,
     $isRejectedByManager: Boolean!,
-    $isRejectedByStoreHead: Boolean!
+    $isRejectedByStoreHead: Boolean!, 
+    $sender:String!, 
+    $receiver:String!, 
+    $description:String!
     ) {
     insert_ManagerAppEmpRequest_one(object: {
       id: $id, 
@@ -55,8 +58,22 @@ const client = new GraphQLClient(endpoint, {
     update_Employee_Request(where: {id: {_eq: $id}}, _set: {isApprovedByManager: true}) {
       affected_rows
     }
-  }
-  
+      insert_notification(objects: {
+        sender: $sender, 
+        receiver: $receiver, 
+        description: $description,
+        item_no:$item_no,
+        quantity_requested:$quantity_requested
+      }) {
+      returning {
+        Notify_Id
+        sender
+        receiver
+        description
+        isViwed
+      }
+    }
+  } 
 `
 
 const requestHeaders = {
@@ -64,7 +81,7 @@ const requestHeaders = {
   }
 
 
-  async function addApprovalByManager(id, data){
+  async function addApprovalByManager(id, data, receiver, remark){
             
             console.log(data.Employee_Request[0]);
 
@@ -80,7 +97,10 @@ const requestHeaders = {
                             isApprovedByManager:true,
                             isApprovedByStoreHead:data.Employee_Request[0].isApprovedByStoreHead,
                             isRejectedByManager:data.Employee_Request[0].isRejectedByManager,
-                            isRejectedByStoreHead:data.Employee_Request[0].isRejectedByStoreHead
+                            isRejectedByStoreHead:data.Employee_Request[0].isRejectedByStoreHead,
+                            sender:data.Employee_Request[0].manager_username,
+                            receiver:data.Employee_Request[0].employee_username, 
+                            description: remark ? remark : "Accepted."
                             }
 
                         console.log(variables);

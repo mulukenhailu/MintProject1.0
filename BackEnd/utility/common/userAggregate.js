@@ -79,15 +79,23 @@ async function userAggregate(id, user_name){
             else{
 
               const doc=gql`
-              query MyQuery ($role_id:Int!, $user_name:String!)@cached {
-                    User(where: {_and: {role_id: {_eq: $role_id}, user_name: {_eq: $user_name}}}) {
-                      first_name
-                      last_name
-                      role_id
-                      user_name
-                      manager_username
-                    }
-                  }              
+              query MyQuery($role_id: Int!, $user_name: String!) @cached {
+                User(where: {_and: {role_id: {_eq: $role_id}, user_name: {_eq: $user_name}}}) {
+                  first_name
+                  last_name
+                  user_name
+                  manager_username
+                  created_at
+                  department
+                  email
+                  phone_number
+                  profile_picture
+                  updated_at
+                  Role {
+                    role_name
+                  }
+                }
+              }                      
               `
 
              const variables={

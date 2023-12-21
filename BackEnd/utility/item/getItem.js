@@ -9,16 +9,23 @@ const client = new GraphQLClient(endpoint, {
   })
 
   const doc=gql`
-        query MyQuery ($itemNumber:Int!){
-            Item(where: {item_number: {_eq:$itemNumber}}) {
-            productname
-            item_number
-            productphoto
-            productstatus
-            productquantitynumber
-            productdescription
-            }
-        }
+  query MyQuery($itemNumber: Int!) {
+    Item(where: {item_number: {_eq: $itemNumber}}) {
+      productname
+      item_number
+      productphoto
+      productstatus
+      productquantitynumber
+      productdescription
+      productmodel
+      productmodelnumber
+      productsource
+      productstandardtype
+      created_at
+      updated_at
+    }
+  }
+  
   `
   const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
