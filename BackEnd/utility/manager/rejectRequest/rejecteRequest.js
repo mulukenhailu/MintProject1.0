@@ -15,6 +15,9 @@ const doc=gql     `
                       $sender:String!,
                       $receiver:String!,
                       $description:String!
+                      $senderFirstName:String!, 
+                      $senderLastName:String!, 
+                      $senderProfilePicture:String!
                       ) {
                       update_Employee_Request(where: {_and: {id: {_eq: $request_id}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}}},
                         _set: {isRejectedByManager: true}) {
@@ -48,6 +51,9 @@ const doc=gql     `
                         description: $description, 
                         item_no:$item_no,
                         quantity_requested:$quantity_requested
+                        senderFirstName:$senderFirstName, 
+                        senderLastName:$senderLastName, 
+                        senderProfilePicture:$senderProfilePicture
                       }) {
                         returning {
                           Notify_Id
@@ -55,6 +61,9 @@ const doc=gql     `
                           receiver
                           description
                           isViwed
+                          senderFirstName
+                          senderLastName
+                          senderProfilePicture
                           created_at
                           updated_at
                         }
@@ -66,9 +75,10 @@ const requestHeaders = {
   }
 
 
- async function rejectRequestByManager(request_id, item_no, quantity_requested, reasonOfRejection, sender, receiver){
+ async function rejectRequestByManager(request_id, item_no, quantity_requested, reasonOfRejection, sender, receiver, senderFirstName, senderLastName, senderProfilePicture){
 
-    console.log(request_id, item_no, quantity_requested, reasonOfRejection, sender)
+    console.log(request_id, item_no, quantity_requested, reasonOfRejection, sender, 
+      senderFirstName, senderLastName, senderProfilePicture)
 
     const variables={
       request_id,
@@ -76,7 +86,10 @@ const requestHeaders = {
       quantity_requested,
       sender,
       receiver,
-      description:reasonOfRejection
+      description:reasonOfRejection,
+      senderFirstName, 
+      senderLastName, 
+      senderProfilePicture
     }
 
     console.log(variables)

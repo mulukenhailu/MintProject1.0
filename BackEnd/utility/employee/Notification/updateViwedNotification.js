@@ -9,7 +9,7 @@ const client = new GraphQLClient(endpoint, {
   })
 
   const doc=gql`
-  mutation MyMutation ($notify_id:uuid!){
+  mutation MyMutation($notify_id: uuid!) {
     update_notification(where: {_and: {Notify_Id: {_eq: $notify_id}, isViwed: {_eq: false}}}, _set: {isViwed: true}) {
       returning {
         Notify_Id
@@ -21,9 +21,13 @@ const client = new GraphQLClient(endpoint, {
         isViwed
         created_at
         updated_at
+        sender_FirstName
+        sender_LastName
+        sender_ProfilePicture
       }
     }
   }
+  
   `
 
   const requestHeaders = {

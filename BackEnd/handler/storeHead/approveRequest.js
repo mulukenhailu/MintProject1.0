@@ -12,7 +12,7 @@ function approveRequestByStoreHead(req, res){
     console.log(req.params.id);
     console.log(req.body.decoded);
 
-    let{remark}=req.body
+    let{remark, senderFirstName, senderLastName, senderProfilePicture}=req.body
 
     if (req.body.decoded.role != "storehead"){
         return res.sendStatus(401);
@@ -22,7 +22,7 @@ function approveRequestByStoreHead(req, res){
         .then((data)=>{
             console.log(">>>>", data)
             if(data.ManagerAppEmpRequest && data.ManagerAppEmpRequest.length === 1){
-                addApprovalByStoreHead.addApprovalByStoreHead(req.params.id, data, remark)
+                addApprovalByStoreHead.addApprovalByStoreHead(req.params.id, data, remark, senderFirstName, senderLastName, senderProfilePicture)
                     .then((data)=>{
                         res.send(data)
                     })

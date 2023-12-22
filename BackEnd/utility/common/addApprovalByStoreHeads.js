@@ -25,7 +25,10 @@ const client = new GraphQLClient(endpoint, {
     $isRejectedByStoreHead: Boolean!,
     $sender:String!, 
     $receiver:String!, 
-    $description:String!
+    $description:String!,
+    $senderFirstName:senderFirstName!,
+    $senderLastName:senderLastName!, 
+    $senderProfilePicture:senderProfilePicture!
     ) {
     insert_storeHeadApprovedEmpRequest_one(object: {
       id: $id, 
@@ -69,6 +72,9 @@ const client = new GraphQLClient(endpoint, {
           description: $description,
           item_no:$item_no,
           quantity_requested:$quantity_requested
+          senderFirstName:$senderFirstName, 
+          senderLastName:$senderLastName, 
+          senderProfilePicture:$senderProfilePicture
         }) {
         returning {
           Notify_Id
@@ -76,6 +82,9 @@ const client = new GraphQLClient(endpoint, {
           receiver
           description
           isViwed
+          senderFirstName 
+          senderLastName 
+          senderProfilePicture
         }
       }
       }
@@ -85,7 +94,7 @@ const client = new GraphQLClient(endpoint, {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
   }
 
-  async function addApprovalByStoreHead(id, data, remark){
+  async function addApprovalByStoreHead(id, data, remark, senderFirstName, senderLastName, senderProfilePicture){
 
     console.log(id, data);
 
@@ -105,7 +114,10 @@ const client = new GraphQLClient(endpoint, {
             isRejectedByStoreHead:data.ManagerAppEmpRequest[0].isRejectedByStoreHead,
             sender:data.ManagerAppEmpRequest[0].manager_username, 
             receiver:data.ManagerAppEmpRequest[0].employee_username,  
-            description: remark ? remark : "Accepted."
+            description: remark ? remark : "Accepted.",
+            senderFirstName,
+            senderLastName, 
+            senderProfilePicture
             }
 
             console.log(variables);

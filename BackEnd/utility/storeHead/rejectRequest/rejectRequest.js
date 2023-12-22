@@ -16,6 +16,9 @@ const client = new GraphQLClient(endpoint, {
     $sender:String!,
     $receiver:String!,
     $description:String!
+    $senderFirstName:String!, 
+    $senderLastName:String!, 
+    $senderProfilePicture:String!
     ) {
     update_Employee_Request(where: {
       id: {_eq: $request_id}, 
@@ -119,6 +122,9 @@ const client = new GraphQLClient(endpoint, {
             description: $description, 
             item_no:$item_no,
             quantity_requested:$quantity_requested
+            senderFirstName:$senderFirstName, 
+            senderLastName:$senderLastName, 
+            senderProfilePicture:$senderProfilePicture
               }) {
             returning {
               Notify_Id
@@ -128,6 +134,9 @@ const client = new GraphQLClient(endpoint, {
               isViwed
               created_at
               updated_at
+              senderFirstName
+              senderLastName
+              senderProfilePicture
             }
           }
       }
@@ -138,7 +147,8 @@ const client = new GraphQLClient(endpoint, {
   }
 
 
-  async function rejectRequestByStoreHead(request_id, item_no, quantity_requested, reasonOfRejection, sender, receiver){
+  async function rejectRequestByStoreHead(request_id, item_no, quantity_requested, reasonOfRejection, sender, receiver, 
+    senderFirstName, senderLastName, senderProfilePicture){
 
     const variables={
         request_id,
@@ -146,7 +156,10 @@ const client = new GraphQLClient(endpoint, {
         quantity_requested,
         sender, 
         receiver,
-        description:reasonOfRejection
+        description:reasonOfRejection,
+        senderFirstName, 
+        senderLastName, 
+        senderProfilePicture
     };
 
     try{

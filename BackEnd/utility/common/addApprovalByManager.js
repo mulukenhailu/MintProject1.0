@@ -26,6 +26,9 @@ const client = new GraphQLClient(endpoint, {
     $sender:String!, 
     $receiver:String!, 
     $description:String!
+    $senderFirstName:String!, 
+    $senderLastName:String!, 
+    $senderProfilePicture:String!
     ) {
     insert_ManagerAppEmpRequest_one(object: {
       id: $id, 
@@ -63,7 +66,10 @@ const client = new GraphQLClient(endpoint, {
         receiver: $receiver, 
         description: $description,
         item_no:$item_no,
-        quantity_requested:$quantity_requested
+        quantity_requested:$quantity_requested,
+        senderFirstName:$senderFirstName,
+        senderLastName:$senderLastName, 
+        senderProfilePicture:$senderProfilePicture
       }) {
       returning {
         Notify_Id
@@ -81,7 +87,7 @@ const requestHeaders = {
   }
 
 
-  async function addApprovalByManager(id, data, remark){
+  async function addApprovalByManager(id, data, remark, senderFirstName, senderLastName, senderProfilePicture){
             
             console.log(data.Employee_Request[0]);
 
@@ -100,7 +106,10 @@ const requestHeaders = {
                             isRejectedByStoreHead:data.Employee_Request[0].isRejectedByStoreHead,
                             sender:data.Employee_Request[0].manager_username,
                             receiver:data.Employee_Request[0].employee_username, 
-                            description: remark ? remark : "Accepted."
+                            description: remark ? remark : "Accepted.",
+                            senderFirstName, 
+                            senderLastName, 
+                            senderProfilePicture
                             }
 
                         console.log(variables);
