@@ -305,7 +305,7 @@ app.get(
 );
 
 app.post(
-  "/manager/rejectedrequest/:id/:item_no/:quantity_requested",
+  "/manager/rejectrequest/:id/:item_no/:quantity_requested",
   verifyAccessToken.verifyAccessToken,
   managerReject.managerRejectRequest
 );

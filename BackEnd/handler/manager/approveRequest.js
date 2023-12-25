@@ -16,6 +16,7 @@ function approveRequest(req, res){
             console.log(data)
                 // if it exists add the request to the manager approved employee requeat DB using the same request id 
             if (data.Employee_Request && data.Employee_Request.length === 1){
+                console.log("we are here")
                 addApprovalByManager.addApprovalByManager(req.params.id, data, remark, senderFirstName, senderLastName, senderProfilePicture)
                     .then((data)=>{
                         res.send(data);

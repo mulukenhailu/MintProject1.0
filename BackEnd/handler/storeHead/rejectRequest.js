@@ -2,8 +2,9 @@ const storeHeadRejectEmployeeRequest=require("../../utility/storeHead/rejectRequ
 
 async function storeHeadRejectEmployeeReq(req, res){
 
-    let{reason, receiver}=req.body
-    console.log(req.params.id, req.params.item_no, req.params.quantity_requested, reason, receiver, senderFirstName, senderLastName, senderProfilePicture)
+    let{reason, receiver, senderFirstName, senderLastName, senderProfilePicture}=req.body
+    console.log(req.params.id, req.params.item_no, req.params.quantity_requested, reason, receiver, 
+        senderFirstName, senderLastName, senderProfilePicture)
     
     storeHeadRejectEmployeeRequest.rejectRequestByStoreHead(
         req.params.id, 

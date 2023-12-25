@@ -77,6 +77,9 @@ const client = new GraphQLClient(endpoint, {
         receiver
         description
         isViwed
+        senderFirstName
+        senderLastName
+        senderProfilePicture
       }
     }
   } 

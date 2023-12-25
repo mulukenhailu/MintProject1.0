@@ -26,9 +26,9 @@ const client = new GraphQLClient(endpoint, {
     $sender:String!, 
     $receiver:String!, 
     $description:String!,
-    $senderFirstName:senderFirstName!,
-    $senderLastName:senderLastName!, 
-    $senderProfilePicture:senderProfilePicture!
+    $senderFirstName:String!,
+    $senderLastName:String!, 
+    $senderProfilePicture:String!
     ) {
     insert_storeHeadApprovedEmpRequest_one(object: {
       id: $id, 
@@ -71,7 +71,7 @@ const client = new GraphQLClient(endpoint, {
           receiver: $receiver, 
           description: $description,
           item_no:$item_no,
-          quantity_requested:$quantity_requested
+          quantity_requested:$quantity_requested,
           senderFirstName:$senderFirstName, 
           senderLastName:$senderLastName, 
           senderProfilePicture:$senderProfilePicture
@@ -112,7 +112,7 @@ const client = new GraphQLClient(endpoint, {
             isApprovedByStoreHead:true,
             isRejectedByManager:data.ManagerAppEmpRequest[0].isRejectedByManager,
             isRejectedByStoreHead:data.ManagerAppEmpRequest[0].isRejectedByStoreHead,
-            sender:data.ManagerAppEmpRequest[0].manager_username, 
+            sender:data.ManagerAppEmpRequest[0].storehead_username, 
             receiver:data.ManagerAppEmpRequest[0].employee_username,  
             description: remark ? remark : "Accepted.",
             senderFirstName,

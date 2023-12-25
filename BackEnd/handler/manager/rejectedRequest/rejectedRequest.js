@@ -1,6 +1,8 @@
 const rejectRequestByManager=require("../../../utility/manager/rejectRequest/rejecteRequest")
 async function managerRejectRequest(req, res){
+
     let{reason, receiver, senderFirstName, senderLastName, senderProfilePicture}=req.body
+    
     rejectRequestByManager.rejectRequestByManager(
         req.params.id, 
         req.params.item_no, 
