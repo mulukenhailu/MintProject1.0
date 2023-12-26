@@ -196,7 +196,8 @@ const cookieParser = require("cookie-parser");
 
 const cors = require("cors");
 
-
+const uploads=require("./utility/ImageUpload/configupload")
+const {uploadfunc}=require("./utility/ImageUpload/imageupload")
 
 const adminupdateProfile = require("./handler/Admin/adminUpdateProfile");
 
@@ -223,6 +224,8 @@ app.use(credentials);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
+
+app.use(express.static(__dirname + '/public'));
 app.use("/uploads", express.static(__dirname + "/public/assets/images"));
 
 app.get("/welcome", (req, res) => {
@@ -393,21 +396,25 @@ app.post("/createitem", createItem.createItem);
 
 
 
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, path.join(__dirname, "./public/assets/images"));
-  },
-  filename(req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination(req, file, cb) {
+//     cb(null, path.join(__dirname, "./public/assets/images"));
+//   },
+//   filename(req, file, cb) {
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
-app.post("/upload", upload.single("image"), (req, res) => {
-  console.log(req.file);
-  res.send(req.file.filename);
-});
+// app.post("/upload", upload.single("image"), (req, res) => {
+//   console.log(req.file);
+//   res.send(req.file.filename);
+// });
+
+
+
+app.post("/upload", uploads.single("image"), uploadfunc);
 
 app.listen(process.env.PORT || PORT, () => {
   console.log(`server started on port ${PORT}`);
