@@ -21,9 +21,9 @@ const client = new GraphQLClient(endpoint, {
         isViwed
         created_at
         updated_at
-        sender_FirstName
-        sender_LastName
-        sender_ProfilePicture
+        senderFirstName
+        senderLastName
+        senderProfilePicture
       }
     }
   }
