@@ -100,6 +100,8 @@ export default function Sidebar() {
 
   const handleLogOut = () => {
     navigate("/");
+    localStorage.removeItem("persist:root");
+    localStorage.removeItem("my_app_store");
   };
 
   return (
@@ -121,7 +123,7 @@ export default function Sidebar() {
             disablePadding
             sx={{
               display: "block",
-              padding: { md: "0px 5px 0px 0px" },
+              padding: { md: "0px 15px 0px 0px" },
               color: "black",
               background: isActive("home") ? "lightgray" : "transparent",
             }}
@@ -149,7 +151,7 @@ export default function Sidebar() {
                 sx={{
                   opacity: open ? 1 : 0,
                   display: { xs: "none", md: "block" },
-                  color: "gray",
+                  color: "#12596B",
                 }}
               />
             </ListItemButton>
@@ -186,7 +188,7 @@ export default function Sidebar() {
                 sx={{
                   opacity: open ? 1 : 0,
                   display: { xs: "none", md: "block" },
-                  color: "gray",
+                  color: "#12596B",
                 }}
               />
             </ListItemButton>
@@ -223,7 +225,7 @@ export default function Sidebar() {
                 sx={{
                   opacity: open ? 1 : 0,
                   display: { xs: "none", md: "block" },
-                  color: "gray",
+                  color: "#12596B",
                 }}
               />
             </ListItemButton>
@@ -261,7 +263,7 @@ export default function Sidebar() {
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
-                    color: "gray",
+                    color: "#12596B",
                   }}
                 />
               </ListItemButton>
@@ -303,7 +305,7 @@ export default function Sidebar() {
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
-                    color: "gray",
+                    color: "#12596B",
                   }}
                 />
               </ListItemButton>
@@ -344,7 +346,7 @@ export default function Sidebar() {
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
-                    color: "gray",
+                    color: "#12596B",
                   }}
                 />
               </ListItemButton>
@@ -386,7 +388,7 @@ export default function Sidebar() {
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
-                    color: "gray",
+                    color: "#12596B",
                   }}
                 />
               </ListItemButton>
@@ -428,7 +430,7 @@ export default function Sidebar() {
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
-                    color: "gray",
+                    color: "#12596B",
                   }}
                 />
               </ListItemButton>
@@ -468,7 +470,7 @@ export default function Sidebar() {
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
-                    color: "gray",
+                    color: "#12596B",
                   }}
                 />
               </ListItemButton>
@@ -510,7 +512,7 @@ export default function Sidebar() {
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
-                    color: "gray",
+                    color: "#12596B",
                   }}
                 />
               </ListItemButton>

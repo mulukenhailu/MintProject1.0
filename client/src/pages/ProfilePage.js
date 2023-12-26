@@ -269,8 +269,12 @@ const ProfilePage = () => {
                                 padding: 2,
                               }}
                             >
-                              <TableCell>{row.label}</TableCell>
-                              <TableCell>{row.value}</TableCell>
+                              <TableCell sx={{ color: "#12596B" }}>
+                                {row.label}
+                              </TableCell>
+                              <TableCell sx={{ color: "#12596B" }}>
+                                {row.value}
+                              </TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
@@ -284,7 +288,7 @@ const ProfilePage = () => {
                 <Box p={5}>
                   <Typography
                     variant="h5"
-                    color={"#112846"}
+                    color={"#12596B"}
                     textAlign={"center"}
                   >
                     Update Profile
@@ -292,7 +296,7 @@ const ProfilePage = () => {
                   {loadingUploadingImage && (
                     <Box sx={{ textAlign: "center" }}>
                       <ClipLoader
-                        color={"#36d7b7"}
+                        color={"#12596B"}
                         loading={loadingUploadingImage}
                         size={50}
                         aria-label="Loading Spinner"
@@ -303,7 +307,7 @@ const ProfilePage = () => {
                   {loadingEdit && (
                     <Box sx={{ textAlign: "center" }}>
                       <ClipLoader
-                        color={"#36d7b7"}
+                        color={"#12596B"}
                         loading={loadingEdit}
                         size={50}
                         aria-label="Loading Spinner"
@@ -341,7 +345,9 @@ const ProfilePage = () => {
                   )}
 
                   <Box>
-                    <InputLabel htmlFor="first_name">First Name</InputLabel>
+                    <InputLabel htmlFor="first_name" sx={{ color: "#12596B" }}>
+                      First Name
+                    </InputLabel>
                     <TextField
                       fullWidth
                       id="first_name"
@@ -350,7 +356,9 @@ const ProfilePage = () => {
                       onChange={handleFormChange}
                       sx={{ backgroundColor: "#F6F5F5", marginBottom: 2 }}
                     />
-                    <InputLabel htmlFor="last_name">Last Name</InputLabel>
+                    <InputLabel htmlFor="last_name" sx={{ color: "#12596B" }}>
+                      Last Name
+                    </InputLabel>
                     <TextField
                       fullWidth
                       name="last_name"
@@ -358,7 +366,9 @@ const ProfilePage = () => {
                       onChange={handleFormChange}
                       sx={{ backgroundColor: "#F6F5F5", marginBottom: 1 }}
                     />
-                    <InputLabel htmlFor="email">Email</InputLabel>
+                    <InputLabel htmlFor="email" sx={{ color: "#12596B" }}>
+                      Email
+                    </InputLabel>
                     <TextField
                       fullWidth
                       name="email"
@@ -366,7 +376,12 @@ const ProfilePage = () => {
                       onChange={handleFormChange}
                       sx={{ backgroundColor: "#F6F5F5", marginBottom: 1 }}
                     />
-                    <InputLabel htmlFor="phone_number">Phone Number</InputLabel>
+                    <InputLabel
+                      htmlFor="phone_number"
+                      sx={{ color: "#12596B" }}
+                    >
+                      Phone Number
+                    </InputLabel>
                     <TextField
                       fullWidth
                       name="phone_number"

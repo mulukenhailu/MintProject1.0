@@ -9,6 +9,11 @@ const ListItemForModal = styled(ListItem)({
   alignItems: "center",
   gap: "20px",
 });
+const ListItemForModalDescription = styled(ListItem)({
+  display: "flex",
+  alignItems: "flex-start",
+  gap: "20px",
+});
 
 const RequestDetailPageComponent = () => {
   const [notification, setNotification] = useState({});
@@ -103,34 +108,45 @@ const RequestDetailPageComponent = () => {
             <Box sx={{ width: "300px", height: "300px" }}>
               <img
                 src={`${PF}${notification?.senderProfilePicture}`}
-                alt="test"
+                alt="NaN"
                 crossOrigin="anonymous"
                 style={{
                   width: "100%",
                   height: "100%",
                   borderRadius: "50%",
-                  objectFit: "cover",
+                  objectFit: "contain",
                   border: "1px solid #12596B",
                 }}
               />
             </Box>
           </Box>
-          <Box sx={{ display: "flex", gap: "20px", marginBottom: "30px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: "20px",
+              marginBottom: "30px",
+              position: "relative",
+            }}
+          >
             <Box>
-              <Typography variant="h5" color={"#12596B"}>
+              <Typography
+                variant="h5"
+                color={"#12596B"}
+                sx={{ position: "absolute", top: "0px", right: "0px" }}
+              >
                 Product Photo
               </Typography>
             </Box>
             <Box sx={{ width: "300px", height: "300px" }}>
               <img
                 src={`${PF}${property?.productphoto}`}
-                alt="test"
+                alt="NaN"
                 crossOrigin="anonymous"
                 style={{
                   width: "100%",
                   height: "100%",
                   borderRadius: "50%",
-                  objectFit: "cover",
+                  objectFit: "contain",
                   border: "1px solid #12596B",
                 }}
               />
@@ -230,6 +246,24 @@ const RequestDetailPageComponent = () => {
                 {notification?.quantity_requested}
               </Typography>
             </ListItemForModal>
+            <ListItemForModalDescription>
+              <Typography
+                variant="h6"
+                flex={4}
+                sx={{ color: "#12596B" }}
+                fontWeight={500}
+              >
+                Description:
+              </Typography>
+              <Typography
+                variant="body1"
+                flex={4}
+                sx={{ color: "#12596B" }}
+                fontWeight={400}
+              >
+                {notification?.description}
+              </Typography>
+            </ListItemForModalDescription>
           </List>
         </Box>
       </Box>

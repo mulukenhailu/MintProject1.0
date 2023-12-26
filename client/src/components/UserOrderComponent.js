@@ -88,7 +88,7 @@ const UserOrderComponent = () => {
   );
 
   if (!orders || orders.length === 0) {
-    return <Box sx={{ padding: "20px 0px 0px 135px" }}>No order yet</Box>;
+    return <Box sx={{ padding: "20px 0px 0px 155px" }}>No order yet</Box>;
   }
   return (
     <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={3} paddingBottom={5}>
