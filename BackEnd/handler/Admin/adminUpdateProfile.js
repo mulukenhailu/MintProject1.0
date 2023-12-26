@@ -11,37 +11,54 @@ const client = new GraphQLClient(endpoint, {
 })
 
 const doc = gql`
-  mutation updateProfile(
-    $user_name:String!, 
-    $first_name: String, 
-    $last_name: String,
-    $email: String!, 
-    $phone_number: Int!, 
-    $department:String!,
-    $Password:String!,
-    $manager_username:String!
-    ){
-    update_User_by_pk(pk_columns: {user_name: $user_name}, _set: 
-       {
-        first_name:$first_name, 
-        last_name:$last_name, 
-        email:$email, 
-        phone_number:$phone_number, 
-        department:$department,
-        manager_username:$manager_username,
-        Password:$Password
-      }) {
-        first_name
-        last_name
-        profile_picture
-        email
-        department
-        manager_username
-        Role {
-          role_name
-        }
-      }
+mutation updateProfile(
+  $user_name: String!, 
+  $first_name: String, 
+  $last_name: String, 
+  $email: String!, 
+  $phone_number: Int!, 
+  $department: String!, 
+  $Password: String!, 
+  $manager_username: String!
+  ) {
+  update_User_by_pk(pk_columns: {user_name: $user_name}, 
+    _set: {first_name: $first_name, 
+      last_name: $last_name, 
+      email: $email, 
+      phone_number: $phone_number, 
+      department: $department, 
+      manager_username: $manager_username, 
+      Password: $Password
+    }) {
+    first_name
+    last_name
+    profile_picture
+    email
+    department
+    manager_username
+    Role {
+      role_name
+    }
   }
+  update_notification(where: {sender: {_eq: $user_name}}, 
+    _set: {senderFirstName: $first_name, senderLastName: $last_name}) {
+    returning {
+      sender
+      receiver
+      senderFirstName
+      senderLastName
+      senderProfilePicture
+      item_no
+      quantity_requested
+      description
+      isViwed
+      Notify_Id
+      created_at
+      updated_at
+    }
+  }
+}
+
 `
 
 const requestHeaders = {
