@@ -17,6 +17,8 @@ const PropertyList = () => {
   useEffect(() => {
     dispatch({ type: GET_PROPERTIES });
   }, [dispatch]);
+
+  console.log("sortedProperty", sortedProperty);
   return (
     <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
       <SearchForm />
