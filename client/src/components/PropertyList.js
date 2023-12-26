@@ -1,19 +1,30 @@
-import React, { useEffect } from "react";
-import { Box, Grid } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Grid,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
 import Card from "./PropertyCard";
 import { GET_PROPERTIES } from "../State/ReduxSaga/Types/propertyType";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
-import SearchForm from "./SearchForm";
+import SearchIcon from "@mui/icons-material/Search";
 
 const PropertyList = () => {
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
   const { allProperty, loadingProperty, errorProperty } = useSelector(
     (state) => state.property
   );
-  const sortedProperty = [...allProperty].sort(
-    (a, b) => new Date(b.created_at) - new Date(a.created_at)
-  );
+
+  const sortedProperty = [...allProperty]
+    .filter((property) =>
+      property.productname.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
   useEffect(() => {
     dispatch({ type: GET_PROPERTIES });
   }, [dispatch]);
@@ -21,7 +32,33 @@ const PropertyList = () => {
   console.log("sortedProperty", sortedProperty);
   return (
     <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
-      <SearchForm />
+      <Box
+        sx={{
+          width: "60%",
+          margin: "auto",
+          marginBottom: "30px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <TextField
+          type="text"
+          fullWidth
+          placeholder="Search by Product Name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment>
+                <IconButton>
+                  <SearchIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
       {loadingProperty ? (
         <Box
           sx={{

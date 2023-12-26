@@ -18,7 +18,7 @@ const CreateUserPage = () => {
             justifyContent: "center",
           }}
         >
-          <Box paddingLeft={{ xs: 15, md: 20 }} padding={5}>
+          <Box paddingLeft={{ xs: 15, md: 20 }} padding={7}>
             <CreateUser />
           </Box>
         </Box>
