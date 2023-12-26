@@ -14,6 +14,8 @@ import {
   List,
   ListItem,
   Typography,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -22,6 +24,7 @@ import { GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER } from "../../State/ReduxSaga/
 import { useSelector, useDispatch } from "react-redux";
 import { UserDetailsModal } from "./UserDetailsModal";
 import PropertyDetails from "./PropertyDetails";
+import SearchIcon from "@mui/icons-material/Search";
 
 const ProductDetailContainer = styled(Modal)({
   display: "flex",
@@ -54,12 +57,19 @@ const History = () => {
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [itemNo, setItemNo] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     dispatch({ type: GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER });
   }, []);
 
   const { allRequest } = useSelector((state) => state.request);
+
+  const sortedRequest = [...allRequest]
+    .filter((user) =>
+      user.employee_username.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
 
   if (allRequest.length === 0 || allRequest === "Empty") {
     return <Box>No order requested</Box>;
@@ -68,6 +78,33 @@ const History = () => {
   return (
     <Box>
       <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={4} paddingBottom={5}>
+        <Box
+          sx={{
+            width: "60%",
+            margin: "auto",
+            marginBottom: "10px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <TextField
+            type="text"
+            fullWidth
+            placeholder="Search by Product Name"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment>
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
         <TableContainer component={Paper} sx={{ bgcolor: "#f7f7f7" }}>
           <Table>
             <TableHead sx={{ background: "#bbb", color: "#fff" }}>
@@ -88,7 +125,7 @@ const History = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {allRequest?.map((item, index) => (
+              {sortedRequest?.map((item, index) => (
                 <TableRow key={index}>
                   <TableCell
                     sx={{ textAlign: "center", cursor: "pointer" }}

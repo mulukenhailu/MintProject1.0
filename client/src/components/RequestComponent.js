@@ -43,7 +43,7 @@ const RequestComponent = () => {
 
   if (notifications.length === 0) {
     return (
-      <Box sx={{ padding: "20px 0px 0px 135px" }}>No notification yet</Box>
+      <Box sx={{ padding: "20px 0px 0px 165px" }}>No notification yet</Box>
     );
   }
   return (

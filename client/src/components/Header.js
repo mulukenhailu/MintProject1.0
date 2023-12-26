@@ -153,7 +153,6 @@ export default function Header() {
       <MenuItem onClick={handleMenuClose} component={Link} to="/profile">
         Profile
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 
@@ -175,20 +174,12 @@ export default function Header() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={notificationLength} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -228,18 +219,26 @@ export default function Header() {
             aria-haspopup="true"
             color="inherit"
           >
-            <Avatar
-              alt="MinT"
-              src="/assets/Logo.jpg"
-              sx={{ width: 55, height: 55 }}
-            />
+            <Box component={Link} to={"/home"}>
+              <img
+                src="/assets/Logo.jpg"
+                alt="NaN"
+                crossOrigin="anonymous"
+                style={{
+                  width: "100px",
+                  height: "55px",
+                  objectFit: "contain",
+                  border: "2px solid #12596B",
+                }}
+              />
+            </Box>
           </IconButton>
           <Typography
             variant="h6"
             color="success"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block", color: "gray" } }}
+            sx={{ display: { xs: "none", sm: "block", color: "#12596B" } }}
           >
             MinT-Store
           </Typography>
