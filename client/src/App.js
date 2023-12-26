@@ -13,10 +13,13 @@ import AllManagersRequestPage from "./pages/ManagerPages/AllManagersRequestPage"
 import EditUserPage from "./pages/AdminPages/UpdateUserPage";
 import ForgetPasswordPage from "./pages/forgetPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import UserOrdersPage from "./pages/UserOrdersPage";
 import { Routes, Route } from "react-router-dom";
 import CreateProductPage from "./pages/StoreKeeper/CreateProductPage";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import RequestPage from "./pages/RequestPage";
+import RequestPageDetail from "./pages/RequestPageDetail";
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
@@ -33,6 +36,9 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/userorder" element={<UserOrdersPage />} />
+        <Route path="/notification" element={<RequestPage />} />
+        <Route path="/notification/:id" element={<RequestPageDetail />} />
         <Route path="/details/:id" element={<DetailsProductPage />} />
         {role_name === "admin" && (
           <Route path="/usersList" element={<UsersListPage />} />

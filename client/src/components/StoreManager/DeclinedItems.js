@@ -72,6 +72,10 @@ const DeclinedItemsComponent = () => {
     setDetailModals(updatedDetailModals);
   };
 
+  const sortedAllRequest = [...allRequest].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   if (allRequest.length === 0 || allRequest === "Empty") {
@@ -79,7 +83,7 @@ const DeclinedItemsComponent = () => {
   }
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      {allRequest?.map((item, index) => (
+      {sortedAllRequest?.map((item, index) => (
         <React.Fragment>
           <Grid item xs={12} sm={6} lg={4}>
             <Card

@@ -89,13 +89,13 @@ const AcceptModalWrapper = styled(Box)({
 
 const StorekeeperPendingItems = () => {
   const dispatch = useDispatch();
+  const { allRequest } = useSelector((state) => state.request);
   const [detailModals, setDetailModals] = useState([]);
   const [acceptModals, setAcceptModals] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [response, setResponse] = useState(null);
   const [confirmationNumber, setConfirmationNumber] = useState(null);
-  const { allRequest } = useSelector((state) => state.request);
 
   const Sources = [
     { value: 101, label: "101" },
@@ -131,7 +131,7 @@ const StorekeeperPendingItems = () => {
     setAcceptModals(updatedAcceptedModals);
   };
 
-  const handleInsertConfirmationNumber = (id) => {
+  const handleInsertConfirmationNumber = (id, index) => {
     setLoading(true);
     axios
       .post(`/storekeeper/blessing/${id}/${confirmationNumber}`, null, {
@@ -141,18 +141,28 @@ const StorekeeperPendingItems = () => {
         setLoading(false);
         setError(false);
         setResponse(response.data);
+
         setTimeout(() => {
+          setAcceptModals((prevAcceptModals) => {
+            const updatedAcceptModals = [...prevAcceptModals];
+            updatedAcceptModals[index] = false;
+            return updatedAcceptModals;
+          });
           setResponse(false);
-          setAcceptModals(false);
         }, 5000);
         console.log(response);
       })
       .catch((error) => {
         setLoading(false);
-        setError(true);
+        setError(error?.response?.data?.error);
+
         setTimeout(() => {
-          setError(false);
-          setAcceptModals(false);
+          setAcceptModals((prevAcceptModals) => {
+            const updatedAcceptModals = [...prevAcceptModals];
+            updatedAcceptModals[index] = false;
+            return updatedAcceptModals;
+          });
+          setError("");
         }, 5000);
         console.log(error);
       });
@@ -257,7 +267,7 @@ const StorekeeperPendingItems = () => {
                   </ListItem>
                 </List>
               </CardContent>
-              <CardActions>
+              <CardActions sx={{ marginBottom: "10px" }}>
                 <ButtonGroup fullWidth>
                   <AcceptButton
                     variant="contained"
@@ -503,7 +513,7 @@ const StorekeeperPendingItems = () => {
                     textAlign: "center",
                   }}
                 >
-                  Error Occurred
+                  {error}
                 </Box>
               )}
               {response && (
@@ -531,7 +541,7 @@ const StorekeeperPendingItems = () => {
                 sx={{ background: "#12596B" }}
                 fullWidth
                 onClick={() => {
-                  handleInsertConfirmationNumber(item.id);
+                  handleInsertConfirmationNumber(item.id, index);
                 }}
               >
                 Confirm

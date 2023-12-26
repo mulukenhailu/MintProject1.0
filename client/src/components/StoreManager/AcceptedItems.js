@@ -71,12 +71,16 @@ const AcceptedItemsComponent = () => {
   };
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const sortedAllRequest = [...allRequest].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
   if (allRequest.length === 0 || allRequest === "Empty") {
     return <Box>No Request</Box>;
   }
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      {allRequest?.map((item, index) => {
+      {sortedAllRequest?.map((item, index) => {
         return (
           <React.Fragment>
             <Grid item xs={12} sm={6} lg={4}>
@@ -90,7 +94,7 @@ const AcceptedItemsComponent = () => {
                   component="img"
                   alt="green iguana"
                   height="250"
-                  image={`${PF}${item?.item?.productpgoto}`}
+                  image={`${PF}${item?.item?.productphoto}`}
                 />
                 <CardContent>
                   <List>

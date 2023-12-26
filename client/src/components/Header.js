@@ -20,6 +20,7 @@ import { Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { GET_SINGLE_USER } from "../State/ReduxSaga/Types/userTypes";
+import axios from "axios";
 
 const AppBar = styled(
   MuiAppBar,
@@ -70,6 +71,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [notification, setNotification] = useState([]);
+  const [notificationLength, setNotificationLength] = useState(0);
   const updateOpen = useAppStore((state) => state.updateOpen);
   const dopen = useAppStore((state) => state.dopen);
   const dispatch = useDispatch();
@@ -81,6 +84,25 @@ export default function Header() {
 
   useEffect(() => {
     dispatch({ type: GET_SINGLE_USER, user_name });
+  }, []);
+
+  useEffect(() => {
+    {
+      const getAllOrderList = () => {
+        axios
+          .get("/employee/notifications", {
+            withCredentials: true,
+          })
+          .then((response) => {
+            console.log(response.data.notification);
+            setNotification(response?.data?.notification);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+      getAllOrderList();
+    }
   }, []);
 
   const { profile_picture } =
@@ -105,6 +127,11 @@ export default function Header() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  useEffect(() => {
+    const unViewed = notification?.filter((item) => item.isViwed === false);
+    setNotificationLength(unViewed?.length);
+  }, [notification]);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -223,8 +250,18 @@ export default function Header() {
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
+              component={Link}
+              to="/notification"
             >
-              <Badge badgeContent={3} color="success">
+              <Badge
+                badgeContent={notificationLength}
+                sx={{
+                  "& .MuiBadge-badge": {
+                    color: "white",
+                    backgroundColor: "red",
+                  },
+                }}
+              >
                 <NotificationsIcon sx={{ color: "gray" }} />
               </Badge>
             </IconButton>
