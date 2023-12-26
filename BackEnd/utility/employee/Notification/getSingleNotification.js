@@ -9,8 +9,8 @@ const client = new GraphQLClient(endpoint, {
   })
 
   const doc=gql`
-            query MyQuery (NotifyId:$uuid!){
-                notification_by_pk(Notify_Id: NotifyId) {
+            query MyQuery ($NotifyId:uuid!){
+                notification_by_pk(Notify_Id: $NotifyId) {
                 Notify_Id
                 sender
                 receiver
@@ -31,7 +31,7 @@ const client = new GraphQLClient(endpoint, {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
   }
 
-  async function getNotification(NotifyId){
+  async function getSingleNotification(NotifyId){
 
     const variables={
         NotifyId
@@ -42,9 +42,10 @@ const client = new GraphQLClient(endpoint, {
         return data
     }
     catch(error){
+        console.log("Error while fetching Single Notification.")
         throw error
     }
 
   }
 
-  module.exports={getNotification}
+  module.exports={getSingleNotification}

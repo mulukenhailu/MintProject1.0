@@ -10,17 +10,17 @@ const client = new GraphQLClient(endpoint, {
 
 const doc=gql`
   query MyQuery($receiver: String!) {
-    notification(where: {_and: {isViwed: {_eq: false}, receiver: {_eq: $receiver}}}) {
+    notification(where: {receiver: {_eq: $receiver}}) {
       Notify_Id
       sender
       receiver
+      senderFirstName
+      senderLastName
+      senderProfilePicture
       item_no
       quantity_requested
       description
       isViwed
-      senderFirstName 
-      senderLastName 
-      senderProfilePicture
       created_at
       updated_at
     }

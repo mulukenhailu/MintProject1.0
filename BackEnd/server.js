@@ -157,6 +157,7 @@ const resetPassword = require("./handler/common/resetPassword");
 
 const makeRequest = require("./handler/Employee/makeRequest");
 const allNotifications=require("./handler/Employee/Notification/Allnotification")
+const singleNotification=require("./handler/Employee/Notification/getNotification")
 const allOrdersMade=require("./handler/Employee/AllRequest/allRequests")
 const getupdateOfViwedNotificaion=require("./handler/Employee/Notification/updateNotifications")
 
@@ -259,6 +260,9 @@ app.post(
   verifyAccessToken.verifyAccessToken,
   makeRequest.makeRequest
 );
+
+
+app.get("/notification/:notifyId", verifyAccessToken.verifyAccessToken, singleNotification.getNotification)
 
 app.get(
   "/employee/notifications",
