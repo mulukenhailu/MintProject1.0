@@ -20,74 +20,50 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
 import { GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER } from "../../State/ReduxSaga/Types/storeKeeperRequestType";
 import { useSelector, useDispatch } from "react-redux";
+import { UserDetailsModal } from "./UserDetailsModal";
+import PropertyDetails from "./PropertyDetails";
 
-const HistoryContainer = styled(Modal)({
+const ProductDetailContainer = styled(Modal)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 });
-const HistoryWrapper = styled(Box)({
+const ProductDetailWrapper = styled(Box)({
   background: "#fff",
   height: "fit-content",
-  borderRadius: "20px",
+  borderRadius: "5px",
   padding: "20px",
 });
 
-const ListItemForModal = styled(ListItem)({
+const UserDetailModalContainer = styled(Modal)({
   display: "flex",
   alignItems: "center",
+  justifyContent: "center",
 });
+const UserDetailModalWrapper = styled(Box)({
+  background: "#fff",
+  height: "fit-content",
+  borderRadius: "5px",
+  padding: "20px",
+});
+
 const History = () => {
   const dispatch = useDispatch();
-  const [detailModal, setDetailModal] = useState(false);
+  const [userDetail, setUserDetail] = useState(false);
+  const [propertyDetail, setPropertyDetail] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
+  const [itemNo, setItemNo] = useState("");
+
   useEffect(() => {
     dispatch({ type: GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER });
   }, []);
 
-  const [products, setProducts] = useState([
-    {
-      ProductSerial: "MinT-Prod-1",
-      ProductName: "Product 1",
-      Availability: "Yes",
-      OwnedBy: "Store",
-      StoreKeeper: "Keeper-1",
-    },
-    {
-      ProductSerial: "MinT-Prod-2",
-      ProductName: "Product 2",
-      Availability: "Yes",
-      OwnedBy: "Store",
-      StoreKeeper: "keeper-1",
-    },
-    {
-      ProductSerial: "MinT-Prod-3",
-      ProductName: "Product 3",
-      Availability: "No",
-      OwnedBy: "User-3",
-      StoreKeeper: "keeper-2",
-    },
-    {
-      ProductSerial: "MinT-Prod-4",
-      ProductName: "Product 3",
-      Availability: "Yes",
-      OwnedBy: "Store",
-      StoreKeeper: "keeper-3",
-    },
-    {
-      ProductSerial: "MinT-Prod-5",
-      ProductName: "Product 3",
-      Availability: "Yes",
-      OwnedBy: "Store",
-      StoreKeeper: "Keeper-1",
-    },
-    {
-      ProductSerial: "MinT-Prod-6",
-      ProductName: "Product 3",
-      Availability: "No",
-      OwnedBy: "User-6",
-      StoreKeeper: "keeper-2",
-    },
-  ]);
+  const { allRequest } = useSelector((state) => state.request);
+
+  if (allRequest.length === 0 || allRequest === "Empty") {
+    return <Box>No order requested</Box>;
+  }
 
   return (
     <Box>
@@ -96,84 +72,109 @@ const History = () => {
           <Table>
             <TableHead sx={{ background: "#bbb", color: "#fff" }}>
               <TableRow>
-                <TableCell sx={{ color: "#12596B" }}>ProductName</TableCell>
-                <TableCell sx={{ color: "#12596B" }}>ProductModel</TableCell>
-                <TableCell sx={{ color: "#12596B" }}>OwnedBy</TableCell>
-                <TableCell sx={{ color: "#12596B" }}>MangerName</TableCell>
-                <TableCell sx={{ color: "#12596B" }}>StoreHead</TableCell>
-                <TableCell sx={{ color: "#12596B" }}>StoreKeeper</TableCell>
+                <TableCell sx={{ color: "#12596B" }}>Requested By</TableCell>
+                <TableCell sx={{ color: "#12596B" }}>
+                  Approved Manager
+                </TableCell>
+                <TableCell sx={{ color: "#12596B" }}>
+                  Approved Store Head
+                </TableCell>
+                <TableCell sx={{ color: "#12596B" }}>Recieved From</TableCell>
+                <TableCell sx={{ color: "#12596B" }}>Product Name</TableCell>
                 <TableCell sx={{ color: "#12596B" }}>
                   Confirmation Number
                 </TableCell>
+                <TableCell sx={{ color: "#12596B" }}>Product Details</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {products.map((product, index) => (
+              {allRequest?.map((item, index) => (
                 <TableRow key={index}>
-                  <TableCell>{product.ProductName}</TableCell>
-                  <TableCell>Model</TableCell>
-                  <TableCell>mrsX</TableCell>
-                  <TableCell>managerX</TableCell>
-                  <TableCell>storeHeadX</TableCell>
-                  <TableCell>storeKeeperX</TableCell>
-                  <TableCell>1234</TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", cursor: "pointer" }}
+                    onClick={() => {
+                      setUserDetail(true);
+                      setUserName(item?.employee_username);
+                      setUserId(1);
+                    }}
+                  >
+                    {item?.employee_username}
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", cursor: "pointer" }}
+                    onClick={() => {
+                      setUserDetail(true);
+                      setUserName(item?.manager_username);
+                      setUserId(2);
+                    }}
+                  >
+                    {item?.manager_username}
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", cursor: "pointer" }}
+                    onClick={() => {
+                      setUserDetail(true);
+                      setUserName(item?.storehead_username);
+                      setUserId(3);
+                    }}
+                  >
+                    {item?.storehead_username}
+                  </TableCell>
+                  <TableCell
+                    sx={{ textAlign: "center", cursor: "pointer" }}
+                    onClick={() => {
+                      setUserDetail(true);
+                      setUserName(item?.storekeeper_username);
+                      setUserId(4);
+                    }}
+                  >
+                    {item?.storekeeper_username}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {item?.item_name}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {item?.confirmation_number}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <SettingsAccessibilityIcon
+                      sx={{ color: "blue" }}
+                      onClick={() => {
+                        setItemNo(item.item_no);
+                        setPropertyDetail(true);
+                      }}
+                    />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Box>
-      <HistoryContainer
-        open={detailModal}
-        onClose={() => setDetailModal(false)}
+      <ProductDetailContainer
+        open={propertyDetail}
+        onClose={() => setPropertyDetail(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <HistoryWrapper width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}>
-          <List>
-            <Typography
-              variant="h5"
-              textAlign={"center"}
-              marginBottom={"20px"}
-              sx={{ textDecoration: "underline" }}
-            >
-              Product-Details
-            </Typography>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Product-Name
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                Product-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Product-Serial-Number
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                Product-serial-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                User-Name
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                User-1
-              </Typography>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Typography variant="body1" flex={2}>
-                Manager-Name
-              </Typography>
-              <Typography variant="body2" flex={1}>
-                Manager-1
-              </Typography>
-            </ListItemForModal>
-          </List>
-        </HistoryWrapper>
-      </HistoryContainer>
+        <ProductDetailWrapper
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
+        >
+          <PropertyDetails itemNo={itemNo} />
+        </ProductDetailWrapper>
+      </ProductDetailContainer>
+      <UserDetailModalContainer
+        open={userDetail}
+        onClose={() => setUserDetail(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <UserDetailModalWrapper
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
+        >
+          <UserDetailsModal userId={userId} userName={userName} />
+        </UserDetailModalWrapper>
+      </UserDetailModalContainer>
     </Box>
   );
 };

@@ -94,6 +94,7 @@ const ProfilePage = () => {
       label: "Phone Number",
       value: user?.phone_number ? user?.phone_number : "Phone not provided",
     },
+    { label: "Department", value: user?.department },
     { label: "User Name", value: user?.user_name },
     { label: "Role", value: user?.Role?.role_name },
     { label: "Manager ", value: user?.manager_username },

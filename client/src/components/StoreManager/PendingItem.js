@@ -123,6 +123,10 @@ const PendingItemComponent = () => {
   const [error, setError] = useState(false);
   const [response, setResponse] = useState(false);
   const { allRequest } = useSelector((state) => state.request);
+  const [rejectReason, setRejectReason] = useState("");
+  const { first_name, last_name, profile_picture } = useSelector(
+    (state) => state.user.user
+  );
   console.log(allRequest);
 
   useEffect(() => {
@@ -156,9 +160,18 @@ const PendingItemComponent = () => {
   const handleAcceptRequest = async (id) => {
     setLoading(true);
     await axios
-      .post(`/storehead/requestToApprove/${id}`, null, {
-        withCredentials: true,
-      })
+      .post(
+        `/storehead/requestToApprove/${id}`,
+        {
+          remark: `Your request is accepted by store head ${first_name} + " " + ${last_name}`,
+          senderFirstName: first_name,
+          senderLastName: last_name,
+          senderProfilePicture: profile_picture,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         setLoading(false);
         console.log("rejected", response);
@@ -180,11 +193,18 @@ const PendingItemComponent = () => {
   };
 
   const handleDeclineRequest = async (request) => {
+    const newData = {
+      receiver: request.receiver,
+      reason: rejectReason,
+      senderFirstName: first_name,
+      senderLastName: last_name,
+      senderProfilePicture: profile_picture,
+    };
     setLoading(true);
     await axios
       .post(
         `/storehead/rejectedrequest/${request.id}/${request.item_no}/${request.quantity_requested}`,
-        null,
+        newData,
         { withCredentials: true }
       )
       .then((response) => {
@@ -206,6 +226,9 @@ const PendingItemComponent = () => {
         console.log(error);
       });
   };
+  const sortedAllRequest = [...allRequest].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
 
   if (allRequest.length === 0 || allRequest === "Empty") {
     return <Box>No order requested</Box>;
@@ -214,7 +237,7 @@ const PendingItemComponent = () => {
 
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      {allRequest?.map((item, index) => {
+      {sortedAllRequest?.map((item, index) => {
         return (
           <React.Fragment key={index}>
             <Grid item xs={12} sm={6} lg={4}>
@@ -877,6 +900,7 @@ const PendingItemComponent = () => {
                   minRows={5}
                   sx={{ fontSize: "18px", marginBottom: "20px" }}
                   placeholder="Send to decline reason to manager"
+                  onChange={(e) => setRejectReason(e.target.value)}
                 />
                 <RejectButton
                   variant="contained"
@@ -886,6 +910,7 @@ const PendingItemComponent = () => {
                       id: item?.id,
                       item_no: item?.item_no,
                       quantity_requested: item?.quantity_requested,
+                      receiver: item?.employeeRequest?.User?.user_name,
                     };
                     handleDeclineRequest(request);
                   }}
