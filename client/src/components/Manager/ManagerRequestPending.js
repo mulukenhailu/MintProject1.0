@@ -127,6 +127,7 @@ const ManagerRequestPending = () => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(false);
   const [error, setError] = useState(false);
+  const [rejectReason, setRejectReason] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -137,6 +138,13 @@ const ManagerRequestPending = () => {
   const { loadingRequest, errorRequest, allRequest } = useSelector(
     (state) => state.request
   );
+  const { first_name, last_name, profile_picture } = useSelector(
+    (state) => state.user.user
+  );
+
+  const sortedAllRequest = [...allRequest].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
 
   if (allRequest.length === 0) {
     return <Box>No requests available</Box>;
@@ -145,9 +153,18 @@ const ManagerRequestPending = () => {
   const handleAcceptRequest = async (id) => {
     setLoading(true);
     await axios
-      .post(`/manager/requestToApprove/${id}`, null, {
-        withCredentials: true,
-      })
+      .post(
+        `/manager/requestToApprove/${id}`,
+        {
+          remark: `Your request is accepted by your manager ${first_name} + " " + ${last_name}`,
+          senderFirstName: first_name,
+          senderLastName: last_name,
+          senderProfilePicture: profile_picture,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         setLoading(false);
         console.log("rejected", response);
@@ -168,11 +185,18 @@ const ManagerRequestPending = () => {
       });
   };
   const handleDeclineRequest = async (request) => {
+    const newBody = {
+      receiver: request.receiver,
+      reason: rejectReason,
+      senderFirstName: first_name,
+      senderLastName: last_name,
+      senderProfilePicture: profile_picture,
+    };
     setLoading(true);
     await axios
       .post(
-        `/manager/rejectedrequest/${request.id}/${request.item_no}/${request.quantity_requested}`,
-        null,
+        `/manager/rejectrequest/${request.id}/${request.item_no}/${request.quantity_requested}`,
+        newBody,
         { withCredentials: true }
       )
       .then((response) => {
@@ -225,10 +249,6 @@ const ManagerRequestPending = () => {
   if (allRequest.length === 0 || allRequest === "Empty") {
     return <Box>No requests available</Box>;
   }
-
-  const sortedAllRequest = [...allRequest].sort(
-    (a, b) => new Date(b.created_at) - new Date(a.created_at)
-  );
 
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -847,6 +867,7 @@ const ManagerRequestPending = () => {
                 minRows={5}
                 sx={{ fontSize: "18px", marginBottom: "15px" }}
                 placeholder="Send decline reason to user"
+                onChange={(e) => setRejectReason(e.target.value)}
               />
               <RejectButton
                 variant="contained"
@@ -856,6 +877,7 @@ const ManagerRequestPending = () => {
                     id: item.id,
                     item_no: item.item_no,
                     quantity_requested: item.quantity_requested,
+                    receiver: item.User.user_name,
                   };
                   handleDeclineRequest(request);
                 }}

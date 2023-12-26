@@ -30,13 +30,16 @@ const DetailModalWrapper = styled(Box)({
 const ListItemForModal = styled(ListItem)({
   display: "flex",
   alignItems: "center",
+  gap: "20px",
 });
 const DetailButton = styled(Button)({
-  marginRight: "10px",
-  background: "orange",
+  background: "#FFC107",
   borderRadius: "2px",
+  marginBottom: "10px",
+  transition: "transform 0.3s ease-in-out",
   "&:hover": {
-    background: "#473c10",
+    background: "#FFC107",
+    transform: "scale(0.95)",
   },
 });
 
@@ -71,7 +74,7 @@ const StoreKeeperAcceptedItems = () => {
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       {allRequest?.map((item, index) => (
-        <React.Fragment>
+        <React.Fragment key={index}>
           <Grid item xs={12} sm={6} lg={4}>
             <Card
               sx={{
@@ -91,36 +94,85 @@ const StoreKeeperAcceptedItems = () => {
                     <Typography
                       variant="body1"
                       marginRight={1}
-                      fontWeight={500}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
                     >
-                      Name:
+                      Requested By:
                     </Typography>
-                    <Typography variant="body2" color={"gray"}>
-                      User-1
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.employee_username}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
                       variant="body1"
                       marginRight={1}
-                      fontWeight={500}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
                     >
-                      Department:
+                      Approved Manager:
                     </Typography>
-                    <Typography variant="body2" color={"gray"}>
-                      Department-1
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.manager_username}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
                       variant="body1"
                       marginRight={1}
-                      fontWeight={500}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
                     >
-                      Property Name:
+                      Approved Store Head:
                     </Typography>
-                    <Typography variant="body2" color={"gray"}>
-                      Property-Name-1
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.storehead_username}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant="body1"
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      Recieved From:
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.storehead_username}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant="body1"
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      Product Name:
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item_name}
                     </Typography>
                   </ListItem>
                 </List>
@@ -151,48 +203,134 @@ const StoreKeeperAcceptedItems = () => {
                   variant="h5"
                   textAlign={"center"}
                   marginBottom={"20px"}
-                  sx={{ textDecoration: "underline" }}
+                  sx={{ textDecoration: "underline", color: "#12596B" }}
                 >
                   Delivered-Details
                 </Typography>
                 <ListItemForModal>
-                  <Typography variant="body1" flex={2} fontWeight={500}>
-                    Name
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Requested By
                   </Typography>
-                  <Typography variant="body2" flex={1} color={"gray"}>
-                    User-1
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography variant="body1" flex={2} fontWeight={500}>
-                    Department
-                  </Typography>
-                  <Typography variant="body2" flex={1} color={"gray"}>
-                    Department-1
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography variant="body1" flex={2} fontWeight={500}>
-                    Manager-Name
-                  </Typography>
-                  <Typography variant="body2" flex={1} color={"gray"}>
-                    Manager-1
+                  <Typography
+                    variant="body2"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.employee_username}
                   </Typography>
                 </ListItemForModal>
                 <ListItemForModal>
-                  <Typography variant="body1" flex={2} fontWeight={500}>
-                    Property-Name
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Approved Manager
                   </Typography>
-                  <Typography variant="body2" flex={1} color={"gray"}>
-                    Property-Name-1
+                  <Typography
+                    variant="body2"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.manager_username}
                   </Typography>
                 </ListItemForModal>
                 <ListItemForModal>
-                  <Typography variant="body1" flex={2} fontWeight={500}>
-                    Property-Serial
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Approved Store Head
                   </Typography>
-                  <Typography variant="body2" flex={1} color={"gray"}>
-                    Property-Serial-1
+                  <Typography
+                    variant="body2"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.storehead_username}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Recieved From
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.storekeeper_username}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Product Name:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item?.item_name}
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Product Model:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    Model dummy
+                  </Typography>
+                </ListItemForModal>
+                <ListItemForModal>
+                  <Typography
+                    variant="body1"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={900}
+                  >
+                    Quantity Requested:
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    flex={2}
+                    sx={{ color: "#12596B" }}
+                    fontWeight={400}
+                  >
+                    {item.quantity_requested}
                   </Typography>
                 </ListItemForModal>
               </List>

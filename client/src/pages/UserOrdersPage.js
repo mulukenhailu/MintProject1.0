@@ -1,12 +1,10 @@
+import { Box } from "@mui/material";
 import React from "react";
+import UserOrderComponent from "../components/UserOrderComponent";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import MuiAppBar from "@mui/material/AppBar";
-import RequestComponent from "../components/RequestComponent";
 
-const RequestPage = () => {
+const UserOrdersPage = () => {
   return (
     <>
       <Header />
@@ -14,11 +12,11 @@ const RequestPage = () => {
       <Box sx={{ display: "flex" }}>
         <Sidebar />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <RequestComponent />
+          <UserOrderComponent />
         </Box>
       </Box>
     </>
   );
 };
 
-export default RequestPage;
+export default UserOrdersPage;
