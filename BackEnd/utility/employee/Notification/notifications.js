@@ -14,12 +14,11 @@ const doc=gql`
       Notify_Id
       sender
       receiver
-      item_no
-      quantity_requested
       description
       isViwed
-      created_at
-      updated_at
+      senderFirstName 
+      senderLastName 
+      senderProfilePicture
     }
   }
 `
