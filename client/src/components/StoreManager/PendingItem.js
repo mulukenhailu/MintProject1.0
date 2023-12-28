@@ -163,7 +163,7 @@ const PendingItemComponent = () => {
       .post(
         `/storehead/requestToApprove/${id}`,
         {
-          remark: `Your request is accepted by store head ${first_name} + " " + ${last_name}`,
+          remark: `Your request is accepted by store head ${first_name}  ${last_name}`,
           senderFirstName: first_name,
           senderLastName: last_name,
           senderProfilePicture: profile_picture,
