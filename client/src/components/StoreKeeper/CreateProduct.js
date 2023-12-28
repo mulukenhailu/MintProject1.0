@@ -63,6 +63,7 @@ const CreateProduct = () => {
     productintialserialnumber: "",
     productdescription: "",
     productphoto: "",
+    price: "",
     productserialnumbers: [],
   });
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -135,9 +136,28 @@ const CreateProduct = () => {
   }
 
   useEffect(() => {
-    if (errorProperty || newProperty) {
+    if (newProperty) {
       setTimeout(() => {
         dispatch(removeNewProperty());
+        setProperty({
+          productname: "",
+          productmodel: "",
+          productsource: "",
+          productstandardtype: "",
+          productmodelnumber: "",
+          productstatus: "",
+          productquantitynumber: "",
+          productintialserialnumber: "",
+          productdescription: "",
+          productphoto: "",
+          price: "",
+          productserialnumbers: [],
+        });
+        setImage("");
+      }, 5000);
+    }
+    if (errorProperty) {
+      setTimeout(() => {
         dispatch(removePropertyError());
       }, 5000);
     }
@@ -316,6 +336,15 @@ const CreateProduct = () => {
             label="Product Intial Serial Number"
             name="productintialserialnumber"
             value={property.productintialserialnumber}
+            onChange={handleFormChange}
+            fullWidth
+            margin="normal"
+            sx={{ backgroundColor: "#f7f7f7" }}
+          />
+          <TextField
+            label="Product Price"
+            name="price"
+            value={property.price}
             onChange={handleFormChange}
             fullWidth
             margin="normal"

@@ -9,6 +9,11 @@ const ListItemForModal = styled(ListItem)({
   alignItems: "center",
   gap: "20px",
 });
+const ListItemForModalDescription = styled(ListItem)({
+  display: "flex",
+  alignItems: "flex-start",
+  gap: "20px",
+});
 const PropertyDetails = ({ itemNo }) => {
   const [property, setProperty] = useState({});
   const [loading, setLoading] = useState(false);
@@ -102,7 +107,7 @@ const PropertyDetails = ({ itemNo }) => {
           {property.productmodel}
         </Typography>
       </ListItemForModal>
-      <ListItemForModal>
+      <ListItemForModalDescription>
         <Typography
           variant="body1"
           flex={2}
@@ -119,7 +124,7 @@ const PropertyDetails = ({ itemNo }) => {
         >
           {property.productdescription}
         </Typography>
-      </ListItemForModal>
+      </ListItemForModalDescription>
       <ListItemForModal>
         <Typography
           variant="body1"

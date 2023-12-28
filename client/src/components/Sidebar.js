@@ -318,9 +318,7 @@ export default function Sidebar() {
                 display: "block",
                 padding: { md: "0px 5px 0px 0px" },
                 color: "black",
-                background: isActive("propertieslist")
-                  ? "lightgray"
-                  : "transparent",
+                background: isActive("history") ? "lightgray" : "transparent",
               }}
               component={Link}
               to="/history"

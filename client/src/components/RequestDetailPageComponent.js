@@ -3,6 +3,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const ListItemForModal = styled(ListItem)({
   display: "flex",
@@ -18,6 +19,7 @@ const ListItemForModalDescription = styled(ListItem)({
 const RequestDetailPageComponent = () => {
   const [notification, setNotification] = useState({});
   const [property, setProperty] = useState({});
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
   console.log(id);
   useEffect(() => {
@@ -40,6 +42,7 @@ const RequestDetailPageComponent = () => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`/storekeeper/getitem/${notification?.item_no}`, {
         withCredentials: true,
@@ -47,8 +50,10 @@ const RequestDetailPageComponent = () => {
       .then((response) => {
         console.log(response.data);
         setProperty(response.data);
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   }, [notification]);
@@ -86,6 +91,17 @@ const RequestDetailPageComponent = () => {
       <Typography variant="h4" textAlign={"center"} color={"#12596B"}>
         Notification Details
       </Typography>
+      {loading && (
+        <Box sx={{ textAlign: "center", marginY: "20px" }}>
+          <ClipLoader
+            color={"#36d7b7"}
+            loading={loading}
+            size={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </Box>
+      )}
       <Box
         sx={{
           display: "flex",
@@ -120,6 +136,7 @@ const RequestDetailPageComponent = () => {
               />
             </Box>
           </Box>
+          <hr style={{ margin: "30px" }} />
           <Box
             sx={{
               display: "flex",
