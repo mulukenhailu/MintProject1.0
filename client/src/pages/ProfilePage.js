@@ -326,7 +326,7 @@ const ProfilePage = () => {
                         textAlign: "center",
                       }}
                     >
-                      Error Occurred
+                      Please fill all field required
                     </Box>
                   )}
                   {responseEdit && (
