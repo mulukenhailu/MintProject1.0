@@ -14,15 +14,18 @@ import {
   removeOrderError,
 } from "../State/ReduxToolkit/Slices/orderSlice";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useTranslation } from "react-i18next";
 
 const OrderButton = styled(Button)({
   background: "#12596B",
+  fontSize: "18px",
   "&:hover": {
     background: "#0F4F5F",
   },
 });
 const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation("global");
   const { newOrder, errorOrder, loadingOrder } = useSelector(
     (state) => state.order
   );
@@ -65,7 +68,7 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
     <Box bgcolor={"white"} borderRadius={"5px"} width={"400px"} padding={4}>
       <Box>
         <Typography variant="h5" gutterBottom textAlign={"center"}>
-          Move Order
+          {t("moveorder.ordertitle")}
         </Typography>
         {loadingOrder && (
           <Box sx={{ textAlign: "center" }}>
@@ -89,7 +92,7 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
               textAlign: "center",
             }}
           >
-            Error while creating order
+            {t("moveorder.error")}
           </Box>
         )}
         {newOrder && (
@@ -103,13 +106,13 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
               textAlign: "center",
             }}
           >
-            New Order Created Successfully
+            {t("moveorder.create")}
           </Box>
         )}
 
         <FormGroup>
           <TextField
-            label="Quantity"
+            label={t("moveorder.quantity")}
             name="quantity"
             value={formData.quantity}
             onChange={handleFormChange}
@@ -122,9 +125,9 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
           variant="contained"
           onClick={handleOrder}
           fullWidth
-          sx={{ marginTop: "30px", background: "#12596B" }}
+          sx={{ marginTop: "10px", background: "#12596B" }}
         >
-          Order Product
+          {t("moveorder.order")}
         </OrderButton>
       </Box>
     </Box>

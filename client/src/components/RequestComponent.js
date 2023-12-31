@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const RequestComponent = () => {
   const [notifications, setNotifications] = useState([]);
+  const { t } = useTranslation("global");
   useEffect(() => {
     {
       const getAllNotificationList = () => {
@@ -43,11 +45,11 @@ const RequestComponent = () => {
 
   if (notifications.length === 0) {
     return (
-      <Box sx={{ padding: "20px 0px 0px 165px" }}>No notification yet</Box>
+      <Box sx={{ padding: "20px 0px 0px 195px" }}>No notification yet</Box>
     );
   }
   return (
-    <Box paddingLeft={{ xs: 10, md: 16 }} paddingTop={3} paddingBottom={5}>
+    <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={3} paddingBottom={5}>
       <Box
         sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}
       >
@@ -112,7 +114,7 @@ const RequestComponent = () => {
             <Box sx={{ flex: "4" }}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Typography flex={1} color={"#12596B"} variant="h6">
-                  From
+                  {t("notification.from")}
                 </Typography>
                 <Typography flex={4} color={"#12596B"} variant="body1">
                   {item?.senderFirstName + " " + item?.senderLastName}
@@ -120,7 +122,7 @@ const RequestComponent = () => {
               </Box>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Typography flex={1} color={"#12596B"} variant="h6">
-                  Message
+                  {t("notification.message")}
                 </Typography>
                 <Typography flex={4} color={"#12596B"} variant="body1">
                   {item?.description}

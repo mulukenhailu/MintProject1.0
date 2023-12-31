@@ -15,6 +15,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import OrderComponent from "../components/Order";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const CardContents = styled(Box)({
   height: "fit-content",
@@ -25,6 +26,13 @@ const CardContents = styled(Box)({
 });
 const CardContentItem = styled(Box)({
   display: "flex",
+  alignItems: "center",
+  gap: "10px",
+});
+
+const CardContentDescrption = styled(Box)({
+  display: "flex",
+  alignItems: "start",
   gap: "10px",
 });
 
@@ -44,6 +52,7 @@ const OrderButton = styled(Button)({
 const DetailsProductPage = () => {
   const { id } = useParams();
   const { allProperty } = useSelector((state) => state.property);
+  const { t } = useTranslation("global");
   const singleProperty = allProperty.find(
     (item) => item.item_number === parseInt(id)
   );
@@ -91,16 +100,16 @@ const DetailsProductPage = () => {
                     fontWeight={700}
                     textAlign={"center"}
                   >
-                    Property Details
+                    {t("homedetail.propertydetail")}
                   </Typography>
                   <CardContents>
                     <CardContentItem>
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
                       >
-                        Name:
+                        {t("homedetail.name")}:
                       </Typography>
                       <Typography
                         variant="body1"
@@ -112,11 +121,11 @@ const DetailsProductPage = () => {
                     </CardContentItem>
                     <CardContentItem>
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
                       >
-                        Model:
+                        {t("homedetail.model")}:
                       </Typography>
                       <Typography
                         variant="body1"
@@ -126,29 +135,31 @@ const DetailsProductPage = () => {
                         {singleProperty.productmodel}
                       </Typography>
                     </CardContentItem>
-                    <CardContentItem>
+                    <CardContentDescrption>
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
+                        flex={3}
                       >
-                        Description:
+                        {t("homedetail.description")}:
                       </Typography>
                       <Typography
                         variant="body1"
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
+                        flex={12}
                       >
                         {singleProperty.productdescription}
                       </Typography>
-                    </CardContentItem>
+                    </CardContentDescrption>
                     <CardContentItem>
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
                       >
-                        Available:
+                        {t("homedetail.available")}:
                       </Typography>
                       <Typography
                         variant="body1"
@@ -162,16 +173,25 @@ const DetailsProductPage = () => {
                   </CardContents>
                   <Box sx={{ display: "flex", gap: "15px", marginTop: "20px" }}>
                     <OrderButton
-                      size="small"
+                      size="medium"
                       variant="contained"
-                      sx={{ background: "#12596B" }}
+                      sx={{
+                        background: "#12596B",
+                        fontSize: "18px",
+                        width: "100px",
+                      }}
                       onClick={() => setOpenOrderModal(true)}
                     >
-                      Order
+                      {t("homedetail.order")}
                     </OrderButton>
                     <Link to="/home">
-                      <Button variant="contained" size="small" color="warning">
-                        back to main page
+                      <Button
+                        variant="contained"
+                        size="medium"
+                        color="warning"
+                        sx={{ fontSize: "18px", width: "100px" }}
+                      >
+                        {t("homedetail.back")}
                       </Button>
                     </Link>
                   </Box>

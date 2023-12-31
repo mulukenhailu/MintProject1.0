@@ -13,6 +13,26 @@ import {
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import OrderComponent from "./Order";
+import { useTranslation } from "react-i18next";
+
+const CardContentItem = styled(Box)({
+  height: "fit-content",
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+});
+const OrderFormModalContainer = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+const OrderFormModalWrapper = styled(Box)({});
+const CreateButton = styled(Button)({
+  background: "#12596B",
+  "&:hover": {
+    background: "#0F4F5F",
+  },
+});
 
 const PropertyCard = ({
   productname,
@@ -23,24 +43,8 @@ const PropertyCard = ({
   productmodel,
 }) => {
   const [openOrderModal, setOpenOrderModal] = useState(false);
-  const CardContentItem = styled(Box)({
-    height: "fit-content",
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-  });
-  const OrderFormModalContainer = styled(Modal)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  });
-  const OrderFormModalWrapper = styled(Box)({});
-  const CreateButton = styled(Button)({
-    background: "#12596B",
-    "&:hover": {
-      background: "#0F4F5F",
-    },
-  });
+  const { t } = useTranslation("global");
+
   const handleClickModal = () => {
     setOpenOrderModal(true);
   };
@@ -76,72 +80,53 @@ const PropertyCard = ({
       />
       <CardContent>
         <CardContentItem>
-          <Typography
-            variant="body1"
-            sx={{ color: "#12596B" }}
-            fontWeight={900}
-          >
-            Name:
+          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={900}>
+            {t("home.name")}:
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ color: "#12596B" }}
-            fontWeight={400}
-          >
+          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={400}>
             {productname}
           </Typography>
         </CardContentItem>
         <CardContentItem>
-          <Typography
-            variant="body1"
-            sx={{ color: "#12596B" }}
-            fontWeight={900}
-          >
-            Model:
+          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={900}>
+            {t("home.model")}:
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ color: "#12596B" }}
-            fontWeight={400}
-          >
+          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={400}>
             {productmodel}
           </Typography>
         </CardContentItem>
         <CardContentItem>
-          <Typography
-            variant="body1"
-            sx={{ color: "#12596B" }}
-            fontWeight={900}
-          >
-            Available:
+          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={900}>
+            {t("home.available")}:
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ color: "#12596B" }}
-            fontWeight={400}
-          >
+          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={400}>
             {productquantitynumber}
           </Typography>
         </CardContentItem>
       </CardContent>
       <CardActions>
         <CreateButton
-          size="small"
-          sx={{ color: "#fff", marginRight: "5px" }}
+          size="medium"
+          sx={{
+            color: "#fff",
+            fontSize: "18px",
+            marginRight: "5px",
+            width: "100px",
+          }}
           variant="contained"
           onClick={() => handleClickModal()}
         >
-          Order
+          {t("home.order")}
         </CreateButton>
 
         <Link to={`/details/${item_number}`}>
           <Button
-            size="small"
-            sx={{ color: "#fff" }}
+            size="medium"
+            sx={{ color: "#fff", fontSize: "18px", width: "100px" }}
             variant="contained"
             color="warning"
           >
-            Details
+            {t("home.detail")}
           </Button>
         </Link>
       </CardActions>

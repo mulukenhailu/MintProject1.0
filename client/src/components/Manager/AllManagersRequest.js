@@ -37,7 +37,7 @@ const AllManagersRequest = () => {
   }));
   return (
     <Box>
-      <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
+      <Box paddingLeft={{ xs: 10, md: 23 }} paddingTop={5} paddingBottom={5}>
         <ButtonContainer
           disableElevation
           variant="contained"

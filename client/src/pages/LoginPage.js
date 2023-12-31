@@ -10,6 +10,8 @@ import { LOGIN_USER } from "../State/ReduxSaga/Types/userTypes";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import { removeUserError } from "../State/ReduxToolkit/Slices/userSlice";
+import { useTranslation } from "react-i18next";
+import { Box, ButtonGroup, Select } from "@mui/material";
 
 const Container = styled.div`
   display: flex;
@@ -112,6 +114,7 @@ function LoginPage() {
   const [submitClicked, setSubmitClicked] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation("global");
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -148,6 +151,10 @@ function LoginPage() {
     }
   }, [submitClicked, loadingUser, errorUser]);
 
+  const languageChange = (lang) => {
+    i18n.changeLanguage(lang);
+  };
+
   return (
     <Container>
       <Form onSubmit={handleLogin}>
@@ -158,7 +165,7 @@ function LoginPage() {
           marginBottom={3}
           sx={{ color: "gray" }}
         >
-          LOGIN
+          {t("login.login")}
         </Typography>
         {errorUser && (
           <ErrorComponent>
@@ -181,7 +188,7 @@ function LoginPage() {
           <TextField
             required
             id="standard-username-input"
-            label="Username"
+            label={t("login.username")}
             type="text"
             variant="standard"
             value={credentials.user_name}
@@ -192,7 +199,7 @@ function LoginPage() {
           <TextField
             required
             id="standard-password-input"
-            label="Password"
+            label={t("login.password")}
             type={passwordVisible ? "text" : "password"}
             variant="standard"
             value={credentials.password}
@@ -216,7 +223,21 @@ function LoginPage() {
             )}
           </EyeSpan>
         </TextFieldWrapper>
-        <ButtonStyled type="submit">Login</ButtonStyled>
+        <ButtonStyled type="submit">{t("login.login")}</ButtonStyled>
+        <select
+          label={t("login.language")}
+          value={i18n.language}
+          onChange={(e) => languageChange(e.target.value)}
+          style={{
+            marginTop: "30px",
+            width: "100px",
+            height: "30px",
+            fontSize: "14px",
+          }}
+        >
+          <option value="ኣማ">አማርኛ</option>
+          <option value="en">English</option>
+        </select>
       </Form>
     </Container>
   );
