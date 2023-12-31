@@ -69,7 +69,7 @@ const History = () => {
     .filter((user) =>
       user.employee_username.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   if (allRequest.length === 0 || allRequest === "Empty") {
     return <Box>No order requested</Box>;
