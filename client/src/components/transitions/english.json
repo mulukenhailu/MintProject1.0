@@ -1,0 +1,80 @@
+{
+  "login": {
+    "username": "User Name",
+    "password": "Password",
+    "login": "Login"
+  },
+  "sidebar": {
+    "home": "Home",
+    "profile": "Profile",
+    "order": "Orders",
+    "userlist": "User List",
+    "createuser": "Create User",
+    "history": "History",
+    "request": "Requests",
+    "productcreate": "Create Property",
+    "logout": "Logout"
+  },
+  "home": {
+    "searchbyproductname": "Search by product name",
+    "name": "Property Name",
+    "model": "Property Model",
+    "available": "Available",
+    "order": "Order",
+    "detail": "Detail"
+  },
+  "homedetail": {
+    "name": "Property Name",
+    "model": "Property Model",
+    "available": "Available",
+    "order": "Order",
+    "back": "Back",
+    "description": "Description",
+    "propertydetail": "Property Details"
+  },
+  "moveorder": {
+    "ordertitle": "Order Request",
+    "quantity": "Quantity",
+    "order": "Order",
+    "error": "Error while requesting please try again",
+    "create": "Order request done successfully"
+  },
+  "profile": {
+    "firstname": "First Name",
+    "lastname": "Last Name",
+    "email": "Email",
+    "phonenumber": "Phone Number",
+    "department": "Department",
+    "username": "User Name",
+    "role": "Role",
+    "manager": "Manager",
+    "updateprofile": "Update Profile",
+    "update": "Update Profile"
+  },
+  "userorder": {
+    "propertyname": "Property Name",
+    "propertymodel": "Property Model",
+    "quantity": "Quantity",
+    "confirmation": "Confirmation",
+    "detail": "Details",
+    "requestdetail": "Request Details",
+    "approvedbymanager": "Approved by manager",
+    "approvedbystorehead": "Approved by store head",
+    "rejectedbymanager": "Rejected by manager",
+    "rejectedbystorehead": "Rejected by store head"
+  },
+  "notification": {
+    "from": "From",
+    "message": "Message",
+    "messagedetail": "Message Detail",
+    "senderphoto": "Sender Photo",
+    "propertyphoto": "Property Photo",
+    "senderfirstname": "Sender First Name",
+    "senderlastname": "Sender Last Name",
+    "propertyname": "Property Name",
+    "propertymodel": "Property Model",
+    "requestedquantity": "Quantity Requested",
+    "description": "Description",
+    "back": "Back"
+  }
+}

@@ -35,9 +35,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { UPLOAD_IMAGE } from "../State/ReduxSaga/Types/uploadImageType";
 import axios from "axios";
 import { removeUploadImage } from "../State/ReduxToolkit/Slices/uploadImageSlice";
+import { useTranslation } from "react-i18next";
 
 const UpdateButton = styled(Button)({
   marginTop: "20px",
+  fontSize: "24px",
   background: "#12596B",
   "&:hover": {
     background: "#0F4F5F",
@@ -54,6 +56,7 @@ const ProfilePage = () => {
   const { uploadedImage, loadingUploadingImage, errorImage } = useSelector(
     (state) => state.upload
   );
+  const { t } = useTranslation("global");
 
   useEffect(() => {
     dispatch(removeUploadImage());
@@ -87,17 +90,20 @@ const ProfilePage = () => {
   const [user, setUser] = useState({});
   const [profileInfo, setProfileInfo] = useState({});
   const userInformation = [
-    { label: "First Name", value: user?.first_name },
-    { label: "Last Name", value: user?.last_name },
-    { label: "Email", value: user?.email ? user?.email : "Email not provided" },
+    { label: t("profile.firstname"), value: user?.first_name },
+    { label: t("profile.lastname"), value: user?.last_name },
     {
-      label: "Phone Number",
+      label: t("profile.email"),
+      value: user?.email ? user?.email : "Email not provided",
+    },
+    {
+      label: t("profile.phonenumber"),
       value: user?.phone_number ? user?.phone_number : "Phone not provided",
     },
-    { label: "Department", value: user?.department },
-    { label: "User Name", value: user?.user_name },
-    { label: "Role", value: user?.Role?.role_name },
-    { label: "Manager ", value: user?.manager_username },
+    { label: t("profile.department"), value: user?.department },
+    { label: t("profile.username"), value: user?.user_name },
+    { label: t("profile.role"), value: user?.Role?.role_name },
+    { label: t("profile.manager"), value: user?.manager_username },
   ];
 
   const { user_name } = useSelector((state) => state.user.user);
@@ -191,7 +197,7 @@ const ProfilePage = () => {
         <Sidebar />
         <Box
           component="main"
-          sx={{ flexGrow: 1, padding: "66px 8px 32px 170px" }}
+          sx={{ flexGrow: 1, padding: "66px 8px 32px 205px" }}
         >
           <Paper sx={{}}>
             <Grid container spacing={2}>
@@ -269,10 +275,14 @@ const ProfilePage = () => {
                                 padding: 2,
                               }}
                             >
-                              <TableCell sx={{ color: "#12596B" }}>
+                              <TableCell
+                                sx={{ color: "#12596B", fontSize: "20px" }}
+                              >
                                 {row.label}
                               </TableCell>
-                              <TableCell sx={{ color: "#12596B" }}>
+                              <TableCell
+                                sx={{ color: "#12596B", fontSize: "18px" }}
+                              >
                                 {row.value}
                               </TableCell>
                             </TableRow>
@@ -291,7 +301,7 @@ const ProfilePage = () => {
                     color={"#12596B"}
                     textAlign={"center"}
                   >
-                    Update Profile
+                    {t("profile.updateprofile")}
                   </Typography>
                   {loadingUploadingImage && (
                     <Box sx={{ textAlign: "center" }}>
@@ -345,8 +355,11 @@ const ProfilePage = () => {
                   )}
 
                   <Box>
-                    <InputLabel htmlFor="first_name" sx={{ color: "#12596B" }}>
-                      First Name
+                    <InputLabel
+                      htmlFor="first_name"
+                      sx={{ color: "#12596B", fontSize: "20px" }}
+                    >
+                      {t("profile.firstname")}
                     </InputLabel>
                     <TextField
                       fullWidth
@@ -356,8 +369,11 @@ const ProfilePage = () => {
                       onChange={handleFormChange}
                       sx={{ backgroundColor: "#F6F5F5", marginBottom: 2 }}
                     />
-                    <InputLabel htmlFor="last_name" sx={{ color: "#12596B" }}>
-                      Last Name
+                    <InputLabel
+                      htmlFor="last_name"
+                      sx={{ color: "#12596B", fontSize: "20px" }}
+                    >
+                      {t("profile.lastname")}
                     </InputLabel>
                     <TextField
                       fullWidth
@@ -366,8 +382,11 @@ const ProfilePage = () => {
                       onChange={handleFormChange}
                       sx={{ backgroundColor: "#F6F5F5", marginBottom: 1 }}
                     />
-                    <InputLabel htmlFor="email" sx={{ color: "#12596B" }}>
-                      Email
+                    <InputLabel
+                      htmlFor="email"
+                      sx={{ color: "#12596B", fontSize: "20px" }}
+                    >
+                      {t("profile.email")}
                     </InputLabel>
                     <TextField
                       fullWidth
@@ -378,9 +397,9 @@ const ProfilePage = () => {
                     />
                     <InputLabel
                       htmlFor="phone_number"
-                      sx={{ color: "#12596B" }}
+                      sx={{ color: "#12596B", fontSize: "20px" }}
                     >
-                      Phone Number
+                      {t("profile.phonenumber")}
                     </InputLabel>
                     <TextField
                       fullWidth
@@ -467,7 +486,7 @@ const ProfilePage = () => {
                       fullWidth
                       onClick={handleUpdateProfile}
                     >
-                      Update Profile
+                      {t("profile.update")}
                     </UpdateButton>
                   </Box>
                 </Box>

@@ -29,6 +29,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppStore } from "../appStore";
 import { useSelector, useDispatch } from "react-redux";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+import { useTranslation } from "react-i18next";
 
 const drawerWidth = "fit-content";
 
@@ -93,6 +94,7 @@ export default function Sidebar() {
   const dispatch = useDispatch();
   const open = useAppStore((state) => state.dopen);
   const location = useLocation();
+  const { t } = useTranslation("global");
 
   const isActive = (route) => location.pathname === `/${route}`;
   const user = useSelector((state) => state.user.user);
@@ -118,7 +120,13 @@ export default function Sidebar() {
             )}
           </IconButton>
         </DrawerHeader>
-        <List sx={{ height: "100%", position: "relative", padding: "2" }}>
+        <List
+          sx={{
+            height: "100%",
+            position: "relative",
+            padding: "2",
+          }}
+        >
           <ListItem
             disablePadding
             sx={{
@@ -135,6 +143,7 @@ export default function Sidebar() {
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
                 px: 2.5,
+                fontSize: "3.2rem",
               }}
             >
               <ListItemIcon
@@ -147,12 +156,13 @@ export default function Sidebar() {
                 <HomeIcon sx={{ color: "#12596B" }} />
               </ListItemIcon>
               <ListItemText
-                primary="Home"
+                primary={t("sidebar.home")}
                 sx={{
                   opacity: open ? 1 : 0,
                   display: { xs: "none", md: "block" },
                   color: "#12596B",
                 }}
+                primaryTypographyProps={{ fontSize: "20px" }}
               />
             </ListItemButton>
           </ListItem>
@@ -184,12 +194,13 @@ export default function Sidebar() {
                 <PersonIcon sx={{ color: "#12596B" }} />
               </ListItemIcon>
               <ListItemText
-                primary="Profile"
+                primary={t("sidebar.profile")}
                 sx={{
                   opacity: open ? 1 : 0,
                   display: { xs: "none", md: "block" },
                   color: "#12596B",
                 }}
+                primaryTypographyProps={{ fontSize: "20px" }}
               />
             </ListItemButton>
           </ListItem>
@@ -221,12 +232,13 @@ export default function Sidebar() {
                 <BorderColorIcon sx={{ color: "#12596B" }} />
               </ListItemIcon>
               <ListItemText
-                primary="Order"
+                primary={t("sidebar.order")}
                 sx={{
                   opacity: open ? 1 : 0,
                   display: { xs: "none", md: "block" },
                   color: "#12596B",
                 }}
+                primaryTypographyProps={{ fontSize: "20px" }}
               />
             </ListItemButton>
           </ListItem>
@@ -265,6 +277,7 @@ export default function Sidebar() {
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
+                  primaryTypographyProps={{ fontSize: "20px" }}
                 />
               </ListItemButton>
             </ListItem>
@@ -307,6 +320,7 @@ export default function Sidebar() {
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
+                  primaryTypographyProps={{ fontSize: "20px" }}
                 />
               </ListItemButton>
             </ListItem>
@@ -346,6 +360,7 @@ export default function Sidebar() {
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
+                  primaryTypographyProps={{ fontSize: "20px" }}
                 />
               </ListItemButton>
             </ListItem>
@@ -382,12 +397,13 @@ export default function Sidebar() {
                   <RequestPageIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Requests"
+                  primary={t("sidebar.request")}
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
+                  primaryTypographyProps={{ fontSize: "20px" }}
                 />
               </ListItemButton>
             </ListItem>
@@ -424,12 +440,13 @@ export default function Sidebar() {
                   <RequestPageIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Requests"
+                  primary={t("sidebar.request")}
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
+                  primaryTypographyProps={{ fontSize: "20px" }}
                 />
               </ListItemButton>
             </ListItem>
@@ -464,12 +481,13 @@ export default function Sidebar() {
                   <RequestPageIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Requests"
+                  primary={t("sidebar.request")}
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
+                  primaryTypographyProps={{ fontSize: "20px" }}
                 />
               </ListItemButton>
             </ListItem>
@@ -506,12 +524,13 @@ export default function Sidebar() {
                   <AddBusinessIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="AddProduct"
+                  primary={t("sidebar.productcreate")}
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
+                  primaryTypographyProps={{ fontSize: "20px" }}
                 />
               </ListItemButton>
             </ListItem>
@@ -540,12 +559,13 @@ export default function Sidebar() {
                 <LogoutIcon color="error" />
               </ListItemIcon>
               <ListItemText
-                primary="Logout"
+                primary={t("sidebar.logout")}
                 sx={{
                   opacity: open ? 1 : 0,
                   display: { xs: "none", md: "block" },
                   color: "red",
                 }}
+                primaryTypographyProps={{ fontSize: "20px" }}
               />
             </ListItemButton>
           </LogOutContainer>
