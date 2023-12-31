@@ -83,9 +83,9 @@ itemByItemNumber.itemByItemNumber(Number(item_no), Number(quantity_requested))
                             if(validManager){
                                 console.log("in the final step");
                                 validateRequest.validateRequest("Employee_Request", Number(item_no), req.body.decoded.user_name)
-                                    .then(async (validateRequest)=>{
-                                        console.log("==>", validateRequest);
-                                        if(validateRequest){
+                                    .then(async (validRequest)=>{
+                                        console.log("==>", validRequest);
+                                        if(validRequest){
                                             updateQuantity.updateQuantity(Number(item_no), Number(quantity_requested))
                                                 .then(async (data)=>{
                                                     console.log(data)

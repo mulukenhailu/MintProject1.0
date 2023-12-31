@@ -35,23 +35,18 @@ async function validateRequest(request_type, item_number, employee_user_name){
 
         try{
             const data= await client.request(document, variables, requestHeaders);
-
             console.log("from the request validation ==> ", data);
-
-            if(data.Employee_Request.length === 0){
-                return true;
-            }else{
-                return false;
-            }
-
+            return true
+            // if(data.Employee_Request.length === 0){
+            //     return true;
+            // }else{
+            //     return false;
+            // }
         }catch(error){
             console.log("Error while validating the Employee Request");
             throw error;
         }
-
   }
-
-  
 
   async function validateApproval(requestId){
 
@@ -108,10 +103,8 @@ async function validateRequest(request_type, item_number, employee_user_name){
                       isRejectedByManager
                       isRejectedByStoreHead
                     }
-                  }
-                  
+                  }    
                 `
-
                 const variables={
                     request_id:requestId
                 }
@@ -123,7 +116,6 @@ async function validateRequest(request_type, item_number, employee_user_name){
                     console.log("Error while validating Storehead Approval for the Employee Request");
                     throw error
                 }
-
   }
 
 
