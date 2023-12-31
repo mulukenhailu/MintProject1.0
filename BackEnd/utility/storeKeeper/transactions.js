@@ -21,6 +21,8 @@ const client = new GraphQLClient(endpoint, {
       quantity_requested
       confirmation_number
       is_approved
+      created_at
+      updated_at
     }
   }
   `
