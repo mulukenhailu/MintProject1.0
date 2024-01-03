@@ -73,7 +73,12 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
       marginX={"auto"}
     >
       <Box>
-        <Typography variant="h5" gutterBottom textAlign={"center"}>
+        <Typography
+          variant="h5"
+          gutterBottom
+          textAlign={"center"}
+          color={"#12596B"}
+        >
           {t("moveorder.ordertitle")}
         </Typography>
         {loadingOrder && (
