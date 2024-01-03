@@ -11,9 +11,11 @@ import { GET_PROPERTIES } from "../State/ReduxSaga/Types/propertyType";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import SearchIcon from "@mui/icons-material/Search";
+import { useTranslation } from "react-i18next";
 
 const PropertyList = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation("global");
   const [searchTerm, setSearchTerm] = useState("");
   const { allProperty, loadingProperty, errorProperty } = useSelector(
     (state) => state.property
@@ -31,7 +33,7 @@ const PropertyList = () => {
 
   console.log("sortedProperty", sortedProperty);
   return (
-    <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
+    <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={5} paddingBottom={5}>
       <Box
         sx={{
           width: "60%",
@@ -45,7 +47,7 @@ const PropertyList = () => {
         <TextField
           type="text"
           fullWidth
-          placeholder="Search by Product Name"
+          placeholder={t("home.searchbyproductname")}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           InputProps={{

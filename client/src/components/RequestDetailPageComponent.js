@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useTranslation } from "react-i18next";
 
 const ListItemForModal = styled(ListItem)({
   display: "flex",
@@ -20,6 +21,7 @@ const RequestDetailPageComponent = () => {
   const [notification, setNotification] = useState({});
   const [property, setProperty] = useState({});
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation("global");
   const { id } = useParams();
   console.log(id);
   useEffect(() => {
@@ -63,7 +65,7 @@ const RequestDetailPageComponent = () => {
 
   return (
     <Box
-      paddingLeft={{ xs: 10, md: 20 }}
+      paddingLeft={{ xs: 10, md: 35 }}
       paddingTop={3}
       paddingBottom={5}
       sx={{ position: "relative" }}
@@ -74,7 +76,7 @@ const RequestDetailPageComponent = () => {
         sx={{
           position: "absolute",
           top: "25px",
-          left: "130px",
+          left: "230px",
           background: "#12596B",
           color: "#fff",
           textDecoration: "none",
@@ -86,10 +88,10 @@ const RequestDetailPageComponent = () => {
         }}
       >
         <KeyboardBackspaceIcon />
-        Back
+        {t("notification.back")}
       </Box>
       <Typography variant="h4" textAlign={"center"} color={"#12596B"}>
-        Notification Details
+        {t("notification.messagedetail")}
       </Typography>
       {loading && (
         <Box sx={{ textAlign: "center", marginY: "20px" }}>
@@ -118,7 +120,7 @@ const RequestDetailPageComponent = () => {
           <Box sx={{ display: "flex", gap: "20px", marginBottom: "30px" }}>
             <Box>
               <Typography variant="h5" color={"#12596B"}>
-                Sender Photo
+                {t("notification.senderphoto")}
               </Typography>
             </Box>
             <Box sx={{ width: "300px", height: "300px" }}>
@@ -151,7 +153,7 @@ const RequestDetailPageComponent = () => {
                 color={"#12596B"}
                 sx={{ position: "absolute", top: "0px", right: "0px" }}
               >
-                Product Photo
+                {t("notification.propertyphoto")}
               </Typography>
             </Box>
             <Box sx={{ width: "300px", height: "300px" }}>
@@ -180,7 +182,7 @@ const RequestDetailPageComponent = () => {
                 sx={{ color: "#12596B" }}
                 fontWeight={500}
               >
-                Sender First Name:
+                {t("notification.senderfirstname")}
               </Typography>
               <Typography
                 variant="body1"
@@ -198,7 +200,7 @@ const RequestDetailPageComponent = () => {
                 sx={{ color: "#12596B" }}
                 fontWeight={500}
               >
-                Sender Last Name:
+                {t("notification.senderlastname")}
               </Typography>
               <Typography
                 variant="body1"
@@ -216,7 +218,7 @@ const RequestDetailPageComponent = () => {
                 sx={{ color: "#12596B" }}
                 fontWeight={500}
               >
-                Product Name:
+                {t("notification.propertyname")}
               </Typography>
               <Typography
                 variant="body1"
@@ -234,7 +236,7 @@ const RequestDetailPageComponent = () => {
                 sx={{ color: "#12596B" }}
                 fontWeight={500}
               >
-                Product Model:
+                {t("notification.propertymodel")}
               </Typography>
               <Typography
                 variant="body1"
@@ -252,7 +254,7 @@ const RequestDetailPageComponent = () => {
                 sx={{ color: "#12596B" }}
                 fontWeight={500}
               >
-                Quantity Requested:
+                {t("notification.requestedquantity")}
               </Typography>
               <Typography
                 variant="body1"
@@ -270,7 +272,7 @@ const RequestDetailPageComponent = () => {
                 sx={{ color: "#12596B" }}
                 fontWeight={500}
               >
-                Description:
+                {t("notification.description")}
               </Typography>
               <Typography
                 variant="body1"

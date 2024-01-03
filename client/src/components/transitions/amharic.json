@@ -1,0 +1,80 @@
+{
+  "login": {
+    "username": "መለያ ስም",
+    "password": "የይለፍ ቃል",
+    "login": "ግባ"
+  },
+  "sidebar": {
+    "home": "መግቢያ",
+    "profile": "ግላዊ መግለጫ",
+    "order": "የበፊት ትዕዛዝት",
+    "userlist": "የተጠቃሚዎች ዝርዝር",
+    "createuser": "አዲስ ተጠቃሚ መፍጠር",
+    "history": "ያለቁ ትዕዛዛት",
+    "request": "ጥያቄዎች",
+    "productcreate": "አዲስ ዕቃ መፍጠር",
+    "logout": "ውጣ"
+  },
+  "home": {
+    "searchbyproductname": "በዕቃው ስም ፈልግ",
+    "name": "የዕቃው ስም",
+    "model": "የዕቃው ሞዴል",
+    "available": "የዕቃው ብዛት",
+    "order": "ዕዘዝ",
+    "detail": "ማብራሪያ"
+  },
+  "homedetail": {
+    "name": "የዕቃው ስም",
+    "model": "የዕቃው ሞዴል",
+    "available": "የዕቃው ብዛት",
+    "order": "ዕዘዝ",
+    "back": "ተመለስ",
+    "description": "የዕቃው መግለጫ",
+    "propertydetail": "የዕቃው መግለጫ"
+  },
+  "moveorder": {
+    "ordertitle": "ማዘዣ ቅጽ",
+    "quantity": "መጠኑን አስገባ",
+    "order": "ዕዘዝ",
+    "error": "ትዕዛዙን ማስተናገድ አልተቻለም እንደገና ይሞክሩ",
+    "create": "ትዕዛዙ ተቀባይነት አግኝቷል"
+  },
+  "profile": {
+    "firstname": "የመጀመሪያ ስም",
+    "lastname": "የአባት ስም",
+    "email": "ኤሜል",
+    "phonenumber": "ስልክ ቁጥር",
+    "department": "የስራ ክፍል",
+    "username": "መለያ ስም",
+    "role": "ኀላፊነት",
+    "manager": "የማናጀር ስም",
+    "updateprofile": "መረጃ መቀየር",
+    "update": "ቀይር"
+  },
+  "userorder": {
+    "propertyname": "የዕቃው ስም",
+    "propertymodel": "የዕቃው ሞዴል",
+    "quantity": "የታዘዘው መጠን",
+    "confirmation": "ማረጋገጫ ቁጥር",
+    "detail": "ዝርዝር",
+    "requestdetail": "የእቃው ዝርዝር",
+    "approvedbymanager": "በማናጀሩ ተፈቅዷል",
+    "approvedbystorehead": "በስቶር ማናጀሩ የተፈቀደ",
+    "rejectedbymanager": "በማናጀሩ የተከለከለ",
+    "rejectedbystorehead": "በስቶር ማናጀሩ የተከለከለ"
+  },
+  "notification": {
+    "from": "ከ",
+    "message": "መልዕክት",
+    "messagedetail": "የመልዕክቱ ዝርዝር",
+    "senderphoto": "የላኪው ፎቶ",
+    "propertyphoto": "የዕቃው ፎቶ",
+    "senderfirstname": "የላኪው ስም",
+    "senderlastname": "የላኪው የአባት ስም",
+    "propertyname": "የዕቃው ስም",
+    "propertymodel": "የዕቃው ሞዴል",
+    "requestedquantity": "የተጠየቀው መጠን",
+    "description": "የዕቃው ማብራሪያ",
+    "back": "ተመለስ"
+  }
+}
