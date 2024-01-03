@@ -47,10 +47,12 @@ const client = new GraphQLClient(endpoint, {
         productsource
         productstandardtype
         productstatus
+        request {
+          updated_at
+        }
       }
     }
   }
-  
   
   `
 

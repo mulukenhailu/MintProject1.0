@@ -40,7 +40,7 @@ mutation MyMutation(
     }
     update_Item(where: {item_number: 
         {_eq: $item_no}}, 
-        _inc: { productquantitynumber: $quantity_Reduced}) {
+        _inc: { productquantitynumber: $quantity_requested}) {
       returning {
         item_number
         productdescription
@@ -71,26 +71,23 @@ mutation MyMutation(
                     manager_username: manager_username, 
                     quantity_requested: quantity_requested,
                     confirmation_number: confirmationNumber.confirmationNumber()
-            }
-
-            
+                    }
 
             try{
                 const data=await client.request(doc, variables, requestHeaders)
-                updateQuantity.updateQuantity(Number(item_no), Number(quantity_requested))
-                    .then(async (update_data)=>{
-                        
-                    })
-                    .catch((error)=>{
-                        console.log("Error while updating Quantity from Manager Request.")
-                        return error
-            })
+                    updateQuantity.updateQuantity(Number(item_no), Number(quantity_requested))
+                        .then(async (update_data)=>{
+                            console.log(update_data)
+                        })
+                        .catch((error)=>{
+                            console.log("Error while updating Quantity from Manager Request.")
+                            return error
+                        })
                 return data
             }catch(error){
                 console.log("Error while inserting Request into the manager Request DB.")
                 return error
             }
-
   }
 
   module.exports={managerRequest}
