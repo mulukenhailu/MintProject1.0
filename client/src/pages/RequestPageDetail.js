@@ -11,7 +11,10 @@ const RequestPageDetail = () => {
       <Box height={30} />
       <Box sx={{ display: "flex" }}>
         <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, paddingLeft: 2, paddingTop: 3 }}
+        >
           <RequestDetailPageComponent />
         </Box>
       </Box>

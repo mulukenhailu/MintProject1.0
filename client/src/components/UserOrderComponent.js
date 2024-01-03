@@ -93,7 +93,7 @@ const UserOrderComponent = () => {
     return <Box sx={{ padding: "20px 0px 0px 175px" }}>No order yet</Box>;
   }
   return (
-    <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={3} paddingBottom={5}>
+    <Box paddingLeft={{ xs: 5, md: 19 }} paddingTop={3} paddingBottom={5}>
       <TableContainer component={Paper} sx={{ bgcolor: "#f7f7f7" }}>
         <Table>
           <TableHead sx={{ background: "#bbb", color: "#fff" }}>
@@ -112,6 +112,7 @@ const UserOrderComponent = () => {
                   color: "#12596B",
                   width: "20%",
                   fontSize: "20px",
+                  display: { xs: "none", sm: "table-cell" },
                 }}
               >
                 {t("userorder.propertymodel")}
@@ -121,6 +122,7 @@ const UserOrderComponent = () => {
                   color: "#12596B",
                   width: "20%",
                   fontSize: "20px",
+                  display: { xs: "none", md: "table-cell" },
                 }}
               >
                 {t("userorder.quantity")}
@@ -130,6 +132,7 @@ const UserOrderComponent = () => {
                   color: "#12596B",
                   width: "20%",
                   fontSize: "20px",
+                  display: { xs: "none", md: "table-cell" },
                 }}
               >
                 {t("userorder.confirmation")}
@@ -155,6 +158,7 @@ const UserOrderComponent = () => {
                   <TableCell
                     sx={{
                       width: "20%",
+                      display: { xs: "none", sm: "table-cell" },
                     }}
                   >
                     {item?.Item?.productmodel}
@@ -162,6 +166,7 @@ const UserOrderComponent = () => {
                   <TableCell
                     sx={{
                       width: "20%",
+                      display: { xs: "none", md: "table-cell" },
                     }}
                   >
                     {item?.quantity_requested}
@@ -169,6 +174,7 @@ const UserOrderComponent = () => {
                   <TableCell
                     sx={{
                       width: "20%",
+                      display: { xs: "none", md: "table-cell" },
                     }}
                   >
                     {item?.confirmation_number}
@@ -190,30 +196,67 @@ const UserOrderComponent = () => {
                     aria-describedby="modal-modal-description"
                   >
                     <UserDetailModalWrapper
-                      width={{ xs: "90%", sm: "70%", md: "50%", lg: "50%" }}
+                      width={{ xs: "60%", sm: "70%", md: "50%", lg: "55%" }}
                     >
                       <List>
                         <Typography
                           variant="h4"
                           textAlign={"center"}
                           marginBottom={"10px"}
-                          sx={{ textDecoration: "underline", color: "#12596B" }}
+                          sx={{ color: "#12596B" }}
                         >
                           {t("userorder.requestdetail")}
                         </Typography>
-                        <ListItemForModal>
+                        <ListItemForModal
+                          sx={{
+                            display: { xs: "block", sm: "flex" },
+                            textAlign: { xs: "center", sm: "start" },
+                          }}
+                        >
                           <Label sx={{ fontSize: "20px" }}>
                             {t("userorder.propertyname")}
                           </Label>
                           <Value>{item?.Item?.productname}</Value>
                         </ListItemForModal>
-                        <ListItemForModal>
+                        <ListItemForModal
+                          sx={{
+                            display: { xs: "block", sm: "flex" },
+                            textAlign: { xs: "center", sm: "start" },
+                          }}
+                        >
                           <Label sx={{ fontSize: "20px" }}>
                             {t("userorder.propertymodel")}
                           </Label>
                           <Value>{item?.Item?.productmodel}</Value>
                         </ListItemForModal>
-                        <ListItemForModal>
+                        <ListItemForModal
+                          sx={{
+                            display: { xs: "block", sm: "flex" },
+                            textAlign: { xs: "center", sm: "start" },
+                          }}
+                        >
+                          <Label sx={{ fontSize: "20px" }}>
+                            {t("userorder.quantity")}
+                          </Label>
+                          <Value>{item?.quantity_requested}</Value>
+                        </ListItemForModal>
+                        <ListItemForModal
+                          sx={{
+                            display: { xs: "block", sm: "flex" },
+                            textAlign: { xs: "center", sm: "start" },
+                          }}
+                        >
+                          <Label sx={{ fontSize: "20px" }}>
+                            {t("userorder.confirmation")}
+                          </Label>
+                          <Value>{item?.confirmation_number}</Value>
+                        </ListItemForModal>
+                        <ListItemForModal
+                          sx={{
+                            display: { xs: "block", sm: "flex" },
+                            textAlign: { xs: "center", sm: "start" },
+                          }}
+                        >
                           <Label sx={{ fontSize: "20px" }}>
                             {t("userorder.approvedbymanager")}
                           </Label>
@@ -221,7 +264,12 @@ const UserOrderComponent = () => {
                             {item?.isApprovedByManager ? "Yes" : "No"}
                           </Value>
                         </ListItemForModal>
-                        <ListItemForModal>
+                        <ListItemForModal
+                          sx={{
+                            display: { xs: "block", sm: "flex" },
+                            textAlign: { xs: "center", sm: "start" },
+                          }}
+                        >
                           <Label sx={{ fontSize: "20px" }}>
                             {t("userorder.rejectedbymanager")}
                           </Label>
@@ -229,7 +277,12 @@ const UserOrderComponent = () => {
                             {item?.isRejectedByManager ? "Yes" : "No"}
                           </Value>
                         </ListItemForModal>
-                        <ListItemForModal>
+                        <ListItemForModal
+                          sx={{
+                            display: { xs: "block", sm: "flex" },
+                            textAlign: { xs: "center", sm: "start" },
+                          }}
+                        >
                           <Label sx={{ fontSize: "20px" }}>
                             {t("userorder.approvedbystorehead")}
                           </Label>
@@ -237,7 +290,12 @@ const UserOrderComponent = () => {
                             {item?.isApprovedByStoreHead ? "Yes" : "No"}
                           </Value>
                         </ListItemForModal>
-                        <ListItemForModal>
+                        <ListItemForModal
+                          sx={{
+                            display: { xs: "block", sm: "flex" },
+                            textAlign: { xs: "center", sm: "start" },
+                          }}
+                        >
                           <Label sx={{ fontSize: "20px" }}>
                             {t("userorder.rejectedbystorehead")}
                           </Label>

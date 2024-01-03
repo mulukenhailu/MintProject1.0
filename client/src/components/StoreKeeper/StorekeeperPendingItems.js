@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GET_ALL_PENDING_REQUEST_FOR_STOREKEEPER } from "../../State/ReduxSaga/Types/storeKeeperRequestType";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useTranslation } from "react-i18next";
 
 const AcceptButton = styled(Button)({
   marginRight: "10px",
@@ -89,6 +90,7 @@ const AcceptModalWrapper = styled(Box)({
 
 const StorekeeperPendingItems = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation("global");
   const { allRequest } = useSelector((state) => state.request);
   const [detailModals, setDetailModals] = useState([]);
   const [acceptModals, setAcceptModals] = useState([]);
@@ -96,16 +98,6 @@ const StorekeeperPendingItems = () => {
   const [error, setError] = useState("");
   const [response, setResponse] = useState(null);
   const [confirmationNumber, setConfirmationNumber] = useState(null);
-
-  const Sources = [
-    { value: 101, label: "101" },
-    { value: 103, label: "103" },
-  ];
-
-  const Items = [
-    { value: 4531, label: "4531" },
-    { value: 4529, label: "4529" },
-  ];
 
   const handleDetailModalOpen = (index) => {
     const updatedDetailModals = [...detailModals];
@@ -204,7 +196,7 @@ const StorekeeperPendingItems = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee First Name:
+                      {t("storekeeper.firstname")}
                     </Typography>
                     <Typography
                       variant="body3"
@@ -221,7 +213,7 @@ const StorekeeperPendingItems = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee Last Name:
+                      {t("storekeeper.lastname")}
                     </Typography>
                     <Typography
                       variant="body3"
@@ -238,7 +230,7 @@ const StorekeeperPendingItems = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Name:
+                      {t("storekeeper.propertyname")}
                     </Typography>
                     <Typography
                       variant="body3"
@@ -255,7 +247,7 @@ const StorekeeperPendingItems = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Model:
+                      {t("storekeeper.propertymodel")}
                     </Typography>
                     <Typography
                       variant="body3"
@@ -273,13 +265,13 @@ const StorekeeperPendingItems = () => {
                     variant="contained"
                     onClick={() => handleAcceptModalOpen(index)}
                   >
-                    Accept
+                    {t("storekeeper.accept")}
                   </AcceptButton>
                   <DetailButton
                     variant="contained"
                     onClick={() => handleDetailModalOpen(index)}
                   >
-                    Details
+                    {t("storekeeper.detail")}
                   </DetailButton>
                 </ButtonGroup>
               </CardActions>
@@ -292,16 +284,16 @@ const StorekeeperPendingItems = () => {
             aria-describedby="modal-modal-description"
           >
             <DetailModalWrapper
-              width={{ xs: "90%", sm: "70%", md: "50%", lg: "60%" }}
+              width={{ xs: "90%", sm: "70%", md: "50%", lg: "70%" }}
             >
               <List>
                 <Typography
                   variant="h5"
                   textAlign={"center"}
                   marginBottom={"20px"}
-                  sx={{ textDecoration: "underline", color: "#12596B" }}
+                  sx={{ color: "#12596B" }}
                 >
-                  Request Details
+                  {t("storekeeper.requestdetail")}
                 </Typography>
                 <ListItemForModal>
                   <Typography
@@ -310,7 +302,7 @@ const StorekeeperPendingItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee First Name:
+                    {t("storekeeper.firstname")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -328,7 +320,7 @@ const StorekeeperPendingItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee Last Name:
+                    {t("storekeeper.lastname")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -346,7 +338,7 @@ const StorekeeperPendingItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee Email:
+                    {t("storekeeper.email")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -366,7 +358,7 @@ const StorekeeperPendingItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee Phone Number:
+                    {t("storekeeper.phonenumber")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -386,7 +378,7 @@ const StorekeeperPendingItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Department
+                    {t("storekeeper.department")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -406,7 +398,7 @@ const StorekeeperPendingItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Name:
+                    {t("storekeeper.propertyname")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -424,7 +416,7 @@ const StorekeeperPendingItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Model:
+                    {t("storekeeper.propertymodel")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -442,7 +434,7 @@ const StorekeeperPendingItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Description
+                    {t("storekeeper.description")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -460,7 +452,7 @@ const StorekeeperPendingItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Quantity Requested
+                    {t("storekeeper.quantity")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -483,14 +475,6 @@ const StorekeeperPendingItems = () => {
             <AcceptModalWrapper
               width={{ xs: "90%", sm: "70%", md: "50%", lg: "30%" }}
             >
-              <Typography
-                variant="h5"
-                textAlign={"center"}
-                marginBottom={"20px"}
-                sx={{ textDecoration: "underline", color: "#12596B" }}
-              >
-                Insert confirmation number
-              </Typography>
               {loading && (
                 <Box sx={{ textAlign: "center" }}>
                   <ClipLoader
@@ -533,7 +517,7 @@ const StorekeeperPendingItems = () => {
               <TextField
                 name="confirmation"
                 fullWidth
-                label="Confirmation number"
+                label={t("storekeeper.confirmation")}
                 onChange={(e) => setConfirmationNumber(e.target.value)}
               />
               <SendButton
@@ -544,7 +528,7 @@ const StorekeeperPendingItems = () => {
                   handleInsertConfirmationNumber(item.id, index);
                 }}
               >
-                Confirm
+                {t("storekeeper.confirm")}
               </SendButton>
             </AcceptModalWrapper>
           </AcceptModal>

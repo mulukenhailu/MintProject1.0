@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 const PropertyList = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation("global");
+  const { languange } = useSelector((state) => state.languange);
   const [searchTerm, setSearchTerm] = useState("");
   const { allProperty, loadingProperty, errorProperty } = useSelector(
     (state) => state.property
@@ -33,34 +34,37 @@ const PropertyList = () => {
 
   console.log("sortedProperty", sortedProperty);
   return (
-    <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={5} paddingBottom={5}>
-      <Box
-        sx={{
-          width: "60%",
-          margin: "auto",
-          marginBottom: "30px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <TextField
-          type="text"
-          fullWidth
-          placeholder={t("home.searchbyproductname")}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment>
-                <IconButton>
-                  <SearchIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
+    <Box paddingLeft={{ xs: 5, md: 18.5 }} paddingTop={5} paddingBottom={5}>
+      <Box sx={{}}>
+        <Box
+          sx={{
+            width: { xs: "80%", md: "60%" },
+            marginX: "auto",
+            marginBottom: "30px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        />
+        >
+          <TextField
+            type="text"
+            fullWidth
+            placeholder={t("home.searchbyproductname")}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment>
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
       </Box>
+
       {loadingProperty ? (
         <Box
           sx={{
