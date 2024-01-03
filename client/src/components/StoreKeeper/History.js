@@ -25,6 +25,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { UserDetailsModal } from "./UserDetailsModal";
 import PropertyDetails from "./PropertyDetails";
 import SearchIcon from "@mui/icons-material/Search";
+import { useTranslation } from "react-i18next";
 
 const ProductDetailContainer = styled(Modal)({
   display: "flex",
@@ -52,6 +53,7 @@ const UserDetailModalWrapper = styled(Box)({
 
 const History = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation("global");
   const [userDetail, setUserDetail] = useState(false);
   const [propertyDetail, setPropertyDetail] = useState(false);
   const [userId, setUserId] = useState("");
@@ -77,7 +79,7 @@ const History = () => {
 
   return (
     <Box>
-      <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={4} paddingBottom={5}>
+      <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={4} paddingBottom={5}>
         <Box
           sx={{
             width: "60%",
@@ -91,7 +93,7 @@ const History = () => {
           <TextField
             type="text"
             fullWidth
-            placeholder="Search by Product Name"
+            placeholder={t("history.searchbyusername")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             InputProps={{
@@ -109,19 +111,27 @@ const History = () => {
           <Table>
             <TableHead sx={{ background: "#bbb", color: "#fff" }}>
               <TableRow>
-                <TableCell sx={{ color: "#12596B" }}>Requested By</TableCell>
-                <TableCell sx={{ color: "#12596B" }}>
-                  Approved Manager
+                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                  {t("history.requestedby")}
                 </TableCell>
-                <TableCell sx={{ color: "#12596B" }}>
-                  Approved Store Head
+                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                  {t("history.approvedmanager")}
                 </TableCell>
-                <TableCell sx={{ color: "#12596B" }}>Recieved From</TableCell>
-                <TableCell sx={{ color: "#12596B" }}>Product Name</TableCell>
-                <TableCell sx={{ color: "#12596B" }}>
-                  Confirmation Number
+                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                  {t("history.approvedstorehead")}
                 </TableCell>
-                <TableCell sx={{ color: "#12596B" }}>Product Details</TableCell>
+                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                  {t("history.recievedfrom")}
+                </TableCell>
+                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                  {t("history.propertyname")}
+                </TableCell>
+                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                  {t("history.confirmation")}
+                </TableCell>
+                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                  {t("history.propertydetail")}
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -195,7 +205,7 @@ const History = () => {
         aria-describedby="modal-modal-description"
       >
         <ProductDetailWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "50%" }}
         >
           <PropertyDetails itemNo={itemNo} />
         </ProductDetailWrapper>
@@ -207,7 +217,7 @@ const History = () => {
         aria-describedby="modal-modal-description"
       >
         <UserDetailModalWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "50%" }}
         >
           <UserDetailsModal userId={userId} userName={userName} />
         </UserDetailModalWrapper>

@@ -2,6 +2,7 @@ import { Box, Typography, styled, ListItem } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useTranslation } from "react-i18next";
 
 const ListItemForModal = styled(ListItem)({
   display: "flex",
@@ -9,6 +10,7 @@ const ListItemForModal = styled(ListItem)({
   gap: "20px",
 });
 export const UserDetailsModal = ({ userId, userName }) => {
+  const { t } = useTranslation("global");
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -45,12 +47,12 @@ export const UserDetailsModal = ({ userId, userName }) => {
   return (
     <Box>
       <Typography
-        variant="h5"
+        variant="h4"
         textAlign={"center"}
         marginBottom={"20px"}
-        sx={{ textDecoration: "underline", color: "#12596B" }}
+        sx={{ color: "#12596B" }}
       >
-        User Deatils
+        {t("history.userdetail")}
       </Typography>
       {loading && (
         <Box sx={{ textAlign: "center" }}>
@@ -80,15 +82,15 @@ export const UserDetailsModal = ({ userId, userName }) => {
       <Box sx={{ width: "100%" }}>
         <ListItemForModal>
           <Typography
-            variant="body1"
+            variant="h6"
             flex={2}
             sx={{ color: "#12596B" }}
             fontWeight={900}
           >
-            First Name
+            {t("history.firstname")}
           </Typography>
           <Typography
-            variant="body2"
+            variant="body1"
             flex={2}
             sx={{ color: "#12596B" }}
             fontWeight={400}
@@ -98,15 +100,15 @@ export const UserDetailsModal = ({ userId, userName }) => {
         </ListItemForModal>
         <ListItemForModal>
           <Typography
-            variant="body1"
+            variant="h6"
             flex={2}
             sx={{ color: "#12596B" }}
             fontWeight={900}
           >
-            Last Name
+            {t("history.lastname")}
           </Typography>
           <Typography
-            variant="body2"
+            variant="body1"
             flex={2}
             sx={{ color: "#12596B" }}
             fontWeight={400}
@@ -116,15 +118,15 @@ export const UserDetailsModal = ({ userId, userName }) => {
         </ListItemForModal>
         <ListItemForModal>
           <Typography
-            variant="body1"
+            variant="h6"
             flex={2}
             sx={{ color: "#12596B" }}
             fontWeight={900}
           >
-            Email
+            {t("history.email")}
           </Typography>
           <Typography
-            variant="body2"
+            variant="body1"
             flex={2}
             sx={{ color: "#12596B" }}
             fontWeight={400}
@@ -134,15 +136,15 @@ export const UserDetailsModal = ({ userId, userName }) => {
         </ListItemForModal>
         <ListItemForModal>
           <Typography
-            variant="body1"
+            variant="h6"
             flex={2}
             sx={{ color: "#12596B" }}
             fontWeight={900}
           >
-            Department
+            {t("history.department")}
           </Typography>
           <Typography
-            variant="body2"
+            variant="body1"
             flex={2}
             sx={{ color: "#12596B" }}
             fontWeight={400}
@@ -152,15 +154,15 @@ export const UserDetailsModal = ({ userId, userName }) => {
         </ListItemForModal>
         <ListItemForModal>
           <Typography
-            variant="body1"
+            variant="h6"
             flex={2}
             sx={{ color: "#12596B" }}
             fontWeight={900}
           >
-            Phone Number
+            {t("history.phonenumber")}
           </Typography>
           <Typography
-            variant="body2"
+            variant="body1"
             flex={2}
             sx={{ color: "#12596B" }}
             fontWeight={400}

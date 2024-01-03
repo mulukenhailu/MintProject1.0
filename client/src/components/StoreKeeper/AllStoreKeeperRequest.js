@@ -4,8 +4,10 @@ import StoreKeeperAcceptedItems from "./StoreKeeperAcceptedItems";
 import StorekeeperPendingItems from "./StorekeeperPendingItems";
 import PendingIcon from "@mui/icons-material/Pending";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import { useTranslation } from "react-i18next";
 
 const AllStoreKeeperRequest = () => {
+  const { t } = useTranslation("global");
   const [activeItem, setActiveItem] = useState("pending");
   const ButtonContainer = styled(ButtonGroup)({
     position: "sticky",
@@ -30,7 +32,7 @@ const AllStoreKeeperRequest = () => {
 
   return (
     <Box>
-      <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
+      <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={5} paddingBottom={5}>
         <ButtonContainer
           disableElevation
           variant="contained"
@@ -42,13 +44,13 @@ const AllStoreKeeperRequest = () => {
             onClick={() => setActiveItem("pending")}
             startIcon={<PendingIcon />}
           >
-            Pending
+            {t("status.pending")}
           </PendingButton>
           <AcceptButton
             onClick={() => setActiveItem("accepted")}
             startIcon={<ThumbUpAltIcon />}
           >
-            Delivered
+            {t("status.delivered")}
           </AcceptButton>
         </ButtonContainer>
         <Box>

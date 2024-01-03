@@ -15,6 +15,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_ALL_ACCEPTED_REQUEST_FOR_STOREHEAD } from "../../State/ReduxSaga/Types/storeHeadRequestTypes";
+import { useTranslation } from "react-i18next";
 
 const DetailModalContainer = styled(Modal)({
   display: "flex",
@@ -49,6 +50,7 @@ const DetailButton = styled(Button)({
 });
 
 const AcceptedItemsComponent = () => {
+  const { t } = useTranslation("global");
   const [detailModals, setDetailModals] = useState([]);
   const dispatch = useDispatch();
 
@@ -96,7 +98,7 @@ const AcceptedItemsComponent = () => {
                   height="250"
                   image={`${PF}${item?.item?.productphoto}`}
                 />
-                <CardContent>
+                <CardContent sx={{ padding: "0px" }}>
                   <List>
                     <ListItem
                       sx={{
@@ -106,17 +108,19 @@ const AcceptedItemsComponent = () => {
                       }}
                     >
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         marginRight={1}
                         sx={{ color: "#12596B" }}
+                        flex={1}
                         fontWeight={900}
                       >
-                        First Name:
+                        {t("storehead.firstname")}
                       </Typography>
                       <Typography
-                        variant="body2"
+                        variant="body1"
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
+                        flex={1}
                       >
                         {item?.item?.request[0]?.User?.first_name}
                       </Typography>
@@ -129,17 +133,19 @@ const AcceptedItemsComponent = () => {
                       }}
                     >
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         marginRight={1}
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
+                        flex={1}
                       >
-                        Last Name:
+                        {t("storehead.lastname")}
                       </Typography>
                       <Typography
-                        variant="body2"
+                        variant="body1"
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
+                        flex={1}
                       >
                         {item?.item?.request[0]?.User?.last_name}
                       </Typography>
@@ -152,17 +158,19 @@ const AcceptedItemsComponent = () => {
                       }}
                     >
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         marginRight={1}
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
+                        flex={1}
                       >
-                        Product Name:
+                        {t("storehead.propertyname")}
                       </Typography>
                       <Typography
-                        variant="body2"
+                        variant="body1"
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
+                        flex={1}
                       >
                         {item?.item?.productname}
                       </Typography>
@@ -175,40 +183,19 @@ const AcceptedItemsComponent = () => {
                       }}
                     >
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         marginRight={1}
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
+                        flex={1}
                       >
-                        Approved Manager:
+                        {t("storehead.quantity")}
                       </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.item?.request[0]?.User?.manager_username}
-                      </Typography>
-                    </ListItem>
-                    <ListItem
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                      }}
-                    >
                       <Typography
                         variant="body1"
-                        marginRight={1}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        Quantity:
-                      </Typography>
-                      <Typography
-                        variant="body2"
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
+                        flex={1}
                       >
                         {item?.quantity_requested}
                       </Typography>
@@ -218,11 +205,12 @@ const AcceptedItemsComponent = () => {
                 <CardActions>
                   <DetailButton
                     variant="contained"
+                    sx={{ fontSize: "20px", textTransform: "capitalize" }}
                     fullWidth
                     type="small"
                     onClick={() => handleDetailModalOpen(index)}
                   >
-                    Details
+                    {t("storehead.detail")}
                   </DetailButton>
                 </CardActions>
               </Card>
@@ -238,12 +226,12 @@ const AcceptedItemsComponent = () => {
               >
                 <List>
                   <Typography
-                    variant="h5"
+                    variant="h4"
                     textAlign={"center"}
                     marginBottom={"20px"}
-                    sx={{ textDecoration: "underline", color: "#12596B" }}
+                    sx={{ color: "#12596B" }}
                   >
-                    Store Head Pending Details
+                    {t("storehead.requestdetail")}
                   </Typography>
                   <ListItemForModal>
                     <Typography
@@ -252,7 +240,7 @@ const AcceptedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee First Name:
+                      {t("storehead.firstname")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -270,7 +258,7 @@ const AcceptedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee Last Name:
+                      {t("storehead.lastname")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -288,7 +276,7 @@ const AcceptedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee Email:
+                      {t("storehead.email")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -308,7 +296,7 @@ const AcceptedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee Phone Number:
+                      {t("storehead.phonenumber")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -328,7 +316,7 @@ const AcceptedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Department
+                      {t("storehead.department")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -348,7 +336,7 @@ const AcceptedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Name:
+                      {t("storehead.propertyname")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -366,7 +354,7 @@ const AcceptedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Model:
+                      {t("storehead.propertymodel")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -384,7 +372,7 @@ const AcceptedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Description
+                      {t("storehead.description")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -402,7 +390,7 @@ const AcceptedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Quantity Requested
+                      {t("storehead.quantity")}
                     </Typography>
                     <Typography
                       variant="body2"

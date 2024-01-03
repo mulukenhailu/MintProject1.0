@@ -134,6 +134,7 @@ export default function Sidebar() {
               padding: { md: "0px 15px 0px 0px" },
               color: "black",
               background: isActive("home") ? "lightgray" : "transparent",
+              borderLeft: isActive("home") ? "3px solid #12596B" : "null",
             }}
             component={Link}
             to="/home"
@@ -142,14 +143,14 @@ export default function Sidebar() {
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: 1,
                 fontSize: "3.2rem",
               }}
             >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : "auto",
+                  mr: open ? 2.5 : "auto",
                   justifyContent: "center",
                 }}
               >
@@ -173,6 +174,7 @@ export default function Sidebar() {
               padding: { md: "0px 5px 0px 0px" },
               color: "black",
               background: isActive("profile") ? "lightgray" : "transparent",
+              borderLeft: isActive("profile") ? "3px solid #12596B" : "null",
             }}
             component={Link}
             to="/profile"
@@ -181,13 +183,13 @@ export default function Sidebar() {
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: 1,
               }}
             >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : "auto",
+                  mr: open ? 2.5 : "auto",
                   justifyContent: "center",
                 }}
               >
@@ -211,6 +213,7 @@ export default function Sidebar() {
               padding: { md: "0px 5px 0px 0px" },
               color: "black",
               background: isActive("userorder") ? "lightgray" : "transparent",
+              borderLeft: isActive("userorder") ? "3px solid #12596B" : "null",
             }}
             component={Link}
             to="/userorder"
@@ -219,13 +222,13 @@ export default function Sidebar() {
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: 1,
               }}
             >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : "auto",
+                  mr: open ? 2.5 : "auto",
                   justifyContent: "center",
                 }}
               >
@@ -250,6 +253,9 @@ export default function Sidebar() {
                 padding: { md: "0px 5px 0px 0px" },
                 color: "black",
                 background: isActive("usersList") ? "lightgray" : "transparent",
+                borderLeft: isActive("usersList")
+                  ? "3px solid #12596B"
+                  : "null",
               }}
               component={Link}
               to="/usersList"
@@ -258,20 +264,20 @@ export default function Sidebar() {
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  px: 1,
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : "auto",
+                    mr: open ? 2.5 : "auto",
                     justifyContent: "center",
                   }}
                 >
                   <PeopleIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Users List"
+                  primary={t("sidebar.userlist")}
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
@@ -293,6 +299,9 @@ export default function Sidebar() {
                 background: isActive("createUser")
                   ? "lightgray"
                   : "transparent",
+                borderLeft: isActive("createUser")
+                  ? "3px solid #12596B"
+                  : "null",
               }}
               component={Link}
               to="/createUser"
@@ -301,20 +310,20 @@ export default function Sidebar() {
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  px: 1,
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : "auto",
+                    mr: open ? 2.5 : "auto",
                     justifyContent: "center",
                   }}
                 >
                   <PersonAddAlt1Icon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Create User"
+                  primary={t("sidebar.createuser")}
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
@@ -333,6 +342,7 @@ export default function Sidebar() {
                 padding: { md: "0px 5px 0px 0px" },
                 color: "black",
                 background: isActive("history") ? "lightgray" : "transparent",
+                borderLeft: isActive("history") ? "3px solid #12596B" : "null",
               }}
               component={Link}
               to="/history"
@@ -341,20 +351,20 @@ export default function Sidebar() {
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  px: 1,
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : "auto",
+                    mr: open ? 2.5 : "auto",
                     justifyContent: "center",
                   }}
                 >
                   <StoreIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="History"
+                  primary={t("sidebar.history")}
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
@@ -376,6 +386,9 @@ export default function Sidebar() {
                 background: isActive("storemanager")
                   ? "lightgray"
                   : "transparent",
+                borderLeft: isActive("storemanager")
+                  ? "3px solid #12596B"
+                  : "null",
               }}
               component={Link}
               to="/storemanager"
@@ -384,13 +397,13 @@ export default function Sidebar() {
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  px: 1,
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : "auto",
+                    mr: open ? 2.5 : "auto",
                     justifyContent: "center",
                   }}
                 >
@@ -419,6 +432,9 @@ export default function Sidebar() {
                 background: isActive("storekeeper")
                   ? "lightgray"
                   : "transparent",
+                borderLeft: isActive("storekeeper")
+                  ? "3px solid #12596B"
+                  : "null",
               }}
               component={Link}
               to="/storekeeper"
@@ -427,13 +443,13 @@ export default function Sidebar() {
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  px: 1,
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : "auto",
+                    mr: open ? 2.5 : "auto",
                     justifyContent: "center",
                   }}
                 >
@@ -460,6 +476,7 @@ export default function Sidebar() {
                 padding: { md: "0px 5px 0px 0px" },
                 color: "black",
                 background: isActive("manager") ? "lightgray" : "transparent",
+                borderLeft: isActive("manager") ? "3px solid #12596B" : "null",
               }}
               component={Link}
               to="/manager"
@@ -468,13 +485,13 @@ export default function Sidebar() {
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  px: 1,
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : "auto",
+                    mr: open ? 2.5 : "auto",
                     justifyContent: "center",
                   }}
                 >
@@ -503,6 +520,9 @@ export default function Sidebar() {
                 background: isActive("createproduct")
                   ? "lightgray"
                   : "transparent",
+                borderLeft: isActive("createproduct")
+                  ? "3px solid #12596B"
+                  : "null",
               }}
               component={Link}
               to="/createproduct"
@@ -511,13 +531,13 @@ export default function Sidebar() {
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  px: 1,
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : "auto",
+                    mr: open ? 2.5 : "auto",
                     justifyContent: "center",
                   }}
                 >
@@ -546,13 +566,13 @@ export default function Sidebar() {
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: 1,
               }}
             >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : "auto",
+                  mr: open ? 2.5 : "auto",
                   justifyContent: "center",
                 }}
               >

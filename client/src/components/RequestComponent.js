@@ -49,19 +49,23 @@ const RequestComponent = () => {
     );
   }
   return (
-    <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={3} paddingBottom={5}>
+    <Box paddingLeft={{ xs: 5.5, md: 20 }} paddingTop={3} paddingBottom={5}>
       <Box
-        sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
       >
         {sortedNotifications?.map((item, index) => (
           <Box
             sx={{
-              width: "60%",
+              width: { xs: "100%", sm: "80%", md: "70%", lg: "60%" },
               height: "fit-content",
               background: "lightgray",
               padding: "10px",
               marginBottom: "20px",
-              display: "flex",
+              display: { xs: "block", md: "flex" },
               gap: "30px",
               position: "relative",
               textDecoration: "none",
@@ -96,7 +100,7 @@ const RequestComponent = () => {
                 flex: "1",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "flex-start",
+                justifyContent: { xs: "center", md: "flex-start" },
               }}
             >
               <img
@@ -112,19 +116,31 @@ const RequestComponent = () => {
               />
             </Box>
             <Box sx={{ flex: "4" }}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography flex={1} color={"#12596B"} variant="h6">
+              <Box
+                sx={{
+                  display: { xs: "block", md: "flex" },
+                  gap: "2%",
+                  alignItems: "center",
+                }}
+              >
+                <Typography flex={2} color={"#12596B"} variant="h6">
                   {t("notification.from")}
                 </Typography>
-                <Typography flex={4} color={"#12596B"} variant="body1">
+                <Typography flex={5} color={"#12596B"} variant="body1">
                   {item?.senderFirstName + " " + item?.senderLastName}
                 </Typography>
               </Box>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography flex={1} color={"#12596B"} variant="h6">
+              <Box
+                sx={{
+                  display: { xs: "block", md: "flex" },
+                  gap: "4%",
+                  alignItems: "center",
+                }}
+              >
+                <Typography flex={2} color={"#12596B"} variant="h6">
                   {t("notification.message")}
                 </Typography>
-                <Typography flex={4} color={"#12596B"} variant="body1">
+                <Typography flex={5} color={"#12596B"} variant="body1">
                   {item?.description}
                 </Typography>
               </Box>

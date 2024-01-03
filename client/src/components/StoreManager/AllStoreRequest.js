@@ -6,9 +6,11 @@ import DeclinedItemsComponent from "./DeclinedItems";
 import PendingIcon from "@mui/icons-material/Pending";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import { useTranslation } from "react-i18next";
 
 const AllStoreRequest = () => {
   const [activeItem, setActiveItem] = useState("pending");
+  const { t } = useTranslation("global");
   const ButtonContainer = styled(ButtonGroup)({
     position: "sticky",
     top: "73px",
@@ -38,7 +40,7 @@ const AllStoreRequest = () => {
 
   return (
     <Box>
-      <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
+      <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={5} paddingBottom={5}>
         <ButtonContainer
           disableElevation
           variant="contained"
@@ -49,20 +51,23 @@ const AllStoreRequest = () => {
           <PendingButton
             onClick={() => setActiveItem("pending")}
             startIcon={<PendingIcon />}
+            sx={{ fontSize: "20px" }}
           >
-            Pending
+            {t("status.pending")}
           </PendingButton>
           <AcceptButton
             onClick={() => setActiveItem("accepted")}
             startIcon={<ThumbUpAltIcon />}
+            sx={{ fontSize: "20px" }}
           >
-            Accepted
+            {t("status.accepted")}
           </AcceptButton>
           <DeclineButton
             onClick={() => setActiveItem("declined")}
             startIcon={<ThumbDownAltIcon />}
+            sx={{ fontSize: "20px" }}
           >
-            Declined
+            {t("status.declined")}
           </DeclineButton>
         </ButtonContainer>
         <Box>

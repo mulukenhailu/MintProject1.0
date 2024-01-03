@@ -17,6 +17,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { GET_ALL_MANAGERS } from "../../State/ReduxSaga/Types/mangerType";
+import { useTranslation } from "react-i18next";
 
 const EditUserButton = styled(Button)({
   marginTop: "20px",
@@ -29,6 +30,7 @@ const EditUserButton = styled(Button)({
 const EditUserComponent = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const { t } = useTranslation("global");
   const navigate = useNavigate();
 
   const username = params.username;
@@ -117,8 +119,13 @@ const EditUserComponent = () => {
         margin: "auto",
       }}
     >
-      <Typography variant="h4" textAlign={"center"} color={"gray"}>
-        Update User
+      <Typography
+        variant="h4"
+        textAlign={"center"}
+        color={"#12596B"}
+        marginBottom={2}
+      >
+        {t("userlist.updateuser")}
       </Typography>
       {loadingUser && (
         <Box sx={{ textAlign: "center" }}>
@@ -164,7 +171,7 @@ const EditUserComponent = () => {
       <TextField
         id="first_name"
         type="text"
-        label="First Name"
+        label={t("userlist.firstname")}
         name="first_name"
         value={user.first_name}
         onChange={(e) => handleFormChange(e)}
@@ -175,7 +182,7 @@ const EditUserComponent = () => {
       <TextField
         id="last_name"
         type="text"
-        label="Last Name"
+        label={t("userlist.lastname")}
         name="last_name"
         value={user.last_name}
         onChange={handleFormChange}
@@ -186,7 +193,7 @@ const EditUserComponent = () => {
       <TextField
         id="email"
         type="email"
-        label="Email"
+        label={t("userlist.email")}
         name="email"
         value={user.email}
         onChange={handleFormChange}
@@ -197,7 +204,7 @@ const EditUserComponent = () => {
       <TextField
         id="phone_number"
         type="text"
-        label="Phone Number"
+        label={t("userlist.phonenumber")}
         name="phone_number"
         value={user.phone_number}
         onChange={handleFormChange}
@@ -208,7 +215,7 @@ const EditUserComponent = () => {
       <TextField
         id="department"
         type="text"
-        label="Department"
+        label={t("userlist.department")}
         name="department"
         value={user.department}
         onChange={handleFormChange}
@@ -219,7 +226,7 @@ const EditUserComponent = () => {
       <TextField
         id="password"
         type="text"
-        label="Password"
+        label={t("userlist.password")}
         name="Password"
         value={user.Password}
         onChange={handleFormChange}
@@ -230,7 +237,7 @@ const EditUserComponent = () => {
       <TextField
         id="manager"
         type="text"
-        label="Manager"
+        label={t("userlist.manager")}
         name="manager_username"
         value={user.manager_username}
         onChange={handleFormChange}
@@ -252,7 +259,7 @@ const EditUserComponent = () => {
         onClick={handleEditUser}
         fullWidth
       >
-        Update
+        {t("userlist.updateuser")}
       </EditUserButton>
     </Paper>
   );

@@ -18,16 +18,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
 import UserDetailModal from "./UserDetailModal";
-import DeleteUserModal from "./DeleteUserModal";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_ALL_USERS } from "../../State/ReduxSaga/Types/userTypes";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
+import { useTranslation } from "react-i18next";
 
 const UserList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation("global");
   const [detailModal, setDetailModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -51,7 +52,7 @@ const UserList = () => {
   };
 
   return (
-    <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
+    <Box paddingLeft={{ xs: 10, md: 21 }} paddingTop={5} paddingBottom={5}>
       {loadingUser ? (
         <Box
           sx={{
@@ -85,7 +86,7 @@ const UserList = () => {
             <TextField
               type="text"
               fullWidth
-              placeholder="Search by Product Name"
+              placeholder={t("userlist.searchbyfirstname")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               InputProps={{
@@ -110,7 +111,7 @@ const UserList = () => {
                       width: "12%",
                     }}
                   >
-                    First Name
+                    {t("userlist.firstname")}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -119,10 +120,10 @@ const UserList = () => {
                       width: "12%",
                     }}
                   >
-                    Last Name
+                    {t("userlist.lastname")}
                   </TableCell>
                   <TableCell sx={{ color: "#12596B", width: "12%" }}>
-                    UserName
+                    {t("userlist.username")}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -131,7 +132,7 @@ const UserList = () => {
                       width: "12%",
                     }}
                   >
-                    Phone Number
+                    {t("userlist.phonenumber")}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -140,7 +141,7 @@ const UserList = () => {
                       width: "12%",
                     }}
                   >
-                    Position
+                    {t("userlist.position")}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -149,16 +150,13 @@ const UserList = () => {
                       width: "12%",
                     }}
                   >
-                    Department
+                    {t("userlist.department")}
                   </TableCell>
                   <TableCell sx={{ color: "#12596B", width: "3%" }}>
-                    Edit
+                    {t("userlist.edit")}
                   </TableCell>
                   <TableCell sx={{ color: "#12596B", width: "3%" }}>
-                    Delete
-                  </TableCell>
-                  <TableCell sx={{ color: "#12596B", width: "3%" }}>
-                    Details
+                    {t("userlist.detail")}
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -217,14 +215,6 @@ const UserList = () => {
                       </IconButton>
                     </TableCell>
                     <TableCell sx={{ width: "3%" }}>
-                      <IconButton
-                        sx={{ color: "red" }}
-                        onClick={() => setDeleteModal(true)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell sx={{ width: "3%" }}>
                       <SettingsAccessibilityIcon
                         sx={{ color: "blue" }}
                         onClick={() => {
@@ -240,15 +230,10 @@ const UserList = () => {
           </TableContainer>
         </Box>
       )}
-
       <UserDetailModal
         detailModal={detailModal}
         setDetailModal={setDetailModal}
         currentUserId={currentUserId}
-      />
-      <DeleteUserModal
-        deleteModal={deleteModal}
-        setDeleteModal={setDeleteModal}
       />
     </Box>
   );

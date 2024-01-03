@@ -16,6 +16,7 @@ import {
 } from "../../State/ReduxToolkit/Slices/userSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 import { GET_ALL_MANAGERS } from "../../State/ReduxSaga/Types/mangerType";
+import { useTranslation } from "react-i18next";
 
 const CreateUserButton = styled(Button)({
   marginTop: "20px",
@@ -27,7 +28,7 @@ const CreateUserButton = styled(Button)({
 
 const CreateUser = () => {
   const dispatch = useDispatch();
-
+  const { t } = useTranslation("global");
   const [user, setUser] = useState({
     first_name: "",
     last_name: "",
@@ -83,10 +84,10 @@ const CreateUser = () => {
   }, [errorUser, newUser, dispatch]);
 
   const roleType = [
-    { value: "manager", label: "Manager" },
-    { value: "storehead", label: "Store Head" },
-    { value: "storekeeper", label: "Store Keeper" },
-    { value: "employee", label: "Employee" },
+    { value: "manager", label: t("createuser.manager") },
+    { value: "storehead", label: t("createuser.storehead") },
+    { value: "storekeeper", label: t("createuser.storekeeper") },
+    { value: "employee", label: t("createuser.employee") },
   ];
 
   const managersList = [];
@@ -103,12 +104,17 @@ const CreateUser = () => {
       elevation={3}
       sx={{
         padding: 5,
-        width: { xs: "100%", sm: "70%", md: "60%", lg: "40%" },
+        width: { xs: "100%", sm: "70%", md: "60%", lg: "50%" },
         margin: "auto",
       }}
     >
-      <Typography variant="h6" gutterBottom>
-        Create User
+      <Typography
+        variant="h4"
+        gutterBottom
+        color={"#12596B"}
+        textAlign={"center"}
+      >
+        {t("createuser.create")}
       </Typography>
       {loadingUser && (
         <Box sx={{ textAlign: "center" }}>
@@ -150,7 +156,7 @@ const CreateUser = () => {
         </Box>
       )}
       <TextField
-        label="First Name"
+        label={t("createuser.firstname")}
         name="first_name"
         value={user.first_name}
         onChange={handleFormChange}
@@ -160,7 +166,7 @@ const CreateUser = () => {
       />
 
       <TextField
-        label="Last Name"
+        label={t("createuser.lastname")}
         name="last_name"
         value={user.last_name}
         onChange={handleFormChange}
@@ -169,7 +175,7 @@ const CreateUser = () => {
         sx={{ backgroundColor: "#f7f7f7" }}
       />
       <TextField
-        label="Username"
+        label={t("createuser.username")}
         name="user_name"
         value={user.user_name}
         onChange={handleFormChange}
@@ -178,7 +184,7 @@ const CreateUser = () => {
         sx={{ backgroundColor: "#f7f7f7" }}
       />
       <TextField
-        label="Password"
+        label={t("createuser.password")}
         name="password"
         type="password"
         value={user.password}
@@ -188,7 +194,7 @@ const CreateUser = () => {
         sx={{ backgroundColor: "#f7f7f7" }}
       />
       <TextField
-        label="Department"
+        label={t("createuser.department")}
         name="department"
         type="department"
         value={user.department}
@@ -198,7 +204,7 @@ const CreateUser = () => {
         sx={{ backgroundColor: "#f7f7f7" }}
       />
       <TextField
-        label="Role"
+        label={t("createuser.role")}
         name="role"
         value={user.role}
         onChange={handleFormChange}
@@ -214,7 +220,7 @@ const CreateUser = () => {
         ))}
       </TextField>
       <TextField
-        label="Manager"
+        label={t("createuser.managername")}
         name="manager_username"
         type="text"
         value={user.manager_username}
@@ -238,7 +244,7 @@ const CreateUser = () => {
         fullWidth
         sx={{ marginTop: "20px", background: "#12596B" }}
       >
-        Create
+        {t("createuser.create")}
       </CreateUserButton>
     </Paper>
   );

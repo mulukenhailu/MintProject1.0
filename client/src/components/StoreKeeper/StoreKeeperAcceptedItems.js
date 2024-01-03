@@ -15,6 +15,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER } from "../../State/ReduxSaga/Types/storeKeeperRequestType";
+import { useTranslation } from "react-i18next";
 
 const DetailModalContainer = styled(Modal)({
   display: "flex",
@@ -45,6 +46,7 @@ const DetailButton = styled(Button)({
 
 const StoreKeeperAcceptedItems = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation("global");
   const [detailModals, setDetailModals] = useState([]);
 
   const { allRequest } = useSelector((state) => state.request);
@@ -97,7 +99,7 @@ const StoreKeeperAcceptedItems = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Requested By:
+                      {t("storekeeper.requestedby")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -114,7 +116,7 @@ const StoreKeeperAcceptedItems = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Approved Manager:
+                      {t("storekeeper.approvedmanager")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -131,7 +133,7 @@ const StoreKeeperAcceptedItems = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Approved Store Head:
+                      {t("storekeeper.approvedstorehead")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -148,7 +150,7 @@ const StoreKeeperAcceptedItems = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Recieved From:
+                      {t("storekeeper.recievedfrom")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -165,7 +167,7 @@ const StoreKeeperAcceptedItems = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Name:
+                      {t("storekeeper.propertyname")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -184,7 +186,7 @@ const StoreKeeperAcceptedItems = () => {
                   type="small"
                   onClick={() => handleDetailModalOpen(index)}
                 >
-                  Details
+                  {t("storekeeper.detail")}
                 </DetailButton>
               </CardActions>
             </Card>
@@ -203,9 +205,9 @@ const StoreKeeperAcceptedItems = () => {
                   variant="h5"
                   textAlign={"center"}
                   marginBottom={"20px"}
-                  sx={{ textDecoration: "underline", color: "#12596B" }}
+                  sx={{ color: "#12596B" }}
                 >
-                  Delivered-Details
+                  {t("storekeeper.requestdetail")}
                 </Typography>
                 <ListItemForModal>
                   <Typography
@@ -214,7 +216,7 @@ const StoreKeeperAcceptedItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Requested By
+                    {t("storekeeper.requestedby")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -232,7 +234,7 @@ const StoreKeeperAcceptedItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Approved Manager
+                    {t("storekeeper.approvedmanager")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -250,7 +252,7 @@ const StoreKeeperAcceptedItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Approved Store Head
+                    {t("storekeeper.approvedstorehead")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -268,7 +270,7 @@ const StoreKeeperAcceptedItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Recieved From
+                    {t("storekeeper.recievedfrom")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -286,7 +288,7 @@ const StoreKeeperAcceptedItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Name:
+                    {t("storekeeper.propertyname")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -304,7 +306,7 @@ const StoreKeeperAcceptedItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Model:
+                    {t("storekeeper.propertymodel")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -322,7 +324,7 @@ const StoreKeeperAcceptedItems = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Quantity Requested:
+                    {t("storekeeper.quantity")}
                   </Typography>
                   <Typography
                     variant="body2"

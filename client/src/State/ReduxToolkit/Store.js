@@ -13,6 +13,7 @@ import managerReducer from "./Slices/managerSlice";
 import requestReducer from "./Slices/requestSlice";
 import uploadReducer from "./Slices/uploadImageSlice";
 import orderReducer from "./Slices/orderSlice";
+import languangeReducer from "./Slices/languange";
 
 const persistConfig = {
   key: "root",
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   request: requestReducer,
   upload: uploadReducer,
   order: orderReducer,
+  languange: languangeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

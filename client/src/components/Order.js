@@ -65,7 +65,13 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
   }, [newOrder, errorOrder]);
 
   return (
-    <Box bgcolor={"white"} borderRadius={"5px"} width={"400px"} padding={4}>
+    <Box
+      bgcolor={"white"}
+      borderRadius={"5px"}
+      width={{ xs: "80%", sm: "50%", md: "40%", lg: "30%" }}
+      padding={4}
+      marginX={"auto"}
+    >
       <Box>
         <Typography variant="h5" gutterBottom textAlign={"center"}>
           {t("moveorder.ordertitle")}
