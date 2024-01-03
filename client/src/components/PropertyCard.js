@@ -84,7 +84,7 @@ const PropertyCard = ({
         <CardContentItem>
           <Typography
             variant={{ xs: "body1", md: "h6" }}
-            sx={{ color: "#12596B" }}
+            sx={{ color: "#12596B", fontWeight: "900" }}
             flex={1}
           >
             {t("home.name")}
@@ -100,7 +100,7 @@ const PropertyCard = ({
         <CardContentItem>
           <Typography
             variant={{ xs: "body1", md: "h6" }}
-            sx={{ color: "#12596B" }}
+            sx={{ color: "#12596B", fontWeight: "900" }}
             flex={1}
           >
             {t("home.model")}
@@ -116,7 +116,7 @@ const PropertyCard = ({
         <CardContentItem>
           <Typography
             variant={{ xs: "body1", md: "h6" }}
-            sx={{ color: "#12596B" }}
+            sx={{ color: "#12596B", fontWeight: "900" }}
             flex={1}
           >
             {t("home.available")}

@@ -163,7 +163,10 @@ export default function Sidebar() {
                   display: { xs: "none", md: "block" },
                   color: "#12596B",
                 }}
-                primaryTypographyProps={{ fontSize: "20px" }}
+                primaryTypographyProps={{
+                  fontSize: "20px",
+                  fontWeight: "900",
+                }}
               />
             </ListItemButton>
           </ListItem>
@@ -202,7 +205,10 @@ export default function Sidebar() {
                   display: { xs: "none", md: "block" },
                   color: "#12596B",
                 }}
-                primaryTypographyProps={{ fontSize: "20px" }}
+                primaryTypographyProps={{
+                  fontSize: "20px",
+                  fontWeight: "900",
+                }}
               />
             </ListItemButton>
           </ListItem>
@@ -241,7 +247,10 @@ export default function Sidebar() {
                   display: { xs: "none", md: "block" },
                   color: "#12596B",
                 }}
-                primaryTypographyProps={{ fontSize: "20px" }}
+                primaryTypographyProps={{
+                  fontSize: "20px",
+                  fontWeight: "900",
+                }}
               />
             </ListItemButton>
           </ListItem>
@@ -283,7 +292,10 @@ export default function Sidebar() {
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
-                  primaryTypographyProps={{ fontSize: "20px" }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "900",
+                  }}
                 />
               </ListItemButton>
             </ListItem>
@@ -329,7 +341,10 @@ export default function Sidebar() {
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
-                  primaryTypographyProps={{ fontSize: "20px" }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "900",
+                  }}
                 />
               </ListItemButton>
             </ListItem>
@@ -370,7 +385,10 @@ export default function Sidebar() {
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
-                  primaryTypographyProps={{ fontSize: "20px" }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "900",
+                  }}
                 />
               </ListItemButton>
             </ListItem>
@@ -416,7 +434,10 @@ export default function Sidebar() {
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
-                  primaryTypographyProps={{ fontSize: "20px" }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "900",
+                  }}
                 />
               </ListItemButton>
             </ListItem>
@@ -462,7 +483,10 @@ export default function Sidebar() {
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
-                  primaryTypographyProps={{ fontSize: "20px" }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "900",
+                  }}
                 />
               </ListItemButton>
             </ListItem>
@@ -504,7 +528,10 @@ export default function Sidebar() {
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
-                  primaryTypographyProps={{ fontSize: "20px" }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "900",
+                  }}
                 />
               </ListItemButton>
             </ListItem>
@@ -550,7 +577,10 @@ export default function Sidebar() {
                     display: { xs: "none", md: "block" },
                     color: "#12596B",
                   }}
-                  primaryTypographyProps={{ fontSize: "20px" }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "900",
+                  }}
                 />
               </ListItemButton>
             </ListItem>
@@ -585,7 +615,10 @@ export default function Sidebar() {
                   display: { xs: "none", md: "block" },
                   color: "red",
                 }}
-                primaryTypographyProps={{ fontSize: "20px" }}
+                primaryTypographyProps={{
+                  fontSize: "20px",
+                  fontWeight: "900",
+                }}
               />
             </ListItemButton>
           </LogOutContainer>
