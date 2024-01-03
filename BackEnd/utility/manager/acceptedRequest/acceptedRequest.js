@@ -42,6 +42,9 @@ const client = new GraphQLClient(endpoint, {
         productstatus
         created_at
         updated_at
+        request {
+          updated_at
+        }
       }
       confirmation_number
       created_at
@@ -50,6 +53,7 @@ const client = new GraphQLClient(endpoint, {
       manager_username
     }
   }
+  
   `
 
   const requestHeaders = {
