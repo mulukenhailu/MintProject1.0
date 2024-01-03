@@ -173,7 +173,11 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem
+        component={Link}
+        to="/notification"
+        onClick={handleProfileMenuOpen}
+      >
         <IconButton
           size="large"
           aria-label="show 17 new notifications"

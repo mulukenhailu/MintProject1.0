@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { GET_ALL_PENDING_REQUEST_FOR_STOREHEAD } from "../../State/ReduxSaga/Types/storeHeadRequestTypes";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useTranslation } from "react-i18next";
 
 const DeclineButton = styled(Button)({
   marginRight: "10px",
@@ -116,6 +117,7 @@ const DeclineModalWrapper = styled(Box)({
 
 const PendingItemComponent = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation("global");
   const [detailModals, setDetailModals] = useState([]);
   const [acceptModals, setAcceptModals] = useState([]);
   const [declineModal, setDeclineModal] = useState(false);
@@ -253,7 +255,7 @@ const PendingItemComponent = () => {
                   height="250px"
                   src={`${PF}${item?.employeeRequest?.Item?.productphoto}`}
                 />
-                <CardContent>
+                <CardContent sx={{ padding: "0px" }}>
                   <List>
                     <ListItem
                       sx={{
@@ -263,17 +265,19 @@ const PendingItemComponent = () => {
                       }}
                     >
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         marginRight={1}
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
+                        flex={1}
                       >
-                        First Name:
+                        {t("storehead.firstname")}
                       </Typography>
                       <Typography
-                        variant="body3"
+                        variant="body1"
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
+                        flex={1}
                       >
                         {item?.employeeRequest?.User?.first_name}
                       </Typography>
@@ -286,17 +290,19 @@ const PendingItemComponent = () => {
                       }}
                     >
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         marginRight={1}
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
+                        flex={1}
                       >
-                        Last Name:
+                        {t("storehead.lastname")}
                       </Typography>
                       <Typography
-                        variant="body3"
+                        variant="body1"
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
+                        flex={1}
                       >
                         {item?.employeeRequest?.User?.last_name}
                       </Typography>
@@ -309,17 +315,19 @@ const PendingItemComponent = () => {
                       }}
                     >
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         marginRight={1}
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
+                        flex={1}
                       >
-                        Product Name:
+                        {t("storehead.propertyname")}
                       </Typography>
                       <Typography
-                        variant="body3"
+                        variant="body1"
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
+                        flex={1}
                       >
                         {item?.employeeRequest?.Item?.productname}
                       </Typography>
@@ -332,42 +340,21 @@ const PendingItemComponent = () => {
                       }}
                     >
                       <Typography
-                        variant="body1"
+                        variant="h6"
                         marginRight={1}
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
+                        flex={1}
                       >
-                        Quantity:
+                        {t("storehead.quantity")}
                       </Typography>
                       <Typography
-                        variant="body3"
+                        variant="body1"
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
+                        flex={1}
                       >
                         {item?.quantity_requested}
-                      </Typography>
-                    </ListItem>
-                    <ListItem
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                      }}
-                    >
-                      <Typography
-                        variant="body1"
-                        marginRight={1}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        Approved-date:
-                      </Typography>
-                      <Typography
-                        variant="body3"
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        1 month ago
                       </Typography>
                     </ListItem>
                   </List>
@@ -378,20 +365,23 @@ const PendingItemComponent = () => {
                       variant="contained"
                       size="small"
                       onClick={() => setDeclineModal(true)}
+                      sx={{ fontSize: "20px", textTransform: "capitalize" }}
                     >
-                      Decline
+                      {t("storehead.decline")}
                     </DeclineButton>
                     <AcceptButton
                       variant="contained"
                       onClick={() => handleAcceptModalOpen(index)}
+                      sx={{ fontSize: "20px", textTransform: "capitalize" }}
                     >
-                      Accept
+                      {t("storehead.accept")}
                     </AcceptButton>
                     <DetailButton
                       variant="contained"
                       onClick={() => handleDetailModalOpen(index)}
+                      sx={{ fontSize: "20px", textTransform: "capitalize" }}
                     >
-                      Details
+                      {t("storehead.detail")}
                     </DetailButton>
                   </ButtonGroup>
                 </CardActions>
@@ -404,16 +394,16 @@ const PendingItemComponent = () => {
               aria-describedby="modal-modal-description"
             >
               <DetailModalWrapper
-                width={{ xs: "90%", sm: "70%", md: "50%", lg: "60%" }}
+                width={{ xs: "90%", sm: "70%", md: "50%", lg: "75%" }}
               >
                 <List>
                   <Typography
-                    variant="h5"
+                    variant="h4"
                     textAlign={"center"}
                     marginBottom={"20px"}
-                    sx={{ textDecoration: "underline", color: "#12596B" }}
+                    sx={{ color: "#12596B" }}
                   >
-                    Store Head Pending Details
+                    {t("storehead.requestdetail")}
                   </Typography>
                   <ListItemForModal>
                     <Typography
@@ -422,7 +412,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee First Name:
+                      {t("storehead.firstname")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -440,7 +430,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee Last Name:
+                      {t("storehead.lastname")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -458,7 +448,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee Email:
+                      {t("storehead.email")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -478,7 +468,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee Phone Number:
+                      {t("storehead.phonenumber")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -498,7 +488,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Department
+                      {t("storehead.department")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -518,7 +508,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Name:
+                      {t("storehead.propertyname")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -536,7 +526,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Model:
+                      {t("storehead.propertymodel")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -554,7 +544,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Description
+                      {t("storehead.description")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -572,7 +562,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Quantity Requested
+                      {t("storehead.quantity")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -600,9 +590,9 @@ const PendingItemComponent = () => {
                     variant="h5"
                     textAlign={"center"}
                     marginBottom={"10px"}
-                    sx={{ textDecoration: "underline", color: "#12596B" }}
+                    sx={{ color: "#12596B" }}
                   >
-                    Store Head Pending Details
+                    {t("storehead.requestdetail")}
                   </Typography>
                   {loading && (
                     <Box sx={{ textAlign: "center" }}>
@@ -650,7 +640,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee First Name:
+                      {t("storehead.firstname")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -668,7 +658,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee Last Name:
+                      {t("storehead.lastname")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -686,7 +676,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee Email:
+                      {t("storehead.email")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -706,7 +696,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Employee Phone Number:
+                      {t("storehead.phonenumber")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -726,7 +716,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Department
+                      {t("storehead.department")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -746,7 +736,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Name:
+                      {t("storehead.propertyname")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -764,7 +754,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Model:
+                      {t("storehead.propertymodel")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -782,7 +772,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Product Description
+                      {t("storehead.description")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -800,7 +790,7 @@ const PendingItemComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
                     >
-                      Quantity Requested
+                      {t("storehead.quantity")}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -811,32 +801,18 @@ const PendingItemComponent = () => {
                       {item?.quantity_requested}
                     </Typography>
                   </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
-                    >
-                      Approved Date:
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      2 days ago
-                    </Typography>
-                  </ListItemForModal>
                 </List>
                 <SendButton
                   variant="contained"
-                  sx={{ background: "#12596B" }}
+                  sx={{
+                    background: "#12596B",
+                    fontSize: "20px",
+                    textTransform: "capitalize",
+                  }}
                   fullWidth
                   onClick={() => handleAcceptRequest(item?.id)}
                 >
-                  Approve request
+                  {t("storehead.accept")}
                 </SendButton>
               </AcceptModalWrapper>
             </AcceptModal>
@@ -850,12 +826,12 @@ const PendingItemComponent = () => {
                 width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
               >
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   textAlign={"center"}
-                  marginBottom={"20px"}
-                  sx={{ textDecoration: "underline", color: "#12596B" }}
+                  marginBottom={"10px"}
+                  sx={{ color: "#12596B" }}
                 >
-                  Decline request
+                  {t("storehead.declinefrom")}
                 </Typography>
                 {loading && (
                   <Box sx={{ textAlign: "center" }}>
@@ -899,7 +875,7 @@ const PendingItemComponent = () => {
                 <Textarea
                   minRows={5}
                   sx={{ fontSize: "18px", marginBottom: "20px" }}
-                  placeholder="Send to decline reason to manager"
+                  placeholder={t("storehead.declinereason")}
                   onChange={(e) => setRejectReason(e.target.value)}
                 />
                 <RejectButton
@@ -915,7 +891,7 @@ const PendingItemComponent = () => {
                     handleDeclineRequest(request);
                   }}
                 >
-                  Decline request
+                  {t("storehead.decline")}
                 </RejectButton>
               </DeclineModalWrapper>
             </DeclineModal>

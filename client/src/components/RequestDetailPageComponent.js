@@ -65,10 +65,10 @@ const RequestDetailPageComponent = () => {
 
   return (
     <Box
-      paddingLeft={{ xs: 10, md: 35 }}
+      paddingLeft={{ xs: 5, md: 20 }}
       paddingTop={3}
       paddingBottom={5}
-      sx={{ position: "relative" }}
+      sx={{ position: "relative", border: "1px solid green" }}
     >
       <Box
         component={Link}
@@ -76,11 +76,11 @@ const RequestDetailPageComponent = () => {
         sx={{
           position: "absolute",
           top: "25px",
-          left: "230px",
+          left: { xs: "12%", md: "20%", lg: "15%" },
           background: "#12596B",
           color: "#fff",
           textDecoration: "none",
-          padding: "10px 20px 10px 10px",
+          padding: "5px 10px 5px 5px",
           borderRadius: "5px",
           display: "flex",
           alignItems: "center",
@@ -88,7 +88,10 @@ const RequestDetailPageComponent = () => {
         }}
       >
         <KeyboardBackspaceIcon />
-        {t("notification.back")}
+        <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          {" "}
+          {t("notification.back")}
+        </Box>
       </Box>
       <Typography variant="h4" textAlign={"center"} color={"#12596B"}>
         {t("notification.messagedetail")}
@@ -106,18 +109,22 @@ const RequestDetailPageComponent = () => {
       )}
       <Box
         sx={{
-          display: "flex",
-          gap: "30px",
+          display: { xs: "block", lg: "flex" },
+          gap: "10px",
           marginTop: "30px",
         }}
       >
         <Box
           sx={{
-            flex: "1",
             padding: "20px",
           }}
+          flex={1}
         >
-          <Box sx={{ display: "flex", gap: "20px", marginBottom: "30px" }}>
+          <Box
+            sx={{
+              marginBottom: "30px",
+            }}
+          >
             <Box>
               <Typography variant="h5" color={"#12596B"}>
                 {t("notification.senderphoto")}
@@ -141,18 +148,11 @@ const RequestDetailPageComponent = () => {
           <hr style={{ margin: "30px" }} />
           <Box
             sx={{
-              display: "flex",
-              gap: "20px",
               marginBottom: "30px",
-              position: "relative",
             }}
           >
             <Box>
-              <Typography
-                variant="h5"
-                color={"#12596B"}
-                sx={{ position: "absolute", top: "0px", right: "0px" }}
-              >
+              <Typography variant="h5" color={"#12596B"}>
                 {t("notification.propertyphoto")}
               </Typography>
             </Box>
@@ -173,9 +173,9 @@ const RequestDetailPageComponent = () => {
           </Box>
         </Box>
 
-        <Box sx={{ flex: "1", padding: "20px" }}>
+        <Box sx={{ padding: "20px" }} flex={1}>
           <List>
-            <ListItemForModal>
+            <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
               <Typography
                 variant="h6"
                 flex={4}
@@ -193,7 +193,7 @@ const RequestDetailPageComponent = () => {
                 {notification?.senderFirstName}
               </Typography>
             </ListItemForModal>
-            <ListItemForModal>
+            <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
               <Typography
                 variant="h6"
                 flex={4}
@@ -211,7 +211,7 @@ const RequestDetailPageComponent = () => {
                 {notification?.senderLastName}
               </Typography>
             </ListItemForModal>
-            <ListItemForModal>
+            <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
               <Typography
                 variant="h6"
                 flex={4}
@@ -229,7 +229,7 @@ const RequestDetailPageComponent = () => {
                 {property?.productname}
               </Typography>
             </ListItemForModal>
-            <ListItemForModal>
+            <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
               <Typography
                 variant="h6"
                 flex={4}
@@ -247,7 +247,7 @@ const RequestDetailPageComponent = () => {
                 {property?.productmodel}
               </Typography>
             </ListItemForModal>
-            <ListItemForModal>
+            <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
               <Typography
                 variant="h6"
                 flex={4}
@@ -265,14 +265,16 @@ const RequestDetailPageComponent = () => {
                 {notification?.quantity_requested}
               </Typography>
             </ListItemForModal>
-            <ListItemForModalDescription>
+            <ListItemForModalDescription
+              sx={{ display: { xs: "block", sm: "flex" } }}
+            >
               <Typography
                 variant="h6"
                 flex={4}
                 sx={{ color: "#12596B" }}
                 fontWeight={500}
               >
-                {t("notification.description")}
+                {t("notification.message")}
               </Typography>
               <Typography
                 variant="body1"

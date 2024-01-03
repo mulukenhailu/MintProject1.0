@@ -26,7 +26,9 @@ const OrderFormModalContainer = styled(Modal)({
   alignItems: "center",
   justifyContent: "center",
 });
-const OrderFormModalWrapper = styled(Box)({});
+const OrderFormModalWrapper = styled(Box)({
+  width: "100%",
+});
 const CreateButton = styled(Button)({
   background: "#12596B",
   "&:hover": {
@@ -54,7 +56,7 @@ const PropertyCard = ({
   return (
     <Card
       sx={{
-        padding: "20px 10px",
+        padding: "20px 2px",
         height: "500px",
         background: "#fff",
         boxShadow: "5px 10px 10px rgba(0, 0, 0, 0.2)",
@@ -69,7 +71,7 @@ const PropertyCard = ({
         sx={{
           borderRadius: "5px",
           padding: "0px 5px",
-          objectFit: "fill",
+          objectFit: "contain",
           height: "70%",
           width: "100%",
           overflow: "hidden",
@@ -78,28 +80,52 @@ const PropertyCard = ({
         image={`${PF}${productphoto}`}
         alt="property image"
       />
-      <CardContent>
+      <CardContent sx={{ width: "100%" }}>
         <CardContentItem>
-          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={900}>
-            {t("home.name")}:
+          <Typography
+            variant={{ xs: "body1", md: "h6" }}
+            sx={{ color: "#12596B" }}
+            flex={1}
+          >
+            {t("home.name")}
           </Typography>
-          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={400}>
+          <Typography
+            variant={{ xs: "body2", md: "body1" }}
+            sx={{ color: "#12596B" }}
+            flex={1}
+          >
             {productname}
           </Typography>
         </CardContentItem>
         <CardContentItem>
-          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={900}>
-            {t("home.model")}:
+          <Typography
+            variant={{ xs: "body1", md: "h6" }}
+            sx={{ color: "#12596B" }}
+            flex={1}
+          >
+            {t("home.model")}
           </Typography>
-          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={400}>
+          <Typography
+            variant={{ xs: "body2", md: "body1" }}
+            sx={{ color: "#12596B" }}
+            flex={1}
+          >
             {productmodel}
           </Typography>
         </CardContentItem>
         <CardContentItem>
-          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={900}>
-            {t("home.available")}:
+          <Typography
+            variant={{ xs: "body1", md: "h6" }}
+            sx={{ color: "#12596B" }}
+            flex={1}
+          >
+            {t("home.available")}
           </Typography>
-          <Typography variant="h6" sx={{ color: "#12596B" }} fontWeight={400}>
+          <Typography
+            variant={{ xs: "body2", md: "body1" }}
+            sx={{ color: "#12596B" }}
+            flex={1}
+          >
             {productquantitynumber}
           </Typography>
         </CardContentItem>
@@ -109,9 +135,10 @@ const PropertyCard = ({
           size="medium"
           sx={{
             color: "#fff",
-            fontSize: "18px",
+            fontSize: { xs: "12px", md: "16px" },
             marginRight: "5px",
             width: "100px",
+            textTransform: "capitalize",
           }}
           variant="contained"
           onClick={() => handleClickModal()}
@@ -122,7 +149,12 @@ const PropertyCard = ({
         <Link to={`/details/${item_number}`}>
           <Button
             size="medium"
-            sx={{ color: "#fff", fontSize: "18px", width: "100px" }}
+            sx={{
+              color: "#fff",
+              fontSize: { xs: "12px", md: "16px" },
+              width: "100px",
+              textTransform: "capitalize",
+            }}
             variant="contained"
             color="warning"
           >

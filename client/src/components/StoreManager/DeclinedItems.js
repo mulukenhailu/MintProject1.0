@@ -16,6 +16,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GET_ALL_DECLINED_REQUEST_FOR_STOREHEAD } from "../../State/ReduxSaga/Types/storeHeadRequestTypes";
 import { removeAllRequest } from "../../State/ReduxToolkit/Slices/requestSlice";
+import { useTranslation } from "react-i18next";
 
 const DeclineModalContainer = styled(Modal)({
   display: "flex",
@@ -51,6 +52,7 @@ const DetailButton = styled(Button)({
 });
 
 const DeclinedItemsComponent = () => {
+  const { t } = useTranslation("global");
   const [detailModals, setDetailModals] = useState([]);
   const { allRequest } = useSelector((state) => state.request);
   const dispatch = useDispatch();
@@ -98,21 +100,23 @@ const DeclinedItemsComponent = () => {
                 height="250"
                 image={`${PF}${item?.employeeRequest?.Item?.productphoto}`}
               />
-              <CardContent>
+              <CardContent sx={{ padding: "0px" }}>
                 <List>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant="h6"
                       marginRight={1}
                       sx={{ color: "#12596B" }}
+                      flex={1}
                       fontWeight={900}
                     >
-                      First Name:
+                      {t("storehead.firstname")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {
                         item?.employeeRequest?.Item?.request[0]?.User
@@ -122,51 +126,57 @@ const DeclinedItemsComponent = () => {
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant="h6"
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
-                      Last Name:
+                      {t("storehead.lastname")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item?.employeeRequest?.Item?.request[0]?.User?.last_name}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant="h6"
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
-                      Product Name:
+                      {t("storehead.propertyname")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item?.employeeRequest?.Item?.productname}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant="h6"
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
-                      Quantity:
+                      {t("storehead.quantity")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item?.quantity_requested}
                     </Typography>
@@ -178,8 +188,9 @@ const DeclinedItemsComponent = () => {
                   variant="contained"
                   fullWidth
                   onClick={() => handleDetailModalOpen(index)}
+                  sx={{ fontSize: "20px", textTransform: "capitalize" }}
                 >
-                  Details
+                  {t("storehead.detail")}
                 </DetailButton>
               </CardActions>
             </Card>
@@ -191,16 +202,16 @@ const DeclinedItemsComponent = () => {
             aria-describedby="modal-modal-description"
           >
             <DeclineModalWrapper
-              width={{ xs: "90%", sm: "70%", md: "50%", lg: "60%" }}
+              width={{ xs: "90%", sm: "70%", md: "50%", lg: "70%" }}
             >
               <List>
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   textAlign={"center"}
-                  marginBottom={"20px"}
-                  sx={{ textDecoration: "underline", color: "#12596B" }}
+                  marginBottom={"10px"}
+                  sx={{ color: "#12596B" }}
                 >
-                  Decline Details
+                  {t("storehead.requestdetail")}
                 </Typography>
                 <ListItemForModal>
                   <Typography
@@ -209,7 +220,7 @@ const DeclinedItemsComponent = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee First Name:
+                    {t("storehead.firstname")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -227,7 +238,7 @@ const DeclinedItemsComponent = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee Last Name:
+                    {t("storehead.lastname")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -245,7 +256,7 @@ const DeclinedItemsComponent = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee Email:
+                    {t("storehead.email")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -265,7 +276,7 @@ const DeclinedItemsComponent = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee Phone Number:
+                    {t("storehead.phonenumber")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -286,7 +297,7 @@ const DeclinedItemsComponent = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Department
+                    {t("storehead.department")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -307,7 +318,7 @@ const DeclinedItemsComponent = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Name:
+                    {t("storehead.propertyname")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -325,7 +336,7 @@ const DeclinedItemsComponent = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Model:
+                    {t("storehead.propertymodel")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -343,7 +354,7 @@ const DeclinedItemsComponent = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Description
+                    {t("storehead.description")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -361,7 +372,7 @@ const DeclinedItemsComponent = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Quantity Requested
+                    {t("storehead.quantity")}
                   </Typography>
                   <Typography
                     variant="body2"

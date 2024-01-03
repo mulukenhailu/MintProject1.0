@@ -41,7 +41,9 @@ const OrderFormModalContainer = styled(Modal)({
   alignItems: "center",
   justifyContent: "center",
 });
-const OrderFormModalWrapper = styled(Box)({});
+const OrderFormModalWrapper = styled(Box)({
+  width: "100%",
+});
 const OrderButton = styled(Button)({
   background: "#12596B",
   "&:hover": {
@@ -67,10 +69,10 @@ const DetailsProductPage = () => {
       <Box sx={{ display: "flex" }}>
         <Sidebar />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5}>
-            <Paper elevation={4}>
+          <Box paddingLeft={{ xs: 6, md: 14 }} paddingTop={5}>
+            <Paper elevation={4} sx={{ padding: { xs: "20px", md: "0px" } }}>
               <Grid container>
-                <Grid item xs={12} md={6} sx={{ padding: "20px" }}>
+                <Grid item xs={12} md={6} sx={{ padding: "0px" }}>
                   <CardMedia
                     sx={{
                       borderRadius: "15px",
@@ -78,6 +80,7 @@ const DetailsProductPage = () => {
                       height: "450px",
                       width: "100%",
                       overflow: "hidden",
+                      objectFit: "contain",
                     }}
                     component="img"
                     image={`${PF}${singleProperty.productphoto}`}
@@ -103,13 +106,15 @@ const DetailsProductPage = () => {
                     {t("homedetail.propertydetail")}
                   </Typography>
                   <CardContents>
-                    <CardContentItem>
+                    <CardContentItem
+                      sx={{ display: { xs: "block", md: "flex" } }}
+                    >
                       <Typography
                         variant="h6"
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
                       >
-                        {t("homedetail.name")}:
+                        {t("homedetail.name")}
                       </Typography>
                       <Typography
                         variant="body1"
@@ -119,13 +124,15 @@ const DetailsProductPage = () => {
                         {singleProperty.productname}
                       </Typography>
                     </CardContentItem>
-                    <CardContentItem>
+                    <CardContentItem
+                      sx={{ display: { xs: "block", md: "flex" } }}
+                    >
                       <Typography
                         variant="h6"
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
                       >
-                        {t("homedetail.model")}:
+                        {t("homedetail.model")}
                       </Typography>
                       <Typography
                         variant="body1"
@@ -135,31 +142,35 @@ const DetailsProductPage = () => {
                         {singleProperty.productmodel}
                       </Typography>
                     </CardContentItem>
-                    <CardContentDescrption>
+                    <CardContentDescrption
+                      sx={{ display: { xs: "block", md: "flex" } }}
+                    >
                       <Typography
                         variant="h6"
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
                         flex={3}
                       >
-                        {t("homedetail.description")}:
+                        {t("homedetail.description")}
                       </Typography>
                       <Typography
                         variant="body1"
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
-                        flex={12}
+                        flex={10}
                       >
                         {singleProperty.productdescription}
                       </Typography>
                     </CardContentDescrption>
-                    <CardContentItem>
+                    <CardContentItem
+                      sx={{ display: { xs: "block", md: "flex" } }}
+                    >
                       <Typography
                         variant="h6"
                         sx={{ color: "#12596B" }}
                         fontWeight={900}
                       >
-                        {t("homedetail.available")}:
+                        {t("homedetail.available")}
                       </Typography>
                       <Typography
                         variant="body1"
@@ -177,7 +188,7 @@ const DetailsProductPage = () => {
                       variant="contained"
                       sx={{
                         background: "#12596B",
-                        fontSize: "18px",
+                        fontSize: "16px",
                         width: "100px",
                       }}
                       onClick={() => setOpenOrderModal(true)}
@@ -189,7 +200,7 @@ const DetailsProductPage = () => {
                         variant="contained"
                         size="medium"
                         color="warning"
-                        sx={{ fontSize: "18px", width: "100px" }}
+                        sx={{ fontSize: "16px", width: "100px" }}
                       >
                         {t("homedetail.back")}
                       </Button>

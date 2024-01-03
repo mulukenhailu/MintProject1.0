@@ -18,9 +18,11 @@ import {
 } from "../../State/ReduxToolkit/Slices/propertySlice";
 import { UPLOAD_IMAGE } from "../../State/ReduxSaga/Types/uploadImageType";
 import { removeUploadImage } from "../../State/ReduxToolkit/Slices/uploadImageSlice";
+import { useTranslation } from "react-i18next";
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation("global");
   const CreateButton = styled(Button)({
     background: "#12596B",
     "&:hover": {
@@ -40,8 +42,8 @@ const CreateProduct = () => {
     { value: 4521, label: "4521" },
   ];
   const productStatus = [
-    { value: "available", label: "Available" },
-    { value: "unavailable", label: "Unavailable" },
+    { value: "available", label: t("createproduct.available") },
+    { value: "unavailable", label: t("createproduct.unavailable") },
   ];
 
   const { newProperty, errorProperty, loadingProperty } = useSelector(
@@ -176,8 +178,13 @@ const CreateProduct = () => {
           margin: "auto",
         }}
       >
-        <Typography variant="h6" gutterBottom>
-          Create Product
+        <Typography
+          variant="h4"
+          textAlign={"center"}
+          gutterBottom
+          sx={{ color: "#12596B" }}
+        >
+          {t("createproduct.create")}
         </Typography>
         {loadingProperty && (
           <Box sx={{ textAlign: "center" }}>
@@ -244,7 +251,7 @@ const CreateProduct = () => {
           </Box>
         )}
         <TextField
-          label="Product Name"
+          label={t("createproduct.propertyname")}
           name="productname"
           value={property.productname}
           onChange={handleFormChange}
@@ -253,7 +260,7 @@ const CreateProduct = () => {
           sx={{ backgroundColor: "#f7f7f7" }}
         />
         <TextField
-          label="Product Model"
+          label={t("createproduct.propertymodel")}
           name="productmodel"
           value={property.productmodel}
           onChange={handleFormChange}
@@ -263,7 +270,7 @@ const CreateProduct = () => {
         />
         <Box sx={{ display: "flex", gap: "15px" }}>
           <TextField
-            label="Product Source"
+            label={t("createproduct.productsource")}
             name="productsource"
             value={property.productsource}
             onChange={handleFormChange}
@@ -280,7 +287,7 @@ const CreateProduct = () => {
           </TextField>
 
           <TextField
-            label="Product Standard Type"
+            label={t("createproduct.productstandardtype")}
             name="productstandardtype"
             value={property.productstandardtype}
             onChange={handleFormChange}
@@ -297,7 +304,7 @@ const CreateProduct = () => {
           </TextField>
 
           <TextField
-            label="Product Model Number"
+            label={t("createproduct.productmodelnumber")}
             name="productmodelnumber"
             value={property.productmodelnumber}
             onChange={handleFormChange}
@@ -308,7 +315,7 @@ const CreateProduct = () => {
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <TextField
-            label="Product Status"
+            label={t("createproduct.productstatus")}
             name="productstatus"
             value={property.productstatus}
             onChange={handleFormChange}
@@ -324,7 +331,7 @@ const CreateProduct = () => {
             ))}
           </TextField>
           <TextField
-            label="Product Quantity Number"
+            label={t("createproduct.quantity")}
             name="productquantitynumber"
             value={property.productquantitynumber}
             onChange={handleFormChange}
@@ -333,7 +340,7 @@ const CreateProduct = () => {
             sx={{ backgroundColor: "#f7f7f7" }}
           />
           <TextField
-            label="Product Intial Serial Number"
+            label={t("createproduct.productintialserialnumber")}
             name="productintialserialnumber"
             value={property.productintialserialnumber}
             onChange={handleFormChange}
@@ -342,7 +349,7 @@ const CreateProduct = () => {
             sx={{ backgroundColor: "#f7f7f7" }}
           />
           <TextField
-            label="Product Price"
+            label={t("createproduct.productprice")}
             name="price"
             value={property.price}
             onChange={handleFormChange}
@@ -352,7 +359,7 @@ const CreateProduct = () => {
           />
         </Box>
         <TextField
-          label="Product Description"
+          label={t("createproduct.description")}
           name="productdescription"
           value={property.productdescription}
           onChange={handleFormChange}
@@ -445,7 +452,7 @@ const CreateProduct = () => {
           fullWidth
           sx={{ marginTop: "20px", background: "#12596B" }}
         >
-          Create
+          {t("createproduct.create")}
         </CreateButton>
       </Paper>
     </Box>

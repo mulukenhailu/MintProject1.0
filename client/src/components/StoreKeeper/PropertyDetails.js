@@ -3,6 +3,7 @@ import { List, ListItem, Typography, Box } from "@mui/material";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useTranslation } from "react-i18next";
 
 const ListItemForModal = styled(ListItem)({
   display: "flex",
@@ -15,6 +16,7 @@ const ListItemForModalDescription = styled(ListItem)({
   gap: "20px",
 });
 const PropertyDetails = ({ itemNo }) => {
+  const { t } = useTranslation("global");
   const [property, setProperty] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -39,12 +41,12 @@ const PropertyDetails = ({ itemNo }) => {
   return (
     <List>
       <Typography
-        variant="h5"
+        variant="h4"
         textAlign={"center"}
-        marginBottom={"20px"}
-        sx={{ textDecoration: "underline" }}
+        marginBottom={"10px"}
+        sx={{ color: "#12596B" }}
       >
-        Product-Details
+        {t("history.propertydetail")}
       </Typography>
       {loading && (
         <Box sx={{ textAlign: "center" }}>
@@ -73,16 +75,16 @@ const PropertyDetails = ({ itemNo }) => {
       )}
       <ListItemForModal>
         <Typography
-          variant="body1"
+          variant="h6"
           flex={2}
           sx={{ color: "#12596B" }}
           fontWeight={900}
         >
-          Product-Name
+          {t("history.propertyname")}
         </Typography>
         <Typography
-          variant="body2"
-          flex={2}
+          variant="body1"
+          flex={3}
           sx={{ color: "#12596B" }}
           fontWeight={400}
         >
@@ -91,16 +93,16 @@ const PropertyDetails = ({ itemNo }) => {
       </ListItemForModal>
       <ListItemForModal>
         <Typography
-          variant="body1"
+          variant="h6"
           flex={2}
           sx={{ color: "#12596B" }}
           fontWeight={900}
         >
-          Product-Model:
+          {t("history.propertymodel")}
         </Typography>
         <Typography
-          variant="body2"
-          flex={2}
+          variant="body1"
+          flex={3}
           sx={{ color: "#12596B" }}
           fontWeight={400}
         >
@@ -109,16 +111,16 @@ const PropertyDetails = ({ itemNo }) => {
       </ListItemForModal>
       <ListItemForModalDescription>
         <Typography
-          variant="body1"
+          variant="h6"
           flex={2}
           sx={{ color: "#12596B" }}
           fontWeight={900}
         >
-          Product Description
+          {t("history.description")}
         </Typography>
         <Typography
-          variant="body2"
-          flex={2}
+          variant="body1"
+          flex={3}
           sx={{ color: "#12596B" }}
           fontWeight={400}
         >
@@ -127,16 +129,16 @@ const PropertyDetails = ({ itemNo }) => {
       </ListItemForModalDescription>
       <ListItemForModal>
         <Typography
-          variant="body1"
+          variant="h6"
           flex={2}
           sx={{ color: "#12596B" }}
           fontWeight={900}
         >
-          Quantity
+          {t("history.quantity")}
         </Typography>
         <Typography
-          variant="body2"
-          flex={2}
+          variant="body1"
+          flex={3}
           sx={{ color: "#12596B" }}
           fontWeight={400}
         >

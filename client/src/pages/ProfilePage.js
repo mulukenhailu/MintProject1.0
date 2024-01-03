@@ -88,7 +88,16 @@ const ProfilePage = () => {
 
   const [image, setImage] = useState(null);
   const [user, setUser] = useState({});
-  const [profileInfo, setProfileInfo] = useState({});
+  const [profileInfo, setProfileInfo] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone_number: "",
+    department: "",
+    user_name: "",
+    role_name: "",
+    manager_username: "",
+  });
   const userInformation = [
     { label: t("profile.firstname"), value: user?.first_name },
     { label: t("profile.lastname"), value: user?.last_name },
@@ -197,11 +206,13 @@ const ProfilePage = () => {
         <Sidebar />
         <Box
           component="main"
-          sx={{ flexGrow: 1, padding: "66px 8px 32px 205px" }}
+          sx={{ flexGrow: 1 }}
+          paddingTop={9}
+          paddingRight={1}
+          paddingLeft={{ xs: "70px", md: "180px" }}
         >
-          <Paper sx={{}}>
-            <Grid container spacing={2}>
-              {/* First Column: User Profile Display */}
+          <Paper sx={{ height: "fit-content" }}>
+            <Grid container spacing={0}>
               <Grid item xs={12} md={6}>
                 <Box
                   sx={{
@@ -223,7 +234,8 @@ const ProfilePage = () => {
                       flexDirection: "column",
                       alignItems: "flex-start",
                       justifyContent: "center",
-                      height: "100%",
+                      width: { xs: "90%", md: "75%", lg: "60%" },
+                      marginX: "auto",
                     }}
                   >
                     <Avatar
@@ -233,11 +245,11 @@ const ProfilePage = () => {
                         width: { xs: 100, md: 120, xl: 150 },
                         height: { xs: 100, md: 120, xl: 150 },
                         alignSelf: "center",
-                        marginBottom: 4,
+                        marginY: 5,
                       }}
                     />
 
-                    <TableContainer sx={{ width: "100%", overflowY: "hidden" }}>
+                    <Box sx={{ width: "100%" }}>
                       {loadingGet && (
                         <Box sx={{ textAlign: "center" }}>
                           <ClipLoader
@@ -263,33 +275,33 @@ const ProfilePage = () => {
                           Can not get your data
                         </Box>
                       )}
-                      <Table>
-                        <TableBody>
-                          {userInformation.map((row, index) => (
-                            <TableRow
-                              key={row.label}
-                              sx={{
-                                "&:nth-of-type(odd)": {
-                                  backgroundColor: "#F6F5F5",
-                                },
-                                padding: 2,
-                              }}
-                            >
-                              <TableCell
-                                sx={{ color: "#12596B", fontSize: "20px" }}
-                              >
-                                {row.label}
-                              </TableCell>
-                              <TableCell
-                                sx={{ color: "#12596B", fontSize: "18px" }}
-                              >
-                                {row.value}
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
+                      <Box sx={{ height: "fit-content", width: "100%" }}>
+                        {userInformation.map((row, index) => (
+                          <Box
+                            key={row.label}
+                            sx={{
+                              "&:nth-of-type(odd)": {
+                                backgroundColor: "#F6F5F5",
+                              },
+                              padding: 2,
+                              display: {
+                                xs: "block",
+                                md: "flex",
+                              },
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Box sx={{ color: "#12596B", fontSize: "18px" }}>
+                              {row.label}
+                            </Box>
+                            <Box sx={{ color: "#12596B", fontSize: "18px" }}>
+                              {row.value}
+                            </Box>
+                          </Box>
+                        ))}
+                      </Box>
+                    </Box>
                   </Box>
                 </Box>
               </Grid>
@@ -485,6 +497,7 @@ const ProfilePage = () => {
                       variant="contained"
                       fullWidth
                       onClick={handleUpdateProfile}
+                      sx={{ fontSize: { xs: "16px", md: "22px" } }}
                     >
                       {t("profile.update")}
                     </UpdateButton>

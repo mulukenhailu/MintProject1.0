@@ -16,6 +16,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_ALL_DECLINED_REQUEST_FOR_MANAGER } from "../../State/ReduxSaga/Types/managerRequestType";
 import { removeAllRequest } from "../../State/ReduxToolkit/Slices/requestSlice";
+import { useTranslation } from "react-i18next";
 
 const DeclineModalContainer = styled(Modal)({
   display: "flex",
@@ -52,6 +53,7 @@ const ManagerRequestDeclined = () => {
   const dispatch = useDispatch();
   const [detailModals, setDetailModals] = useState([]);
   const { allRequest } = useSelector((state) => state.request);
+  const { t } = useTranslation("global");
 
   useEffect(() => {
     dispatch(removeAllRequest());
@@ -83,7 +85,7 @@ const ManagerRequestDeclined = () => {
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       {sortedAllRequest?.map((item, index) => (
-        <React.Fragment>
+        <React.Fragment key={index}>
           <Grid item xs={12} sm={6} lg={4}>
             <Card
               sx={{
@@ -97,72 +99,80 @@ const ManagerRequestDeclined = () => {
                 height="250"
                 src={`${PF}${item.Item.productphoto}`}
               />
-              <CardContent>
+              <CardContent sx={{ padding: "0px" }}>
                 <List>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant="h6"
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
-                      First Name:
+                      {t("manager.firstname")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item.User.first_name}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant="h6"
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
-                      Last Name:
+                      {t("manager.lastname")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item.User.last_name}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant="h6"
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
-                      Product-name:
+                      {t("manager.propertyname")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item.Item.productname}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant="h6"
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
-                      Quantity Requested:
+                      {t("manager.quantity")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item.quantity_requested}
                     </Typography>
@@ -174,8 +184,9 @@ const ManagerRequestDeclined = () => {
                   variant="contained"
                   fullWidth
                   onClick={() => handleDetailModalOpen(index)}
+                  sx={{ fontSize: "20px", textTransform: "capitalize" }}
                 >
-                  Details
+                  {t("manager.detail")}
                 </DetailButton>
               </CardActions>
             </Card>
@@ -191,12 +202,12 @@ const ManagerRequestDeclined = () => {
             >
               <List>
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   textAlign={"center"}
                   marginBottom={"20px"}
-                  sx={{ textDecoration: "underline", color: "#12596B" }}
+                  sx={{ color: "#12596B" }}
                 >
-                  Decline Details
+                  {t("manager.requestdetail")}
                 </Typography>
                 <ListItemForModal>
                   <Typography
@@ -205,7 +216,7 @@ const ManagerRequestDeclined = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee First Name:
+                    {t("manager.firstname")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -223,7 +234,7 @@ const ManagerRequestDeclined = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee Last Name:
+                    {t("manager.lastname")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -241,7 +252,7 @@ const ManagerRequestDeclined = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee Email:
+                    {t("manager.email")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -259,7 +270,7 @@ const ManagerRequestDeclined = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Employee Phone Number:
+                    {t("manager.phonenumber")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -279,7 +290,7 @@ const ManagerRequestDeclined = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Department
+                    {t("manager.department")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -299,7 +310,7 @@ const ManagerRequestDeclined = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Name:
+                    {t("manager.propertyname")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -317,7 +328,7 @@ const ManagerRequestDeclined = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Model:
+                    {t("manager.propertymodel")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -335,7 +346,7 @@ const ManagerRequestDeclined = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Product Description
+                    {t("manager.description")}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -353,7 +364,7 @@ const ManagerRequestDeclined = () => {
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
                   >
-                    Quantity Requested
+                    {t("manager.quantity")}
                   </Typography>
                   <Typography
                     variant="body2"

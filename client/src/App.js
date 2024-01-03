@@ -20,6 +20,10 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import RequestPage from "./pages/RequestPage";
 import RequestPageDetail from "./pages/RequestPageDetail";
+import global_en from "./components/transitions/english.json";
+import global_am from "./components/transitions/amharic.json";
+import { useTranslation, initReactI18next } from "react-i18next";
+import i18n from "i18next";
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
@@ -28,6 +32,20 @@ function App() {
   console.log(user);
   const role_name = user.Role ? user.Role.role_name : null;
   console.log(role_name);
+  const { languange } = useSelector((state) => state.languange);
+
+  i18n.use(initReactI18next).init({
+    interpolation: { escapeValue: false },
+    lng: languange,
+    resources: {
+      en: {
+        global: global_en,
+      },
+      ኣማ: {
+        global: global_am,
+      },
+    },
+  });
 
   return (
     <div className="App">

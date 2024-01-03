@@ -12,6 +12,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { removeUserError } from "../State/ReduxToolkit/Slices/userSlice";
 import { useTranslation } from "react-i18next";
 import { Box, ButtonGroup, Select } from "@mui/material";
+import { setLanguange } from "../State/ReduxToolkit/Slices/languange";
 
 const Container = styled.div`
   display: flex;
@@ -153,6 +154,7 @@ function LoginPage() {
 
   const languageChange = (lang) => {
     i18n.changeLanguage(lang);
+    dispatch(setLanguange(lang));
   };
 
   return (
@@ -161,9 +163,9 @@ function LoginPage() {
         <Typography
           align="center"
           variant="h4"
-          fontWeight={400}
+          fontWeight={700}
           marginBottom={3}
-          sx={{ color: "gray" }}
+          sx={{ color: "#12596b" }}
         >
           {t("login.login")}
         </Typography>
@@ -206,6 +208,7 @@ function LoginPage() {
             onChange={(e) =>
               setCredentials({ ...credentials, password: e.target.value })
             }
+            y
           />
           <EyeSpan>
             {passwordVisible ? (
@@ -233,6 +236,8 @@ function LoginPage() {
             width: "100px",
             height: "30px",
             fontSize: "14px",
+            border: "2px solid #12596b",
+            color: "#12596b",
           }}
         >
           <option value="ኣማ">አማርኛ</option>

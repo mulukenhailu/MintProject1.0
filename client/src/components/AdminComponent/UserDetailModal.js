@@ -3,6 +3,7 @@ import { Box, List, Typography, Modal, styled, ListItem } from "@mui/material";
 import { useSelector } from "react-redux";
 import { GET_ALL_MANAGERS } from "../../State/ReduxSaga/Types/mangerType";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const UserDetailModalContainer = styled(Modal)({
   display: "flex",
@@ -21,7 +22,7 @@ const UserDetailModalWrapper = styled(Box)({
 const ListItemForModal = styled(ListItem)({
   display: "flex",
   alignItems: "center",
-  gap: "25px",
+  gap: "100px",
 });
 
 const Label = styled(Typography)({
@@ -33,11 +34,12 @@ const Label = styled(Typography)({
 
 const Value = styled(Typography)({
   flex: 1,
-  color: "#333",
+  color: "#12596B",
 });
 
 const UserDetailModal = ({ detailModal, setDetailModal, currentUserId }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation("global");
   const [userManager, setUserManager] = useState({});
   const { allUser } = useSelector((state) => state.user);
   const currentUser = allUser.find((user) => user.user_name === currentUserId);
@@ -69,47 +71,47 @@ const UserDetailModal = ({ detailModal, setDetailModal, currentUserId }) => {
         aria-describedby="modal-modal-description"
       >
         <UserDetailModalWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "30%" }}
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
         >
-          <List>
+          <List sx={{ width: "100%", padding: "10px 20px 30px 20px" }}>
             <Typography
-              variant="h5"
+              variant="h4"
               textAlign={"center"}
               marginBottom={"10px"}
-              sx={{ textDecoration: "underline", color: "#12596B" }}
+              sx={{ color: "#12596B" }}
             >
-              User-Details
+              {t("userlist.userdetail")}
             </Typography>
-            <ListItemForModal>
-              <Label>First Name</Label>
+            <ListItemForModal sx={{ width: "100%" }}>
+              <Label>{t("userlist.firstname")}</Label>
               <Value>{currentUser?.first_name || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Label>Last Name</Label>
+              <Label>{t("userlist.lastname")}</Label>
               <Value>{currentUser?.last_name || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Label>User-Name</Label>
+              <Label>{t("userlist.username")}</Label>
               <Value>{currentUser?.user_name || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Label>Email</Label>
+              <Label>{t("userlist.email")}</Label>
               <Value>{currentUser?.email || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Label>Phone Number</Label>
+              <Label>{t("userlist.phonenumber")}</Label>
               <Value>{currentUser?.phone_number || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Label>Department</Label>
+              <Label>{t("userlist.department")}</Label>
               <Value>{currentUser?.department || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Label>Position</Label>
+              <Label>{t("userlist.position")}</Label>
               <Value>{currentUser?.Role.role_name || "Not Available"}</Value>
             </ListItemForModal>
             <ListItemForModal>
-              <Label>Manager</Label>
+              <Label>{t("userlist.manager")}</Label>
               <Value>
                 {userManager
                   ? userManager.first_name + userManager.last_name
