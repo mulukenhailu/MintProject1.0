@@ -79,7 +79,7 @@ async function requestToApprove(req, res){
 
     }catch(err){
         console.log("Error while fetching request for the manager");
-        console.log(err.response.errors[0].message);
+        console.log(err);
         return err
     }
 }
