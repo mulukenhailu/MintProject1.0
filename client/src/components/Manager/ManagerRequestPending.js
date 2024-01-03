@@ -123,7 +123,7 @@ const DeclineModalWrapper = styled(Box)({
 const ManagerRequestPending = () => {
   const [detailModals, setDetailModals] = useState([]);
   const [acceptModals, setAcceptModals] = useState([]);
-  const [declineModal, setDeclineModal] = useState(false);
+  const [declineModals, setDeclineModal] = useState([]);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(false);
   const [error, setError] = useState(false);
@@ -244,6 +244,18 @@ const ManagerRequestPending = () => {
     setAcceptModals(updatedAcceptedModals);
   };
 
+  const handleDeclineModalOpen = (index) => {
+    const updatedDeclinedModals = [...declineModals];
+    updatedDeclinedModals[index] = true;
+    setDeclineModal(updatedDeclinedModals);
+  };
+
+  const handleDeclineModalClose = (index) => {
+    const updatedDeclinedModals = [...declineModals];
+    updatedDeclinedModals[index] = false;
+    setDeclineModal(updatedDeclinedModals);
+  };
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   console.log(allRequest);
@@ -260,7 +272,7 @@ const ManagerRequestPending = () => {
               sx={{
                 border: "1px solid #12596B",
                 borderRadius: "10px",
-                padding: "20px 5px",
+                padding: "10px",
               }}
             >
               <CardMedia
@@ -268,6 +280,7 @@ const ManagerRequestPending = () => {
                 alt="green iguana"
                 height="250px"
                 src={`${PF}${item?.Item?.productphoto}`}
+                sx={{ objectFit: "contain" }}
               />
               <CardContent sx={{ padding: "0px" }}>
                 <List sx={{ width: "100%" }}>
@@ -366,7 +379,7 @@ const ManagerRequestPending = () => {
                   <DeclineButton
                     variant="contained"
                     size="small"
-                    onClick={() => setDeclineModal(true)}
+                    onClick={() => handleDeclineModalOpen(index)}
                     sx={{
                       fontSize: { xs: "18px", md: "20px" },
                       textTransform: "capitalize",
@@ -544,7 +557,9 @@ const ManagerRequestPending = () => {
                         : "Depar... not provided"}
                     </Typography>
                   </ListItemForModal>
-                  <ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
                     <Typography
                       variant="body1"
                       flex={2}
@@ -637,7 +652,12 @@ const ManagerRequestPending = () => {
             >
               <List
                 sx={{
-                  height: { xs: "80vh", sm: "60vh", md: "50vh", lg: "50vh" },
+                  height: {
+                    xs: "80vh",
+                    sm: "60vh",
+                    md: "50vh",
+                    lg: "70vh",
+                  },
                 }}
               >
                 <Typography
@@ -911,8 +931,8 @@ const ManagerRequestPending = () => {
             </AcceptModalWrapper>
           </AcceptModal>
           <DeclineModal
-            open={declineModal}
-            onClose={() => setDeclineModal(false)}
+            open={declineModals[index] || false}
+            onClose={() => handleDeclineModalClose(index)}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >

@@ -91,6 +91,7 @@ const ManagerRequestDeclined = () => {
               sx={{
                 border: "1px solid #12596B",
                 borderRadius: "10px",
+                padding: "10px",
               }}
             >
               <CardMedia
@@ -98,6 +99,7 @@ const ManagerRequestDeclined = () => {
                 alt="green iguana"
                 height="250"
                 src={`${PF}${item.Item.productphoto}`}
+                sx={{ objectFit: "contain" }}
               />
               <CardContent sx={{ padding: "0px" }}>
                 <List>
@@ -209,172 +211,212 @@ const ManagerRequestDeclined = () => {
                 >
                   {t("manager.requestdetail")}
                 </Typography>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
+                <Box
+                  sx={{
+                    height: {
+                      xs: "60vh",
+                      md: "55vh",
+                      lg: "55vh",
+                      overflowY: "scroll",
+                      "&::-webkit-scrollbar": {
+                        width: "1px",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                        webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: "rgba(0,0,0,.1)",
+                        outline: "1px solid slategrey",
+                      },
+                    },
+                  }}
+                >
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {t("manager.firstname")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("manager.firstname")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.User.first_name}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {item.User.first_name}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("manager.lastname")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.User.last_name}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {t("manager.lastname")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("manager.email")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.User.email ? item.User.email : "Email not provided"}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {item.User.last_name}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("manager.phonenumber")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.User.phone_number
+                        ? item.User.phone_number
+                        : "Phone not provided"}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {t("manager.email")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("manager.department")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.User.department
+                        ? item.User.department
+                        : "Dept... not provided"}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {item.User.email ? item.User.email : "Email not provided"}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("manager.propertyname")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.Item.productname}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {t("manager.phonenumber")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("manager.propertymodel")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.Item.productmodel}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModalDescription
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {item.User.phone_number
-                      ? item.User.phone_number
-                      : "Phone not provided"}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("manager.description")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.Item.productdescription}
+                    </Typography>
+                  </ListItemForModalDescription>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {t("manager.department")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
-                  >
-                    {item.User.department
-                      ? item.User.department
-                      : "Dept... not provided"}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
-                  >
-                    {t("manager.propertyname")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
-                  >
-                    {item.Item.productname}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
-                  >
-                    {t("manager.propertymodel")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
-                  >
-                    {item.Item.productmodel}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModalDescription>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
-                  >
-                    {t("manager.description")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
-                  >
-                    {item.Item.productdescription}
-                  </Typography>
-                </ListItemForModalDescription>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
-                  >
-                    {t("manager.quantity")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
-                  >
-                    {item.quantity_requested}
-                  </Typography>
-                </ListItemForModal>
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("manager.quantity")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item.quantity_requested}
+                    </Typography>
+                  </ListItemForModal>
+                </Box>
               </List>
             </DeclineModalWrapper>
           </DeclineModalContainer>
