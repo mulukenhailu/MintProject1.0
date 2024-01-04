@@ -169,11 +169,11 @@ const CreateProduct = () => {
     dispatch(removeUploadImage());
   }, []);
   return (
-    <Box paddingLeft={{ xs: 10, md: 20 }} paddingTop={5} paddingBottom={5}>
+    <Box paddingLeft={{ xs: 5, md: 20 }} paddingTop={5} paddingBottom={5}>
       <Paper
         elevation={3}
         sx={{
-          padding: 5,
+          padding: { xs: 1, sm: 4, md: 5 },
           width: { xs: "100%", sm: "70%", md: "60%", lg: "70%" },
           margin: "auto",
         }}
@@ -268,7 +268,7 @@ const CreateProduct = () => {
           margin="normal"
           sx={{ backgroundColor: "#f7f7f7" }}
         />
-        <Box sx={{ display: "flex", gap: "15px" }}>
+        <Box sx={{ display: { xs: "block", md: "flex" }, gap: "15px" }}>
           <TextField
             label={t("createproduct.productsource")}
             name="productsource"
@@ -313,7 +313,13 @@ const CreateProduct = () => {
             sx={{ backgroundColor: "#f7f7f7", flex: 2 }}
           />
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        <Box
+          sx={{
+            display: { xs: "block", md: "flex" },
+            alignItems: "center",
+            gap: "20px",
+          }}
+        >
           <TextField
             label={t("createproduct.productstatus")}
             name="productstatus"

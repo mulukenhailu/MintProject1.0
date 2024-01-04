@@ -7,13 +7,16 @@
   "sidebar": {
     "home": "መግቢያ",
     "profile": "ግላዊ መግለጫ",
-    "order": "የበፊት ትዕዛዝት",
+    "order": "የበፊት ትዕዛዛት",
     "userlist": "የግለሰብ ዝርዝር",
-    "createuser": "ተጠቃሚ ማስገባት",
+    "createuser": "ተጠቃሚ ጨምር",
     "history": "ያለቁ ትዕዛዛት",
     "request": "ጥያቄዎች",
     "productcreate": "ዕቃ ማስገባት",
     "logout": "ውጣ"
+  },
+  "navbar": {
+    "title": ""
   },
   "home": {
     "searchbyproductname": "በዕቃው ስም ፈልግ",
@@ -153,9 +156,9 @@
     "confirmation": "ማረጋገጫ ቁጥር አስገባ",
     "confirm": "አረጋግጥ",
     "requestedby": "የጠያቂው ስም",
-    "approvedmanager": "የፈቀደው ኀላፊ ስም",
-    "approvedstorehead": "የፈቀደው የስቶር ኀላፊ",
-    "recievedfrom": "ዕቃውን ያስረከበው ግለሰብ"
+    "approvedmanager": "የኀላፊው ስም",
+    "approvedstorehead": "የስቶር ኀላፊ",
+    "recievedfrom": "ዕቃውን ያስረከበው"
   },
   "createproduct": {
     "create": "ዕቃ ማስገባት",

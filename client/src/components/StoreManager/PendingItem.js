@@ -120,7 +120,7 @@ const PendingItemComponent = () => {
   const { t } = useTranslation("global");
   const [detailModals, setDetailModals] = useState([]);
   const [acceptModals, setAcceptModals] = useState([]);
-  const [declineModal, setDeclineModal] = useState(false);
+  const [declineModal, setDeclineModal] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [response, setResponse] = useState(false);
@@ -157,6 +157,18 @@ const PendingItemComponent = () => {
     const updatedAcceptedModals = [...acceptModals];
     updatedAcceptedModals[index] = false;
     setAcceptModals(updatedAcceptedModals);
+  };
+
+  const handleDeclinedModalOpen = (index) => {
+    const updatedDeclinedModals = [...declineModal];
+    updatedDeclinedModals[index] = true;
+    setDeclineModal(updatedDeclinedModals);
+  };
+
+  const handleDeclinedModalClose = (index) => {
+    const updatedDeclinedModals = [...declineModal];
+    updatedDeclinedModals[index] = false;
+    setDeclineModal(updatedDeclinedModals);
   };
 
   const handleAcceptRequest = async (id) => {
@@ -254,6 +266,7 @@ const PendingItemComponent = () => {
                   alt="green iguana"
                   height="250px"
                   src={`${PF}${item?.employeeRequest?.Item?.productphoto}`}
+                  sx={{ objectFit: "contain" }}
                 />
                 <CardContent sx={{ padding: "0px" }}>
                   <List>
@@ -364,22 +377,31 @@ const PendingItemComponent = () => {
                     <DeclineButton
                       variant="contained"
                       size="small"
-                      onClick={() => setDeclineModal(true)}
-                      sx={{ fontSize: "20px", textTransform: "capitalize" }}
+                      onClick={() => handleDeclinedModalOpen(index)}
+                      sx={{
+                        fontSize: { xs: "18px", md: "20px" },
+                        textTransform: "capitalize",
+                      }}
                     >
                       {t("storehead.decline")}
                     </DeclineButton>
                     <AcceptButton
                       variant="contained"
                       onClick={() => handleAcceptModalOpen(index)}
-                      sx={{ fontSize: "20px", textTransform: "capitalize" }}
+                      sx={{
+                        fontSize: { xs: "18px", md: "20px" },
+                        textTransform: "capitalize",
+                      }}
                     >
                       {t("storehead.accept")}
                     </AcceptButton>
                     <DetailButton
                       variant="contained"
                       onClick={() => handleDetailModalOpen(index)}
-                      sx={{ fontSize: "20px", textTransform: "capitalize" }}
+                      sx={{
+                        fontSize: { xs: "18px", md: "20px" },
+                        textTransform: "capitalize",
+                      }}
                     >
                       {t("storehead.detail")}
                     </DetailButton>
@@ -405,174 +427,214 @@ const PendingItemComponent = () => {
                   >
                     {t("storehead.requestdetail")}
                   </Typography>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                  <Box
+                    sx={{
+                      height: {
+                        xs: "60vh",
+                        md: "55vh",
+                        lg: "55vh",
+                        overflowY: "scroll",
+                        "&::-webkit-scrollbar": {
+                          width: "1px",
+                        },
+                        "&::-webkit-scrollbar-track": {
+                          boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                          webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                        },
+                        "&::-webkit-scrollbar-thumb": {
+                          backgroundColor: "rgba(0,0,0,.1)",
+                          outline: "1px solid slategrey",
+                        },
+                      },
+                    }}
+                  >
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {t("storehead.firstname")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.firstname")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.User?.first_name}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {item?.employeeRequest?.User?.first_name}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.lastname")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.User?.last_name}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {t("storehead.lastname")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.email")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.User?.email
+                          ? item?.employeeRequest?.User?.email
+                          : "Email not provided"}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {item?.employeeRequest?.User?.last_name}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.phonenumber")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.User?.phone_number
+                          ? item?.employeeRequest?.User?.phone_number
+                          : "Phone not provided"}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {t("storehead.email")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.department")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.User?.department
+                          ? item?.employeeRequest?.User?.department
+                          : "Dept... not provided"}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {item?.employeeRequest?.User?.email
-                        ? item?.employeeRequest?.User?.email
-                        : "Email not provided"}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.propertyname")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.Item?.productname}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {t("storehead.phonenumber")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.propertymodel")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.Item?.productmodel}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModalDescription
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {item?.employeeRequest?.User?.phone_number
-                        ? item?.employeeRequest?.User?.phone_number
-                        : "Phone not provided"}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.description")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.Item?.productdescription}
+                      </Typography>
+                    </ListItemForModalDescription>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {t("storehead.department")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      {item?.employeeRequest?.User?.department
-                        ? item?.employeeRequest?.User?.department
-                        : "Dept... not provided"}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
-                    >
-                      {t("storehead.propertyname")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      {item?.employeeRequest?.Item?.productname}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
-                    >
-                      {t("storehead.propertymodel")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      {item?.employeeRequest?.Item?.productmodel}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModalDescription>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
-                    >
-                      {t("storehead.description")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      {item?.employeeRequest?.Item?.productdescription}
-                    </Typography>
-                  </ListItemForModalDescription>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
-                    >
-                      {t("storehead.quantity")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      {item?.quantity_requested}
-                    </Typography>
-                  </ListItemForModal>
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.quantity")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.quantity_requested}
+                      </Typography>
+                    </ListItemForModal>
+                  </Box>
                 </List>
               </DetailModalWrapper>
             </DetailModalContainer>
@@ -585,7 +647,16 @@ const PendingItemComponent = () => {
               <AcceptModalWrapper
                 width={{ xs: "90%", sm: "70%", md: "50%", lg: "80%" }}
               >
-                <List>
+                <List
+                  sx={{
+                    height: {
+                      xs: "80vh",
+                      sm: "60vh",
+                      md: "50vh",
+                      lg: "70vh",
+                    },
+                  }}
+                >
                   <Typography
                     variant="h5"
                     textAlign={"center"}
@@ -633,174 +704,210 @@ const PendingItemComponent = () => {
                       Request Done Successfully
                     </Box>
                   )}
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                  <Box
+                    sx={{
+                      height: "80%",
+                      overflowY: "scroll",
+                      "&::-webkit-scrollbar": {
+                        width: "1px",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                        webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: "rgba(0,0,0,.1)",
+                        outline: "1px solid slategrey",
+                      },
+                    }}
+                  >
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {t("storehead.firstname")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.firstname")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.User?.first_name}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {item?.employeeRequest?.User?.first_name}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.lastname")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.User?.last_name}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {t("storehead.lastname")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.email")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.User?.email
+                          ? item?.employeeRequest?.User?.email
+                          : "Email not provided"}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {item?.employeeRequest?.User?.last_name}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.phonenumber")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.User?.phone_number
+                          ? item?.employeeRequest?.User?.phone_number
+                          : "Phone not provided"}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {t("storehead.email")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.department")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.User?.department
+                          ? item?.employeeRequest?.User?.department
+                          : "Dept... not provided"}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {item?.employeeRequest?.User?.email
-                        ? item?.employeeRequest?.User?.email
-                        : "Email not provided"}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.propertyname")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.Item?.productname}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {t("storehead.phonenumber")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.propertymodel")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.Item?.productmodel}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModalDescription
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {item?.employeeRequest?.User?.phone_number
-                        ? item?.employeeRequest?.User?.phone_number
-                        : "Phone not provided"}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.description")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.employeeRequest?.Item?.productdescription}
+                      </Typography>
+                    </ListItemForModalDescription>
+                    <ListItemForModal
+                      sx={{ display: { xs: "block", sm: "flex" } }}
                     >
-                      {t("storehead.department")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      {item?.employeeRequest?.User?.department
-                        ? item?.employeeRequest?.User?.department
-                        : "Dept... not provided"}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
-                    >
-                      {t("storehead.propertyname")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      {item?.employeeRequest?.Item?.productname}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
-                    >
-                      {t("storehead.propertymodel")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      {item?.employeeRequest?.Item?.productmodel}
-                    </Typography>
-                  </ListItemForModal>
-                  <ListItemForModalDescription>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
-                    >
-                      {t("storehead.description")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      {item?.employeeRequest?.Item?.productdescription}
-                    </Typography>
-                  </ListItemForModalDescription>
-                  <ListItemForModal>
-                    <Typography
-                      variant="body1"
-                      flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
-                    >
-                      {t("storehead.quantity")}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      flex={4}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
-                    >
-                      {item?.quantity_requested}
-                    </Typography>
-                  </ListItemForModal>
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={900}
+                      >
+                        {t("storehead.quantity")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{ color: "#12596B" }}
+                        fontWeight={400}
+                      >
+                        {item?.quantity_requested}
+                      </Typography>
+                    </ListItemForModal>
+                  </Box>
                 </List>
                 <SendButton
                   variant="contained"
@@ -817,8 +924,8 @@ const PendingItemComponent = () => {
               </AcceptModalWrapper>
             </AcceptModal>
             <DeclineModal
-              open={declineModal}
-              onClose={() => setDeclineModal(false)}
+              open={declineModal[index] || false}
+              onClose={() => handleDeclinedModalClose(index)}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >

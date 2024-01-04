@@ -40,7 +40,7 @@ const AllStoreRequest = () => {
 
   return (
     <Box>
-      <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={5} paddingBottom={5}>
+      <Box paddingLeft={{ xs: 5, md: 19 }} paddingTop={5} paddingBottom={5}>
         <ButtonContainer
           disableElevation
           variant="contained"
@@ -53,21 +53,28 @@ const AllStoreRequest = () => {
             startIcon={<PendingIcon />}
             sx={{ fontSize: "20px" }}
           >
-            {t("status.pending")}
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
+              {" "}
+              {t("status.pending")}
+            </Box>
           </PendingButton>
           <AcceptButton
             onClick={() => setActiveItem("accepted")}
             startIcon={<ThumbUpAltIcon />}
             sx={{ fontSize: "20px" }}
           >
-            {t("status.accepted")}
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
+              {t("status.accepted")}
+            </Box>
           </AcceptButton>
           <DeclineButton
             onClick={() => setActiveItem("declined")}
             startIcon={<ThumbDownAltIcon />}
             sx={{ fontSize: "20px" }}
           >
-            {t("status.declined")}
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
+              {t("status.declined")}
+            </Box>
           </DeclineButton>
         </ButtonContainer>
         <Box>

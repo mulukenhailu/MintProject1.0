@@ -22,7 +22,6 @@ import {
   removeAllRequest,
   setAcceptedRequestId,
 } from "../../State/ReduxToolkit/Slices/requestSlice";
-import { AcceptedModal } from "./AcceptedModal";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useTranslation } from "react-i18next";
