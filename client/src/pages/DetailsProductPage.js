@@ -69,7 +69,7 @@ const DetailsProductPage = () => {
       <Box sx={{ display: "flex" }}>
         <Sidebar />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <Box paddingLeft={{ xs: 6, md: 14 }} paddingTop={5}>
+          <Box paddingLeft={{ xs: 6, md: 19 }} paddingTop={5}>
             <Paper elevation={4} sx={{ padding: { xs: "20px", md: "0px" } }}>
               <Grid container>
                 <Grid item xs={12} md={6} sx={{ padding: "0px" }}>

@@ -205,7 +205,7 @@ export default function Header() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar
         position="fixed"
         elevation={1}
@@ -215,40 +215,60 @@ export default function Header() {
           height: "70px",
         }}
       >
-        <Toolbar>
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="primary-search-account-menu"
-            aria-haspopup="true"
-            color="inherit"
+        <Toolbar
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box
+            sx={{
+              display: {
+                md: "flex",
+                justifyContent: "flex-start",
+              },
+              flex: 1,
+            }}
           >
-            <Box component={Link} to={"/home"}>
-              <img
-                src="/assets/Logo.jpg"
-                alt="NaN"
-                crossOrigin="anonymous"
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+              sx={{
+                borderRadius: "0px",
+              }}
+            >
+              <Box
+                component={Link}
+                to={"/home"}
                 style={{
-                  width: "100px",
-                  height: "55px",
-                  objectFit: "contain",
-                  border: "2px solid #12596B",
+                  width: { xs: "200px", md: "350px" },
+                  height: "60px",
+                  marginLeft: { md: "-500px" },
                 }}
-              />
-            </Box>
-          </IconButton>
-          <Typography
-            variant="h6"
-            color="success"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block", color: "#12596B" } }}
+              >
+                <img
+                  src="/assets/mint1.png"
+                  alt="NaN"
+                  crossOrigin="anonymous"
+                  style={{ objectFit: "cover", width: "100%" }}
+                />
+              </Box>
+            </IconButton>
+          </Box>
+          <Box
+            sx={{
+              display: {
+                xs: "none",
+                md: "flex",
+                justifyContent: "flex-end",
+              },
+              flex: 1,
+            }}
           >
-            MinT-Store
-          </Typography>
-
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"

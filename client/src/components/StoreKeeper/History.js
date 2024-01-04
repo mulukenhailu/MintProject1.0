@@ -79,7 +79,7 @@ const History = () => {
 
   return (
     <Box>
-      <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={4} paddingBottom={5}>
+      <Box paddingLeft={{ xs: 5, md: 19 }} paddingTop={4} paddingBottom={5}>
         <Box
           sx={{
             width: "60%",

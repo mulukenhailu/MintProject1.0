@@ -38,11 +38,9 @@ const AcceptButton = styled(Button)({
 
 const DetailButton = styled(Button)({
   marginRight: "10px",
-  background: "#FFC107",
   borderRadius: "2px",
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
-    background: "#FFC107",
     transform: "scale(1.05)",
   },
 });
@@ -173,12 +171,13 @@ const StorekeeperPendingItems = () => {
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       {allRequest?.map((item, index) => (
-        <React.Fragment>
+        <React.Fragment key={index}>
           <Grid item xs={12} sm={6} lg={4}>
             <Card
               sx={{
-                border: "2px solid black",
+                border: "2px solid #12596B",
                 borderRadius: "10px",
+                padding: "5px 10px",
               }}
             >
               <CardMedia
@@ -186,73 +185,88 @@ const StorekeeperPendingItems = () => {
                 alt="green iguana"
                 height="250px"
                 src={`${PF}${item?.item?.productphoto}`}
+                sx={{ objectFit: "contain" }}
               />
               <CardContent>
                 <List>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                  >
                     <Typography
-                      variant="body1"
+                      variant={{ xs: "body1", md: "h6" }}
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
                       {t("storekeeper.firstname")}
                     </Typography>
                     <Typography
-                      variant="body3"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item?.item?.request[0]?.User?.first_name}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant={{ xs: "body1", md: "h6" }}
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
                       {t("storekeeper.lastname")}
                     </Typography>
                     <Typography
-                      variant="body3"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item?.item?.request[0]?.User?.last_name}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant={{ xs: "body1", md: "h6" }}
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
                       {t("storekeeper.propertyname")}
                     </Typography>
                     <Typography
-                      variant="body3"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item?.item?.productname}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
-                      variant="body1"
+                      variant={{ xs: "body1", md: "h6" }}
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
+                      flex={1}
                     >
                       {t("storekeeper.propertymodel")}
                     </Typography>
                     <Typography
-                      variant="body3"
+                      variant="body1"
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
+                      flex={1}
                     >
                       {item?.item?.productmodel}
                     </Typography>
@@ -270,6 +284,7 @@ const StorekeeperPendingItems = () => {
                   <DetailButton
                     variant="contained"
                     onClick={() => handleDetailModalOpen(index)}
+                    color="warning"
                   >
                     {t("storekeeper.detail")}
                   </DetailButton>
@@ -295,174 +310,214 @@ const StorekeeperPendingItems = () => {
                 >
                   {t("storekeeper.requestdetail")}
                 </Typography>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
+                <Box
+                  sx={{
+                    height: {
+                      xs: "60vh",
+                      md: "55vh",
+                      lg: "55vh",
+                      overflowY: "scroll",
+                      "&::-webkit-scrollbar": {
+                        width: "1px",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                        webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: "rgba(0,0,0,.1)",
+                        outline: "1px solid slategrey",
+                      },
+                    },
+                  }}
+                >
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {t("storekeeper.firstname")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.firstname")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.request[0]?.User?.first_name}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {item?.item?.request[0]?.User?.first_name}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.lastname")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.request[0]?.User?.last_name}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {t("storekeeper.lastname")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.email")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.request[0]?.User?.email
+                        ? item?.item?.request[0]?.User?.email
+                        : "Email not provided"}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {item?.item?.request[0]?.User?.last_name}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.phonenumber")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.request[0]?.User?.phone_number
+                        ? item?.item?.request[0]?.User?.phone_number
+                        : "Phone not provided"}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {t("storekeeper.email")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.department")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.request[0]?.User?.department
+                        ? item?.item?.request[0]?.User?.department
+                        : "Dept... not provided"}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {item?.item?.request[0]?.User?.email
-                      ? item?.item?.request[0]?.User?.email
-                      : "Email not provided"}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.propertyname")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.productname}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {t("storekeeper.phonenumber")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.propertymodel")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.productmodel}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModalDescription
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {item?.item?.request[0]?.User?.phone_number
-                      ? item?.item?.request[0]?.User?.phone_number
-                      : "Phone not provided"}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.description")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.productdescription}
+                    </Typography>
+                  </ListItemForModalDescription>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
                   >
-                    {t("storekeeper.department")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
-                  >
-                    {item?.item?.request[0]?.User?.department
-                      ? item?.item?.request[0]?.User?.department
-                      : "Dept... not provided"}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
-                  >
-                    {t("storekeeper.propertyname")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
-                  >
-                    {item?.item?.productname}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
-                  >
-                    {t("storekeeper.propertymodel")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
-                  >
-                    {item?.item?.productmodel}
-                  </Typography>
-                </ListItemForModal>
-                <ListItemForModalDescription>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
-                  >
-                    {t("storekeeper.description")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
-                  >
-                    {item?.item?.productdescription}
-                  </Typography>
-                </ListItemForModalDescription>
-                <ListItemForModal>
-                  <Typography
-                    variant="body1"
-                    flex={2}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={900}
-                  >
-                    {t("storekeeper.quantity")}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    flex={4}
-                    sx={{ color: "#12596B" }}
-                    fontWeight={400}
-                  >
-                    {item?.quantity_requested}
-                  </Typography>
-                </ListItemForModal>
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.quantity")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.quantity_requested}
+                    </Typography>
+                  </ListItemForModal>
+                </Box>
               </List>
             </DetailModalWrapper>
           </DetailModalContainer>
