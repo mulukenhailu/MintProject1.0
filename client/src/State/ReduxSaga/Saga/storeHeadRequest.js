@@ -17,11 +17,11 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 export function* getAllPendingRequestForStoreHeadSaga(action) {
   try {
-    console.log(action);
+    console.log("pending store", action);
     yield put(getAllRequestStart());
     const request = yield call(getAllPendingRequestForStoreHeadApi);
-    console.log(" store head", request);
-    yield put(getAllRequestSuccess(request.data.ManagerAppEmpRequest));
+    console.log("store head pending", request);
+    yield put(getAllRequestSuccess(request.data.ManagerAndEmpRequest));
   } catch (error) {
     console.log(error);
     yield put(getAllRequestFail());

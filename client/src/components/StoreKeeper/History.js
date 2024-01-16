@@ -124,9 +124,6 @@ const History = () => {
                   {t("history.recievedfrom")}
                 </TableCell>
                 <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
-                  {t("history.propertyname")}
-                </TableCell>
-                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
                   {t("history.confirmation")}
                 </TableCell>
                 <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
@@ -176,9 +173,6 @@ const History = () => {
                     }}
                   >
                     {item?.storekeeper_username}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    {item?.item_name}
                   </TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
                     {item?.confirmation_number}

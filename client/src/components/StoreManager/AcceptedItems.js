@@ -75,7 +75,7 @@ const AcceptedItemsComponent = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const sortedAllRequest = [...allRequest].sort(
-    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
   );
   if (allRequest.length === 0 || allRequest === "Empty") {
     return <Box>No Request</Box>;
@@ -248,7 +248,7 @@ const AcceptedItemsComponent = () => {
                       height: "80%",
                       overflowY: "scroll",
                       "&::-webkit-scrollbar": {
-                        width: "1px",
+                        width: "0px",
                       },
                       "&::-webkit-scrollbar-track": {
                         boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",

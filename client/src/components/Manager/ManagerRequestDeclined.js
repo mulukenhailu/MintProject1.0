@@ -79,11 +79,9 @@ const ManagerRequestDeclined = () => {
   }
 
   const sortedAllRequest = [...allRequest].sort(
-    (a, b) => {
-      console.log(b?.Item?.request[0]?.updated_at);
-    }
-    // new Date(b?.Item?.request[0]?.updated_at) -
-    // new Date(a?.Item?.request[0]?.updated_at)
+    (a, b) =>
+      new Date(b?.Item?.request[0]?.updated_at) -
+      new Date(a?.Item?.request[0]?.updated_at)
   );
 
   return (
@@ -223,7 +221,7 @@ const ManagerRequestDeclined = () => {
                       lg: "55vh",
                       overflowY: "scroll",
                       "&::-webkit-scrollbar": {
-                        width: "1px",
+                        width: "0px",
                       },
                       "&::-webkit-scrollbar-track": {
                         boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",

@@ -87,7 +87,7 @@ const StoreKeeperAcceptedItems = () => {
                 component="img"
                 alt="green iguana"
                 height="250"
-                src="https://media.istockphoto.com/id/1295841884/photo/stock-taking-beautiful-young-woman-worker-of-furniture-store-with-surgical-mask-in-covid-19.jpg?s=612x612&w=0&k=20&c=9gGV9n_1lrW15AAhiaevjqEGHI2kJBWD1zUvoT4PAYE="
+                src={`${PF}${item?.item?.productphoto}`}
                 sx={{ objectFit: "contain" }}
               />
               <CardContent>
