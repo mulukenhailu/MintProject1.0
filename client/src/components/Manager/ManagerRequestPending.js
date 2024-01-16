@@ -142,6 +142,7 @@ const ManagerRequestPending = () => {
     (state) => state.user.user
   );
 
+  console.log("all request", allRequest);
   const sortedAllRequest = [...allRequest].sort(
     (a, b) => new Date(b.created_at) - new Date(a.created_at)
   );
@@ -261,6 +262,8 @@ const ManagerRequestPending = () => {
   if (allRequest.length === 0 || allRequest === "Empty") {
     return <Box>No requests available</Box>;
   }
+
+  console.log("sorted all request", sortedAllRequest);
 
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -437,7 +440,7 @@ const ManagerRequestPending = () => {
                       lg: "55vh",
                       overflowY: "scroll",
                       "&::-webkit-scrollbar": {
-                        width: "1px",
+                        width: "0px",
                       },
                       "&::-webkit-scrollbar-track": {
                         boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",

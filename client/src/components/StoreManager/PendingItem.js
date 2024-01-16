@@ -249,6 +249,8 @@ const PendingItemComponent = () => {
   }
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
+  console.log("sorted all request", sortedAllRequest);
+
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       {sortedAllRequest?.map((item, index) => {
@@ -265,7 +267,7 @@ const PendingItemComponent = () => {
                   component="img"
                   alt="green iguana"
                   height="250px"
-                  src={`${PF}${item?.employeeRequest?.Item?.productphoto}`}
+                  src={`${PF}${item?.Item?.productphoto}`}
                   sx={{ objectFit: "contain" }}
                 />
                 <CardContent sx={{ padding: "0px" }}>
@@ -292,7 +294,7 @@ const PendingItemComponent = () => {
                         fontWeight={400}
                         flex={1}
                       >
-                        {item?.employeeRequest?.User?.first_name}
+                        {item?.User?.first_name}
                       </Typography>
                     </ListItem>
                     <ListItem
@@ -317,7 +319,7 @@ const PendingItemComponent = () => {
                         fontWeight={400}
                         flex={1}
                       >
-                        {item?.employeeRequest?.User?.last_name}
+                        {item?.User?.last_name}
                       </Typography>
                     </ListItem>
                     <ListItem
@@ -342,7 +344,7 @@ const PendingItemComponent = () => {
                         fontWeight={400}
                         flex={1}
                       >
-                        {item?.employeeRequest?.Item?.productname}
+                        {item?.Item?.productname}
                       </Typography>
                     </ListItem>
                     <ListItem
@@ -465,7 +467,7 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.first_name}
+                        {item?.User?.first_name}
                       </Typography>
                     </ListItemForModal>
                     <ListItemForModal
@@ -485,7 +487,7 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.last_name}
+                        {item?.User?.last_name}
                       </Typography>
                     </ListItemForModal>
                     <ListItemForModal
@@ -505,8 +507,8 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.email
-                          ? item?.employeeRequest?.User?.email
+                        {item?.User?.email
+                          ? item?.User?.email
                           : "Email not provided"}
                       </Typography>
                     </ListItemForModal>
@@ -527,8 +529,8 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.phone_number
-                          ? item?.employeeRequest?.User?.phone_number
+                        {item?.User?.phone_number
+                          ? item?.User?.phone_number
                           : "Phone not provided"}
                       </Typography>
                     </ListItemForModal>
@@ -549,8 +551,8 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.department
-                          ? item?.employeeRequest?.User?.department
+                        {item?.User?.department
+                          ? item?.User?.department
                           : "Dept... not provided"}
                       </Typography>
                     </ListItemForModal>
@@ -571,7 +573,7 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.Item?.productname}
+                        {item?.Item?.productname}
                       </Typography>
                     </ListItemForModal>
                     <ListItemForModal
@@ -591,7 +593,7 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.Item?.productmodel}
+                        {item?.Item?.productmodel}
                       </Typography>
                     </ListItemForModal>
                     <ListItemForModalDescription
@@ -611,7 +613,7 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.Item?.productdescription}
+                        {item?.Item?.productdescription}
                       </Typography>
                     </ListItemForModalDescription>
                     <ListItemForModal
@@ -738,7 +740,7 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.first_name}
+                        {item?.User?.first_name}
                       </Typography>
                     </ListItemForModal>
                     <ListItemForModal
@@ -758,7 +760,7 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.last_name}
+                        {item?.User?.last_name}
                       </Typography>
                     </ListItemForModal>
                     <ListItemForModal
@@ -778,8 +780,8 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.email
-                          ? item?.employeeRequest?.User?.email
+                        {item?.User?.email
+                          ? item?.User?.email
                           : "Email not provided"}
                       </Typography>
                     </ListItemForModal>
@@ -800,8 +802,8 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.phone_number
-                          ? item?.employeeRequest?.User?.phone_number
+                        {item?.User?.phone_number
+                          ? item?.User?.phone_number
                           : "Phone not provided"}
                       </Typography>
                     </ListItemForModal>
@@ -822,8 +824,8 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.department
-                          ? item?.employeeRequest?.User?.department
+                        {item?.User?.department
+                          ? item?.User?.department
                           : "Dept... not provided"}
                       </Typography>
                     </ListItemForModal>
@@ -844,7 +846,7 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.Item?.productname}
+                        {item?.Item?.productname}
                       </Typography>
                     </ListItemForModal>
                     <ListItemForModal
@@ -864,7 +866,7 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.Item?.productmodel}
+                        {item?.Item?.productmodel}
                       </Typography>
                     </ListItemForModal>
                     <ListItemForModalDescription
@@ -884,7 +886,7 @@ const PendingItemComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.Item?.productdescription}
+                        {item?.Item?.productdescription}
                       </Typography>
                     </ListItemForModalDescription>
                     <ListItemForModal
@@ -993,7 +995,7 @@ const PendingItemComponent = () => {
                       id: item?.id,
                       item_no: item?.item_no,
                       quantity_requested: item?.quantity_requested,
-                      receiver: item?.employeeRequest?.User?.user_name,
+                      receiver: item?.User?.user_name,
                     };
                     handleDeclineRequest(request);
                   }}

@@ -21,13 +21,13 @@ import { call, put, takeEvery } from "redux-saga/effects";
 
 export function* getAllPendingRequestForManagerSaga(action) {
   try {
-    console.log(action);
+    console.log("manager pending request action", action);
     yield put(getAllRequestStart());
     const request = yield call(getAllPendingRequestForManagerApi);
-    console.log(request);
+    console.log("manager pending requests", request);
     yield put(getAllRequestSuccess(request.data));
   } catch (error) {
-    console.log(error);
+    console.log("error in manager pending", error);
     yield put(getAllRequestFail());
   }
 }
