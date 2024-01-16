@@ -83,6 +83,8 @@ const DeclinedItemsComponent = () => {
   if (allRequest.length === 0 || allRequest === "Empty") {
     return <Box>No requests available</Box>;
   }
+
+  console.log("declined store head request", allRequest);
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       {sortedAllRequest?.map((item, index) => (
@@ -92,6 +94,7 @@ const DeclinedItemsComponent = () => {
               sx={{
                 border: "2px solid black",
                 borderRadius: "10px",
+                padding: "10px",
               }}
             >
               <CardMedia
@@ -222,7 +225,7 @@ const DeclinedItemsComponent = () => {
                       lg: "55vh",
                       overflowY: "scroll",
                       "&::-webkit-scrollbar": {
-                        width: "1px",
+                        width: "0px",
                       },
                       "&::-webkit-scrollbar-track": {
                         boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",

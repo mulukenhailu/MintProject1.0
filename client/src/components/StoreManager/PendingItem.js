@@ -249,7 +249,7 @@ const PendingItemComponent = () => {
   }
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  console.log("sorted all request", sortedAllRequest);
+  console.log("sorted store head pending", sortedAllRequest);
 
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
