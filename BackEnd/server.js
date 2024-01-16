@@ -28,7 +28,7 @@ const deleteItem = require("./handler/item/deleteItem");
 
 const createItem = require("./handler/item/createItem");
 
-const managerMakeRequest=require("./handler/manager/makeRequest/makeRequest")
+const managerMakeRequest = require("./handler/manager/makeRequest/makeRequest");
 const allManagersAvailable = require("./handler/manager/allManageravailable");
 const manageracceptance = require("./handler/manager/acceptedRequest/acceptedRequest");
 const getAllUser = require("./handler/common/getAllUser");
@@ -142,9 +142,10 @@ app.post("/getuserinfo/:username", userInfo.userInfo);
 
 app.post("/register", verifyAccessToken.verifyAccessToken, register.register);
 
-app.post("/manager/makeRequest", 
-verifyAccessToken.verifyAccessToken,
-managerMakeRequest.managerMakeRequest
+app.post(
+  "/manager/makeRequest",
+  verifyAccessToken.verifyAccessToken,
+  managerMakeRequest.managerMakeRequest
 );
 
 app.get(

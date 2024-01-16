@@ -79,10 +79,10 @@ const ManagerRequestDeclined = () => {
   }
 
   const sortedAllRequest = [...allRequest].sort(
-    (a, b) =>
-      new Date(b?.Item?.request[0]?.updated_at) -
-      new Date(a?.Item?.request[0]?.updated_at)
+    (a, b) => new Date(b?.created_at) - new Date(a?.created_at)
   );
+
+  console.log("all declined for manager", sortedAllRequest);
 
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

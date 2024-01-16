@@ -75,11 +75,14 @@ const AcceptedItemsComponent = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const sortedAllRequest = [...allRequest].sort(
-    (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
+    (a, b) => new Date(b?.created_at) - new Date(a?.created_at)
   );
+
   if (allRequest.length === 0 || allRequest === "Empty") {
     return <Box>No Request</Box>;
   }
+
+  console.log("sorted accepted store head request", sortedAllRequest);
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       {sortedAllRequest?.map((item, index) => {
@@ -123,7 +126,7 @@ const AcceptedItemsComponent = () => {
                         fontWeight={400}
                         flex={1}
                       >
-                        {item?.item?.request[0]?.User?.first_name}
+                        {item?.User?.first_name}
                       </Typography>
                     </ListItem>
                     <ListItem
@@ -148,7 +151,7 @@ const AcceptedItemsComponent = () => {
                         fontWeight={400}
                         flex={1}
                       >
-                        {item?.item?.request[0]?.User?.last_name}
+                        {item?.User?.last_name}
                       </Typography>
                     </ListItem>
                     <ListItem
@@ -277,7 +280,7 @@ const AcceptedItemsComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.item?.request[0]?.User?.first_name}
+                        {item?.User?.first_name}
                       </Typography>
                     </ListItemForModal>
                     <ListItemForModal
@@ -297,7 +300,7 @@ const AcceptedItemsComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.item?.request[0]?.User?.last_name}
+                        {item?.User?.last_name}
                       </Typography>
                     </ListItemForModal>
                     <ListItemForModal
@@ -317,8 +320,8 @@ const AcceptedItemsComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.item?.request[0]?.User?.email
-                          ? item?.item?.request[0]?.User?.email
+                        {item?.User?.email
+                          ? item?.User?.email
                           : "Email not provided"}
                       </Typography>
                     </ListItemForModal>
@@ -339,8 +342,8 @@ const AcceptedItemsComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.item?.request[0]?.User?.phonenumber
-                          ? item?.item?.request[0]?.User?.phonenumber
+                        {item?.User?.phone_number
+                          ? item?.User?.phone_number
                           : "Phone Number not provided"}
                       </Typography>
                     </ListItemForModal>
@@ -361,8 +364,8 @@ const AcceptedItemsComponent = () => {
                         sx={{ color: "#12596B" }}
                         fontWeight={400}
                       >
-                        {item?.employeeRequest?.User?.department
-                          ? item?.employeeRequest?.User?.department
+                        {item?.User?.department
+                          ? item?.User?.department
                           : "Dept... not provided"}
                       </Typography>
                     </ListItemForModal>

@@ -68,9 +68,7 @@ const ManagerRequestAccepted = () => {
   }
 
   const sortedAllRequest = [...allRequest].sort(
-    (a, b) =>
-      new Date(b?.Item?.request[0]?.updated_at) -
-      new Date(a?.Item?.request[0]?.updated_at)
+    (a, b) => new Date(b?.updated_at) - new Date(a?.updated_at)
   );
 
   const handleDetailModalOpen = (index) => {
@@ -86,6 +84,8 @@ const ManagerRequestAccepted = () => {
   };
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  console.log("manager accepted request", sortedAllRequest);
 
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
