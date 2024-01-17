@@ -28,8 +28,12 @@ const deleteItem = require("./handler/item/deleteItem");
 
 const createItem = require("./handler/item/createItem");
 
+<<<<<<< HEAD
 const getAllUser = require("./handler/common/getAllUser");
 const managerMakeRequest=require("./handler/manager/makeRequest/makeRequest")
+=======
+const managerMakeRequest = require("./handler/manager/makeRequest/makeRequest");
+>>>>>>> d20ad6937c1d8b26f92d5e73c74147926187b423
 const allManagersAvailable = require("./handler/manager/allManageravailable");
 const manageracceptance = require("./handler/manager/acceptedRequest/acceptedRequest");
 const managerOwnRequest=require("./handler/manager/ownPastRequest/ownPastRequest")
@@ -144,9 +148,10 @@ app.post("/getuserinfo/:username", userInfo.userInfo);
 
 app.post("/register", verifyAccessToken.verifyAccessToken, register.register);
 
-app.post("/manager/makeRequest", 
-verifyAccessToken.verifyAccessToken,
-managerMakeRequest.managerMakeRequest
+app.post(
+  "/manager/makeRequest",
+  verifyAccessToken.verifyAccessToken,
+  managerMakeRequest.managerMakeRequest
 );
 
 app.get(
