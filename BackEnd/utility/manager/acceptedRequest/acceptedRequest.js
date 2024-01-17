@@ -11,7 +11,9 @@ const client = new GraphQLClient(endpoint, {
 
   const doc=gql`
   query MyQuery($manager_username: String!) @cached {
-    Employee_Request(where: {_and: {manager_username: {_eq: $manager_username}, isApprovedByManager: {_eq: true}}}) {
+    Employee_Request(where: {_and: 
+      {manager_username: {_eq: $manager_username}, 
+      isApprovedByManager: {_eq: true}}}) {
       User {
         first_name
         last_name
