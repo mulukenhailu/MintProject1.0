@@ -15,6 +15,7 @@ import {
 } from "../State/ReduxToolkit/Slices/orderSlice";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 const OrderButton = styled(Button)({
   background: "#12596B",
@@ -25,11 +26,15 @@ const OrderButton = styled(Button)({
 });
 const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [orderNew, setOrderNew] = useState(false);
+  const [error, setError] = useState(false);
   const { t } = useTranslation("global");
   const { newOrder, errorOrder, loadingOrder } = useSelector(
     (state) => state.order
   );
-  console.log(productname, item_number);
+  const { role_name } = useSelector((state) => state.user.user.Role);
+  console.log("role of current user", role_name);
 
   const [formData, setFormData] = useState({
     quantity: "",
@@ -51,18 +56,36 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
       quantity_requested: formData.quantity,
     };
     console.log(order);
-    dispatch({ type: CREATE_ORDER, order });
+    if (role_name !== "manager") {
+      dispatch({ type: CREATE_ORDER, order });
+    } else {
+      setLoading(true);
+      axios
+        .post("/manager/makeRequest", order, { withCredentials: true })
+        .then((response) => {
+          setLoading(false);
+          setOrderNew(true);
+          console.log(response.data);
+        })
+        .then((error) => {
+          setLoading(false);
+          setError(true);
+          console.log(error);
+        });
+    }
   };
 
   useEffect(() => {
-    if (newOrder || errorOrder) {
+    if (newOrder || errorOrder || orderNew || error) {
       setTimeout(() => {
         dispatch(removeNewOrder());
         dispatch(removeOrderError());
         setOpenOrderModal(false);
+        setOrderNew(false);
+        setError(false);
       }, 5000);
     }
-  }, [newOrder, errorOrder]);
+  }, [newOrder, errorOrder, orderNew, error]);
 
   return (
     <Box
@@ -92,7 +115,32 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
             />
           </Box>
         )}
+        {loading && (
+          <Box sx={{ textAlign: "center" }}>
+            <ClipLoader
+              color={"#36d7b7"}
+              loading={loading}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </Box>
+        )}
         {errorOrder && (
+          <Box
+            sx={{
+              backgroundColor: "red",
+              color: "white",
+              fontSize: " 18px",
+              padding: " 5px 15px",
+              marginBottom: "20px",
+              textAlign: "center",
+            }}
+          >
+            {t("moveorder.error")}
+          </Box>
+        )}
+        {error && (
           <Box
             sx={{
               backgroundColor: "red",
@@ -120,7 +168,20 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
             {t("moveorder.create")}
           </Box>
         )}
-
+        {orderNew && (
+          <Box
+            sx={{
+              backgroundColor: "#12596B",
+              color: "white",
+              fontSize: " 18px",
+              padding: " 5px 15px",
+              marginBottom: "20px",
+              textAlign: "center",
+            }}
+          >
+            {t("moveorder.create")}
+          </Box>
+        )}
         <FormGroup>
           <TextField
             label={t("moveorder.quantity")}
