@@ -9,8 +9,6 @@ const addApprovalByStoreHead=require("../../utility/common/addApprovalByStoreHea
 
 function approveRequestByStoreHead(req, res){
 
-    console.log(req.params.id);
-    console.log(req.body.decoded);
 
     let{remark, senderFirstName, senderLastName, senderProfilePicture}=req.body
 
@@ -21,19 +19,14 @@ function approveRequestByStoreHead(req, res){
     validateApprovalofStorehead.validateApprovalofStorehead(req.params.id)
         .then((data)=>{
             console.log(">>>>", data)
-            if(data.ManagerAppEmpRequest && data.ManagerAppEmpRequest.length === 1){
+            if(data.ManagerAndEmpRequest && data.ManagerAndEmpRequest.length === 1){
                 addApprovalByStoreHead.addApprovalByStoreHead(req.params.id, data, remark, senderFirstName, senderLastName, senderProfilePicture)
                     .then((data)=>{
                         res.send(data)
                     })
                     .catch((error)=>{
                         console.log(error);
-                        if(error.response.errors[0].message.includes("Uniqueness violation")){
-                            res.send({"message":"Already Approved"});
-                        }
-                        else{
-                            res.send({"message":"Retry Again."});
-                        }
+                        res.send({"message":"Retry Again."});
                     })
 
             }else{
@@ -41,8 +34,8 @@ function approveRequestByStoreHead(req, res){
             }
         })
         .catch((error)=>{
-            console.log(error.response.errors[0].message);
-            res.send({"message":"No Request found tobe approved"});
+            console.log(error);
+            res.status(500).send({error:"No Request found tobe approved"});
         })
 
 }

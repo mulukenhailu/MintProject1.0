@@ -23,15 +23,24 @@ const client = new GraphQLClient(endpoint, {
       is_approved
       created_at
       updated_at
+      item {
+        item_number
+        productdescription
+        productmodel
+        productmodelnumber
+        productname
+        productphoto
+        productquantitynumber
+        productsource
+        productstandardtype
+        productstatus
+      }
     }
-  }
+  }  
   `
-
-
   const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
   }
-
 
   async function allTransactions(){
 

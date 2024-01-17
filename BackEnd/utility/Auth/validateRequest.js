@@ -88,7 +88,7 @@ async function validateRequest(request_type, item_number, employee_user_name){
 
                 const doc=gql`
                 query MyQuery($request_id: uuid) {
-                    ManagerAppEmpRequest(where: {id: {_eq: $request_id}}) {
+                    ManagerAndEmpRequest(where: {id: {_eq: $request_id}}) {
                       id
                       item_no
                       item_name
@@ -103,7 +103,9 @@ async function validateRequest(request_type, item_number, employee_user_name){
                       isRejectedByManager
                       isRejectedByStoreHead
                     }
-                  }    
+                    
+                  }
+                  
                 `
                 const variables={
                     request_id:requestId

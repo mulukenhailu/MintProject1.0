@@ -59,13 +59,32 @@ const client = new GraphQLClient(endpoint, {
       isRejectedByManager
       isRejectedByStoreHead
     }
-        update_ManagerAppEmpRequest(where: {id: {_eq: $id}, isApprovedByStoreHead: {_eq: false}, isApprovedByManager: {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}, _set: {isApprovedByStoreHead: true}) {
+        update_ManagerAppEmpRequest(where: {
+          id: {_eq: $id}, 
+          isApprovedByStoreHead: {_eq: false}, 
+          isApprovedByManager: {_eq: true}, 
+          isRejectedByManager: {_eq: false}, 
+          isRejectedByStoreHead: {_eq: false}}, 
+          _set: {isApprovedByStoreHead: true}) 
+          {
           affected_rows
         }
+
+        update_ManagerAndEmpRequest(where: {
+          id: {_eq: $id}, 
+          isApprovedByStoreHead: {_eq: false}, 
+          isApprovedByManager: {_eq: true}, 
+          isRejectedByManager: {_eq: false}, 
+          isRejectedByStoreHead: {_eq: false}},
+           _set: {isApprovedByStoreHead: true}) 
+           {
+          affected_rows
+        }
+
         update_Employee_Request(where: {id: {_eq: $id}}, _set: {isApprovedByStoreHead: true}) {
           affected_rows
         }
-      
+
         insert_notification(objects: {
           sender: $sender, 
           receiver: $receiver, 
@@ -90,6 +109,7 @@ const client = new GraphQLClient(endpoint, {
       }
   `
 
+  
   const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
   }
@@ -100,21 +120,21 @@ const client = new GraphQLClient(endpoint, {
 
           const variables={
             id:id, 
-            item_no:data.ManagerAppEmpRequest[0].item_no, 
-            item_name:data.ManagerAppEmpRequest[0].item_name, 
-            quantity_requested:data.ManagerAppEmpRequest[0].quantity_requested, 
-            manager_username:data.ManagerAppEmpRequest[0].manager_username, 
-            employee_username:data.ManagerAppEmpRequest[0].employee_username, 
-            confirmation_number:data.ManagerAppEmpRequest[0].confirmation_number, 
-            storehead_username: data.ManagerAppEmpRequest[0].storehead_username, 
-            is_approved:data.ManagerAppEmpRequest[0].is_approved,
-            isApprovedByManager:data.ManagerAppEmpRequest[0].isApprovedByManager,
-            isApprovedByStoreHead:true,
-            isRejectedByManager:data.ManagerAppEmpRequest[0].isRejectedByManager,
-            isRejectedByStoreHead:data.ManagerAppEmpRequest[0].isRejectedByStoreHead,
-            sender:data.ManagerAppEmpRequest[0].storehead_username, 
-            receiver:data.ManagerAppEmpRequest[0].employee_username,  
-            description: remark ? remark : "Accepted.",
+            item_no:                data.ManagerAndEmpRequest[0].item_no, 
+            item_name:              data.ManagerAndEmpRequest[0].item_name, 
+            quantity_requested:     data.ManagerAndEmpRequest[0].quantity_requested, 
+            manager_username:       data.ManagerAndEmpRequest[0].manager_username, 
+            employee_username:      data.ManagerAndEmpRequest[0].employee_username, 
+            confirmation_number:    data.ManagerAndEmpRequest[0].confirmation_number, 
+            storehead_username:     data.ManagerAndEmpRequest[0].storehead_username, 
+            is_approved:            data.ManagerAndEmpRequest[0].is_approved,
+            isApprovedByManager:    data.ManagerAndEmpRequest[0].isApprovedByManager,
+            isApprovedByStoreHead:  true,
+            isRejectedByManager:    data.ManagerAndEmpRequest[0].isRejectedByManager,
+            isRejectedByStoreHead:  data.ManagerAndEmpRequest[0].isRejectedByStoreHead,
+            sender:                 data.ManagerAndEmpRequest[0].storehead_username, 
+            receiver:               data.ManagerAndEmpRequest[0].employee_username,  
+            description:            remark ? remark : "Accepted.",
             senderFirstName,
             senderLastName, 
             senderProfilePicture
@@ -129,6 +149,7 @@ const client = new GraphQLClient(endpoint, {
             }catch(error){
               console.log("Error while processing approval by the storeHead");
               throw error
+
             }
   }
 

@@ -53,7 +53,6 @@ const client = new GraphQLClient(endpoint, {
       }
     }
   }
-  
   `
 
   const requestHeaders = {

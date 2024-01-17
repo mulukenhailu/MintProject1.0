@@ -10,7 +10,12 @@ const client = new GraphQLClient(endpoint, {
 
 const document=gql`
 query MyQuery($managerName: String!) @cached {
-              Employee_Request(where: {_and: {manager_username: {_eq: $managerName}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}) {
+              Employee_Request(where: {_and: {
+              manager_username: {_eq: $managerName}, 
+              isApprovedByManager: {_eq: false}, 
+              isApprovedByStoreHead: {_eq: false}, 
+              isRejectedByManager: {_eq: false}, 
+              isRejectedByStoreHead: {_eq: false}}}) {
                 User {
                   first_name
                   last_name
@@ -76,11 +81,10 @@ async function requestToApprove(req, res){
             res.send(data.Employee_Request);
         }
         
-
     }catch(err){
         console.log("Error while fetching request for the manager");
         console.log(err);
-        return err
+        res.status(500).send({error:"Retry Again."})
     }
 }
 

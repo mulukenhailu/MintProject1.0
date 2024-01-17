@@ -10,8 +10,30 @@ const client = new GraphQLClient(endpoint, {
 
 
 const doc=gql`
-mutation MyMutation($id: uuid!, $employee_username: String!, $manager_username: String!, $storehead_username: String!, $storekeeper_username: String!, $item_name: String!, $item_no: Int!, $quantity_requested: Int!, $confirmation_number: Int!, $is_approved: Boolean!) {
-  insert_History(objects: {id: $id, employee_username: $employee_username, manager_username: $manager_username, storehead_username: $storehead_username, storekeeper_username: $storekeeper_username, item_name: $item_name, item_no: $item_no, quantity_requested: $quantity_requested, confirmation_number: $confirmation_number, is_approved: $is_approved}) {
+mutation MyMutation(
+  $id: uuid!, 
+  $employee_username: String!, 
+  $manager_username: String!, 
+  $storehead_username: String!, 
+  $storekeeper_username: String!, 
+  $item_name: String!, 
+  $item_no: Int!, 
+  $quantity_requested: Int!, 
+  $confirmation_number: Int!, 
+  $is_approved: Boolean!
+  ) {
+  insert_History(objects: {
+    id: $id, 
+    employee_username: $employee_username, 
+    manager_username: $manager_username, 
+    storehead_username: $storehead_username, 
+    storekeeper_username: $storekeeper_username, 
+    item_name: $item_name, 
+    item_no: $item_no, 
+    quantity_requested: $quantity_requested, 
+    confirmation_number: $confirmation_number, 
+    is_approved: $is_approved
+  }) {
     returning {
       id
       employee_username

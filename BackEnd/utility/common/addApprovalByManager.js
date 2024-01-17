@@ -58,9 +58,40 @@ const client = new GraphQLClient(endpoint, {
       isRejectedByStoreHead
       is_approved
     }
+
+    insert_ManagerAndEmpRequest_one(object: {
+      id: $id, item_no: $item_no, 
+      item_name: $item_name, 
+      quantity_requested: $quantity_requested, 
+      manager_username: $manager_username, 
+      employee_username: $employee_username, 
+      confirmation_number: $confirmation_number, 
+      storehead_username: $storehead_username, 
+      isApprovedByManager: $isApprovedByManager, 
+      isApprovedByStoreHead: $isApprovedByStoreHead, 
+      isRejectedByManager: $isRejectedByManager, 
+      isRejectedByStoreHead: $isRejectedByStoreHead}) 
+      {
+      id
+      item_no
+      item_name
+      quantity_requested
+      manager_username
+      employee_username
+      storehead_username
+      confirmation_number
+      isApprovedByManager
+      isApprovedByStoreHead
+      isRejectedByManager
+      isRejectedByStoreHead
+      is_approved
+    }
+
     update_Employee_Request(where: {id: {_eq: $id}}, _set: {isApprovedByManager: true}) {
       affected_rows
     }
+
+
       insert_notification(objects: {
         sender: $sender, 
         receiver: $receiver, 

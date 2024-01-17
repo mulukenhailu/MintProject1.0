@@ -105,8 +105,6 @@ itemByItemNumber.itemByItemNumber(Number(item_no), Number(quantity_requested))
                                                     console.log("error while updating total quantity of  item After requested has been made.", error)
                                                     return  error
                                                 })
-
-                                            
                                         }else{
                                             res.status(400).json({error:"Request already existed"});
                                             return;

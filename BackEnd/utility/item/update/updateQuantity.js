@@ -11,17 +11,15 @@ const client = new GraphQLClient(endpoint, {
   })
 
   const doc=gql`
-        mutation MyMutation(
-            $item_number:Int!, 
-            $quantityRequested:Int!) 
-            {
-            update_Item(where: {item_number: {_eq: $item_number}},
-            _inc: {productquantitynumber: $quantityRequested}){
-            returning {
-                productquantitynumber
-            }
-            }
-        }
+  mutation MyMutation($item_number: Int!, $quantityRequested: Int!) {
+    update_Item(where: {item_number: {_eq: $item_number}}, _inc: {productquantitynumber: $quantityRequested}) {
+      returning {
+        productquantitynumber
+        item_number
+      }
+    }
+  }
+  
   `
 
   const requestHeaders = {
@@ -51,7 +49,7 @@ const client = new GraphQLClient(endpoint, {
                 })
 
         }
-        return data.update_Item.returning[0].productquantitynumber
+        return data.update_Item.returning
     }catch(error){
         throw error
     }

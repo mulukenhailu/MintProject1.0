@@ -9,10 +9,22 @@ const client = new GraphQLClient(endpoint, {
 
 const doc=gql     `
 mutation MyMutation(
-  $request_id: uuid!, $item_no: Int!, $quantity_requested: Int!, $sender: String!, 
-  $receiver: String!, $description: String!, $senderFirstName: String!, $senderLastName: String!, 
-  $senderProfilePicture: String!) {
-  update_Employee_Request(where: {_and: {id: {_eq: $request_id}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}}}, _set: {isRejectedByManager: true}) {
+  $request_id: uuid!, 
+  $item_no: Int!, 
+  $quantity_requested: Int!, 
+  $sender: String!, 
+  $receiver: String!, 
+  $description: String!, 
+  $senderFirstName: String!, 
+  $senderLastName: String!, 
+  $senderProfilePicture: String!
+  ) {
+  update_Employee_Request(where: {_and: {id: {_eq: $request_id}, 
+    isApprovedByManager: {_eq: false}, 
+    isApprovedByStoreHead: {_eq: false}, 
+    isRejectedByStoreHead: {_eq: false}, 
+    isRejectedByManager: {_eq: false}}}, 
+    _set: {isRejectedByManager: true}) {
     returning {
       Item {
         created_at
@@ -40,7 +52,15 @@ mutation MyMutation(
       productquantitynumber
     }
   }
-  insert_notification(objects: {sender: $sender, receiver: $receiver, description: $description, item_no: $item_no, quantity_requested: $quantity_requested, senderFirstName: $senderFirstName, senderLastName: $senderLastName, senderProfilePicture: $senderProfilePicture}) {
+  insert_notification(objects: {
+    sender: $sender, 
+    receiver: $receiver, 
+    description: $description, 
+    item_no: $item_no, 
+    quantity_requested: $quantity_requested, 
+    senderFirstName: $senderFirstName, 
+    senderLastName: $senderLastName, 
+    senderProfilePicture: $senderProfilePicture}) {
     returning {
       Notify_Id
       sender
@@ -55,13 +75,11 @@ mutation MyMutation(
     }
   }
 }
-
 `
 const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
   }
-
-
+  
  async function rejectRequestByManager(request_id, item_no, quantity_requested, reasonOfRejection, sender, receiver, senderFirstName, senderLastName, senderProfilePicture){
 
     console.log(request_id, item_no, quantity_requested, reasonOfRejection, sender, 
