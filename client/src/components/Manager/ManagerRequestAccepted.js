@@ -82,9 +82,11 @@ const ManagerRequestAccepted = () => {
     return <Box>No order requested</Box>;
   }
 
-  const sortedAllRequest = [...allRequest].sort(
-    (a, b) => new Date(b?.updated_at) - new Date(a?.updated_at)
-  );
+  const sortedAllRequest = allRequest
+    ? [...allRequest].sort(
+        (a, b) => new Date(b?.updated_at) - new Date(a?.updated_at)
+      )
+    : [];
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   console.log("manager accepted request", sortedAllRequest);
@@ -98,7 +100,6 @@ const ManagerRequestAccepted = () => {
               sx={{
                 border: "1px solid #12596B",
                 borderRadius: "10px",
-                padding: "10px",
               }}
             >
               <CardMedia
@@ -106,7 +107,7 @@ const ManagerRequestAccepted = () => {
                 alt="green iguana"
                 height="250"
                 image={`${PF}${item.Item.productphoto}`}
-                sx={{ objectFit: "contain" }}
+                sx={{ objectFit: "fill", padding: "10px 5px 10px 5px" }}
               />
               <CardContent sx={{ padding: "0px" }}>
                 <List>

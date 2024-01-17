@@ -45,36 +45,29 @@ const property = createSlice({
       state.allProperty = [];
       state.loadingProperty = false;
     },
+    setNewPropertyList: (state, action) => {
+      console.log("action in slice", action);
+      state.allProperty = state.allProperty.map((item) => {
+        if (
+          parseInt(item?.item_number) === parseInt(action.payload.item_number)
+        ) {
+          const productquantitynumber = parseInt(item?.productquantitynumber);
+          const quantity = parseInt(action.payload.quantity);
 
-    editPropertyStart: (state) => {
-      state.loadingProperty = true;
-      state.errorProperty = false;
-      state.property = {};
-    },
-    editPropertySuccess: (state, action) => {
-      state.loadingProperty = false;
-      state.errorProperty = false;
-      state.property = action.payload;
-    },
-    editPropertyFail: (state) => {
-      state.loadingProperty = false;
-      state.errorProperty = true;
-      state.property = {};
-    },
-    deletePropertyStart: (state) => {
-      state.loadingProperty = true;
-      state.errorProperty = false;
-      state.property = {};
-    },
-    deletePropertySuccess: (state, action) => {
-      state.loadingProperty = false;
-      state.errorProperty = false;
-      state.property = action.payload;
-    },
-    deletePropertyFail: (state) => {
-      state.loadingProperty = false;
-      state.property = {};
-      state.errorProperty = true;
+          if (parseInt(productquantitynumber) - parseInt(quantity) === 0) {
+            return;
+          }
+          return {
+            ...item,
+            productquantitynumber:
+              parseInt(productquantitynumber) - parseInt(quantity),
+          };
+        }
+
+        return item;
+      });
+
+      console.log("updatedProperty in slice", state.allProperty);
     },
 
     removePropertyError: (state) => {
@@ -93,12 +86,7 @@ export const {
   getAllPropertyStart,
   getAllPropertySuccess,
   getAllPropertyFail,
-  editPropertyStart,
-  editPropertySuccess,
-  editPropertyFail,
-  deletePropertyStart,
-  deletePropertySuccess,
-  deletePropertyFail,
+  setNewPropertyList,
   removePropertyError,
   removeNewProperty,
 } = property.actions;

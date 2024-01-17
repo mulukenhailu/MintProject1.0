@@ -14,8 +14,6 @@ import {
   GET_ALL_PENDING_REQUEST_FOR_MANAGER,
   GET_ALL_ACCEPTED_REQUEST_FOR_MANAGER,
   GET_ALL_DECLINED_REQUEST_FOR_MANAGER,
-  ACCEPT_REQUEST_FOR_MANAGER,
-  DECLINE_REQUEST_FOR_MANAGER,
 } from "../Types/managerRequestType";
 import { call, put, takeEvery } from "redux-saga/effects";
 
@@ -55,26 +53,6 @@ export function* getAllDeclinedRequestForManagerSaga(action) {
     yield put(getAllRequestFail());
   }
 }
-export function* acceptRequestForManagerSaga(action) {
-  try {
-    console.log(action);
-    const id = action.id;
-    console.log(id);
-    const request = yield call(acceptRequestForManagerApi, id);
-    console.log(request);
-  } catch (error) {
-    console.log(error);
-  }
-}
-export function* declineRequestForManagerSaga(action) {
-  try {
-    console.log(action);
-    const request = yield call(declineRequestForManagerApi, action.request);
-    console.log(request);
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 export function* watchManagerRequestAsync() {
   yield takeEvery(
@@ -89,6 +67,4 @@ export function* watchManagerRequestAsync() {
     GET_ALL_DECLINED_REQUEST_FOR_MANAGER,
     getAllDeclinedRequestForManagerSaga
   );
-  yield takeEvery(ACCEPT_REQUEST_FOR_MANAGER, acceptRequestForManagerSaga);
-  yield takeEvery(DECLINE_REQUEST_FOR_MANAGER, declineRequestForManagerSaga);
 }

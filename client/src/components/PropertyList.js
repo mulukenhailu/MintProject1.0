@@ -24,7 +24,7 @@ const PropertyList = () => {
 
   const sortedProperty = [...allProperty]
     .filter((property) =>
-      property.productname.toLowerCase().includes(searchTerm.toLowerCase())
+      property?.productname.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
@@ -93,12 +93,12 @@ const PropertyList = () => {
             {sortedProperty?.map((property, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <Card
-                  productname={property.productname}
-                  item_number={property.item_number}
-                  productmodel={property.productmodel}
-                  productphoto={property.productphoto}
-                  productquantitynumber={property.productquantitynumber}
-                  productdescription={property.productdescription}
+                  productname={property?.productname}
+                  item_number={property?.item_number}
+                  productmodel={property?.productmodel}
+                  productphoto={property?.productphoto}
+                  productquantitynumber={property?.productquantitynumber}
+                  productdescription={property?.productdescription}
                 />
               </Grid>
             ))}
