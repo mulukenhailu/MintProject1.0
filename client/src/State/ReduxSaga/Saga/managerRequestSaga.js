@@ -36,7 +36,7 @@ export function* getAllAcceptedRequestForManagerSaga(action) {
     console.log(action);
     yield put(getAllRequestStart());
     const request = yield call(getAllAcceptedRequestForManagerApi);
-    console.log(request);
+    console.log("manager request accepted", request);
     yield put(getAllRequestSuccess(request.data.Employee_Request));
   } catch (error) {
     console.log(error);
@@ -48,8 +48,8 @@ export function* getAllDeclinedRequestForManagerSaga(action) {
     console.log(action);
     yield put(getAllRequestStart());
     const request = yield call(getAllRejectedRequestForManagerApi);
-    console.log(request.data);
-    yield put(getAllRequestSuccess(request.data));
+    console.log("manager declined request", request.data);
+    yield put(getAllRequestSuccess(request.data.ManagerAndEmpRequest));
   } catch (error) {
     console.log(error);
     yield put(getAllRequestFail());
