@@ -26,6 +26,20 @@ const client = new GraphQLClient(endpoint, {
       isRejectedByStoreHead
       created_at
       updated_at
+      Item {
+        item_number
+        productmodel
+        productmodelnumber
+        productname
+        productdescription
+        productphoto
+        productquantitynumber
+        productsource
+        productstandardtype
+        productstatus
+        created_at
+        updated_at
+      }
     }
   }
   `
