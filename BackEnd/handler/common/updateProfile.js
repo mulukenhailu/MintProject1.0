@@ -13,7 +13,7 @@ mutation updateProfile(
   $first_name: String!, 
   $last_name: String!, 
   $email: String!, 
-  $phone_number: Int!, 
+  $phone_number: bigint!, 
   $profile_picture: String!
   ) {
   update_User_by_pk(pk_columns: {user_name: $user_name}, 

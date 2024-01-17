@@ -3,8 +3,15 @@ const storeHeadRejectEmployeeRequest=require("../../utility/storeHead/rejectRequ
 async function storeHeadRejectEmployeeReq(req, res){
 
     let{reason, receiver, senderFirstName, senderLastName, senderProfilePicture}=req.body
-    console.log(req.params.id, req.params.item_no, req.params.quantity_requested, reason, receiver, 
-        senderFirstName, senderLastName, senderProfilePicture)
+
+    console.log(req.params.id, 
+                req.params.item_no, 
+                req.params.quantity_requested, 
+                reason, 
+                receiver, 
+                senderFirstName, 
+                senderLastName, 
+                senderProfilePicture)
     
     storeHeadRejectEmployeeRequest.rejectRequestByStoreHead(
         req.params.id, 
@@ -23,7 +30,7 @@ async function storeHeadRejectEmployeeReq(req, res){
         })
         .catch((error)=>{
             console.log(error)
-            res.status(500).send({error:"Retry Again."})
+            res.status(500).send({error:"Network Problem.Retry Again."})
         })
 
 }

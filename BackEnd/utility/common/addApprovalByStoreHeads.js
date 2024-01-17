@@ -71,9 +71,9 @@ const client = new GraphQLClient(endpoint, {
         }
 
         update_ManagerAndEmpRequest(where: {
-          id: {_eq: $id}, 
+          id: {_eq: $id},  
+          isApprovedByManager: {_eq: true},
           isApprovedByStoreHead: {_eq: false}, 
-          isApprovedByManager: {_eq: true}, 
           isRejectedByManager: {_eq: false}, 
           isRejectedByStoreHead: {_eq: false}},
            _set: {isApprovedByStoreHead: true}) 

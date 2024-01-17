@@ -16,7 +16,7 @@ mutation updateProfile(
   $first_name: String, 
   $last_name: String, 
   $email: String!, 
-  $phone_number: Int!, 
+  $phone_number: bigint!, 
   $department: String!, 
   $Password: String!, 
   $manager_username: String!

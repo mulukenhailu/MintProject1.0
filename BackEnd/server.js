@@ -28,10 +28,12 @@ const deleteItem = require("./handler/item/deleteItem");
 
 const createItem = require("./handler/item/createItem");
 
+const getAllUser = require("./handler/common/getAllUser");
 const managerMakeRequest=require("./handler/manager/makeRequest/makeRequest")
 const allManagersAvailable = require("./handler/manager/allManageravailable");
 const manageracceptance = require("./handler/manager/acceptedRequest/acceptedRequest");
-const getAllUser = require("./handler/common/getAllUser");
+const managerOwnRequest=require("./handler/manager/ownPastRequest/ownPastRequest")
+
 const managerDeclines = require("./handler/Employee/Rejected.js/rejectedByManager/rejectedByManager");
 const managerReject = require("./handler/manager/rejectedRequest/rejectedRequest");
 
@@ -177,8 +179,18 @@ app.post(
 app.get(
   "/manager/rejectedrequest",
   verifyAccessToken.verifyAccessToken,
+  managerOwnRequest.managerPastRequest
+);
+
+
+app.post(
+  "/manager/pastrequest",
+  verifyAccessToken.verifyAccessToken,
   managerDeclines.EmployeesManagerRejectedRequest
 );
+
+
+
 
 app.get(
   "/storehead/acceptedrequest",
