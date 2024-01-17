@@ -1,3 +1,5 @@
+// ... (other imports)
+
 import {
   createOrderApi,
   getAllOrderApi,
@@ -17,8 +19,6 @@ import {
   deleteOrderStart,
   deleteOrderSuccess,
   deleteOrderFail,
-  removeOrderError,
-  removeNewOrder,
 } from "../../ReduxToolkit/Slices/orderSlice";
 import {
   CREATE_ORDER,
@@ -27,6 +27,7 @@ import {
   DELETE_ORDER,
 } from "../Types/orderType";
 import { call, put, takeEvery } from "redux-saga/effects";
+import { setNewPropertyList } from "../../ReduxToolkit/Slices/propertySlice";
 
 export function* createOrderSaga(action) {
   try {
@@ -34,6 +35,12 @@ export function* createOrderSaga(action) {
     yield put(createOrderStart());
     const Order = yield call(createOrderApi, action.order);
     console.log(Order.data);
+    yield put(
+      setNewPropertyList({
+        item_number: action?.order?.item_no,
+        quantity: action?.order?.quantity_requested,
+      })
+    );
     yield put(createOrderSuccess(Order.data));
   } catch (error) {
     console.log(error);
@@ -62,6 +69,7 @@ export function* editOrderSaga(action) {
     yield put(editOrderFail());
   }
 }
+
 export function* deleteOrderSaga(action) {
   try {
     yield put(deleteOrderStart());

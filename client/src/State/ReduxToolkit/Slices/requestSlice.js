@@ -7,6 +7,7 @@ const request = createSlice({
     loadingRequest: false,
     errorRequest: false,
     requestId: "",
+    newResponseId: "",
   },
   reducers: {
     getAllRequestStart: (state) => {
@@ -47,6 +48,12 @@ const request = createSlice({
       state.loadingRequest = false;
       state.errorRequest = true;
     },
+    getNewRequestList: (state, action) => {
+      state.allRequest = state.allRequest.filter(
+        (item) => item.id !== action.payload
+      );
+      console.log("IN REQUEST SLICE", state.allRequest);
+    },
     removeAllRequest: (state) => {
       state.allRequest = [];
     },
@@ -60,6 +67,7 @@ export const {
   setRequestStart,
   setRequestSuccess,
   setRequestFail,
+  getNewRequestList,
   removeAllRequest,
 } = request.actions;
 export default request.reducer;

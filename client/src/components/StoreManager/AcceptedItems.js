@@ -16,6 +16,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GET_ALL_ACCEPTED_REQUEST_FOR_STOREHEAD } from "../../State/ReduxSaga/Types/storeHeadRequestTypes";
 import { useTranslation } from "react-i18next";
+import { removeAllRequest } from "../../State/ReduxToolkit/Slices/requestSlice";
 
 const DetailModalContainer = styled(Modal)({
   display: "flex",
@@ -55,6 +56,7 @@ const AcceptedItemsComponent = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(removeAllRequest());
     dispatch({ type: GET_ALL_ACCEPTED_REQUEST_FOR_STOREHEAD });
   }, [dispatch]);
 

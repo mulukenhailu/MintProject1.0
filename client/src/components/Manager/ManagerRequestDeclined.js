@@ -96,7 +96,6 @@ const ManagerRequestDeclined = () => {
               sx={{
                 border: "1px solid #12596B",
                 borderRadius: "10px",
-                padding: "10px",
               }}
             >
               <CardMedia
@@ -104,7 +103,7 @@ const ManagerRequestDeclined = () => {
                 alt="green iguana"
                 height="250"
                 src={`${PF}${item.Item.productphoto}`}
-                sx={{ objectFit: "contain" }}
+                sx={{ objectFit: "fill", padding: "10px 5px 10px 5px" }}
               />
               <CardContent sx={{ padding: "0px" }}>
                 <List>
