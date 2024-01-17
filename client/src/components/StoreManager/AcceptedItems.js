@@ -78,8 +78,11 @@ const AcceptedItemsComponent = () => {
     (a, b) => new Date(b?.created_at) - new Date(a?.created_at)
   );
 
-  if (allRequest.length === 0 || allRequest === "Empty") {
-    return <Box>No Request</Box>;
+  if (!allRequest) {
+    return <Box>No order requested</Box>;
+  }
+  if (allRequest?.length === 0 || allRequest === "Empty") {
+    return <Box>No order requested</Box>;
   }
 
   console.log("sorted accepted store head request", sortedAllRequest);
@@ -100,7 +103,7 @@ const AcceptedItemsComponent = () => {
                   alt="green iguana"
                   height="250"
                   image={`${PF}${item?.item?.productphoto}`}
-                  sx={{ objectFit: "contain" }}
+                  sx={{ objectFit: "fill", padding: "5px 10px 0px 10px" }}
                 />
                 <CardContent sx={{ padding: "0px" }}>
                   <List>
