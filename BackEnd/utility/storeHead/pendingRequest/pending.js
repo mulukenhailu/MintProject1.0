@@ -9,11 +9,7 @@ const client = new GraphQLClient(endpoint, {
 
   const doc=gql`
   query MyQuery @cached {
-    ManagerAndEmpRequest(where: {
-      isApprovedByManager: {_eq: true}, 
-      isApprovedByStoreHead: {_eq: false}, 
-      isRejectedByManager: {_eq: false}, 
-      isRejectedByStoreHead: {_eq: false}}) {
+    ManagerAndEmpRequest(where: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}) {
       id
       item_no
       item_name
@@ -54,9 +50,10 @@ const client = new GraphQLClient(endpoint, {
         created_at
         updated_at
       }
+      created_at
+      updated_at
     }
   }
-  
   `
   const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
