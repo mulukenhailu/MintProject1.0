@@ -164,7 +164,10 @@ const StorekeeperPendingItems = () => {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  if (allRequest.length === 0 || allRequest === "Empty") {
+  if (!allRequest) {
+    return <Box>No order requested</Box>;
+  }
+  if (allRequest?.length === 0 || allRequest === "Empty") {
     return <Box>No order requested</Box>;
   }
 
@@ -183,7 +186,6 @@ const StorekeeperPendingItems = () => {
               sx={{
                 border: "2px solid #12596B",
                 borderRadius: "10px",
-                padding: "5px 10px",
               }}
             >
               <CardMedia
@@ -191,7 +193,7 @@ const StorekeeperPendingItems = () => {
                 alt="green iguana"
                 height="250px"
                 src={`${PF}${item?.item?.productphoto}`}
-                sx={{ objectFit: "contain" }}
+                sx={{ objectFit: "fill", padding: "5px 10px 0px 10px" }}
               />
               <CardContent>
                 <List>
@@ -275,6 +277,25 @@ const StorekeeperPendingItems = () => {
                       flex={1}
                     >
                       {item?.item?.productmodel}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant={{ xs: "body1", md: "h6" }}
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                      flex={1}
+                    >
+                      {t("storekeeper.quantity")}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                      flex={1}
+                    >
+                      {item?.quantity_requested}
                     </Typography>
                   </ListItem>
                 </List>

@@ -243,8 +243,10 @@ const PendingItemComponent = () => {
   const sortedAllRequest = [...allRequest].sort(
     (a, b) => new Date(b.created_at) - new Date(a.created_at)
   );
-
-  if (allRequest.length === 0 || allRequest === "Empty") {
+  if (!allRequest) {
+    return <Box>No order requested</Box>;
+  }
+  if (allRequest?.length === 0 || allRequest === "Empty") {
     return <Box>No order requested</Box>;
   }
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;

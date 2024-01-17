@@ -49,7 +49,7 @@ export function* getAllDeclinedRequestForManagerSaga(action) {
     yield put(getAllRequestStart());
     const request = yield call(getAllRejectedRequestForManagerApi);
     console.log("manager declined request", request.data);
-    yield put(getAllRequestSuccess(request.data.ManagerAndEmpRequest));
+    yield put(getAllRequestSuccess(request.data));
   } catch (error) {
     console.log(error);
     yield put(getAllRequestFail());

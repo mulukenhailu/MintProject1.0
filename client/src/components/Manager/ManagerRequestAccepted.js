@@ -63,14 +63,6 @@ const ManagerRequestAccepted = () => {
     (state) => state.request
   );
 
-  if (allRequest?.length === 0 || allRequest === "Empty") {
-    return <Box>No requests available</Box>;
-  }
-
-  const sortedAllRequest = [...allRequest].sort(
-    (a, b) => new Date(b?.updated_at) - new Date(a?.updated_at)
-  );
-
   const handleDetailModalOpen = (index) => {
     const updatedDetailModals = [...detailModals];
     updatedDetailModals[index] = true;
@@ -83,6 +75,16 @@ const ManagerRequestAccepted = () => {
     setDetailModals(updatedDetailModals);
   };
 
+  if (!allRequest) {
+    return <Box>No order requested</Box>;
+  }
+  if (allRequest?.length === 0 || allRequest === "Empty") {
+    return <Box>No order requested</Box>;
+  }
+
+  const sortedAllRequest = [...allRequest].sort(
+    (a, b) => new Date(b?.updated_at) - new Date(a?.updated_at)
+  );
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   console.log("manager accepted request", sortedAllRequest);

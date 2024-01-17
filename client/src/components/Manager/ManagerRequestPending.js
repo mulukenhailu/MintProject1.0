@@ -249,9 +249,11 @@ const ManagerRequestPending = () => {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  console.log(allRequest);
-  if (allRequest.length === 0 || allRequest === "Empty") {
-    return <Box>No requests available</Box>;
+  if (!allRequest) {
+    return <Box>No order requested</Box>;
+  }
+  if (allRequest?.length === 0 || allRequest === "Empty") {
+    return <Box>No order requested</Box>;
   }
 
   console.log("all request", allRequest);
