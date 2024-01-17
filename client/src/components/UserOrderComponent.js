@@ -18,6 +18,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const UserDetailModalContainer = styled(Modal)({
   display: "flex",
@@ -56,6 +57,7 @@ const Value = styled(Typography)({
 const UserOrderComponent = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrderIndex, setSelectedOrderIndex] = useState(null);
+  const { role_name } = useSelector((state) => state?.user?.user?.Role);
   const { t } = useTranslation("global");
 
   const openDetailModal = (index) => {
@@ -67,21 +69,40 @@ const UserOrderComponent = () => {
   };
 
   useEffect(() => {
-    const getAllOrderList = () => {
-      axios
-        .get("/employee/orders", {
-          withCredentials: true,
-        })
-        .then((response) => {
-          console.log(response.data);
-          setOrders(response.data.Employee_Request);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+    if (role_name === "employee") {
+      const getAllOrderList = () => {
+        axios
+          .get("/employee/orders", {
+            withCredentials: true,
+          })
+          .then((response) => {
+            console.log(response.data);
+            setOrders(response.data.Employee_Request);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
 
-    getAllOrderList();
+      getAllOrderList();
+    }
+    if (role_name === "manager") {
+      const getAllOrderList = () => {
+        axios
+          .get("/manager/pastrequest", {
+            withCredentials: true,
+          })
+          .then((response) => {
+            console.log("manager prev list", response.data);
+            setOrders(response.data.ManagerAndEmpRequest);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+
+      getAllOrderList();
+    }
   }, []);
 
   console.log(orders);

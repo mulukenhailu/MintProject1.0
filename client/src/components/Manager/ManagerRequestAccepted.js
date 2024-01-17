@@ -63,7 +63,7 @@ const ManagerRequestAccepted = () => {
     (state) => state.request
   );
 
-  if (allRequest.length === 0 || allRequest === "Empty") {
+  if (allRequest?.length === 0 || allRequest === "Empty") {
     return <Box>No requests available</Box>;
   }
 

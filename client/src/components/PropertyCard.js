@@ -72,8 +72,8 @@ const PropertyCard = ({
       <CardMedia
         sx={{
           borderRadius: "5px",
-          padding: "0px 5px",
-          objectFit: "contain",
+          padding: "5px 10px 0px 10px",
+          objectFit: "fill",
           height: "70%",
           width: "100%",
           overflow: "hidden",
