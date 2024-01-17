@@ -54,6 +54,7 @@ const OrderButton = styled(Button)({
 const DetailsProductPage = () => {
   const { id } = useParams();
   const { allProperty } = useSelector((state) => state.property);
+  const { role_name } = useSelector((state) => state.user.user);
   const { t } = useTranslation("global");
   const singleProperty = allProperty.find(
     (item) => item.item_number === parseInt(id)
@@ -183,18 +184,21 @@ const DetailsProductPage = () => {
                     </CardContentItem>
                   </CardContents>
                   <Box sx={{ display: "flex", gap: "15px", marginTop: "20px" }}>
-                    <OrderButton
-                      size="medium"
-                      variant="contained"
-                      sx={{
-                        background: "#12596B",
-                        fontSize: "16px",
-                        width: "100px",
-                      }}
-                      onClick={() => setOpenOrderModal(true)}
-                    >
-                      {t("homedetail.order")}
-                    </OrderButton>
+                    {role_name === "employee" || role_name === "manager" ? (
+                      <OrderButton
+                        size="medium"
+                        variant="contained"
+                        sx={{
+                          background: "#12596B",
+                          fontSize: "16px",
+                          width: "100px",
+                        }}
+                        onClick={() => setOpenOrderModal(true)}
+                      >
+                        {t("homedetail.order")}
+                      </OrderButton>
+                    ) : null}
+
                     <Link to="/home">
                       <Button
                         variant="contained"

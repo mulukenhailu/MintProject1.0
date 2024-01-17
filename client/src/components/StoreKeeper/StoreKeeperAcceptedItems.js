@@ -71,9 +71,15 @@ const StoreKeeperAcceptedItems = () => {
     return <Box>No history in database</Box>;
   }
 
+  const sortedAllRequest = [...allRequest].sort(
+    (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
+  );
+
+  console.log("all accepted for the store keeper accepted", sortedAllRequest);
+
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      {allRequest?.map((item, index) => (
+      {sortedAllRequest?.map((item, index) => (
         <React.Fragment key={index}>
           <Grid item xs={12} sm={6} lg={4}>
             <Card

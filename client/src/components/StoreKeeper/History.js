@@ -114,19 +114,49 @@ const History = () => {
                 <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
                   {t("history.requestedby")}
                 </TableCell>
-                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                <TableCell
+                  sx={{
+                    color: "#12596B",
+                    fontSize: "18px",
+                    textAlign: "center",
+                  }}
+                >
                   {t("history.approvedmanager")}
                 </TableCell>
-                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                <TableCell
+                  sx={{
+                    color: "#12596B",
+                    fontSize: "18px",
+                    textAlign: "center",
+                  }}
+                >
                   {t("history.approvedstorehead")}
                 </TableCell>
-                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                <TableCell
+                  sx={{
+                    color: "#12596B",
+                    fontSize: "18px",
+                    textAlign: "center",
+                  }}
+                >
                   {t("history.recievedfrom")}
                 </TableCell>
-                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                <TableCell
+                  sx={{
+                    color: "#12596B",
+                    fontSize: "18px",
+                    textAlign: "center",
+                  }}
+                >
                   {t("history.confirmation")}
                 </TableCell>
-                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                <TableCell
+                  sx={{
+                    color: "#12596B",
+                    fontSize: "18px",
+                    textAlign: "center",
+                  }}
+                >
                   {t("history.propertydetail")}
                 </TableCell>
               </TableRow>
@@ -135,7 +165,7 @@ const History = () => {
               {sortedRequest?.map((item, index) => (
                 <TableRow key={index}>
                   <TableCell
-                    sx={{ textAlign: "center", cursor: "pointer" }}
+                    sx={{ cursor: "pointer" }}
                     onClick={() => {
                       setUserDetail(true);
                       setUserName(item?.employee_username);

@@ -166,7 +166,7 @@ const ProfilePage = () => {
   const handleUpdateProfile = () => {
     let updatedProfileInfo = { ...profileInfo };
 
-    console.log("updatedProfile", updatedProfileInfo);
+    console.log("data to be updated", updatedProfileInfo);
     if (uploadedImage) {
       updatedProfileInfo = {
         ...updatedProfileInfo,
@@ -178,7 +178,7 @@ const ProfilePage = () => {
     axios
       .post("/updateprofile", updatedProfileInfo, { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
+        console.log("updated user data", response.data);
         dispatch(editUserSuccess(response.data));
         setUser(response.data.update_User_by_pk);
         setLoadingEdit(false);
@@ -194,7 +194,7 @@ const ProfilePage = () => {
         setTimeout(() => {
           setErrorEdit(false);
         }, 5000);
-        console.log(error);
+        console.log("error while editing", error);
       });
   };
 

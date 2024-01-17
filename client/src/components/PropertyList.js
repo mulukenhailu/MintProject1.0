@@ -35,7 +35,7 @@ const PropertyList = () => {
   console.log("sortedProperty", sortedProperty);
   return (
     <Box paddingLeft={{ xs: 5, md: 18.5 }} paddingTop={5} paddingBottom={5}>
-      <Box sx={{}}>
+      <Box>
         <Box
           sx={{
             width: { xs: "80%", md: "60%" },
