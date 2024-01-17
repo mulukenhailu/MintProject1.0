@@ -180,11 +180,11 @@ app.post(
 app.get(
   "/manager/rejectedrequest",
   verifyAccessToken.verifyAccessToken,
-  managerOwnRequest.managerPastRequest
+  managerDeclines.EmployeesManagerRejectedRequest
 );
 
 
-app.get(
+app.post(
   "/manager/pastrequest",
   verifyAccessToken.verifyAccessToken,
   managerOwnRequest.managerPastRequest
