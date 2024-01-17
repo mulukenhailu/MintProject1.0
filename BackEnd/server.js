@@ -184,7 +184,7 @@ app.get(
 );
 
 
-app.post(
+app.get(
   "/manager/pastrequest",
   verifyAccessToken.verifyAccessToken,
   managerOwnRequest.managerPastRequest
