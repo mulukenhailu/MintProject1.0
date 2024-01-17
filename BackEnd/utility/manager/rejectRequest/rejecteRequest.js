@@ -17,15 +17,21 @@ mutation MyMutation(
   $description: String!, 
   $senderFirstName: String!, 
   $senderLastName: String!, 
-  $senderProfilePicture: String!
-  ) {
-  update_Employee_Request(where: {_and: {id: {_eq: $request_id}, 
+  $senderProfilePicture: String!) {
+  update_Employee_Request(where: {_and: 
+    {id: {_eq: $request_id}, 
     isApprovedByManager: {_eq: false}, 
     isApprovedByStoreHead: {_eq: false}, 
     isRejectedByStoreHead: {_eq: false}, 
     isRejectedByManager: {_eq: false}}}, 
     _set: {isRejectedByManager: true}) {
     returning {
+      
+      manager_username
+      quantity_requested
+      created_at
+      updated_at
+      
       Item {
         created_at
         item_number
@@ -43,8 +49,6 @@ mutation MyMutation(
           updated_at
         }
       }
-      manager_username
-      quantity_requested
     }
   }
   update_Item(where: {item_number: {_eq: $item_no}}, _inc: {productquantitynumber: $quantity_requested}) {
@@ -54,13 +58,14 @@ mutation MyMutation(
   }
   insert_notification(objects: {
     sender: $sender, 
-    receiver: $receiver, 
+    receiver: $receiver,
     description: $description, 
     item_no: $item_no, 
-    quantity_requested: $quantity_requested, 
+    quantity_requested:$quantity_requested, 
     senderFirstName: $senderFirstName, 
     senderLastName: $senderLastName, 
-    senderProfilePicture: $senderProfilePicture}) {
+    senderProfilePicture: $senderProfilePicture
+  }) {
     returning {
       Notify_Id
       sender
@@ -75,13 +80,22 @@ mutation MyMutation(
     }
   }
 }
+
 `
 const requestHeaders = {
     'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
   }
   
- async function rejectRequestByManager(request_id, item_no, quantity_requested, reasonOfRejection, sender, receiver, senderFirstName, senderLastName, senderProfilePicture){
-
+ async function rejectRequestByManager(
+  request_id, 
+  item_no, 
+  quantity_requested, 
+  reasonOfRejection, 
+  sender, receiver, 
+  senderFirstName, 
+  senderLastName, 
+  senderProfilePicture
+  ){
     console.log(request_id, item_no, quantity_requested, reasonOfRejection, sender, 
       senderFirstName, senderLastName, senderProfilePicture)
 

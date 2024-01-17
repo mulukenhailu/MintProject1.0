@@ -13,28 +13,26 @@ const client = new GraphQLClient(endpoint, {
     $request_id: uuid!, 
     $item_no: Int!, 
     $quantity_requested: Int!, 
-    $sender:String!,
-    $receiver:String!,
-    $description:String!
-    $senderFirstName:String!, 
-    $senderLastName:String!, 
-    $senderProfilePicture:String!
-    ) {
+    $sender: String!, 
+    $receiver: String!, 
+    $description: String!, 
+    $senderFirstName: String!, 
+    $senderLastName: String!, 
+    $senderProfilePicture: String!) {
     update_Employee_Request(where: {
       id: {_eq: $request_id}, 
       _and: {isApprovedByManager: {_eq: true}, 
-            isApprovedByStoreHead: {_eq: false}, 
-            isRejectedByManager: {_eq: false}, 
-            isRejectedByStoreHead: {_eq: false}}}, 
-      _set: {
-        isRejectedByStoreHead: true
-      }) {
+      isApprovedByStoreHead: {_eq: false}, 
+      isRejectedByManager: {_eq: false}, 
+      isRejectedByStoreHead: {_eq: false}}}, 
+      _set: {isRejectedByStoreHead: true}) {
       returning {
         item_name
         item_no
         manager_username
         quantity_requested
         created_at
+        updated_at
         employee_username
         id
         isApprovedByManager
@@ -109,37 +107,27 @@ const client = new GraphQLClient(endpoint, {
         }
       }
     }
-          update_Item(where: {item_number: {_eq: $item_no}}, _inc: {productquantitynumber: $quantity_requested}) {
-            returning {
-              productquantitynumber
-            }
-          }
-
-
-          insert_notification(objects: {
-            sender: $sender, 
-            receiver: $receiver, 
-            description: $description, 
-            item_no:$item_no,
-            quantity_requested:$quantity_requested
-            senderFirstName:$senderFirstName, 
-            senderLastName:$senderLastName, 
-            senderProfilePicture:$senderProfilePicture
-              }) {
-            returning {
-              Notify_Id
-              sender
-              receiver
-              description
-              isViwed
-              created_at
-              updated_at
-              senderFirstName
-              senderLastName
-              senderProfilePicture
-            }
-          }
+    update_Item(where: {item_number: {_eq: $item_no}}, _inc: {productquantitynumber: $quantity_requested}) {
+      returning {
+        productquantitynumber
       }
+    }
+    insert_notification(objects: {sender: $sender, receiver: $receiver, description: $description, item_no: $item_no, quantity_requested: $quantity_requested, senderFirstName: $senderFirstName, senderLastName: $senderLastName, senderProfilePicture: $senderProfilePicture}) {
+      returning {
+        Notify_Id
+        sender
+        receiver
+        description
+        isViwed
+        created_at
+        updated_at
+        senderFirstName
+        senderLastName
+        senderProfilePicture
+      }
+    }
+  }
+  
   `
 
   const requestHeaders = {

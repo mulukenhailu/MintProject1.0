@@ -20,8 +20,7 @@ mutation MyMutation(
   $item_no: Int!, 
   $quantity_requested: Int!, 
   $confirmation_number: Int!, 
-  $is_approved: Boolean!
-  ) {
+  $is_approved: Boolean!) {
   insert_History(objects: {
     id: $id, 
     employee_username: $employee_username, 
@@ -32,8 +31,7 @@ mutation MyMutation(
     item_no: $item_no, 
     quantity_requested: $quantity_requested, 
     confirmation_number: $confirmation_number, 
-    is_approved: $is_approved
-  }) {
+    is_approved: $is_approved}) {
     returning {
       id
       employee_username
@@ -45,12 +43,15 @@ mutation MyMutation(
       quantity_requested
       confirmation_number
       is_approved
+      created_at
+      updated_at
     }
   }
   update_storeHeadApprovedEmpRequest(where: {id: {_eq: $id}}, _set: {is_approved: true}) {
     affected_rows
   }
-}  
+}
+
 `
 
 const requestHeaders = {

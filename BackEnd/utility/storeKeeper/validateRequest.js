@@ -12,6 +12,15 @@ const client = new GraphQLClient(endpoint, {
   query MyQuery($request_id: uuid) {
     storeHeadApprovedEmpRequest(where: {id: {_eq: $request_id}, is_approved: {_eq: false}}) {
       id
+      manager_username
+      employee_username
+      storehead_username
+      item_no
+      item_name
+      quantity_requested
+      confirmation_number
+      created_at
+      updated_at
       item {
         item_number
         productdescription
@@ -26,13 +35,6 @@ const client = new GraphQLClient(endpoint, {
         created_at
         updated_at
       }
-      manager_username
-      employee_username
-      storehead_username
-      item_no
-      item_name
-      quantity_requested
-      confirmation_number
     }
   }
   
