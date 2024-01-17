@@ -23,7 +23,7 @@ export function* getAllPendingRequestForManagerSaga(action) {
     yield put(getAllRequestStart());
     const request = yield call(getAllPendingRequestForManagerApi);
     console.log("manager pending requests", request);
-    yield put(getAllRequestSuccess(request.data));
+    yield put(getAllRequestSuccess(request.data.Employee_Request));
   } catch (error) {
     console.log("error in manager pending", error);
     yield put(getAllRequestFail());
