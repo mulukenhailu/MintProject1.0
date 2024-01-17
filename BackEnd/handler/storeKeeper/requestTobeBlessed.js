@@ -19,7 +19,12 @@ const requestHeaders = {
 
   const doc=gql`
   query MyQuery {
-    storeHeadApprovedEmpRequest(where: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: true}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}, is_approved: {_eq: false}}) {
+    storeHeadApprovedEmpRequest(where: {
+      isApprovedByManager: {_eq: true}, 
+      isApprovedByStoreHead: {_eq: true}, 
+      isRejectedByManager: {_eq: false}, 
+      isRejectedByStoreHead: {_eq: false}, 
+      is_approved: {_eq: false}}) {
       id
       item_no
       item_name
@@ -29,6 +34,12 @@ const requestHeaders = {
       storehead_username
       is_approved
       confirmation_number
+      isApprovedByManager
+      isApprovedByStoreHead
+      isRejectedByManager
+      isRejectedByStoreHead
+      created_at
+      updated_at
       item {
         item_number
         productdescription
@@ -40,34 +51,21 @@ const requestHeaders = {
         productsource
         productstandardtype
         productstatus
-        request {
-          created_at
-          id
-          is_approved
-          item_name
-          item_no
-          manager_username
-          quantity_requested
-          User {
-            created_at
-            department
-            email
-            first_name
-            last_name
-            manager_username
-            phone_number
-            profile_picture
-            updated_at
-            user_name
-            Role {
-              role_name
-            }
-          }
-        }
+      }
+      User {
+        user_name
+        first_name
+        last_name
+        email
+        department
+        manager_username
+        phone_number
+        profile_picture
+        created_at
+        updated_at
       }
     }
   }
-  
   
   `
 
