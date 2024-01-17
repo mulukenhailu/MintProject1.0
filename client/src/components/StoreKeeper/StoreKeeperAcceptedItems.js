@@ -34,12 +34,10 @@ const ListItemForModal = styled(ListItem)({
   gap: "20px",
 });
 const DetailButton = styled(Button)({
-  background: "#FFC107",
   borderRadius: "2px",
   marginBottom: "10px",
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
-    background: "#FFC107",
     transform: "scale(0.95)",
   },
 });
@@ -80,8 +78,9 @@ const StoreKeeperAcceptedItems = () => {
           <Grid item xs={12} sm={6} lg={4}>
             <Card
               sx={{
-                border: "2px solid black",
+                border: "2px solid #12596B",
                 borderRadius: "10px",
+                padding: "10px",
               }}
             >
               <CardMedia
@@ -89,12 +88,19 @@ const StoreKeeperAcceptedItems = () => {
                 alt="green iguana"
                 height="250"
                 src="https://media.istockphoto.com/id/1295841884/photo/stock-taking-beautiful-young-woman-worker-of-furniture-store-with-surgical-mask-in-covid-19.jpg?s=612x612&w=0&k=20&c=9gGV9n_1lrW15AAhiaevjqEGHI2kJBWD1zUvoT4PAYE="
+                sx={{ objectFit: "contain" }}
               />
               <CardContent>
-                <List>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                <List sx={{ width: "100%" }}>
+                  <ListItem
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <Typography
-                      variant="body1"
+                      variant={{ xs: "body1", md: "h6" }}
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
@@ -102,16 +108,22 @@ const StoreKeeperAcceptedItems = () => {
                       {t("storekeeper.requestedby")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant={{ xs: "body2", md: "body2" }}
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
                       {item?.employee_username}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <Typography
-                      variant="body1"
+                      variant={{ xs: "body1", md: "h6" }}
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
@@ -119,16 +131,22 @@ const StoreKeeperAcceptedItems = () => {
                       {t("storekeeper.approvedmanager")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant={{ xs: "body2", md: "body2" }}
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
                       {item?.manager_username}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <Typography
-                      variant="body1"
+                      variant={{ xs: "body1", md: "h6" }}
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
@@ -136,16 +154,22 @@ const StoreKeeperAcceptedItems = () => {
                       {t("storekeeper.approvedstorehead")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant={{ xs: "body2", md: "body2" }}
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
                       {item?.storehead_username}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <Typography
-                      variant="body1"
+                      variant={{ xs: "body1", md: "h6" }}
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
@@ -153,16 +177,22 @@ const StoreKeeperAcceptedItems = () => {
                       {t("storekeeper.recievedfrom")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant={{ xs: "body2", md: "body2" }}
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
                       {item?.storehead_username}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <Typography
-                      variant="body1"
+                      variant={{ xs: "body1", md: "h6" }}
                       marginRight={1}
                       sx={{ color: "#12596B" }}
                       fontWeight={900}
@@ -170,7 +200,7 @@ const StoreKeeperAcceptedItems = () => {
                       {t("storekeeper.propertyname")}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant={{ xs: "body2", md: "body2" }}
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
@@ -185,6 +215,7 @@ const StoreKeeperAcceptedItems = () => {
                   fullWidth
                   type="small"
                   onClick={() => handleDetailModalOpen(index)}
+                  color="warning"
                 >
                   {t("storekeeper.detail")}
                 </DetailButton>
@@ -211,7 +242,7 @@ const StoreKeeperAcceptedItems = () => {
                 </Typography>
                 <ListItemForModal>
                   <Typography
-                    variant="body1"
+                    variant={{ xs: "body1", md: "h6" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
@@ -219,7 +250,7 @@ const StoreKeeperAcceptedItems = () => {
                     {t("storekeeper.requestedby")}
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant={{ xs: "body2", md: "body2" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={400}
@@ -229,7 +260,7 @@ const StoreKeeperAcceptedItems = () => {
                 </ListItemForModal>
                 <ListItemForModal>
                   <Typography
-                    variant="body1"
+                    variant={{ xs: "body1", md: "h6" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
@@ -237,7 +268,7 @@ const StoreKeeperAcceptedItems = () => {
                     {t("storekeeper.approvedmanager")}
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant={{ xs: "body2", md: "body2" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={400}
@@ -247,7 +278,7 @@ const StoreKeeperAcceptedItems = () => {
                 </ListItemForModal>
                 <ListItemForModal>
                   <Typography
-                    variant="body1"
+                    variant={{ xs: "body1", md: "h6" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
@@ -255,7 +286,7 @@ const StoreKeeperAcceptedItems = () => {
                     {t("storekeeper.approvedstorehead")}
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant={{ xs: "body2", md: "body2" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={400}
@@ -265,7 +296,7 @@ const StoreKeeperAcceptedItems = () => {
                 </ListItemForModal>
                 <ListItemForModal>
                   <Typography
-                    variant="body1"
+                    variant={{ xs: "body1", md: "h6" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
@@ -273,7 +304,7 @@ const StoreKeeperAcceptedItems = () => {
                     {t("storekeeper.recievedfrom")}
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant={{ xs: "body2", md: "body2" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={400}
@@ -283,7 +314,7 @@ const StoreKeeperAcceptedItems = () => {
                 </ListItemForModal>
                 <ListItemForModal>
                   <Typography
-                    variant="body1"
+                    variant={{ xs: "body1", md: "h6" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
@@ -291,7 +322,7 @@ const StoreKeeperAcceptedItems = () => {
                     {t("storekeeper.propertyname")}
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant={{ xs: "body2", md: "body2" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={400}
@@ -301,7 +332,7 @@ const StoreKeeperAcceptedItems = () => {
                 </ListItemForModal>
                 <ListItemForModal>
                   <Typography
-                    variant="body1"
+                    variant={{ xs: "body1", md: "h6" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
@@ -309,7 +340,7 @@ const StoreKeeperAcceptedItems = () => {
                     {t("storekeeper.propertymodel")}
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant={{ xs: "body2", md: "body2" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={400}
@@ -319,7 +350,7 @@ const StoreKeeperAcceptedItems = () => {
                 </ListItemForModal>
                 <ListItemForModal>
                   <Typography
-                    variant="body1"
+                    variant={{ xs: "body1", md: "h6" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={900}
@@ -327,7 +358,7 @@ const StoreKeeperAcceptedItems = () => {
                     {t("storekeeper.quantity")}
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant={{ xs: "body2", md: "body2" }}
                     flex={2}
                     sx={{ color: "#12596B" }}
                     fontWeight={400}

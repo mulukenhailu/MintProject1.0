@@ -90,7 +90,13 @@ const UserOrderComponent = () => {
   );
 
   if (!orders || orders.length === 0) {
-    return <Box sx={{ padding: "20px 0px 0px 175px" }}>No order yet</Box>;
+    return (
+      <Box
+        sx={{ paddingTop: "20px", paddingLeft: { xs: "50px", md: "160px" } }}
+      >
+        No order yet
+      </Box>
+    );
   }
   return (
     <Box paddingLeft={{ xs: 5, md: 19 }} paddingTop={3} paddingBottom={5}>
@@ -196,7 +202,7 @@ const UserOrderComponent = () => {
                     aria-describedby="modal-modal-description"
                   >
                     <UserDetailModalWrapper
-                      width={{ xs: "60%", sm: "70%", md: "50%", lg: "55%" }}
+                      width={{ xs: "80%", sm: "70%", md: "50%", lg: "55%" }}
                     >
                       <List>
                         <Typography

@@ -82,42 +82,60 @@ const UserDetailModal = ({ detailModal, setDetailModal, currentUserId }) => {
             >
               {t("userlist.userdetail")}
             </Typography>
-            <ListItemForModal sx={{ width: "100%" }}>
-              <Label>{t("userlist.firstname")}</Label>
-              <Value>{currentUser?.first_name || "Not Available"}</Value>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Label>{t("userlist.lastname")}</Label>
-              <Value>{currentUser?.last_name || "Not Available"}</Value>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Label>{t("userlist.username")}</Label>
-              <Value>{currentUser?.user_name || "Not Available"}</Value>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Label>{t("userlist.email")}</Label>
-              <Value>{currentUser?.email || "Not Available"}</Value>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Label>{t("userlist.phonenumber")}</Label>
-              <Value>{currentUser?.phone_number || "Not Available"}</Value>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Label>{t("userlist.department")}</Label>
-              <Value>{currentUser?.department || "Not Available"}</Value>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Label>{t("userlist.position")}</Label>
-              <Value>{currentUser?.Role.role_name || "Not Available"}</Value>
-            </ListItemForModal>
-            <ListItemForModal>
-              <Label>{t("userlist.manager")}</Label>
-              <Value>
-                {userManager
-                  ? userManager.first_name + userManager.last_name
-                  : "Manager not assigned"}
-              </Value>
-            </ListItemForModal>
+            <Box
+              sx={{
+                height: "80%",
+                overflowY: "scroll",
+                "&::-webkit-scrollbar": {
+                  width: "1px",
+                },
+                "&::-webkit-scrollbar-track": {
+                  boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                  webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "rgba(0,0,0,.1)",
+                  outline: "1px solid slategrey",
+                },
+              }}
+            >
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Label>{t("userlist.firstname")}</Label>
+                <Value>{currentUser?.first_name || "Not Available"}</Value>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Label>{t("userlist.lastname")}</Label>
+                <Value>{currentUser?.last_name || "Not Available"}</Value>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Label>{t("userlist.username")}</Label>
+                <Value>{currentUser?.user_name || "Not Available"}</Value>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Label>{t("userlist.email")}</Label>
+                <Value>{currentUser?.email || "Not Available"}</Value>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Label>{t("userlist.phonenumber")}</Label>
+                <Value>{currentUser?.phone_number || "Not Available"}</Value>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Label>{t("userlist.department")}</Label>
+                <Value>{currentUser?.department || "Not Available"}</Value>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Label>{t("userlist.position")}</Label>
+                <Value>{currentUser?.Role.role_name || "Not Available"}</Value>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Label>{t("userlist.manager")}</Label>
+                <Value>
+                  {userManager
+                    ? userManager.first_name + userManager.last_name
+                    : "Manager not assigned"}
+                </Value>
+              </ListItemForModal>
+            </Box>
           </List>
         </UserDetailModalWrapper>
       </UserDetailModalContainer>

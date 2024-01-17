@@ -103,7 +103,8 @@ const CreateUser = () => {
     <Paper
       elevation={3}
       sx={{
-        padding: 5,
+        padding: { xs: 1, md: 5 },
+        paddingY: { xs: 4, md: 5 },
         width: { xs: "100%", sm: "70%", md: "60%", lg: "50%" },
         margin: "auto",
       }}

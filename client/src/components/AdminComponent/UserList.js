@@ -52,7 +52,7 @@ const UserList = () => {
   };
 
   return (
-    <Box paddingLeft={{ xs: 10, md: 21 }} paddingTop={5} paddingBottom={5}>
+    <Box paddingLeft={{ xs: 5, md: 21 }} paddingTop={5} paddingBottom={5}>
       {loadingUser ? (
         <Box
           sx={{

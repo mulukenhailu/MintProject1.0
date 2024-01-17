@@ -32,7 +32,7 @@ const AllStoreKeeperRequest = () => {
 
   return (
     <Box>
-      <Box paddingLeft={{ xs: 10, md: 22 }} paddingTop={5} paddingBottom={5}>
+      <Box paddingLeft={{ xs: 5, md: 19 }} paddingTop={7} paddingBottom={5}>
         <ButtonContainer
           disableElevation
           variant="contained"
@@ -44,13 +44,18 @@ const AllStoreKeeperRequest = () => {
             onClick={() => setActiveItem("pending")}
             startIcon={<PendingIcon />}
           >
-            {t("status.pending")}
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
+              {t("status.pending")}
+            </Box>
           </PendingButton>
           <AcceptButton
             onClick={() => setActiveItem("accepted")}
             startIcon={<ThumbUpAltIcon />}
           >
-            {t("status.delivered")}
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
+              {" "}
+              {t("status.delivered")}
+            </Box>
           </AcceptButton>
         </ButtonContainer>
         <Box>
