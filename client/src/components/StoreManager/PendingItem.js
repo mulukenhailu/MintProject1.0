@@ -261,6 +261,7 @@ const PendingItemComponent = () => {
                 sx={{
                   border: "2px solid black",
                   borderRadius: "10px",
+                  padding: "10px 5px 10px 5px",
                 }}
               >
                 <CardMedia
@@ -268,7 +269,7 @@ const PendingItemComponent = () => {
                   alt="green iguana"
                   height="250px"
                   src={`${PF}${item?.Item?.productphoto}`}
-                  sx={{ objectFit: "contain" }}
+                  sx={{ objectFit: "fill" }}
                 />
                 <CardContent sx={{ padding: "0px" }}>
                   <List>
@@ -437,7 +438,7 @@ const PendingItemComponent = () => {
                         lg: "55vh",
                         overflowY: "scroll",
                         "&::-webkit-scrollbar": {
-                          width: "1px",
+                          width: "0px",
                         },
                         "&::-webkit-scrollbar-track": {
                           boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",

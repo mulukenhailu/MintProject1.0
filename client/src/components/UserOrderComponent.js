@@ -118,6 +118,7 @@ const UserOrderComponent = () => {
                   color: "#12596B",
                   width: "20%",
                   fontSize: "20px",
+                  textAlign: "center",
                   display: { xs: "none", sm: "table-cell" },
                 }}
               >
@@ -128,6 +129,7 @@ const UserOrderComponent = () => {
                   color: "#12596B",
                   width: "20%",
                   fontSize: "20px",
+                  textAlign: "center",
                   display: { xs: "none", md: "table-cell" },
                 }}
               >
@@ -138,13 +140,19 @@ const UserOrderComponent = () => {
                   color: "#12596B",
                   width: "20%",
                   fontSize: "20px",
+                  textAlign: "center",
                   display: { xs: "none", md: "table-cell" },
                 }}
               >
                 {t("userorder.confirmation")}
               </TableCell>
               <TableCell
-                sx={{ color: "#12596B", width: "20%", fontSize: "20px" }}
+                sx={{
+                  color: "#12596B",
+                  width: "20%",
+                  fontSize: "20px",
+                  textAlign: "center",
+                }}
               >
                 {t("userorder.detail")}
               </TableCell>
@@ -164,6 +172,7 @@ const UserOrderComponent = () => {
                   <TableCell
                     sx={{
                       width: "20%",
+                      textAlign: "center",
                       display: { xs: "none", sm: "table-cell" },
                     }}
                   >
@@ -173,6 +182,7 @@ const UserOrderComponent = () => {
                     sx={{
                       width: "20%",
                       display: { xs: "none", md: "table-cell" },
+                      textAlign: "center",
                     }}
                   >
                     {item?.quantity_requested}
@@ -180,13 +190,14 @@ const UserOrderComponent = () => {
                   <TableCell
                     sx={{
                       width: "20%",
+                      textAlign: "center",
                       display: { xs: "none", md: "table-cell" },
                     }}
                   >
                     {item?.confirmation_number}
                   </TableCell>
                   <TableCell
-                    sx={{ width: "3%" }}
+                    sx={{ width: "3%", textAlign: "center" }}
                     onClick={() => openDetailModal(index)}
                   >
                     <SettingsAccessibilityIcon

@@ -142,15 +142,6 @@ const ManagerRequestPending = () => {
     (state) => state.user.user
   );
 
-  console.log("all request", allRequest);
-  const sortedAllRequest = [...allRequest].sort(
-    (a, b) => new Date(b.created_at) - new Date(a.created_at)
-  );
-
-  if (allRequest.length === 0) {
-    return <Box>No requests available</Box>;
-  }
-
   const handleAcceptRequest = async (id) => {
     setLoading(true);
     await axios
@@ -262,6 +253,11 @@ const ManagerRequestPending = () => {
   if (allRequest.length === 0 || allRequest === "Empty") {
     return <Box>No requests available</Box>;
   }
+
+  console.log("all request", allRequest);
+  const sortedAllRequest = [...allRequest].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
 
   console.log("sorted all request", sortedAllRequest);
 

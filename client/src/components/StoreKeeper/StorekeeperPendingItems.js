@@ -169,430 +169,433 @@ const StorekeeperPendingItems = () => {
   }
 
   console.log("store keeeper pending items", allRequest);
+  console.log("all request", allRequest);
+  const sortedAllRequest = [...allRequest].sort(
+    (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
+  );
 
   return (
-    <Box></Box>
-    // <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-    //   {allRequest?.map((item, index) => (
-    //     <React.Fragment key={index}>
-    //       <Grid item xs={12} sm={6} lg={4}>
-    //         <Card
-    //           sx={{
-    //             border: "2px solid #12596B",
-    //             borderRadius: "10px",
-    //             padding: "5px 10px",
-    //           }}
-    //         >
-    //           <CardMedia
-    //             component="img"
-    //             alt="green iguana"
-    //             height="250px"
-    //             src={`${PF}${item?.item?.productphoto}`}
-    //             sx={{ objectFit: "contain" }}
-    //           />
-    //           <CardContent>
-    //             <List>
-    //               <ListItem
-    //                 sx={{
-    //                   display: "flex",
-    //                   alignItems: "center",
-    //                   gap: "5px",
-    //                 }}
-    //               >
-    //                 <Typography
-    //                   variant={{ xs: "body1", md: "h6" }}
-    //                   marginRight={1}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                   flex={1}
-    //                 >
-    //                   {t("storekeeper.firstname")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body1"
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                   flex={1}
-    //                 >
-    //                   {item?.item?.request[0]?.User?.first_name}
-    //                 </Typography>
-    //               </ListItem>
-    //               <ListItem sx={{ display: "flex", alignItems: "center" }}>
-    //                 <Typography
-    //                   variant={{ xs: "body1", md: "h6" }}
-    //                   marginRight={1}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                   flex={1}
-    //                 >
-    //                   {t("storekeeper.lastname")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body1"
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                   flex={1}
-    //                 >
-    //                   {item?.item?.request[0]?.User?.last_name}
-    //                 </Typography>
-    //               </ListItem>
-    //               <ListItem sx={{ display: "flex", alignItems: "center" }}>
-    //                 <Typography
-    //                   variant={{ xs: "body1", md: "h6" }}
-    //                   marginRight={1}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                   flex={1}
-    //                 >
-    //                   {t("storekeeper.propertyname")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body1"
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                   flex={1}
-    //                 >
-    //                   {item?.item?.productname}
-    //                 </Typography>
-    //               </ListItem>
-    //               <ListItem sx={{ display: "flex", alignItems: "center" }}>
-    //                 <Typography
-    //                   variant={{ xs: "body1", md: "h6" }}
-    //                   marginRight={1}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                   flex={1}
-    //                 >
-    //                   {t("storekeeper.propertymodel")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body1"
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                   flex={1}
-    //                 >
-    //                   {item?.item?.productmodel}
-    //                 </Typography>
-    //               </ListItem>
-    //             </List>
-    //           </CardContent>
-    //           <CardActions sx={{ marginBottom: "10px" }}>
-    //             <ButtonGroup fullWidth>
-    //               <AcceptButton
-    //                 variant="contained"
-    //                 onClick={() => handleAcceptModalOpen(index)}
-    //               >
-    //                 {t("storekeeper.accept")}
-    //               </AcceptButton>
-    //               <DetailButton
-    //                 variant="contained"
-    //                 onClick={() => handleDetailModalOpen(index)}
-    //                 color="warning"
-    //               >
-    //                 {t("storekeeper.detail")}
-    //               </DetailButton>
-    //             </ButtonGroup>
-    //           </CardActions>
-    //         </Card>
-    //       </Grid>
-    //       <DetailModalContainer
-    //         open={detailModals[index] || false}
-    //         onClose={() => handleDetailModalClose(index)}
-    //         aria-labelledby="modal-modal-title"
-    //         aria-describedby="modal-modal-description"
-    //       >
-    //         <DetailModalWrapper
-    //           width={{ xs: "90%", sm: "70%", md: "50%", lg: "70%" }}
-    //         >
-    //           <List>
-    //             <Typography
-    //               variant="h5"
-    //               textAlign={"center"}
-    //               marginBottom={"20px"}
-    //               sx={{ color: "#12596B" }}
-    //             >
-    //               {t("storekeeper.requestdetail")}
-    //             </Typography>
-    //             <Box
-    //               sx={{
-    //                 height: {
-    //                   xs: "60vh",
-    //                   md: "55vh",
-    //                   lg: "55vh",
-    //                   overflowY: "scroll",
-    //                   "&::-webkit-scrollbar": {
-    //                     width: "1px",
-    //                   },
-    //                   "&::-webkit-scrollbar-track": {
-    //                     boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-    //                     webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-    //                   },
-    //                   "&::-webkit-scrollbar-thumb": {
-    //                     backgroundColor: "rgba(0,0,0,.1)",
-    //                     outline: "1px solid slategrey",
-    //                   },
-    //                 },
-    //               }}
-    //             >
-    //               <ListItemForModal
-    //                 sx={{ display: { xs: "block", sm: "flex" } }}
-    //               >
-    //                 <Typography
-    //                   variant="body1"
-    //                   flex={2}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                 >
-    //                   {t("storekeeper.firstname")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body2"
-    //                   flex={4}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                 >
-    //                   {item?.item?.request[0]?.User?.first_name}
-    //                 </Typography>
-    //               </ListItemForModal>
-    //               <ListItemForModal
-    //                 sx={{ display: { xs: "block", sm: "flex" } }}
-    //               >
-    //                 <Typography
-    //                   variant="body1"
-    //                   flex={2}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                 >
-    //                   {t("storekeeper.lastname")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body2"
-    //                   flex={4}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                 >
-    //                   {item?.item?.request[0]?.User?.last_name}
-    //                 </Typography>
-    //               </ListItemForModal>
-    //               <ListItemForModal
-    //                 sx={{ display: { xs: "block", sm: "flex" } }}
-    //               >
-    //                 <Typography
-    //                   variant="body1"
-    //                   flex={2}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                 >
-    //                   {t("storekeeper.email")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body2"
-    //                   flex={4}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                 >
-    //                   {item?.item?.request[0]?.User?.email
-    //                     ? item?.item?.request[0]?.User?.email
-    //                     : "Email not provided"}
-    //                 </Typography>
-    //               </ListItemForModal>
-    //               <ListItemForModal
-    //                 sx={{ display: { xs: "block", sm: "flex" } }}
-    //               >
-    //                 <Typography
-    //                   variant="body1"
-    //                   flex={2}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                 >
-    //                   {t("storekeeper.phonenumber")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body2"
-    //                   flex={4}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                 >
-    //                   {item?.item?.request[0]?.User?.phone_number
-    //                     ? item?.item?.request[0]?.User?.phone_number
-    //                     : "Phone not provided"}
-    //                 </Typography>
-    //               </ListItemForModal>
-    //               <ListItemForModal
-    //                 sx={{ display: { xs: "block", sm: "flex" } }}
-    //               >
-    //                 <Typography
-    //                   variant="body1"
-    //                   flex={2}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                 >
-    //                   {t("storekeeper.department")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body2"
-    //                   flex={4}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                 >
-    //                   {item?.item?.request[0]?.User?.department
-    //                     ? item?.item?.request[0]?.User?.department
-    //                     : "Dept... not provided"}
-    //                 </Typography>
-    //               </ListItemForModal>
-    //               <ListItemForModal
-    //                 sx={{ display: { xs: "block", sm: "flex" } }}
-    //               >
-    //                 <Typography
-    //                   variant="body1"
-    //                   flex={2}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                 >
-    //                   {t("storekeeper.propertyname")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body2"
-    //                   flex={4}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                 >
-    //                   {item?.item?.productname}
-    //                 </Typography>
-    //               </ListItemForModal>
-    //               <ListItemForModal
-    //                 sx={{ display: { xs: "block", sm: "flex" } }}
-    //               >
-    //                 <Typography
-    //                   variant="body1"
-    //                   flex={2}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                 >
-    //                   {t("storekeeper.propertymodel")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body2"
-    //                   flex={4}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                 >
-    //                   {item?.item?.productmodel}
-    //                 </Typography>
-    //               </ListItemForModal>
-    //               <ListItemForModalDescription
-    //                 sx={{ display: { xs: "block", sm: "flex" } }}
-    //               >
-    //                 <Typography
-    //                   variant="body1"
-    //                   flex={2}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                 >
-    //                   {t("storekeeper.description")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body2"
-    //                   flex={4}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                 >
-    //                   {item?.item?.productdescription}
-    //                 </Typography>
-    //               </ListItemForModalDescription>
-    //               <ListItemForModal
-    //                 sx={{ display: { xs: "block", sm: "flex" } }}
-    //               >
-    //                 <Typography
-    //                   variant="body1"
-    //                   flex={2}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={900}
-    //                 >
-    //                   {t("storekeeper.quantity")}
-    //                 </Typography>
-    //                 <Typography
-    //                   variant="body2"
-    //                   flex={4}
-    //                   sx={{ color: "#12596B" }}
-    //                   fontWeight={400}
-    //                 >
-    //                   {item?.quantity_requested}
-    //                 </Typography>
-    //               </ListItemForModal>
-    //             </Box>
-    //           </List>
-    //         </DetailModalWrapper>
-    //       </DetailModalContainer>
-    //       <AcceptModal
-    //         open={acceptModals[index] || false}
-    //         onClose={() => handleAcceptModalClose(index)}
-    //         aria-labelledby="modal-modal-title"
-    //         aria-describedby="modal-modal-description"
-    //       >
-    //         <AcceptModalWrapper
-    //           width={{ xs: "90%", sm: "70%", md: "50%", lg: "30%" }}
-    //         >
-    //           {loading && (
-    //             <Box sx={{ textAlign: "center" }}>
-    //               <ClipLoader
-    //                 color={"#36d7b7"}
-    //                 loading={loading}
-    //                 size={50}
-    //                 aria-label="Loading Spinner"
-    //                 data-testid="loader"
-    //               />
-    //             </Box>
-    //           )}
-    //           {error && (
-    //             <Box
-    //               sx={{
-    //                 backgroundColor: "red",
-    //                 color: "white",
-    //                 fontSize: " 18px",
-    //                 padding: " 5px 15px",
-    //                 marginY: "10px",
-    //                 textAlign: "center",
-    //               }}
-    //             >
-    //               {error}
-    //             </Box>
-    //           )}
-    //           {response && (
-    //             <Box
-    //               sx={{
-    //                 backgroundColor: "#12596B",
-    //                 color: "white",
-    //                 fontSize: " 18px",
-    //                 padding: " 5px 15px",
-    //                 marginY: "10px",
-    //                 textAlign: "center",
-    //               }}
-    //             >
-    //               Request Done Successfully
-    //             </Box>
-    //           )}
-    //           <TextField
-    //             name="confirmation"
-    //             fullWidth
-    //             label={t("storekeeper.confirmation")}
-    //             onChange={(e) => setConfirmationNumber(e.target.value)}
-    //           />
-    //           <SendButton
-    //             variant="contained"
-    //             sx={{ background: "#12596B" }}
-    //             fullWidth
-    //             onClick={() => {
-    //               handleInsertConfirmationNumber(item.id, index);
-    //             }}
-    //           >
-    //             {t("storekeeper.confirm")}
-    //           </SendButton>
-    //         </AcceptModalWrapper>
-    //       </AcceptModal>
-    //     </React.Fragment>
-    //   ))}
-    // </Grid>
+    <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      {sortedAllRequest?.map((item, index) => (
+        <React.Fragment key={index}>
+          <Grid item xs={12} sm={6} lg={4}>
+            <Card
+              sx={{
+                border: "2px solid #12596B",
+                borderRadius: "10px",
+                padding: "5px 10px",
+              }}
+            >
+              <CardMedia
+                component="img"
+                alt="green iguana"
+                height="250px"
+                src={`${PF}${item?.item?.productphoto}`}
+                sx={{ objectFit: "contain" }}
+              />
+              <CardContent>
+                <List>
+                  <ListItem
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                  >
+                    <Typography
+                      variant={{ xs: "body1", md: "h6" }}
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                      flex={1}
+                    >
+                      {t("storekeeper.firstname")}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                      flex={1}
+                    >
+                      {item?.User?.first_name}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant={{ xs: "body1", md: "h6" }}
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                      flex={1}
+                    >
+                      {t("storekeeper.lastname")}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                      flex={1}
+                    >
+                      {item?.User?.last_name}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant={{ xs: "body1", md: "h6" }}
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                      flex={1}
+                    >
+                      {t("storekeeper.propertyname")}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                      flex={1}
+                    >
+                      {item?.item?.productname}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography
+                      variant={{ xs: "body1", md: "h6" }}
+                      marginRight={1}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                      flex={1}
+                    >
+                      {t("storekeeper.propertymodel")}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                      flex={1}
+                    >
+                      {item?.item?.productmodel}
+                    </Typography>
+                  </ListItem>
+                </List>
+              </CardContent>
+              <CardActions sx={{ marginBottom: "10px" }}>
+                <ButtonGroup fullWidth>
+                  <AcceptButton
+                    variant="contained"
+                    onClick={() => handleAcceptModalOpen(index)}
+                  >
+                    {t("storekeeper.accept")}
+                  </AcceptButton>
+                  <DetailButton
+                    variant="contained"
+                    onClick={() => handleDetailModalOpen(index)}
+                    color="warning"
+                  >
+                    {t("storekeeper.detail")}
+                  </DetailButton>
+                </ButtonGroup>
+              </CardActions>
+            </Card>
+          </Grid>
+          <DetailModalContainer
+            open={detailModals[index] || false}
+            onClose={() => handleDetailModalClose(index)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <DetailModalWrapper
+              width={{ xs: "90%", sm: "70%", md: "50%", lg: "70%" }}
+            >
+              <List>
+                <Typography
+                  variant="h5"
+                  textAlign={"center"}
+                  marginBottom={"20px"}
+                  sx={{ color: "#12596B" }}
+                >
+                  {t("storekeeper.requestdetail")}
+                </Typography>
+                <Box
+                  sx={{
+                    height: {
+                      xs: "60vh",
+                      md: "55vh",
+                      lg: "55vh",
+                      overflowY: "scroll",
+                      "&::-webkit-scrollbar": {
+                        width: "1px",
+                      },
+                      "&::-webkit-scrollbar-track": {
+                        boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                        webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                      },
+                      "&::-webkit-scrollbar-thumb": {
+                        backgroundColor: "rgba(0,0,0,.1)",
+                        outline: "1px solid slategrey",
+                      },
+                    },
+                  }}
+                >
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.firstname")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.User?.first_name}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.lastname")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.User?.last_name}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.email")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.User?.email
+                        ? item?.User?.email
+                        : "Email not provided"}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.phonenumber")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.User?.phone_number
+                        ? item?.User?.phone_number
+                        : "Phone not provided"}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.department")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.User?.department
+                        ? item?.User?.department
+                        : "Dept... not provided"}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.propertyname")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.productname}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.propertymodel")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.productmodel}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModalDescription
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.description")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.item?.productdescription}
+                    </Typography>
+                  </ListItemForModalDescription>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={900}
+                    >
+                      {t("storekeeper.quantity")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{ color: "#12596B" }}
+                      fontWeight={400}
+                    >
+                      {item?.quantity_requested}
+                    </Typography>
+                  </ListItemForModal>
+                </Box>
+              </List>
+            </DetailModalWrapper>
+          </DetailModalContainer>
+          <AcceptModal
+            open={acceptModals[index] || false}
+            onClose={() => handleAcceptModalClose(index)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <AcceptModalWrapper
+              width={{ xs: "90%", sm: "70%", md: "50%", lg: "30%" }}
+            >
+              {loading && (
+                <Box sx={{ textAlign: "center" }}>
+                  <ClipLoader
+                    color={"#36d7b7"}
+                    loading={loading}
+                    size={50}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                </Box>
+              )}
+              {error && (
+                <Box
+                  sx={{
+                    backgroundColor: "red",
+                    color: "white",
+                    fontSize: " 18px",
+                    padding: " 5px 15px",
+                    marginY: "10px",
+                    textAlign: "center",
+                  }}
+                >
+                  {error}
+                </Box>
+              )}
+              {response && (
+                <Box
+                  sx={{
+                    backgroundColor: "#12596B",
+                    color: "white",
+                    fontSize: " 18px",
+                    padding: " 5px 15px",
+                    marginY: "10px",
+                    textAlign: "center",
+                  }}
+                >
+                  Request Done Successfully
+                </Box>
+              )}
+              <TextField
+                name="confirmation"
+                fullWidth
+                label={t("storekeeper.confirmation")}
+                onChange={(e) => setConfirmationNumber(e.target.value)}
+              />
+              <SendButton
+                variant="contained"
+                sx={{ background: "#12596B" }}
+                fullWidth
+                onClick={() => {
+                  handleInsertConfirmationNumber(item.id, index);
+                }}
+              >
+                {t("storekeeper.confirm")}
+              </SendButton>
+            </AcceptModalWrapper>
+          </AcceptModal>
+        </React.Fragment>
+      ))}
+    </Grid>
   );
 };
 

@@ -212,48 +212,99 @@ export default function Sidebar() {
               />
             </ListItemButton>
           </ListItem>
-          <ListItem
-            disablePadding
-            sx={{
-              display: "block",
-              padding: { md: "0px 5px 0px 0px" },
-              color: "black",
-              background: isActive("userorder") ? "lightgray" : "transparent",
-              borderLeft: isActive("userorder") ? "3px solid #12596B" : "null",
-            }}
-            component={Link}
-            to="/userorder"
-          >
-            <ListItemButton
+          {role_name === "employee" && (
+            <ListItem
+              disablePadding
               sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 1,
+                display: "block",
+                padding: { md: "0px 5px 0px 0px" },
+                color: "black",
+                background: isActive("userorder") ? "lightgray" : "transparent",
+                borderLeft: isActive("userorder")
+                  ? "3px solid #12596B"
+                  : "null",
               }}
+              component={Link}
+              to="/userorder"
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 2.5 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 1,
                 }}
               >
-                <BorderColorIcon sx={{ color: "#12596B" }} />
-              </ListItemIcon>
-              <ListItemText
-                primary={t("sidebar.order")}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 2.5 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <BorderColorIcon sx={{ color: "#12596B" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary={t("sidebar.order")}
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: { xs: "none", md: "block" },
+                    color: "#12596B",
+                  }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "900",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
+          {role_name === "manager" && (
+            <ListItem
+              disablePadding
+              sx={{
+                display: "block",
+                padding: { md: "0px 5px 0px 0px" },
+                color: "black",
+                background: isActive("userorder") ? "lightgray" : "transparent",
+                borderLeft: isActive("userorder")
+                  ? "3px solid #12596B"
+                  : "null",
+              }}
+              component={Link}
+              to="/userorder"
+            >
+              <ListItemButton
                 sx={{
-                  opacity: open ? 1 : 0,
-                  display: { xs: "none", md: "block" },
-                  color: "#12596B",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 1,
                 }}
-                primaryTypographyProps={{
-                  fontSize: "20px",
-                  fontWeight: "900",
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 2.5 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <BorderColorIcon sx={{ color: "#12596B" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary={t("sidebar.order")}
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: { xs: "none", md: "block" },
+                    color: "#12596B",
+                  }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: "900",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
+
           {role_name === "admin" && (
             <ListItem
               disablePadding

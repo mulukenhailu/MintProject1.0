@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import OrderComponent from "./Order";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const CardContentItem = styled(Box)({
   height: "fit-content",
@@ -44,6 +45,7 @@ const PropertyCard = ({
   productdescription,
   productmodel,
 }) => {
+  const { role_name } = useSelector((state) => state.user.user.Role);
   const [openOrderModal, setOpenOrderModal] = useState(false);
   const { t } = useTranslation("global");
 
@@ -56,7 +58,7 @@ const PropertyCard = ({
   return (
     <Card
       sx={{
-        padding: "20px 2px",
+        padding: "15px 2px 20px 2px",
         height: "500px",
         background: "#fff",
         boxShadow: "5px 10px 10px rgba(0, 0, 0, 0.2)",
@@ -131,20 +133,22 @@ const PropertyCard = ({
         </CardContentItem>
       </CardContent>
       <CardActions>
-        <CreateButton
-          size="medium"
-          sx={{
-            color: "#fff",
-            fontSize: { xs: "12px", md: "16px" },
-            marginRight: "5px",
-            width: "100px",
-            textTransform: "capitalize",
-          }}
-          variant="contained"
-          onClick={() => handleClickModal()}
-        >
-          {t("home.order")}
-        </CreateButton>
+        {role_name === "employee" || role_name === "manager" ? (
+          <CreateButton
+            size="medium"
+            sx={{
+              color: "#fff",
+              fontSize: { xs: "12px", md: "16px" },
+              marginRight: "5px",
+              width: "100px",
+              textTransform: "capitalize",
+            }}
+            variant="contained"
+            onClick={() => handleClickModal()}
+          >
+            {t("home.order")}
+          </CreateButton>
+        ) : null}
 
         <Link to={`/details/${item_number}`}>
           <Button
@@ -152,7 +156,10 @@ const PropertyCard = ({
             sx={{
               color: "#fff",
               fontSize: { xs: "12px", md: "16px" },
-              width: "100px",
+              width:
+                role_name === "employee" || role_name === "manager"
+                  ? "100px"
+                  : "320px",
               textTransform: "capitalize",
             }}
             variant="contained"
