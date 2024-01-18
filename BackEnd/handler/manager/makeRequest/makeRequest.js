@@ -97,31 +97,33 @@ async function managerMakeRequest(req, res){
                 confirmation_number: confirmationNumber.confirmationNumber()
                 }
 
-                if(itemByItemNumber.itemByItemNumber(item_no, quantity_requested)){
 
-                    try {
-                        const data = await client.request(doc, variables, requestHeaders);
-                        if(data.update_Item.returning[0].productquantitynumber==0){
-                            updateStatus.updateStatus(item_no)
-                                .then((Sdata)=>{
-                                   console.log(Sdata)
-                                })
-                                .catch((error)=>{
-                                    console.log(error)
-                                    res.sendStatus(500)
-                                })
+                itemByItemNumber.itemByItemNumber(item_no, quantity_requested)
+                    .then(async (validRequest)=>{
+                        if(validRequest){
+                            try {
+                                const data = await client.request(doc, variables, requestHeaders);
+                                if(data.update_Item.returning[0].productquantitynumber==0){
+                                    updateStatus.updateStatus(item_no)
+                                        .then((Sdata)=>{
+                                           console.log(Sdata)
+                                        })
+                                        .catch((error)=>{
+                                            console.log(error)
+                                            res.sendStatus(500)
+                                        })
+                                }
+                                res.send(data)
+                            } catch (error) {
+                                console.log("Error while inserting Request into the manager Request DB.");
+                                console.log(error);
+                                res.status(500).send({error:"Retry Again!."});
+                            }
                         }
-                        res.send(data)
-                    } catch (error) {
-                        console.log("Error while inserting Request into the manager Request DB.");
-                        console.log(error);
-                        res.status(500).send({error:"Retry Again!."});
-                    }
-
-                }
-                else{
-                    res.status(402).send({error:"Not Valid Quantity"})
-                }                          
+                        else{
+                            res.status(402).send({error:"Not a valid Quantity."})
+                        }
+                    })         
     }
 
 module.exports={managerMakeRequest}
