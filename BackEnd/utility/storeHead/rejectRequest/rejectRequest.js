@@ -9,39 +9,23 @@ const client = new GraphQLClient(endpoint, {
   })
 
   const doc=gql`
-  mutation MyMutation(
-    $request_id: uuid!, 
-    $item_no: Int!, 
-    $quantity_requested: Int!, 
-    $sender: String!, 
-    $receiver: String!, 
-    $description: String!, 
-    $senderFirstName: String!, 
-    $senderLastName: String!, 
-    $senderProfilePicture: String!) 
-    {
-                update_Employee_Request(where: {
-                  id: {_eq: $request_id}, 
-                  _and: {isApprovedByManager: {_eq: true}, 
-                        isApprovedByStoreHead: {_eq: false}, 
-                        isRejectedByManager: {_eq: false}, 
-                        isRejectedByStoreHead: {_eq: false}}}, 
-                  _set: {isRejectedByStoreHead: true}) {
-                      returning {
-                        item_name
-                        item_no
-                        manager_username
-                        quantity_requested
-                        created_at
-                        updated_at
-                        employee_username
-                        id
-                        isApprovedByManager
-                        isApprovedByStoreHead
-                        isRejectedByManager
-                        isRejectedByStoreHead
-                        is_approved
-                        confirmation_number
+  mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int!, $sender: String!, $receiver: String!, $description: String!, $senderFirstName: String!, $senderLastName: String!, $senderProfilePicture: String!) {
+    update_Employee_Request(where: {id: {_eq: $request_id}, _and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}, _set: {isRejectedByStoreHead: true}) {
+      returning {
+        item_name
+        item_no
+        manager_username
+        quantity_requested
+        created_at
+        updated_at
+        employee_username
+        id
+        isApprovedByManager
+        isApprovedByStoreHead
+        isRejectedByManager
+        isRejectedByStoreHead
+        is_approved
+        confirmation_number
         Item {
           item_number
           productdescription
@@ -64,76 +48,56 @@ const client = new GraphQLClient(endpoint, {
         }
       }
     }
-    update_ManagerAppEmpRequest(where: {
-      id: {_eq: $request_id}, _and: 
-      {
-          isApprovedByManager: {_eq: true}, 
-          isApprovedByStoreHead: {_eq: false}, 
-          isRejectedByManager: {_eq: false}, 
-          isRejectedByStoreHead: {_eq: false}}}, 
-          _set: {isRejectedByStoreHead: true}) 
-          {
+    update_ManagerAppEmpRequest(where: {id: {_eq: $request_id}, _and: {isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}, _set: {isRejectedByStoreHead: true}) {
       returning {
-              manager_username
-              quantity_requested
-              item_no
-              item_name
-              employee_username
-              id
-              isApprovedByManager
-              isApprovedByStoreHead
-              isRejectedByManager
-              isRejectedByStoreHead
-              is_approved
-              storehead_username
-              employeeRequest {
-                confirmation_number
-                created_at
-                id
-                employee_username
-                isApprovedByManager
-                isApprovedByStoreHead
-                isRejectedByManager
-                isRejectedByStoreHead
-                is_approved
-                item_name
-                item_no
-                manager_username
-                quantity_requested
-                Item {
-                  created_at
-                  item_number
-                  productdescription
-                  productstatus
-                  productstandardtype
-                  productsource
-                  productquantitynumber
-                  productphoto
-                  productname
-                  productmodelnumber
-                  productmodel
-                }
-              }
-            }
+        manager_username
+        quantity_requested
+        item_no
+        item_name
+        employee_username
+        id
+        isApprovedByManager
+        isApprovedByStoreHead
+        isRejectedByManager
+        isRejectedByStoreHead
+        is_approved
+        storehead_username
+        employeeRequest {
+          confirmation_number
+          created_at
+          id
+          employee_username
+          isApprovedByManager
+          isApprovedByStoreHead
+          isRejectedByManager
+          isRejectedByStoreHead
+          is_approved
+          item_name
+          item_no
+          manager_username
+          quantity_requested
+          Item {
+            created_at
+            item_number
+            productdescription
+            productstatus
+            productstandardtype
+            productsource
+            productquantitynumber
+            productphoto
+            productname
+            productmodelnumber
+            productmodel
+          }
+        }
+      }
     }
-
-
-    update_Item(where: {item_number: {_eq: $item_no}}, _inc: {productquantitynumber: $quantity_requested}) {
+    update_Item(where: {item_number: {_eq: $item_no}}, _inc: {productquantitynumber: $quantity_requested}, _set: {productstatus: "available"}) {
       returning {
         productquantitynumber
       }
     }
-
-    insert_notification(objects: {
-      sender: $sender, 
-      receiver: $receiver, 
-      description: $description, 
-      item_no: $item_no, 
-      quantity_requested: $quantity_requested, 
-      senderFirstName: $senderFirstName, 
-      senderLastName: $senderLastName, 
-      senderProfilePicture: $senderProfilePicture
-    }) {
+    insert_notification(objects: {sender: $sender, receiver: $receiver, description: $description, item_no: $item_no, quantity_requested: $quantity_requested, senderFirstName: $senderFirstName, senderLastName: $senderLastName, senderProfilePicture: $senderProfilePicture}) {
       returning {
         Notify_Id
         sender
@@ -147,22 +111,9 @@ const client = new GraphQLClient(endpoint, {
         senderProfilePicture
       }
     }
-
-    update_ManagerAndEmpRequest(where: 
-      {_and: {id: {_eq: $request_id}, 
-      isApprovedByManager: {_eq: true}, 
-      isApprovedByStoreHead: {_eq: false}, 
-      isRejectedByManager: {_eq: false}, 
-      isRejectedByStoreHead: {_eq: false}}}, 
-      _set: {
-        isApprovedByManager: true, 
-        isApprovedByStoreHead: false, 
-        isRejectedByManager: false, 
-        isRejectedByStoreHead: true
-      }) {
+    update_ManagerAndEmpRequest(where: {_and: {id: {_eq: $request_id}, isApprovedByManager: {_eq: true}, isApprovedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}, isRejectedByStoreHead: {_eq: false}}}, _set: {isApprovedByManager: true, isApprovedByStoreHead: false, isRejectedByManager: false, isRejectedByStoreHead: true}) {
       affected_rows
     }
-
   }
   
   `

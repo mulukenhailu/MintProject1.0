@@ -8,30 +8,13 @@ const client = new GraphQLClient(endpoint, {
   })
 
 const doc=gql     `
-mutation MyMutation(
-  $request_id: uuid!, 
-  $item_no: Int!, 
-  $quantity_requested: Int!, 
-  $sender: String!, 
-  $receiver: String!, 
-  $description: String!, 
-  $senderFirstName: String!, 
-  $senderLastName: String!, 
-  $senderProfilePicture: String!) {
-  update_Employee_Request(where: {_and: 
-    {id: {_eq: $request_id}, 
-    isApprovedByManager: {_eq: false}, 
-    isApprovedByStoreHead: {_eq: false}, 
-    isRejectedByStoreHead: {_eq: false}, 
-    isRejectedByManager: {_eq: false}}}, 
-    _set: {isRejectedByManager: true}) {
+mutation MyMutation($request_id: uuid!, $item_no: Int!, $quantity_requested: Int!, $sender: String!, $receiver: String!, $description: String!, $senderFirstName: String!, $senderLastName: String!, $senderProfilePicture: String!) {
+  update_Employee_Request(where: {_and: {id: {_eq: $request_id}, isApprovedByManager: {_eq: false}, isApprovedByStoreHead: {_eq: false}, isRejectedByStoreHead: {_eq: false}, isRejectedByManager: {_eq: false}}}, _set: {isRejectedByManager: true}) {
     returning {
-      
       manager_username
       quantity_requested
       created_at
       updated_at
-      
       Item {
         created_at
         item_number
@@ -51,21 +34,12 @@ mutation MyMutation(
       }
     }
   }
-  update_Item(where: {item_number: {_eq: $item_no}}, _inc: {productquantitynumber: $quantity_requested}) {
+  update_Item(where: {item_number: {_eq: $item_no}}, _inc: {productquantitynumber: $quantity_requested}, _set: {productstatus: "available"}) {
     returning {
       productquantitynumber
     }
   }
-  insert_notification(objects: {
-    sender: $sender, 
-    receiver: $receiver,
-    description: $description, 
-    item_no: $item_no, 
-    quantity_requested:$quantity_requested, 
-    senderFirstName: $senderFirstName, 
-    senderLastName: $senderLastName, 
-    senderProfilePicture: $senderProfilePicture
-  }) {
+  insert_notification(objects: {sender: $sender, receiver: $receiver, description: $description, item_no: $item_no, quantity_requested: $quantity_requested, senderFirstName: $senderFirstName, senderLastName: $senderLastName, senderProfilePicture: $senderProfilePicture}) {
     returning {
       Notify_Id
       sender
