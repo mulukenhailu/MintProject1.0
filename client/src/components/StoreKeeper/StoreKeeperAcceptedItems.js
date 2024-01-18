@@ -67,7 +67,10 @@ const StoreKeeperAcceptedItems = () => {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  if (allRequest.length === 0 || allRequest === "Empty") {
+  if (!allRequest) {
+    return <Box>No history in database</Box>;
+  }
+  if (allRequest?.length === 0 || allRequest === "Empty") {
     return <Box>No history in database</Box>;
   }
 
@@ -86,7 +89,6 @@ const StoreKeeperAcceptedItems = () => {
               sx={{
                 border: "2px solid #12596B",
                 borderRadius: "10px",
-                padding: "10px",
               }}
             >
               <CardMedia
@@ -94,7 +96,7 @@ const StoreKeeperAcceptedItems = () => {
                 alt="green iguana"
                 height="250"
                 src={`${PF}${item?.item?.productphoto}`}
-                sx={{ objectFit: "contain" }}
+                sx={{ objectFit: "fill", padding: "5px 10px 0px 10px" }}
               />
               <CardContent>
                 <List sx={{ width: "100%" }}>

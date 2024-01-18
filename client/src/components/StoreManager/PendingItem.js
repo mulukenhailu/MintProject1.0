@@ -20,6 +20,10 @@ import { GET_ALL_PENDING_REQUEST_FOR_STOREHEAD } from "../../State/ReduxSaga/Typ
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useTranslation } from "react-i18next";
+import {
+  getNewRequestList,
+  removeAllRequest,
+} from "../../State/ReduxToolkit/Slices/requestSlice";
 
 const DeclineButton = styled(Button)({
   marginRight: "10px",
@@ -118,58 +122,23 @@ const DeclineModalWrapper = styled(Box)({
 const PendingItemComponent = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation("global");
-  const [detailModals, setDetailModals] = useState([]);
-  const [acceptModals, setAcceptModals] = useState([]);
-  const [declineModal, setDeclineModal] = useState([]);
+  const [detailModals, setDetailModals] = useState(false);
+  const [acceptModals, setAcceptModals] = useState(false);
+  const [declineModal, setDeclineModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [response, setResponse] = useState(false);
   const { allRequest } = useSelector((state) => state.request);
   const [rejectReason, setRejectReason] = useState("");
+  const [selectedItem, setSelectedItem] = useState({});
   const { first_name, last_name, profile_picture } = useSelector(
     (state) => state.user.user
   );
-  console.log(allRequest);
 
   useEffect(() => {
+    dispatch(removeAllRequest());
     dispatch({ type: GET_ALL_PENDING_REQUEST_FOR_STOREHEAD });
-  }, [dispatch]);
-
-  const handleDetailModalOpen = (index) => {
-    const updatedDetailModals = [...detailModals];
-    updatedDetailModals[index] = true;
-    setDetailModals(updatedDetailModals);
-  };
-
-  const handleDetailModalClose = (index) => {
-    const updatedDetailModals = [...detailModals];
-    updatedDetailModals[index] = false;
-    setDetailModals(updatedDetailModals);
-  };
-
-  const handleAcceptModalOpen = (index) => {
-    const updatedAcceptedModals = [...acceptModals];
-    updatedAcceptedModals[index] = true;
-    setAcceptModals(updatedAcceptedModals);
-  };
-
-  const handleAcceptModalClose = (index) => {
-    const updatedAcceptedModals = [...acceptModals];
-    updatedAcceptedModals[index] = false;
-    setAcceptModals(updatedAcceptedModals);
-  };
-
-  const handleDeclinedModalOpen = (index) => {
-    const updatedDeclinedModals = [...declineModal];
-    updatedDeclinedModals[index] = true;
-    setDeclineModal(updatedDeclinedModals);
-  };
-
-  const handleDeclinedModalClose = (index) => {
-    const updatedDeclinedModals = [...declineModal];
-    updatedDeclinedModals[index] = false;
-    setDeclineModal(updatedDeclinedModals);
-  };
+  }, []);
 
   const handleAcceptRequest = async (id) => {
     setLoading(true);
@@ -188,8 +157,8 @@ const PendingItemComponent = () => {
       )
       .then((response) => {
         setLoading(false);
-        console.log("rejected", response);
         setResponse(true);
+        dispatch(getNewRequestList(id));
         setTimeout(() => {
           setResponse(false);
           setAcceptModals(false);
@@ -223,7 +192,8 @@ const PendingItemComponent = () => {
       )
       .then((response) => {
         setLoading(false);
-        console.log("rejected", response);
+        console.log("rejected  for store head", response);
+        dispatch(getNewRequestList(request?.id));
         setResponse(true);
         setTimeout(() => {
           setResponse(false);
@@ -240,16 +210,21 @@ const PendingItemComponent = () => {
         console.log(error);
       });
   };
-  const sortedAllRequest = [...allRequest].sort(
-    (a, b) => new Date(b.created_at) - new Date(a.created_at)
-  );
 
-  if (allRequest.length === 0 || allRequest === "Empty") {
+  if (!allRequest) {
+    return <Box>No order requested</Box>;
+  }
+  if (allRequest?.length === 0 || allRequest === "Empty") {
     return <Box>No order requested</Box>;
   }
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
+  const sortedAllRequest = [...allRequest].sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
+
   console.log("sorted store head pending", sortedAllRequest);
+  console.log("selected item", selectedItem);
 
   return (
     <Grid container rowSpacing={7} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -261,7 +236,6 @@ const PendingItemComponent = () => {
                 sx={{
                   border: "2px solid black",
                   borderRadius: "10px",
-                  padding: "10px 5px 10px 5px",
                 }}
               >
                 <CardMedia
@@ -269,7 +243,7 @@ const PendingItemComponent = () => {
                   alt="green iguana"
                   height="250px"
                   src={`${PF}${item?.Item?.productphoto}`}
-                  sx={{ objectFit: "fill" }}
+                  sx={{ objectFit: "fill", padding: "10px 5px 10px 5px" }}
                 />
                 <CardContent sx={{ padding: "0px" }}>
                   <List>
@@ -376,11 +350,14 @@ const PendingItemComponent = () => {
                   </List>
                 </CardContent>
                 <CardActions>
-                  <ButtonGroup fullWidth>
+                  <ButtonGroup>
                     <DeclineButton
                       variant="contained"
                       size="small"
-                      onClick={() => handleDeclinedModalOpen(index)}
+                      onClick={() => {
+                        setDeclineModal(true);
+                        setSelectedItem(item);
+                      }}
                       sx={{
                         fontSize: { xs: "18px", md: "20px" },
                         textTransform: "capitalize",
@@ -390,7 +367,10 @@ const PendingItemComponent = () => {
                     </DeclineButton>
                     <AcceptButton
                       variant="contained"
-                      onClick={() => handleAcceptModalOpen(index)}
+                      onClick={() => {
+                        setAcceptModals(true);
+                        setSelectedItem(item);
+                      }}
                       sx={{
                         fontSize: { xs: "18px", md: "20px" },
                         textTransform: "capitalize",
@@ -400,7 +380,10 @@ const PendingItemComponent = () => {
                     </AcceptButton>
                     <DetailButton
                       variant="contained"
-                      onClick={() => handleDetailModalOpen(index)}
+                      onClick={() => {
+                        setSelectedItem(item);
+                        setDetailModals(true);
+                      }}
                       sx={{
                         fontSize: { xs: "18px", md: "20px" },
                         textTransform: "capitalize",
@@ -412,602 +395,570 @@ const PendingItemComponent = () => {
                 </CardActions>
               </Card>
             </Grid>
-            <DetailModalContainer
-              open={detailModals[index] || false}
-              onClose={() => handleDetailModalClose(index)}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <DetailModalWrapper
-                width={{ xs: "90%", sm: "70%", md: "50%", lg: "75%" }}
-              >
-                <List>
-                  <Typography
-                    variant="h4"
-                    textAlign={"center"}
-                    marginBottom={"20px"}
-                    sx={{ color: "#12596B" }}
-                  >
-                    {t("storehead.requestdetail")}
-                  </Typography>
-                  <Box
-                    sx={{
-                      height: {
-                        xs: "60vh",
-                        md: "55vh",
-                        lg: "55vh",
-                        overflowY: "scroll",
-                        "&::-webkit-scrollbar": {
-                          width: "0px",
-                        },
-                        "&::-webkit-scrollbar-track": {
-                          boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-                          webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-                        },
-                        "&::-webkit-scrollbar-thumb": {
-                          backgroundColor: "rgba(0,0,0,.1)",
-                          outline: "1px solid slategrey",
-                        },
-                      },
-                    }}
-                  >
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.firstname")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.User?.first_name}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.lastname")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.User?.last_name}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.email")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.User?.email
-                          ? item?.User?.email
-                          : "Email not provided"}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.phonenumber")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.User?.phone_number
-                          ? item?.User?.phone_number
-                          : "Phone not provided"}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.department")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.User?.department
-                          ? item?.User?.department
-                          : "Dept... not provided"}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.propertyname")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.Item?.productname}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.propertymodel")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.Item?.productmodel}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModalDescription
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.description")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.Item?.productdescription}
-                      </Typography>
-                    </ListItemForModalDescription>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.quantity")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.quantity_requested}
-                      </Typography>
-                    </ListItemForModal>
-                  </Box>
-                </List>
-              </DetailModalWrapper>
-            </DetailModalContainer>
-            <AcceptModal
-              open={acceptModals[index] || false}
-              onClose={() => handleAcceptModalClose(index)}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <AcceptModalWrapper
-                width={{ xs: "90%", sm: "70%", md: "50%", lg: "80%" }}
-              >
-                <List
-                  sx={{
-                    height: {
-                      xs: "80vh",
-                      sm: "60vh",
-                      md: "50vh",
-                      lg: "70vh",
-                    },
-                  }}
-                >
-                  <Typography
-                    variant="h5"
-                    textAlign={"center"}
-                    marginBottom={"10px"}
-                    sx={{ color: "#12596B" }}
-                  >
-                    {t("storehead.requestdetail")}
-                  </Typography>
-                  {loading && (
-                    <Box sx={{ textAlign: "center" }}>
-                      <ClipLoader
-                        color={"#36d7b7"}
-                        loading={loading}
-                        size={50}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                      />
-                    </Box>
-                  )}
-                  {error && (
-                    <Box
-                      sx={{
-                        backgroundColor: "red",
-                        color: "white",
-                        fontSize: " 18px",
-                        padding: " 5px 15px",
-                        marginY: "10px",
-                        textAlign: "center",
-                      }}
-                    >
-                      Error Occurred
-                    </Box>
-                  )}
-                  {response && (
-                    <Box
-                      sx={{
-                        backgroundColor: "#12596B",
-                        color: "white",
-                        fontSize: " 18px",
-                        padding: " 5px 15px",
-                        marginY: "10px",
-                        textAlign: "center",
-                      }}
-                    >
-                      Request Done Successfully
-                    </Box>
-                  )}
-                  <Box
-                    sx={{
-                      height: "80%",
-                      overflowY: "scroll",
-                      "&::-webkit-scrollbar": {
-                        width: "1px",
-                      },
-                      "&::-webkit-scrollbar-track": {
-                        boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-                        webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-                      },
-                      "&::-webkit-scrollbar-thumb": {
-                        backgroundColor: "rgba(0,0,0,.1)",
-                        outline: "1px solid slategrey",
-                      },
-                    }}
-                  >
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.firstname")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.User?.first_name}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.lastname")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.User?.last_name}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.email")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.User?.email
-                          ? item?.User?.email
-                          : "Email not provided"}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.phonenumber")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.User?.phone_number
-                          ? item?.User?.phone_number
-                          : "Phone not provided"}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.department")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.User?.department
-                          ? item?.User?.department
-                          : "Dept... not provided"}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.propertyname")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.Item?.productname}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.propertymodel")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.Item?.productmodel}
-                      </Typography>
-                    </ListItemForModal>
-                    <ListItemForModalDescription
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.description")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.Item?.productdescription}
-                      </Typography>
-                    </ListItemForModalDescription>
-                    <ListItemForModal
-                      sx={{ display: { xs: "block", sm: "flex" } }}
-                    >
-                      <Typography
-                        variant="body1"
-                        flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
-                      >
-                        {t("storehead.quantity")}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        flex={4}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
-                      >
-                        {item?.quantity_requested}
-                      </Typography>
-                    </ListItemForModal>
-                  </Box>
-                </List>
-                <SendButton
-                  variant="contained"
-                  sx={{
-                    background: "#12596B",
-                    fontSize: "20px",
-                    textTransform: "capitalize",
-                  }}
-                  fullWidth
-                  onClick={() => handleAcceptRequest(item?.id)}
-                >
-                  {t("storehead.accept")}
-                </SendButton>
-              </AcceptModalWrapper>
-            </AcceptModal>
-            <DeclineModal
-              open={declineModal[index] || false}
-              onClose={() => handleDeclinedModalClose(index)}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <DeclineModalWrapper
-                width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
-              >
-                <Typography
-                  variant="h4"
-                  textAlign={"center"}
-                  marginBottom={"10px"}
-                  sx={{ color: "#12596B" }}
-                >
-                  {t("storehead.declinefrom")}
-                </Typography>
-                {loading && (
-                  <Box sx={{ textAlign: "center" }}>
-                    <ClipLoader
-                      color={"#36d7b7"}
-                      loading={loading}
-                      size={50}
-                      aria-label="Loading Spinner"
-                      data-testid="loader"
-                    />
-                  </Box>
-                )}
-                {error && (
-                  <Box
-                    sx={{
-                      backgroundColor: "red",
-                      color: "white",
-                      fontSize: " 18px",
-                      padding: " 5px 15px",
-                      marginY: "10px",
-                      textAlign: "center",
-                    }}
-                  >
-                    Error Occurred
-                  </Box>
-                )}
-                {response && (
-                  <Box
-                    sx={{
-                      backgroundColor: "#12596B",
-                      color: "white",
-                      fontSize: " 18px",
-                      padding: " 5px 15px",
-                      marginY: "10px",
-                      textAlign: "center",
-                    }}
-                  >
-                    Request Done Successfully
-                  </Box>
-                )}
-                <Textarea
-                  minRows={5}
-                  sx={{ fontSize: "18px", marginBottom: "20px" }}
-                  placeholder={t("storehead.declinereason")}
-                  onChange={(e) => setRejectReason(e.target.value)}
-                />
-                <RejectButton
-                  variant="contained"
-                  fullWidth
-                  onClick={() => {
-                    const request = {
-                      id: item?.id,
-                      item_no: item?.item_no,
-                      quantity_requested: item?.quantity_requested,
-                      receiver: item?.User?.user_name,
-                    };
-                    handleDeclineRequest(request);
-                  }}
-                >
-                  {t("storehead.decline")}
-                </RejectButton>
-              </DeclineModalWrapper>
-            </DeclineModal>
           </React.Fragment>
         );
       })}
+      <DetailModalContainer
+        open={detailModals}
+        onClose={() => setDetailModals(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <DetailModalWrapper
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "75%" }}
+        >
+          <List>
+            <Typography
+              variant="h4"
+              textAlign={"center"}
+              marginBottom={"20px"}
+              sx={{ color: "#12596B" }}
+            >
+              {t("storehead.requestdetail")}
+            </Typography>
+            <Box
+              sx={{
+                height: {
+                  xs: "60vh",
+                  md: "55vh",
+                  lg: "55vh",
+                  overflowY: "scroll",
+                  "&::-webkit-scrollbar": {
+                    width: "0px",
+                  },
+                  "&::-webkit-scrollbar-track": {
+                    boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                    webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    backgroundColor: "rgba(0,0,0,.1)",
+                    outline: "1px solid slategrey",
+                  },
+                },
+              }}
+            >
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.firstname")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.User?.first_name}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.lastname")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.User?.last_name}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.email")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.User?.email
+                    ? selectedItem?.User?.email
+                    : "Email not provided"}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.phonenumber")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.User?.phone_number
+                    ? selectedItem?.User?.phone_number
+                    : "Phone not provided"}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.department")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.User?.department
+                    ? selectedItem?.User?.department
+                    : "Dept... not provided"}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.propertyname")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.Item?.productname}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.propertymodel")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.Item?.productmodel}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModalDescription
+                sx={{ display: { xs: "block", sm: "flex" } }}
+              >
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.description")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.Item?.productdescription}
+                </Typography>
+              </ListItemForModalDescription>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.quantity")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.quantity_requested}
+                </Typography>
+              </ListItemForModal>
+            </Box>
+          </List>
+        </DetailModalWrapper>
+      </DetailModalContainer>
+      <AcceptModal
+        open={acceptModals}
+        onClose={() => setAcceptModals(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <AcceptModalWrapper
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "80%" }}
+        >
+          <List
+            sx={{
+              height: {
+                xs: "80vh",
+                sm: "60vh",
+                md: "50vh",
+                lg: "70vh",
+              },
+            }}
+          >
+            <Typography
+              variant="h5"
+              textAlign={"center"}
+              marginBottom={"10px"}
+              sx={{ color: "#12596B" }}
+            >
+              {t("storehead.requestdetail")}
+            </Typography>
+            {loading && (
+              <Box sx={{ textAlign: "center" }}>
+                <ClipLoader
+                  color={"#36d7b7"}
+                  loading={loading}
+                  size={50}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </Box>
+            )}
+            {error && (
+              <Box
+                sx={{
+                  backgroundColor: "red",
+                  color: "white",
+                  fontSize: " 18px",
+                  padding: " 5px 15px",
+                  marginY: "10px",
+                  textAlign: "center",
+                }}
+              >
+                Error Occurred
+              </Box>
+            )}
+            {response && (
+              <Box
+                sx={{
+                  backgroundColor: "#12596B",
+                  color: "white",
+                  fontSize: " 18px",
+                  padding: " 5px 15px",
+                  marginY: "10px",
+                  textAlign: "center",
+                }}
+              >
+                Request Done Successfully
+              </Box>
+            )}
+            <Box
+              sx={{
+                height: "80%",
+                overflowY: "scroll",
+                "&::-webkit-scrollbar": {
+                  width: "1px",
+                },
+                "&::-webkit-scrollbar-track": {
+                  boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                  webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "rgba(0,0,0,.1)",
+                  outline: "1px solid slategrey",
+                },
+              }}
+            >
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.firstname")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.User?.first_name}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.lastname")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.User?.last_name}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.email")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.User?.email
+                    ? selectedItem?.User?.email
+                    : "Email not provided"}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.phonenumber")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.User?.phone_number
+                    ? selectedItem?.User?.phone_number
+                    : "Phone not provided"}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.department")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.User?.department
+                    ? selectedItem?.User?.department
+                    : "Dept... not provided"}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.propertyname")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.Item?.productname}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.propertymodel")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.Item?.productmodel}
+                </Typography>
+              </ListItemForModal>
+              <ListItemForModalDescription
+                sx={{ display: { xs: "block", sm: "flex" } }}
+              >
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.description")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.Item?.productdescription}
+                </Typography>
+              </ListItemForModalDescription>
+              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
+                <Typography
+                  variant="body1"
+                  flex={2}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={900}
+                >
+                  {t("storehead.quantity")}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  flex={4}
+                  sx={{ color: "#12596B" }}
+                  fontWeight={400}
+                >
+                  {selectedItem?.quantity_requested}
+                </Typography>
+              </ListItemForModal>
+            </Box>
+          </List>
+          <SendButton
+            variant="contained"
+            sx={{
+              background: "#12596B",
+              fontSize: "20px",
+              textTransform: "capitalize",
+            }}
+            fullWidth
+            onClick={() => handleAcceptRequest(selectedItem?.id)}
+          >
+            {t("storehead.accept")}
+          </SendButton>
+        </AcceptModalWrapper>
+      </AcceptModal>
+      <DeclineModal
+        open={declineModal}
+        onClose={() => setDeclineModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <DeclineModalWrapper
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
+        >
+          <Typography
+            variant="h4"
+            textAlign={"center"}
+            marginBottom={"10px"}
+            sx={{ color: "#12596B" }}
+          >
+            {t("storehead.declinefrom")}
+          </Typography>
+          {loading && (
+            <Box sx={{ textAlign: "center" }}>
+              <ClipLoader
+                color={"#36d7b7"}
+                loading={loading}
+                size={50}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </Box>
+          )}
+          {error && (
+            <Box
+              sx={{
+                backgroundColor: "red",
+                color: "white",
+                fontSize: " 18px",
+                padding: " 5px 15px",
+                marginY: "10px",
+                textAlign: "center",
+              }}
+            >
+              Error Occurred
+            </Box>
+          )}
+          {response && (
+            <Box
+              sx={{
+                backgroundColor: "#12596B",
+                color: "white",
+                fontSize: " 18px",
+                padding: " 5px 15px",
+                marginY: "10px",
+                textAlign: "center",
+              }}
+            >
+              Request Done Successfully
+            </Box>
+          )}
+          <Textarea
+            minRows={5}
+            sx={{ fontSize: "18px", marginBottom: "20px" }}
+            placeholder={t("storehead.declinereason")}
+            onChange={(e) => setRejectReason(e.target.value)}
+          />
+          <RejectButton
+            variant="contained"
+            fullWidth
+            onClick={() => {
+              const request = {
+                id: selectedItem?.id,
+                item_no: selectedItem?.item_no,
+                quantity_requested: selectedItem?.quantity_requested,
+                receiver: selectedItem?.User?.user_name,
+              };
+              handleDeclineRequest(request);
+            }}
+          >
+            {t("storehead.decline")}
+          </RejectButton>
+        </DeclineModalWrapper>
+      </DeclineModal>
     </Grid>
   );
 };

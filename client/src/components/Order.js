@@ -16,6 +16,7 @@ import {
 import ClipLoader from "react-spinners/ClipLoader";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
+import { setNewPropertyList } from "../State/ReduxToolkit/Slices/propertySlice";
 
 const OrderButton = styled(Button)({
   background: "#12596B",
@@ -63,11 +64,17 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
       axios
         .post("/manager/makeRequest", order, { withCredentials: true })
         .then((response) => {
+          dispatch(
+            setNewPropertyList({
+              item_number: order?.item_no,
+              quantity: order?.quantity_requested,
+            })
+          );
           setLoading(false);
           setOrderNew(true);
           console.log(response.data);
         })
-        .then((error) => {
+        .catch((error) => {
           setLoading(false);
           setError(true);
           console.log(error);

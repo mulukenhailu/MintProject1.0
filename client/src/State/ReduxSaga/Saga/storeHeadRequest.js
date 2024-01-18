@@ -45,7 +45,7 @@ export function* getAllDeclinedRequestForStoreHeadSaga(action) {
     yield put(getAllRequestStart());
     const request = yield call(getAllDeclinedRequestForStoreHeadApi);
     console.log(" store head rejected", request);
-    yield put(getAllRequestSuccess(request.data.ManagerAppEmpRequest));
+    yield put(getAllRequestSuccess(request.data.ManagerAndEmpRequest));
   } catch (error) {
     console.log(error);
     yield put(getAllRequestFail());

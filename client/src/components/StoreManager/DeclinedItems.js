@@ -75,13 +75,16 @@ const DeclinedItemsComponent = () => {
   };
 
   const sortedAllRequest = [...allRequest].sort(
-    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
   );
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  if (allRequest.length === 0 || allRequest === "Empty") {
-    return <Box>No requests available</Box>;
+  if (!allRequest) {
+    return <Box>No order requested</Box>;
+  }
+  if (allRequest?.length === 0 || allRequest === "Empty") {
+    return <Box>No order requested</Box>;
   }
 
   console.log("declined store head request", allRequest);
@@ -94,15 +97,14 @@ const DeclinedItemsComponent = () => {
               sx={{
                 border: "2px solid black",
                 borderRadius: "10px",
-                padding: "10px",
               }}
             >
               <CardMedia
                 component="img"
                 alt="green iguana"
                 height="250"
-                image={`${PF}${item?.employeeRequest?.Item?.productphoto}`}
-                sx={{ objectFit: "contain" }}
+                image={`${PF}${item?.Item?.productphoto}`}
+                sx={{ objectFit: "fill", padding: "5px 10px 0px 10px" }}
               />
               <CardContent sx={{ padding: "0px" }}>
                 <List>
@@ -122,10 +124,7 @@ const DeclinedItemsComponent = () => {
                       fontWeight={400}
                       flex={1}
                     >
-                      {
-                        item?.employeeRequest?.Item?.request[0]?.User
-                          ?.first_name
-                      }
+                      {item?.User?.first_name}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
@@ -144,7 +143,7 @@ const DeclinedItemsComponent = () => {
                       fontWeight={400}
                       flex={1}
                     >
-                      {item?.employeeRequest?.Item?.request[0]?.User?.last_name}
+                      {item?.User?.last_name}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
@@ -163,7 +162,7 @@ const DeclinedItemsComponent = () => {
                       fontWeight={400}
                       flex={1}
                     >
-                      {item?.employeeRequest?.Item?.productname}
+                      {item?.Item?.productname}
                     </Typography>
                   </ListItem>
                   <ListItem sx={{ display: "flex", alignItems: "center" }}>
@@ -255,10 +254,7 @@ const DeclinedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
-                      {
-                        item?.employeeRequest?.Item?.request[0]?.User
-                          ?.first_name
-                      }
+                      {item?.User?.first_name}
                     </Typography>
                   </ListItemForModal>
                   <ListItemForModal
@@ -278,7 +274,7 @@ const DeclinedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
-                      {item?.employeeRequest?.Item?.request[0]?.User?.last_name}
+                      {item?.User?.last_name}
                     </Typography>
                   </ListItemForModal>
                   <ListItemForModal
@@ -298,8 +294,8 @@ const DeclinedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
-                      {item?.employeeRequest?.Item?.request[0]?.User?.email
-                        ? item?.employeeRequest?.Item?.request[0]?.User?.email
+                      {item?.User?.email
+                        ? item?.User?.email
                         : "Email not provided"}
                     </Typography>
                   </ListItemForModal>
@@ -320,11 +316,9 @@ const DeclinedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
-                      {item?.employeeRequest?.Item?.request[0]?.User
-                        ?.phone_number
-                        ? item?.employeeRequest?.Item?.request[0]?.User
-                            ?.phone_number
-                        : "Phone not provided"}
+                      {item?.User?.phone_number
+                        ? item?.User?.phone_number
+                        : "Phone number not provided"}
                     </Typography>
                   </ListItemForModal>
                   <ListItemForModal
@@ -344,9 +338,8 @@ const DeclinedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
-                      {item?.employeeRequest?.Item?.request[0]?.User?.department
-                        ? item?.employeeRequest?.Item?.request[0]?.User
-                            ?.department
+                      {item?.User?.department
+                        ? item?.User?.department
                         : "Dept... not provided"}
                     </Typography>
                   </ListItemForModal>
@@ -367,7 +360,7 @@ const DeclinedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
-                      {item?.employeeRequest?.Item?.productname}
+                      {item?.Item?.productname}
                     </Typography>
                   </ListItemForModal>
                   <ListItemForModal
@@ -387,7 +380,7 @@ const DeclinedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
-                      {item?.employeeRequest?.Item?.productmodel}
+                      {item?.Item?.productmodel}
                     </Typography>
                   </ListItemForModal>
                   <ListItemForModalDescription
@@ -407,7 +400,7 @@ const DeclinedItemsComponent = () => {
                       sx={{ color: "#12596B" }}
                       fontWeight={400}
                     >
-                      {item?.employeeRequest?.Item?.productdescription}
+                      {item?.Item?.productdescription}
                     </Typography>
                   </ListItemForModalDescription>
                   <ListItemForModal
