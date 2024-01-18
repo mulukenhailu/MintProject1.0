@@ -2,6 +2,7 @@ const  { gql, GraphQLClient  }=require('graphql-request');
 const confirmationNumber=require("../../../utility/Auth/confirmationNumber")
 const updateStatus=require("../../../utility/item/update/updateStatus")
 const currentStoreHead=require("../../../utility/common/currentStoreHead")
+const itemByItemNumber=require("../../../utility/common/itemByItemNumber")
 
 const endpoint = `https://mint-intership.hasura.app/v1/graphql`
 
@@ -96,25 +97,31 @@ async function managerMakeRequest(req, res){
                 confirmation_number: confirmationNumber.confirmationNumber()
                 }
 
-                try {
-                    const data = await client.request(doc, variables, requestHeaders);
-                    if(data.update_Item.returning[0].productquantitynumber==0){
-                        updateStatus.updateStatus(item_no)
-                            .then((Sdata)=>{
-                               console.log(Sdata)
-                            })
-                            .catch((error)=>{
-                                console.log(error)
-                                res.sendStatus(500)
-                            })
+                if(itemByItemNumber.itemByItemNumber(item_no, quantity_requested)){
+
+                    try {
+                        const data = await client.request(doc, variables, requestHeaders);
+                        if(data.update_Item.returning[0].productquantitynumber==0){
+                            updateStatus.updateStatus(item_no)
+                                .then((Sdata)=>{
+                                   console.log(Sdata)
+                                })
+                                .catch((error)=>{
+                                    console.log(error)
+                                    res.sendStatus(500)
+                                })
+                        }
+                        res.send(data)
+                    } catch (error) {
+                        console.log("Error while inserting Request into the manager Request DB.");
+                        console.log(error);
+                        res.status(500).send({error:"Retry Again!."});
                     }
-                    res.send(data)
-                } catch (error) {
-                    console.log("Error while inserting Request into the manager Request DB.");
-                    console.log(error);
-                    res.status(500).send({error:"Retry Again!."});
+
                 }
-                                  
+                else{
+                    res.status(402).send({error:"Not Valid Quantity"})
+                }                          
     }
 
 module.exports={managerMakeRequest}

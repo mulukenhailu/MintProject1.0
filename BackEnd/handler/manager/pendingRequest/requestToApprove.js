@@ -78,7 +78,7 @@ async function requestToApprove(req, res){
             res.send(data)
         }
           else{
-            res.send(data.Employee_Request);
+            res.send(data);
         }
         
     }catch(err){
