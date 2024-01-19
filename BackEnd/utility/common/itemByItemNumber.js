@@ -18,6 +18,7 @@ const document = gql`
         productstatus
         productquantitynumber
         productdescription
+        productPrice
         }
     }
 `

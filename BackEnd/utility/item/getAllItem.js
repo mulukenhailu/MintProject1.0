@@ -17,6 +17,7 @@ const client = new GraphQLClient(endpoint, {
             productphoto
             productdescription
             productmodel
+            productPrice
             created_at
             updated_at
         }

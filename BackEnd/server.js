@@ -7,7 +7,9 @@ const filterByName = require("./handler/common/filterByName");
 const updateProfile = require("./handler/common/updateProfile");
 const register = require("./handler/Admin/registerUser");
 const login = require("./handler/common/login");
+const confirmOldPassword=require("./handler/common/confirmOldPassword")
 const resetPassword = require("./handler/common/resetPassword");
+
 
 const makeRequest = require("./handler/Employee/makeRequest");
 const allNotifications = require("./handler/Employee/Notification/Allnotification");
@@ -100,6 +102,12 @@ app.post(
   "/resetpassword",
   verifyAccessToken.verifyAccessToken,
   resetPassword.resetPassword
+);
+
+app.get(
+  "/oldpassword/confirm",
+  verifyAccessToken.verifyAccessToken,
+  confirmOldPassword.confirmOldPassword
 );
 
 app.get("/user", getAllUser.getAllUser);

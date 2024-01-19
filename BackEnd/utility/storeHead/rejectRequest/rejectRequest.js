@@ -88,6 +88,7 @@ const client = new GraphQLClient(endpoint, {
             productname
             productmodelnumber
             productmodel
+            productPrice
           }
         }
       }

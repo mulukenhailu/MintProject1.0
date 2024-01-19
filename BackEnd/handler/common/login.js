@@ -17,7 +17,7 @@ function login(req, res){
         
         if(data.User.length != 0){
 
-            isValid=bcrypt.compareSync(password, data.User[0].Password);
+            isValid=bcrypt.compareSync(password, data.User[0].Password)
             
             if(isValid){
 

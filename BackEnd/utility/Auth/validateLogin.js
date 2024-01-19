@@ -38,11 +38,10 @@ async function validateLogin(user_name){
     try{
         const variables={user_name};
         const data = await client.request(loginInfo,variables,requestHeaders);
-        console.log(data.User)
         return data;
     }catch(error){
         console.log({"Error cheking user_name in the DB":error});
-        throw ({"response":"Uknown user Name"});
+        throw error;
     }
 
 }

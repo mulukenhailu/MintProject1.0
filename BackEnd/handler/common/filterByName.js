@@ -7,37 +7,29 @@ const client = new GraphQLClient(endpoint, {
   },
 })
 
-// const MyQuery = gql`
-//     query MyQuery($name:String!){
-//         MinT_Item(where: {item_name: {_ilike: $name }}) {
-//         item_number
-//         item_name
-//         item_photo
-//         status
-//         total_quantity_avilable
-//         description
-//         }
-//     }
-// `;
-
-
 const MyQuery = gql`
-  query MyQuery ($name:String!){
-    Item(where: {item_name: {_ilike: $name}}) {
-      item_number
-      item_name
-      item_photo
-      status
-      total_quantity_avilable
-      description
-    }
+query MyQuery($name: String!) {
+  Item(where: {productname: {_ilike: $name}}) {
+    item_number
+    productname
+    productphoto
+    productstatus
+    productquantitynumber
+    productdescription
+    productmodel
+    productmodelnumber
+    productsource
+    productstandardtype
+    productPrice
+    created_at
+    updated_at
   }
+}
 `
 
 const requestHeaders = {
   'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
 }
-
 
 async function filterByName(req, res) {
 

@@ -41,6 +41,7 @@ const client = new GraphQLClient(endpoint, {
         productsource
         productstandardtype
         productstatus
+        productPrice
         updated_at
       }
       User {

@@ -21,6 +21,7 @@ const client = new GraphQLClient(endpoint, {
       productmodelnumber
       productsource
       productstandardtype
+      productPrice
       created_at
       updated_at
     }
