@@ -641,6 +641,56 @@ export default function Sidebar() {
             </ListItem>
           )}
 
+          {role_name === "storekeeper" && (
+            <ListItem
+              disablePadding
+              sx={{
+                display: "block",
+                padding: { md: "0px 5px 0px 0px" },
+                color: "black",
+                background: isActive("allproperty")
+                  ? "lightgray"
+                  : "transparent",
+                borderLeft: isActive("allproperty")
+                  ? "3px solid #12596B"
+                  : "null",
+              }}
+              component={Link}
+              to="/allproperty"
+              onClick={() => dispatch(removeCurrentRequestPage())}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 1,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 2.5 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <RequestPageIcon sx={{ color: "#12596B" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Properties"
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    display: { xs: "none", md: "block" },
+                    color: "#12596B",
+                  }}
+                  primaryTypographyProps={{
+                    fontSize: "20px",
+                    fontWeight: languange === "en" ? 400 : 900,
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
+
           <LogOutContainer
             disablePadding
             sx={{ display: "block" }}
