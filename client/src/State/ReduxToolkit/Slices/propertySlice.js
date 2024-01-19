@@ -55,13 +55,17 @@ const property = createSlice({
           const quantity = parseInt(action.payload.quantity);
 
           if (parseInt(productquantitynumber) - parseInt(quantity) === 0) {
-            return;
+            return {
+              ...item,
+              productquantitynumber: 0,
+            };
+          } else {
+            return {
+              ...item,
+              productquantitynumber:
+                parseInt(productquantitynumber) - parseInt(quantity),
+            };
           }
-          return {
-            ...item,
-            productquantitynumber:
-              parseInt(productquantitynumber) - parseInt(quantity),
-          };
         }
 
         return item;

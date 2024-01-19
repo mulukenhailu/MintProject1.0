@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const ListItemForModal = styled(ListItem)({
   display: "flex",
@@ -23,7 +24,7 @@ const RequestDetailPageComponent = () => {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation("global");
   const { id } = useParams();
-  console.log(id);
+  const { languange } = useSelector((state) => state.languange);
   useEffect(() => {
     {
       const getSingleNotification = () => {
@@ -65,10 +66,10 @@ const RequestDetailPageComponent = () => {
 
   return (
     <Box
-      paddingLeft={{ xs: 5, md: 20 }}
+      paddingLeft={{ xs: 7, md: 20 }}
       paddingTop={3}
       paddingBottom={5}
-      sx={{ position: "relative", border: "1px solid green" }}
+      sx={{ position: "relative" }}
     >
       <Box
         component={Link}
@@ -76,24 +77,30 @@ const RequestDetailPageComponent = () => {
         sx={{
           position: "absolute",
           top: "25px",
-          left: { xs: "12%", md: "20%", lg: "15%" },
-          background: "#12596B",
-          color: "#fff",
+          left: { xs: "15%", md: "20%", lg: "15%" },
+          background: "#fff",
+          color: "#12596B",
           textDecoration: "none",
           padding: "5px 10px 5px 5px",
           borderRadius: "5px",
           display: "flex",
           alignItems: "center",
           gap: "5px",
+          border: "1px solid #12596B",
+          fontWeight: languange === "en" ? 500 : 700,
         }}
       >
         <KeyboardBackspaceIcon />
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
-          {" "}
           {t("notification.back")}
         </Box>
       </Box>
-      <Typography variant="h4" textAlign={"center"} color={"#12596B"}>
+      <Typography
+        variant="h4"
+        textAlign={"center"}
+        color={"#12596B"}
+        sx={{ fontWeight: languange === "en" ? 500 : 700 }}
+      >
         {t("notification.messagedetail")}
       </Typography>
       {loading && (
@@ -114,23 +121,27 @@ const RequestDetailPageComponent = () => {
           marginTop: "30px",
         }}
       >
-        <Box
-          sx={{
-            padding: "20px",
-          }}
-          flex={1}
-        >
+        <Box flex={1} padding={5}>
           <Box
             sx={{
               marginBottom: "30px",
             }}
           >
             <Box>
-              <Typography variant="h5" color={"#12596B"}>
+              <Typography
+                variant="h5"
+                color={"#12596B"}
+                sx={{ fontWeight: languange === "en" ? 500 : 700 }}
+              >
                 {t("notification.senderphoto")}
               </Typography>
             </Box>
-            <Box sx={{ width: "300px", height: "300px" }}>
+            <Box
+              sx={{
+                width: { xs: "98%", lg: "300px" },
+                height: { xs: "98%", lg: "300px" },
+              }}
+            >
               <img
                 src={`${PF}${notification?.senderProfilePicture}`}
                 alt="NaN"
@@ -152,11 +163,21 @@ const RequestDetailPageComponent = () => {
             }}
           >
             <Box>
-              <Typography variant="h5" color={"#12596B"}>
+              <Typography
+                variant="h5"
+                color={"#12596B"}
+                sx={{ fontWeight: languange === "en" ? 500 : 700 }}
+              >
                 {t("notification.propertyphoto")}
               </Typography>
             </Box>
-            <Box sx={{ width: "300px", height: "300px" }}>
+            <Box
+              sx={{
+                width: { xs: "98%", lg: "500px" },
+                height: { xs: "99%", lg: "300px" },
+                marginTop: "10px",
+              }}
+            >
               <img
                 src={`${PF}${property?.productphoto}`}
                 alt="NaN"
@@ -164,8 +185,7 @@ const RequestDetailPageComponent = () => {
                 style={{
                   width: "100%",
                   height: "100%",
-                  borderRadius: "50%",
-                  objectFit: "contain",
+                  objectFit: "cover",
                   border: "1px solid #12596B",
                 }}
               />
@@ -179,8 +199,10 @@ const RequestDetailPageComponent = () => {
               <Typography
                 variant="h6"
                 flex={4}
-                sx={{ color: "#12596B" }}
-                fontWeight={500}
+                sx={{
+                  color: "#12596B",
+                  fontWeight: languange === "en" ? 500 : 700,
+                }}
               >
                 {t("notification.senderfirstname")}
               </Typography>
@@ -197,8 +219,10 @@ const RequestDetailPageComponent = () => {
               <Typography
                 variant="h6"
                 flex={4}
-                sx={{ color: "#12596B" }}
-                fontWeight={500}
+                sx={{
+                  color: "#12596B",
+                  fontWeight: languange === "en" ? 500 : 700,
+                }}
               >
                 {t("notification.senderlastname")}
               </Typography>
@@ -215,8 +239,10 @@ const RequestDetailPageComponent = () => {
               <Typography
                 variant="h6"
                 flex={4}
-                sx={{ color: "#12596B" }}
-                fontWeight={500}
+                sx={{
+                  color: "#12596B",
+                  fontWeight: languange === "en" ? 500 : 700,
+                }}
               >
                 {t("notification.propertyname")}
               </Typography>
@@ -233,8 +259,10 @@ const RequestDetailPageComponent = () => {
               <Typography
                 variant="h6"
                 flex={4}
-                sx={{ color: "#12596B" }}
-                fontWeight={500}
+                sx={{
+                  color: "#12596B",
+                  fontWeight: languange === "en" ? 500 : 700,
+                }}
               >
                 {t("notification.propertymodel")}
               </Typography>
@@ -251,8 +279,10 @@ const RequestDetailPageComponent = () => {
               <Typography
                 variant="h6"
                 flex={4}
-                sx={{ color: "#12596B" }}
-                fontWeight={500}
+                sx={{
+                  color: "#12596B",
+                  fontWeight: languange === "en" ? 500 : 700,
+                }}
               >
                 {t("notification.requestedquantity")}
               </Typography>
@@ -271,8 +301,10 @@ const RequestDetailPageComponent = () => {
               <Typography
                 variant="h6"
                 flex={4}
-                sx={{ color: "#12596B" }}
-                fontWeight={500}
+                sx={{
+                  color: "#12596B",
+                  fontWeight: languange === "en" ? 500 : 700,
+                }}
               >
                 {t("notification.message")}
               </Typography>

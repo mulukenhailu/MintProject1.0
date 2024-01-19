@@ -11,15 +11,14 @@ import AllStoreRequestPage from "./pages/StoreManager/AllOrderRequests";
 import AllOrderRequestKeeper from "./pages/StoreKeeper/AllOrderRequestKeeper";
 import AllManagersRequestPage from "./pages/ManagerPages/AllManagersRequestPage";
 import EditUserPage from "./pages/AdminPages/UpdateUserPage";
-import ForgetPasswordPage from "./pages/forgetPasswordPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CreateProductPage from "./pages/StoreKeeper/CreateProductPage";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import RequestPage from "./pages/RequestPage";
 import RequestPageDetail from "./pages/RequestPageDetail";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 import global_en from "./components/transitions/english.json";
 import global_am from "./components/transitions/amharic.json";
 import { useTranslation, initReactI18next } from "react-i18next";
@@ -48,7 +47,7 @@ function App() {
   });
 
   return (
-    <div className="App">
+    <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -65,7 +64,7 @@ function App() {
           <Route path="/createUser" element={<CreateUserPage />} />
         )}
         {role_name === "admin" && (
-          <Route path="/edituser/:username" element={<EditUserPage />} />
+          <Route path="/usersList/:username" element={<EditUserPage />} />
         )}
         {role_name === "storehead" && (
           <Route path="/storemanager" element={<AllStoreRequestPage />} />
@@ -83,12 +82,10 @@ function App() {
         {role_name === "storekeeper" && (
           <Route path="/history" element={<HistoryPage />} />
         )}
-
-        <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
         <Route path="/resetpassword" element={<ResetPasswordPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
-    </div>
+    </Router>
   );
 }
 

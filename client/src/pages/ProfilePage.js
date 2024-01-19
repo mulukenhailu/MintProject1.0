@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import {
   Box,
@@ -18,12 +13,8 @@ import {
   styled,
   InputLabel,
 } from "@mui/material";
-import { GET_SINGLE_USER, EDIT_USER } from "../State/ReduxSaga/Types/userTypes";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  removeUserError,
-  removeEditUser,
-  removeSingleUser,
   getSingleUserStart,
   getSingleUserSuccess,
   getSingleUserFail,
@@ -37,57 +28,26 @@ import axios from "axios";
 import { removeUploadImage } from "../State/ReduxToolkit/Slices/uploadImageSlice";
 import { useTranslation } from "react-i18next";
 
-const UpdateButton = styled(Button)({
-  marginTop: "20px",
-  fontSize: "24px",
-  background: "#12596B",
-  "&:hover": {
-    background: "#0F4F5F",
-  },
-});
-
 const ProfilePage = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation("global");
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [image, setImage] = useState(null);
+  const [user, setUser] = useState({});
   const [loadingGet, setLoadingGet] = useState(false);
   const [loadingEdit, setLoadingEdit] = useState(false);
   const [errorEdit, setErrorEdit] = useState(false);
   const [responseEdit, setResponseEdit] = useState(false);
   const [errorGet, setErrorGet] = useState(false);
+  const { user_name, Role } = useSelector((state) => state.user.user);
   const { uploadedImage, loadingUploadingImage, errorImage } = useSelector(
     (state) => state.upload
   );
-  const { t } = useTranslation("global");
+  const { languange } = useSelector((state) => state.languange);
 
   useEffect(() => {
     dispatch(removeUploadImage());
   }, []);
-
-  const handleImageUpload = (e) => {
-    e.preventDefault();
-    const file = e.target.files[0];
-    if (!file) {
-      return;
-    }
-    const formData = new FormData();
-    formData.append("image", file);
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        const imageUrl = event.target.result;
-        setImage(imageUrl);
-      };
-
-      reader.readAsDataURL(file);
-    }
-    const sendImage = formData.get("image");
-    dispatch({ type: UPLOAD_IMAGE, sendImage });
-  };
-
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  const [image, setImage] = useState(null);
-  const [user, setUser] = useState({});
   const [profileInfo, setProfileInfo] = useState({
     first_name: "",
     last_name: "",
@@ -98,6 +58,7 @@ const ProfilePage = () => {
     role_name: "",
     manager_username: "",
   });
+
   const userInformation = [
     { label: t("profile.firstname"), value: user?.first_name },
     { label: t("profile.lastname"), value: user?.last_name },
@@ -112,12 +73,15 @@ const ProfilePage = () => {
     { label: t("profile.department"), value: user?.department },
     { label: t("profile.username"), value: user?.user_name },
     { label: t("profile.role"), value: user?.Role?.role_name },
-    { label: t("profile.manager"), value: user?.manager_username },
+    Role?.role_name !== "manager"
+      ? {
+          label: t("profile.manager"),
+          value: user?.manager_username
+            ? user?.manager_username
+            : "Don't have manager",
+        }
+      : "",
   ];
-
-  const { user_name } = useSelector((state) => state.user.user);
-  console.log("user", user);
-  console.log("profileInfo", profileInfo);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -161,12 +125,31 @@ const ProfilePage = () => {
       });
   }, []);
 
-  console.log("set profile", profileInfo);
+  const handleImageUpload = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (!file) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("image", file);
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const imageUrl = event.target.result;
+        setImage(imageUrl);
+      };
+
+      reader.readAsDataURL(file);
+    }
+    const sendImage = formData.get("image");
+    dispatch({ type: UPLOAD_IMAGE, sendImage });
+  };
 
   const handleUpdateProfile = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     let updatedProfileInfo = { ...profileInfo };
-
-    console.log("data to be updated", updatedProfileInfo);
     if (uploadedImage) {
       updatedProfileInfo = {
         ...updatedProfileInfo,
@@ -178,7 +161,6 @@ const ProfilePage = () => {
     axios
       .post("/updateprofile", updatedProfileInfo, { withCredentials: true })
       .then((response) => {
-        console.log("updated user data", response.data);
         dispatch(editUserSuccess(response.data));
         setUser(response.data.update_User_by_pk);
         setLoadingEdit(false);
@@ -194,7 +176,6 @@ const ProfilePage = () => {
         setTimeout(() => {
           setErrorEdit(false);
         }, 5000);
-        console.log("error while editing", error);
       });
   };
 
@@ -209,20 +190,20 @@ const ProfilePage = () => {
           sx={{ flexGrow: 1 }}
           paddingTop={9}
           paddingRight={1}
-          paddingLeft={{ xs: "70px", md: "180px" }}
+          paddingLeft={{ xs: "70px", md: "183px" }}
         >
-          <Paper sx={{ height: "fit-content" }}>
+          <Paper sx={{ height: "fit-content", paddingBottom: "30px" }}>
             <Grid container spacing={0}>
               <Grid item xs={12} md={6}>
                 <Box
                   sx={{
-                    height: "80%",
+                    height: "100%",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     padding: {
-                      xs: "40px",
+                      xs: "0px",
                       md: "0px",
                     },
                   }}
@@ -234,7 +215,7 @@ const ProfilePage = () => {
                       flexDirection: "column",
                       alignItems: "flex-start",
                       justifyContent: "center",
-                      width: { xs: "90%", md: "75%", lg: "60%" },
+                      width: { xs: "90%", md: "75%", lg: "70%" },
                       marginX: "auto",
                     }}
                   >
@@ -288,15 +269,42 @@ const ProfilePage = () => {
                                 xs: "block",
                                 md: "flex",
                               },
-                              justifyContent: "space-between",
                               alignItems: "center",
                             }}
                           >
-                            <Box sx={{ color: "#12596B", fontSize: "18px" }}>
-                              {row.label}
+                            <Box
+                              sx={{
+                                color: "#12596B",
+                                flex: "1",
+                              }}
+                            >
+                              <Typography
+                                variant="h6"
+                                textAlign={{ xs: "center", md: "left" }}
+                                sx={{
+                                  fontSize: "18px",
+                                  fontWeight: languange === "en" ? 500 : 700,
+                                }}
+                              >
+                                {row.label}
+                              </Typography>
                             </Box>
-                            <Box sx={{ color: "#12596B", fontSize: "18px" }}>
-                              {row.value}
+                            <Box
+                              sx={{
+                                color: "#12596B",
+                                flex: "1",
+                              }}
+                            >
+                              <Typography
+                                variant="h6"
+                                textAlign={{ xs: "center", md: "left" }}
+                                sx={{
+                                  fontSize: "18px",
+                                  fontWeight: languange === "en" ? 400 : 500,
+                                }}
+                              >
+                                {row?.value}
+                              </Typography>
                             </Box>
                           </Box>
                         ))}
@@ -312,6 +320,7 @@ const ProfilePage = () => {
                     variant="h5"
                     color={"#12596B"}
                     textAlign={"center"}
+                    sx={{ fontWeight: languange === "ኣማ" ? "800" : "" }}
                   >
                     {t("profile.updateprofile")}
                   </Typography>
@@ -369,7 +378,11 @@ const ProfilePage = () => {
                   <Box>
                     <InputLabel
                       htmlFor="first_name"
-                      sx={{ color: "#12596B", fontSize: "20px" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: "20px",
+                        fontWeight: languange === "ኣማ" ? "800" : "",
+                      }}
                     >
                       {t("profile.firstname")}
                     </InputLabel>
@@ -383,7 +396,11 @@ const ProfilePage = () => {
                     />
                     <InputLabel
                       htmlFor="last_name"
-                      sx={{ color: "#12596B", fontSize: "20px" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: "20px",
+                        fontWeight: languange === "ኣማ" ? "800" : "",
+                      }}
                     >
                       {t("profile.lastname")}
                     </InputLabel>
@@ -396,7 +413,11 @@ const ProfilePage = () => {
                     />
                     <InputLabel
                       htmlFor="email"
-                      sx={{ color: "#12596B", fontSize: "20px" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: "20px",
+                        fontWeight: languange === "ኣማ" ? "800" : "",
+                      }}
                     >
                       {t("profile.email")}
                     </InputLabel>
@@ -409,7 +430,11 @@ const ProfilePage = () => {
                     />
                     <InputLabel
                       htmlFor="phone_number"
-                      sx={{ color: "#12596B", fontSize: "20px" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: "20px",
+                        fontWeight: languange === "ኣማ" ? "800" : "",
+                      }}
                     >
                       {t("profile.phonenumber")}
                     </InputLabel>
@@ -492,15 +517,22 @@ const ProfilePage = () => {
                         )}
                       </label>
                     </div>
-                    <UpdateButton
-                      type="submit"
-                      variant="contained"
+                    <Button
+                      variant="outlined"
+                      size="small"
                       fullWidth
                       onClick={handleUpdateProfile}
-                      sx={{ fontSize: { xs: "16px", md: "22px" } }}
+                      sx={{
+                        fontSize: {
+                          xs: "16px",
+                          md: "18px",
+                          color: "#12596B",
+                          border: "1px solid #12596B",
+                        },
+                      }}
                     >
                       {t("profile.update")}
-                    </UpdateButton>
+                    </Button>
                   </Box>
                 </Box>
               </Grid>

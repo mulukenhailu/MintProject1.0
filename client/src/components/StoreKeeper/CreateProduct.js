@@ -20,15 +20,25 @@ import { UPLOAD_IMAGE } from "../../State/ReduxSaga/Types/uploadImageType";
 import { removeUploadImage } from "../../State/ReduxToolkit/Slices/uploadImageSlice";
 import { useTranslation } from "react-i18next";
 
+const CreateButton = styled(Button)({
+  background: "#12596B",
+  "&:hover": {
+    background: "#0F4F5F",
+  },
+});
+
 const CreateProduct = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation("global");
-  const CreateButton = styled(Button)({
-    background: "#12596B",
-    "&:hover": {
-      background: "#0F4F5F",
-    },
-  });
+
+  const { newProperty, errorProperty, loadingProperty } = useSelector(
+    (state) => state.property
+  );
+  const { uploadedImage, errorImage, loadingUploadingImage } = useSelector(
+    (state) => state.upload
+  );
+  const { languange } = useSelector((state) => state.languange);
+
   const [image, setImage] = useState(null);
   const [fileName, setFileName] = useState("Non Selected");
 
@@ -45,14 +55,6 @@ const CreateProduct = () => {
     { value: "available", label: t("createproduct.available") },
     { value: "unavailable", label: t("createproduct.unavailable") },
   ];
-
-  const { newProperty, errorProperty, loadingProperty } = useSelector(
-    (state) => state.property
-  );
-
-  const { uploadedImage, errorImage, loadingUploadingImage } = useSelector(
-    (state) => state.upload
-  );
 
   const [property, setProperty] = useState({
     productname: "",
@@ -77,6 +79,37 @@ const CreateProduct = () => {
       [name]: value,
     });
   };
+  useEffect(() => {
+    dispatch(removeUploadImage());
+  }, []);
+
+  useEffect(() => {
+    if (newProperty) {
+      setTimeout(() => {
+        dispatch(removeNewProperty());
+        setProperty({
+          productname: "",
+          productmodel: "",
+          productsource: "",
+          productstandardtype: "",
+          productmodelnumber: "",
+          productstatus: "",
+          productquantitynumber: "",
+          productintialserialnumber: "",
+          productdescription: "",
+          productphoto: "",
+          price: "",
+          productserialnumbers: [],
+        });
+        setImage("");
+      }, 5000);
+    }
+    if (errorProperty) {
+      setTimeout(() => {
+        dispatch(removePropertyError());
+      }, 5000);
+    }
+  }, [errorProperty, newProperty, dispatch]);
 
   const handleImageUpload = (e) => {
     e.preventDefault();
@@ -102,8 +135,8 @@ const CreateProduct = () => {
   };
 
   const handleCreateProduct = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     const productSerialNumbers = [];
-    console.log(property);
     const {
       productsource,
       productstandardtype,
@@ -137,37 +170,6 @@ const CreateProduct = () => {
     setButtonClicked(false);
   }
 
-  useEffect(() => {
-    if (newProperty) {
-      setTimeout(() => {
-        dispatch(removeNewProperty());
-        setProperty({
-          productname: "",
-          productmodel: "",
-          productsource: "",
-          productstandardtype: "",
-          productmodelnumber: "",
-          productstatus: "",
-          productquantitynumber: "",
-          productintialserialnumber: "",
-          productdescription: "",
-          productphoto: "",
-          price: "",
-          productserialnumbers: [],
-        });
-        setImage("");
-      }, 5000);
-    }
-    if (errorProperty) {
-      setTimeout(() => {
-        dispatch(removePropertyError());
-      }, 5000);
-    }
-  }, [errorProperty, newProperty, dispatch]);
-
-  useEffect(() => {
-    dispatch(removeUploadImage());
-  }, []);
   return (
     <Box paddingLeft={{ xs: 5, md: 20 }} paddingTop={5} paddingBottom={5}>
       <Paper
@@ -182,7 +184,7 @@ const CreateProduct = () => {
           variant="h4"
           textAlign={"center"}
           gutterBottom
-          sx={{ color: "#12596B" }}
+          sx={{ color: "#12596B", fontWeight: languange === "en" ? 500 : 700 }}
         >
           {t("createproduct.create")}
         </Typography>
@@ -453,10 +455,14 @@ const CreateProduct = () => {
 
         <CreateButton
           variant="contained"
-          size="large"
+          size="small"
           onClick={handleCreateProduct}
           fullWidth
-          sx={{ marginTop: "20px", background: "#12596B" }}
+          sx={{
+            marginTop: "20px",
+            background: "#12596B",
+            fontSize: languange === "en" ? 18 : 22,
+          }}
         >
           {t("createproduct.create")}
         </CreateButton>

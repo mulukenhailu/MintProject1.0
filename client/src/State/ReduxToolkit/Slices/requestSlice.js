@@ -8,28 +8,25 @@ const request = createSlice({
     errorRequest: false,
     requestId: "",
     newResponseId: "",
+    currentRequestPage: "pending",
   },
   reducers: {
     getAllRequestStart: (state) => {
       state.allRequest = [];
       state.loadingRequest = true;
       state.errorRequest = false;
-      return state;
     },
     getAllRequestSuccess: (state, action) => {
       console.log(action);
       state.allRequest = action.payload;
       state.loadingRequest = false;
       state.errorRequest = false;
-      return state;
     },
     getAllRequestFail: (state) => {
       state.allRequest = [];
       state.loadingRequest = false;
       state.errorRequest = true;
-      return state;
     },
-    //for new code
     setRequestId: (state, action) => {
       state.requestId = action.payload;
     },
@@ -43,7 +40,7 @@ const request = createSlice({
       state.loadingRequest = false;
       state.errorRequest = false;
     },
-    setRequestFail: (state, action) => {
+    setRequestFail: (state) => {
       state.allRequest = [];
       state.loadingRequest = false;
       state.errorRequest = true;
@@ -52,13 +49,19 @@ const request = createSlice({
       state.allRequest = state.allRequest.filter(
         (item) => item.id !== action.payload
       );
-      console.log("IN REQUEST SLICE", state.allRequest);
     },
     removeAllRequest: (state) => {
       state.allRequest = [];
     },
+    setCurrentRequestPage: (state, action) => {
+      state.currentRequestPage = action.payload;
+    },
+    removeCurrentRequestPage: (state) => {
+      state.currentRequestPage = "pending";
+    },
   },
 });
+
 export const {
   getAllRequestStart,
   getAllRequestSuccess,
@@ -69,5 +72,7 @@ export const {
   setRequestFail,
   getNewRequestList,
   removeAllRequest,
+  setCurrentRequestPage,
+  removeCurrentRequestPage,
 } = request.actions;
 export default request.reducer;

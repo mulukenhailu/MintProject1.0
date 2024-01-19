@@ -107,7 +107,6 @@ const ErrorComponent = styled.div`
     }
   }
 `;
-const ErrorComponentBottom = styled.div``;
 
 function LoginPage() {
   const { loadingUser, errorUser } = useSelector((state) => state.user);

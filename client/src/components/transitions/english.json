@@ -161,6 +161,7 @@
   "createproduct": {
     "create": "Create Product",
     "propertyname": "Property Name",
+    "propertymodel": "Property Model",
     "productsource": "PropertySource",
     "productstandardtype": "PropertyStandardType",
     "productmodelnumber": "PropertyModelNumber",
