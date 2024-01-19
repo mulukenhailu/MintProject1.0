@@ -34,12 +34,12 @@ const UserList = () => {
   const [editModal, setEditModal] = useState(false);
   const [currentUserId, setCurrentUserId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const { allUser, loadingUser } = useSelector((state) => state.user);
+  const { languange } = useSelector((state) => state.languange);
 
   useEffect(() => {
     dispatch({ type: GET_ALL_USERS });
   }, [dispatch, editModal]);
-
-  const { allUser, loadingUser } = useSelector((state) => state.user);
 
   const sortedUser = [...allUser]
     .filter((user) =>
@@ -48,11 +48,15 @@ const UserList = () => {
     .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
 
   const handleEditUser = (user_name) => {
-    navigate(`/edituser/${user_name}`);
+    navigate(`/usersList/${user_name}`);
   };
 
   return (
-    <Box paddingLeft={{ xs: 5, md: 21 }} paddingTop={5} paddingBottom={5}>
+    <Box
+      paddingLeft={{ xs: 5, md: 21, lg: 19 }}
+      paddingTop={5}
+      paddingBottom={5}
+    >
       {loadingUser ? (
         <Box
           sx={{
@@ -107,8 +111,11 @@ const UserList = () => {
                   <TableCell
                     sx={{
                       color: "#12596B",
-                      display: { xs: "none", sm: "table-cell" },
                       width: "12%",
+                      textAlign: "left",
+                      display: { xs: "none", md: "table-cell" },
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
                     }}
                   >
                     {t("userlist.firstname")}
@@ -116,20 +123,34 @@ const UserList = () => {
                   <TableCell
                     sx={{
                       color: "#12596B",
-                      display: { xs: "none", md: "table-cell" },
                       width: "12%",
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
                     }}
                   >
                     {t("userlist.lastname")}
                   </TableCell>
-                  <TableCell sx={{ color: "#12596B", width: "12%" }}>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: "12%",
+                      textAlign: "center",
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
                     {t("userlist.username")}
                   </TableCell>
                   <TableCell
                     sx={{
                       color: "#12596B",
-                      display: { xs: "none", lg: "table-cell" },
                       width: "12%",
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
                     }}
                   >
                     {t("userlist.phonenumber")}
@@ -137,8 +158,11 @@ const UserList = () => {
                   <TableCell
                     sx={{
                       color: "#12596B",
-                      display: { xs: "none", lg: "table-cell" },
                       width: "12%",
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
                     }}
                   >
                     {t("userlist.position")}
@@ -146,16 +170,35 @@ const UserList = () => {
                   <TableCell
                     sx={{
                       color: "#12596B",
-                      display: { xs: "none", lg: "table-cell" },
                       width: "12%",
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
                     }}
                   >
                     {t("userlist.department")}
                   </TableCell>
-                  <TableCell sx={{ color: "#12596B", width: "3%" }}>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: "3%",
+                      textAlign: "center",
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
                     {t("userlist.edit")}
                   </TableCell>
-                  <TableCell sx={{ color: "#12596B", width: "3%" }}>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: "3%",
+                      textAlign: "center",
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
                     {t("userlist.detail")}
                   </TableCell>
                 </TableRow>
@@ -175,6 +218,7 @@ const UserList = () => {
                       sx={{
                         display: { xs: "none", md: "table-cell" },
                         width: "12%",
+                        textAlign: "center",
                       }}
                     >
                       {user.last_name}
@@ -184,6 +228,7 @@ const UserList = () => {
                       sx={{
                         display: { xs: "none", lg: "table-cell" },
                         width: "12%",
+                        textAlign: "center",
                       }}
                     >
                       {user.phone_number}
@@ -192,6 +237,7 @@ const UserList = () => {
                       sx={{
                         display: { xs: "none", lg: "table-cell" },
                         width: "12%",
+                        textAlign: "center",
                       }}
                     >
                       {user.Role.role_name}
@@ -200,13 +246,14 @@ const UserList = () => {
                       sx={{
                         display: { xs: "none", lg: "table-cell" },
                         width: "12%",
+                        textAlign: "center",
                       }}
                     >
                       {user.department}
                     </TableCell>
                     <TableCell sx={{ width: "3%" }}>
                       <IconButton
-                        sx={{ color: "#EF9630" }}
+                        sx={{ color: "#EF9630", textAlign: "center" }}
                         onClick={() => {
                           handleEditUser(user.user_name);
                         }}
@@ -214,7 +261,7 @@ const UserList = () => {
                         <EditIcon />
                       </IconButton>
                     </TableCell>
-                    <TableCell sx={{ width: "3%" }}>
+                    <TableCell sx={{ width: "3%", textAlign: "center" }}>
                       <SettingsAccessibilityIcon
                         sx={{ color: "blue" }}
                         onClick={() => {

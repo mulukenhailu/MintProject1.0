@@ -8,25 +8,27 @@ import {
   FormGroup,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { CREATE_ORDER } from "../State/ReduxSaga/Types/orderType";
 import {
   removeNewOrder,
   removeOrderError,
 } from "../State/ReduxToolkit/Slices/orderSlice";
 import ClipLoader from "react-spinners/ClipLoader";
+import BeatLoader from "react-spinners/BeatLoader";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { setNewPropertyList } from "../State/ReduxToolkit/Slices/propertySlice";
 
 const OrderButton = styled(Button)({
   background: "#12596B",
-  fontSize: "18px",
   "&:hover": {
     background: "#0F4F5F",
   },
 });
 const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [orderNew, setOrderNew] = useState(false);
   const [error, setError] = useState(false);
@@ -35,7 +37,7 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
     (state) => state.order
   );
   const { role_name } = useSelector((state) => state.user.user.Role);
-  console.log("role of current user", role_name);
+  const { languange } = useSelector((state) => state.languange);
 
   const [formData, setFormData] = useState({
     quantity: "",
@@ -72,7 +74,9 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
           );
           setLoading(false);
           setOrderNew(true);
-          console.log(response.data);
+          setTimeout(() => {
+            navigate(`/details/${item_number}`);
+          }, 60000);
         })
         .catch((error) => {
           setLoading(false);
@@ -83,22 +87,38 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
   };
 
   useEffect(() => {
-    if (newOrder || errorOrder || orderNew || error) {
+    if (newOrder || orderNew) {
       setTimeout(() => {
         dispatch(removeNewOrder());
-        dispatch(removeOrderError());
         setOpenOrderModal(false);
         setOrderNew(false);
+      }, 60000);
+    }
+  }, [newOrder, orderNew]);
+
+  useEffect(() => {
+    if (errorOrder || error) {
+      setTimeout(() => {
+        dispatch(removeOrderError());
+        setOpenOrderModal(false);
         setError(false);
       }, 5000);
     }
-  }, [newOrder, errorOrder, orderNew, error]);
+  }, [errorOrder, error]);
+
+  useEffect(() => {
+    if (newOrder) {
+      setTimeout(() => {
+        navigate(`/details/${item_number}`);
+      }, 60000);
+    }
+  }, [newOrder]);
 
   return (
     <Box
       bgcolor={"white"}
       borderRadius={"5px"}
-      width={{ xs: "80%", sm: "50%", md: "40%", lg: "30%" }}
+      width={{ xs: "80%", sm: "50%", md: "40%", lg: "33%" }}
       padding={4}
       marginX={"auto"}
     >
@@ -108,6 +128,7 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
           gutterBottom
           textAlign={"center"}
           color={"#12596B"}
+          sx={{ fontWeight: languange === "en" ? null : 700 }}
         >
           {t("moveorder.ordertitle")}
         </Typography>
@@ -170,9 +191,19 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
               padding: " 5px 15px",
               marginBottom: "20px",
               textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+              gap: "55px",
             }}
           >
-            {t("moveorder.create")}
+            <Typography>Database updates incur a delay</Typography>
+            <BeatLoader
+              color={"#fff"}
+              loading={newOrder}
+              size={10}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
           </Box>
         )}
         {orderNew && (
@@ -183,10 +214,19 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
               fontSize: " 18px",
               padding: " 5px 15px",
               marginBottom: "20px",
-              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+              gap: "27px",
             }}
           >
-            {t("moveorder.create")}
+            <Typography>Database updates incur a delay</Typography>
+            <BeatLoader
+              color={"#fff"}
+              loading={orderNew}
+              size={10}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
           </Box>
         )}
         <FormGroup>
@@ -204,7 +244,11 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
           variant="contained"
           onClick={handleOrder}
           fullWidth
-          sx={{ marginTop: "10px", background: "#12596B" }}
+          sx={{
+            marginTop: "10px",
+            background: "#12596B",
+            fontSize: languange === "en" ? 16 : 20,
+          }}
         >
           {t("moveorder.order")}
         </OrderButton>

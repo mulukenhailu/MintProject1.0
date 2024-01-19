@@ -60,12 +60,12 @@ const History = () => {
   const [userName, setUserName] = useState("");
   const [itemNo, setItemNo] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const { languange } = useSelector((state) => state.languange);
+  const { allRequest } = useSelector((state) => state.request);
 
   useEffect(() => {
     dispatch({ type: GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER });
   }, []);
-
-  const { allRequest } = useSelector((state) => state.request);
 
   const sortedRequest = [...allRequest]
     .filter((user) =>
@@ -79,7 +79,11 @@ const History = () => {
 
   return (
     <Box>
-      <Box paddingLeft={{ xs: 5, md: 19 }} paddingTop={4} paddingBottom={5}>
+      <Box
+        paddingLeft={{ xs: 5, md: 19, lg: 17 }}
+        paddingTop={4}
+        paddingBottom={5}
+      >
         <Box
           sx={{
             width: "60%",
@@ -111,14 +115,25 @@ const History = () => {
           <Table>
             <TableHead sx={{ background: "#bbb", color: "#fff" }}>
               <TableRow>
-                <TableCell sx={{ color: "#12596B", fontSize: "18px" }}>
+                <TableCell
+                  sx={{
+                    color: "#12596B",
+                    width: "15%",
+                    textAlign: "left",
+                    fontSize: languange === "en" ? 17 : 20,
+                    fontWeight: languange === "en" ? 500 : 700,
+                  }}
+                >
                   {t("history.requestedby")}
                 </TableCell>
                 <TableCell
                   sx={{
                     color: "#12596B",
-                    fontSize: "18px",
+                    width: "18%",
                     textAlign: "center",
+                    display: { xs: "none", md: "table-cell" },
+                    fontSize: languange === "en" ? 17 : 20,
+                    fontWeight: languange === "en" ? 500 : 700,
                   }}
                 >
                   {t("history.approvedmanager")}
@@ -126,8 +141,11 @@ const History = () => {
                 <TableCell
                   sx={{
                     color: "#12596B",
-                    fontSize: "18px",
+                    width: "18%",
                     textAlign: "center",
+                    display: { xs: "none", md: "table-cell" },
+                    fontSize: languange === "en" ? 17 : 20,
+                    fontWeight: languange === "en" ? 500 : 700,
                   }}
                 >
                   {t("history.approvedstorehead")}
@@ -135,8 +153,11 @@ const History = () => {
                 <TableCell
                   sx={{
                     color: "#12596B",
-                    fontSize: "18px",
+                    width: "18%",
                     textAlign: "center",
+                    display: { xs: "none", md: "table-cell" },
+                    fontSize: languange === "en" ? 17 : 20,
+                    fontWeight: languange === "en" ? 500 : 700,
                   }}
                 >
                   {t("history.recievedfrom")}
@@ -144,8 +165,11 @@ const History = () => {
                 <TableCell
                   sx={{
                     color: "#12596B",
-                    fontSize: "18px",
+                    width: "15%",
                     textAlign: "center",
+                    display: { xs: "none", md: "table-cell" },
+                    fontSize: languange === "en" ? 17 : 20,
+                    fontWeight: languange === "en" ? 500 : 700,
                   }}
                 >
                   {t("history.confirmation")}
@@ -153,8 +177,11 @@ const History = () => {
                 <TableCell
                   sx={{
                     color: "#12596B",
-                    fontSize: "18px",
+                    width: "24%",
                     textAlign: "center",
+                    display: { xs: "none", md: "table-cell" },
+                    fontSize: languange === "en" ? 17 : 20,
+                    fontWeight: languange === "en" ? 500 : 700,
                   }}
                 >
                   {t("history.propertydetail")}

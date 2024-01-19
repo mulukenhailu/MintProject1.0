@@ -48,6 +48,7 @@ const CreateUser = () => {
   );
 
   const { allManagers } = useSelector((state) => state.manager);
+  const { languange } = useSelector((state) => state.languange);
 
   const handleFormChange = (event) => {
     const { name, value } = event.target;
@@ -111,9 +112,13 @@ const CreateUser = () => {
     >
       <Typography
         variant="h4"
-        gutterBottom
-        color={"#12596B"}
         textAlign={"center"}
+        color={"#12596B"}
+        marginBottom={2}
+        sx={{
+          fontSize: languange === "en" ? 28 : 32,
+          fontWeight: languange === "en" ? 500 : 700,
+        }}
       >
         {t("createuser.create")}
       </Typography>
@@ -243,7 +248,10 @@ const CreateUser = () => {
         size="large"
         onClick={handleCreateUser}
         fullWidth
-        sx={{ marginTop: "20px", background: "#12596B" }}
+        sx={{
+          fontSize: languange === "en" ? 18 : 20,
+          fontWeight: languange === "en" ? 500 : 500,
+        }}
       >
         {t("createuser.create")}
       </CreateUserButton>

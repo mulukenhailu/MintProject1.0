@@ -44,18 +44,13 @@ const OrderFormModalContainer = styled(Modal)({
 const OrderFormModalWrapper = styled(Box)({
   width: "100%",
 });
-const OrderButton = styled(Button)({
-  background: "#12596B",
-  "&:hover": {
-    background: "#0F4F5F",
-  },
-});
 
 const DetailsProductPage = () => {
   const { id } = useParams();
-  const { allProperty } = useSelector((state) => state.property);
-  const { role_name } = useSelector((state) => state.user.user);
   const { t } = useTranslation("global");
+  const { allProperty } = useSelector((state) => state.property);
+  const { role_name } = useSelector((state) => state.user.user.Role);
+  const { languange } = useSelector((state) => state.languange);
   const singleProperty = allProperty.find(
     (item) => item.item_number === parseInt(id)
   );
@@ -74,18 +69,27 @@ const DetailsProductPage = () => {
             <Paper elevation={4} sx={{ padding: { xs: "20px", md: "0px" } }}>
               <Grid container>
                 <Grid item xs={12} md={6} sx={{ padding: "0px" }}>
-                  <CardMedia
+                  <Box
                     sx={{
-                      borderRadius: "15px",
-                      padding: "20px",
-                      height: "450px",
-                      width: "100%",
-                      overflow: "hidden",
-                      objectFit: "contain",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: "100%",
                     }}
-                    component="img"
-                    image={`${PF}${singleProperty.productphoto}`}
-                  />
+                  >
+                    <CardMedia
+                      sx={{
+                        borderRadius: "15px",
+                        padding: "20px",
+                        height: "70%",
+                        width: "100%",
+                        overflow: "hidden",
+                        objectFit: "contail",
+                      }}
+                      component="img"
+                      image={`${PF}${singleProperty.productphoto}`}
+                    />
+                  </Box>
                 </Grid>
                 <Grid
                   item
@@ -101,7 +105,7 @@ const DetailsProductPage = () => {
                   <Typography
                     variant="h4"
                     sx={{ mb: 2, color: "#12596B" }}
-                    fontWeight={700}
+                    fontWeight={languange === "en" ? null : 700}
                     textAlign={"center"}
                   >
                     {t("homedetail.propertydetail")}
@@ -113,7 +117,7 @@ const DetailsProductPage = () => {
                       <Typography
                         variant="h6"
                         sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        fontWeight={languange === "en" ? null : 700}
                       >
                         {t("homedetail.name")}
                       </Typography>
@@ -131,7 +135,7 @@ const DetailsProductPage = () => {
                       <Typography
                         variant="h6"
                         sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        fontWeight={languange === "en" ? null : 700}
                       >
                         {t("homedetail.model")}
                       </Typography>
@@ -149,7 +153,7 @@ const DetailsProductPage = () => {
                       <Typography
                         variant="h6"
                         sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        fontWeight={languange === "en" ? null : 700}
                         flex={3}
                       >
                         {t("homedetail.description")}
@@ -169,7 +173,7 @@ const DetailsProductPage = () => {
                       <Typography
                         variant="h6"
                         sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        fontWeight={languange === "en" ? null : 700}
                       >
                         {t("homedetail.available")}
                       </Typography>
@@ -185,30 +189,37 @@ const DetailsProductPage = () => {
                   </CardContents>
                   <Box sx={{ display: "flex", gap: "15px", marginTop: "20px" }}>
                     {role_name === "employee" || role_name === "manager" ? (
-                      <OrderButton
-                        size="medium"
-                        variant="contained"
+                      <Button
+                        size="small"
+                        variant="outlined"
                         sx={{
-                          background: "#12596B",
+                          color: "#12596B",
                           fontSize: "16px",
-                          width: "100px",
+                          width: "200px",
+                          border: "2px solid #12596B",
+                          fontWeight: languange === "en" ? null : 600,
                         }}
                         onClick={() => setOpenOrderModal(true)}
                       >
                         {t("homedetail.order")}
-                      </OrderButton>
+                      </Button>
                     ) : null}
 
-                    <Link to="/home">
+                    <Box component={Link} to="/home">
                       <Button
-                        variant="contained"
-                        size="medium"
+                        variant="outlined"
+                        size="small"
                         color="warning"
-                        sx={{ fontSize: "16px", width: "100px" }}
+                        sx={{
+                          fontSize: "16px",
+                          width: "200px",
+                          borderWidth: "2px",
+                          fontWeight: languange === "en" ? null : 600,
+                        }}
                       >
                         {t("homedetail.back")}
                       </Button>
-                    </Link>
+                    </Box>
                   </Box>
                 </Grid>
               </Grid>

@@ -25,7 +25,11 @@ import { GET_ALL_PENDING_REQUEST_FOR_STOREKEEPER } from "../../State/ReduxSaga/T
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useTranslation } from "react-i18next";
-import { getNewRequestList } from "../../State/ReduxToolkit/Slices/requestSlice";
+import {
+  getNewRequestList,
+  setCurrentRequestPage,
+} from "../../State/ReduxToolkit/Slices/requestSlice";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const AcceptButton = styled(Button)({
   marginRight: "10px",
@@ -92,6 +96,7 @@ const StorekeeperPendingItems = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { t } = useTranslation("global");
   const { allRequest } = useSelector((state) => state.request);
+  const { languange } = useSelector((state) => state.languange);
   const [detailModals, setDetailModals] = useState(false);
   const [acceptModals, setAcceptModals] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -111,23 +116,31 @@ const StorekeeperPendingItems = () => {
         withCredentials: true,
       })
       .then((response) => {
-        dispatch(getNewRequestList(id));
         setLoading(false);
-        setError(false);
-        setResponse(response.data);
+        console.log("rejected", response);
+        setResponse(true);
+        if (allRequest.length === 1) {
+          setTimeout(() => {
+            dispatch(getNewRequestList(id));
+            dispatch(setCurrentRequestPage("accepted"));
+            setResponse(false);
+            setAcceptModals(false);
+          }, 60000);
+        } else {
+          dispatch(getNewRequestList(id));
+        }
         setTimeout(() => {
-          setAcceptModals(false);
           setResponse(false);
-        }, 5000);
-        console.log(response);
+          setAcceptModals(false);
+          dispatch(setCurrentRequestPage("accepted"));
+        }, 60000);
       })
       .catch((error) => {
         setLoading(false);
-        setError(error?.response?.data?.error);
-
+        setError(true);
         setTimeout(() => {
+          setError(false);
           setAcceptModals(false);
-          setError("");
         }, 5000);
         console.log(error);
       });
@@ -151,7 +164,7 @@ const StorekeeperPendingItems = () => {
           <Grid item xs={12} sm={6} lg={4}>
             <Card
               sx={{
-                border: "2px solid #12596B",
+                border: "1px solid #12596B",
                 borderRadius: "10px",
               }}
             >
@@ -160,135 +173,194 @@ const StorekeeperPendingItems = () => {
                 alt="green iguana"
                 height="250px"
                 src={`${PF}${item?.item?.productphoto}`}
-                sx={{ objectFit: "fill", padding: "5px 10px 0px 10px" }}
+                sx={{ objectFit: "fill", padding: "15px 15px 0px 15px" }}
               />
-              <CardContent>
-                <List>
+              <CardContent sx={{ padding: "0px" }}>
+                <List sx={{ width: "100%" }}>
                   <ListItem
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "5px",
+                      gap: "15px",
                     }}
                   >
                     <Typography
-                      variant={{ xs: "body1", md: "h6" }}
-                      marginRight={1}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      variant="h6"
                       flex={1}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 18 : 22,
+                      }}
                     >
                       {t("storekeeper.firstname")}
                     </Typography>
                     <Typography
-                      variant="body1"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
                       flex={1}
+                      variant="body1"
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 400 : 400,
+                        fontSize: languange === "en" ? 18 : 20,
+                      }}
                     >
                       {item?.User?.first_name}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{ display: "flex", alignItems: "center", gap: "15px" }}
+                  >
                     <Typography
-                      variant={{ xs: "body1", md: "h6" }}
-                      marginRight={1}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      variant="h6"
                       flex={1}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 18 : 22,
+                      }}
                     >
                       {t("storekeeper.lastname")}
                     </Typography>
                     <Typography
-                      variant="body1"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
                       flex={1}
+                      variant="body1"
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 400 : 400,
+                        fontSize: languange === "en" ? 18 : 20,
+                      }}
                     >
                       {item?.User?.last_name}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{ display: "flex", alignItems: "center", gap: "15px" }}
+                  >
                     <Typography
-                      variant={{ xs: "body1", md: "h6" }}
-                      marginRight={1}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      variant="h6"
                       flex={1}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 18 : 22,
+                      }}
                     >
                       {t("storekeeper.propertyname")}
                     </Typography>
                     <Typography
-                      variant="body1"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
                       flex={1}
+                      variant="body1"
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 400 : 400,
+                        fontSize: languange === "en" ? 18 : 20,
+                      }}
                     >
                       {item?.item?.productname}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{ display: "flex", alignItems: "center", gap: "15px" }}
+                  >
                     <Typography
-                      variant={{ xs: "body1", md: "h6" }}
-                      marginRight={1}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      variant="h6"
                       flex={1}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 18 : 22,
+                      }}
                     >
                       {t("storekeeper.propertymodel")}
                     </Typography>
                     <Typography
-                      variant="body1"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
                       flex={1}
+                      variant="body1"
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 400 : 400,
+                        fontSize: languange === "en" ? 18 : 20,
+                      }}
                     >
                       {item?.item?.productmodel}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{ display: "flex", alignItems: "center", gap: "15px" }}
+                  >
                     <Typography
-                      variant={{ xs: "body1", md: "h6" }}
-                      marginRight={1}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      variant="h6"
                       flex={1}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 18 : 22,
+                      }}
                     >
                       {t("storekeeper.quantity")}
                     </Typography>
                     <Typography
-                      variant="body1"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
                       flex={1}
+                      variant="body1"
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 400 : 400,
+                        fontSize: languange === "en" ? 18 : 20,
+                      }}
                     >
                       {item?.quantity_requested}
                     </Typography>
                   </ListItem>
                 </List>
               </CardContent>
-              <CardActions sx={{ marginBottom: "10px" }}>
-                <ButtonGroup fullWidth>
-                  <AcceptButton
-                    variant="contained"
+              <CardActions sx={{ padding: "0px 15px 15px 15px" }}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                  }}
+                >
+                  <Button
+                    variant="outlined"
                     onClick={() => {
                       setSelectedItem(item);
                       setAcceptModals(true);
                     }}
+                    sx={{
+                      fontSize: {
+                        xs: languange === "en" ? "16px" : "18px",
+                        md: languange === "en" ? "18px" : "20px",
+                      },
+                      textTransform: "capitalize",
+                      flex: "1",
+                      color: "#12596B",
+                      border: "2px solid #12596B",
+                    }}
                   >
                     {t("storekeeper.accept")}
-                  </AcceptButton>
-                  <DetailButton
-                    variant="contained"
+                  </Button>
+                  <Button
+                    variant="outlined"
                     onClick={() => {
                       setDetailModals(true);
                       setSelectedItem(item);
                     }}
+                    sx={{
+                      fontSize: {
+                        xs: languange === "en" ? "16px" : "18px",
+                        md: languange === "en" ? "18px" : "20px",
+                      },
+                      textTransform: "capitalize",
+                      flex: "1",
+                      borderWidth: "2px",
+                    }}
                     color="warning"
                   >
                     {t("storekeeper.detail")}
-                  </DetailButton>
-                </ButtonGroup>
+                  </Button>
+                </Box>
               </CardActions>
             </Card>
           </Grid>
@@ -301,14 +373,18 @@ const StorekeeperPendingItems = () => {
         aria-describedby="modal-modal-description"
       >
         <DetailModalWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "70%" }}
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "60%" }}
         >
           <List>
             <Typography
-              variant="h5"
+              variant="h4"
               textAlign={"center"}
               marginBottom={"20px"}
-              sx={{ color: "#12596B" }}
+              sx={{
+                color: "#12596B",
+                fontWeight: languange === "en" ? 900 : 900,
+                fontSize: languange === "en" ? 24 : 28,
+              }}
             >
               {t("storekeeper.requestdetail")}
             </Typography>
@@ -337,15 +413,21 @@ const StorekeeperPendingItems = () => {
                 <Typography
                   variant="body1"
                   flex={2}
-                  sx={{ color: "#12596B" }}
-                  fontWeight={900}
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
                 >
                   {t("storekeeper.firstname")}
                 </Typography>
                 <Typography
                   variant="body2"
                   flex={4}
-                  sx={{ color: "#12596B" }}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
                   fontWeight={400}
                 >
                   {selectedItem?.User?.first_name}
@@ -355,15 +437,21 @@ const StorekeeperPendingItems = () => {
                 <Typography
                   variant="body1"
                   flex={2}
-                  sx={{ color: "#12596B" }}
-                  fontWeight={900}
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
                 >
                   {t("storekeeper.lastname")}
                 </Typography>
                 <Typography
                   variant="body2"
                   flex={4}
-                  sx={{ color: "#12596B" }}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
                   fontWeight={400}
                 >
                   {selectedItem?.User?.last_name}
@@ -373,15 +461,21 @@ const StorekeeperPendingItems = () => {
                 <Typography
                   variant="body1"
                   flex={2}
-                  sx={{ color: "#12596B" }}
-                  fontWeight={900}
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
                 >
                   {t("storekeeper.email")}
                 </Typography>
                 <Typography
                   variant="body2"
                   flex={4}
-                  sx={{ color: "#12596B" }}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
                   fontWeight={400}
                 >
                   {selectedItem?.User?.email
@@ -393,15 +487,21 @@ const StorekeeperPendingItems = () => {
                 <Typography
                   variant="body1"
                   flex={2}
-                  sx={{ color: "#12596B" }}
-                  fontWeight={900}
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
                 >
                   {t("storekeeper.phonenumber")}
                 </Typography>
                 <Typography
                   variant="body2"
                   flex={4}
-                  sx={{ color: "#12596B" }}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
                   fontWeight={400}
                 >
                   {selectedItem?.User?.phone_number
@@ -413,15 +513,21 @@ const StorekeeperPendingItems = () => {
                 <Typography
                   variant="body1"
                   flex={2}
-                  sx={{ color: "#12596B" }}
-                  fontWeight={900}
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
                 >
                   {t("storekeeper.department")}
                 </Typography>
                 <Typography
                   variant="body2"
                   flex={4}
-                  sx={{ color: "#12596B" }}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
                   fontWeight={400}
                 >
                   {selectedItem?.User?.department
@@ -433,15 +539,21 @@ const StorekeeperPendingItems = () => {
                 <Typography
                   variant="body1"
                   flex={2}
-                  sx={{ color: "#12596B" }}
-                  fontWeight={900}
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
                 >
                   {t("storekeeper.propertyname")}
                 </Typography>
                 <Typography
                   variant="body2"
                   flex={4}
-                  sx={{ color: "#12596B" }}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
                   fontWeight={400}
                 >
                   {selectedItem?.item?.productname}
@@ -451,15 +563,21 @@ const StorekeeperPendingItems = () => {
                 <Typography
                   variant="body1"
                   flex={2}
-                  sx={{ color: "#12596B" }}
-                  fontWeight={900}
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
                 >
                   {t("storekeeper.propertymodel")}
                 </Typography>
                 <Typography
                   variant="body2"
                   flex={4}
-                  sx={{ color: "#12596B" }}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
                   fontWeight={400}
                 >
                   {selectedItem?.item?.productmodel}
@@ -471,15 +589,21 @@ const StorekeeperPendingItems = () => {
                 <Typography
                   variant="body1"
                   flex={2}
-                  sx={{ color: "#12596B" }}
-                  fontWeight={900}
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
                 >
                   {t("storekeeper.description")}
                 </Typography>
                 <Typography
                   variant="body2"
                   flex={4}
-                  sx={{ color: "#12596B" }}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
                   fontWeight={400}
                 >
                   {selectedItem?.item?.productdescription}
@@ -489,15 +613,21 @@ const StorekeeperPendingItems = () => {
                 <Typography
                   variant="body1"
                   flex={2}
-                  sx={{ color: "#12596B" }}
-                  fontWeight={900}
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
                 >
                   {t("storekeeper.quantity")}
                 </Typography>
                 <Typography
                   variant="body2"
                   flex={4}
-                  sx={{ color: "#12596B" }}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
                   fontWeight={400}
                 >
                   {selectedItem?.quantity_requested}
@@ -514,7 +644,7 @@ const StorekeeperPendingItems = () => {
         aria-describedby="modal-modal-description"
       >
         <AcceptModalWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "30%" }}
+          width={{ xs: "90%", sm: "50%", md: "50%", lg: "30%" }}
         >
           {loading && (
             <Box sx={{ textAlign: "center" }}>
@@ -538,7 +668,7 @@ const StorekeeperPendingItems = () => {
                 textAlign: "center",
               }}
             >
-              {error}
+              Error while requesting
             </Box>
           )}
           {response && (
@@ -547,12 +677,33 @@ const StorekeeperPendingItems = () => {
                 backgroundColor: "#12596B",
                 color: "white",
                 fontSize: " 18px",
-                padding: " 5px 15px",
+                padding: " 5px 30px 5px 10px",
                 marginY: "10px",
-                textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              Request Done Successfully
+              <Typography variant="h6" sx={{ flex: "2" }}>
+                Database updating
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "0px",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  flex: "1",
+                }}
+              >
+                <BeatLoader
+                  color={"#fff"}
+                  loading={response}
+                  size={10}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </Box>
             </Box>
           )}
           <TextField

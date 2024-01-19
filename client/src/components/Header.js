@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { useAppStore } from "../appStore";
 import { Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -29,87 +24,56 @@ const AppBar = styled(
   zIndex: theme.zIndex.drawer + 1,
 }));
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: " calc(1em + ${theme.spacing(4)})",
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-
 export default function Header() {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [notification, setNotification] = useState([]);
   const [notificationLength, setNotificationLength] = useState(0);
-  const updateOpen = useAppStore((state) => state.updateOpen);
-  const dopen = useAppStore((state) => state.dopen);
-  const dispatch = useDispatch();
 
-  const { user_name } = useSelector((state) => state.user.user);
+  const { user_name, Role } = useSelector((state) => state.user.user);
+  const { notificationId } = useSelector((state) => state.notification);
+
+  const { profile_picture } =
+    useSelector((state) => state.user.singleUser) || {};
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const prevNotificationId = useRef(notificationId);
 
   useEffect(() => {
     dispatch({ type: GET_SINGLE_USER, user_name });
   }, []);
 
   useEffect(() => {
-    {
-      const getAllOrderList = () => {
-        axios
-          .get("/employee/notifications", {
-            withCredentials: true,
-          })
-          .then((response) => {
-            console.log(response.data.notification);
-            setNotification(response?.data?.notification);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-      getAllOrderList();
-    }
-  }, []);
+    const getAllOrderList = () => {
+      axios
+        .get("/employee/notifications", {
+          withCredentials: true,
+        })
+        .then((response) => {
+          console.log(response.data.notification);
+          setNotification(response?.data?.notification);
 
-  const { profile_picture } =
-    useSelector((state) => state.user.singleUser) || {};
+          const unViewed = response?.data?.notification?.filter(
+            (item) => item.isViwed === false
+          );
+          const realUnviewed = unViewed?.filter(
+            (item) => item.Notify_Id !== notificationId
+          );
+          setNotificationLength(realUnviewed?.length);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
-  console.log(profile_picture);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    getAllOrderList();
+  }, [notificationId]);
+
+  console.log("unviewd notificatiobs", notificationLength);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -127,11 +91,6 @@ export default function Header() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
-  useEffect(() => {
-    const unViewed = notification?.filter((item) => item.isViwed === false);
-    setNotificationLength(unViewed?.length);
-  }, [notification]);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -153,6 +112,12 @@ export default function Header() {
       <MenuItem onClick={handleMenuClose} component={Link} to="/profile">
         Profile
       </MenuItem>
+      <MenuItem onClick={handleMenuClose} component={Link} to="/resetpassword">
+        Reset Password
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose} component={Link} to="/resetpassword">
+        Logout
+      </MenuItem>
     </Menu>
   );
 
@@ -173,22 +138,25 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem
-        component={Link}
-        to="/notification"
-        onClick={handleProfileMenuOpen}
-      >
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
+      {Role.role_name === "employee" || Role.role_name === "manager" ? (
+        <MenuItem
+          component={Link}
+          to="/notification"
+          onClick={handleProfileMenuOpen}
         >
-          <Badge badgeContent={notificationLength} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+          <IconButton
+            size="large"
+            aria-label="show 17 new notifications"
+            color="inherit"
+          >
+            <Badge badgeContent={notificationLength} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>
+      ) : null}
+
       <MenuItem component={Link} to="/profile" onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -200,6 +168,34 @@ export default function Header() {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+      </MenuItem>
+      <MenuItem
+        component={Link}
+        to="/resetpassword"
+        onClick={handleProfileMenuOpen}
+      >
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Reset Password</p>
+      </MenuItem>
+      <MenuItem component={Link} to="/profile" onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Logout</p>
       </MenuItem>
     </Menu>
   );
@@ -269,25 +265,28 @@ export default function Header() {
               flex: 1,
             }}
           >
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-              component={Link}
-              to="/notification"
-            >
-              <Badge
-                badgeContent={notificationLength}
-                sx={{
-                  "& .MuiBadge-badge": {
-                    color: "white",
-                    backgroundColor: "red",
-                  },
-                }}
+            {Role.role_name === "employee" || Role.role_name === "manager" ? (
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+                component={Link}
+                to="/notification"
               >
-                <NotificationsIcon sx={{ color: "gray" }} />
-              </Badge>
-            </IconButton>
+                <Badge
+                  badgeContent={notificationLength}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      color: "white",
+                      backgroundColor: "red",
+                    },
+                  }}
+                >
+                  <NotificationsIcon sx={{ color: "gray" }} />
+                </Badge>
+              </IconButton>
+            ) : null}
+
             <IconButton
               size="large"
               edge="end"

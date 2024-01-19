@@ -38,15 +38,15 @@ const EditUserComponent = () => {
   const { allUser, editUser, errorUser, loadingUser } = useSelector(
     (state) => state.user
   );
+  const { allManagers } = useSelector((state) => state.manager);
+  const { languange } = useSelector((state) => state.languange);
+
   const currentUser = allUser.find((user) => user.user_name === username);
   const [buttonClicked, setButtonClicked] = useState(false);
-  console.log("currentuser", currentUser);
 
   useEffect(() => {
     dispatch({ type: GET_ALL_MANAGERS });
   }, []);
-
-  const { allManagers } = useSelector((state) => state.manager);
 
   const managersList = [
     { value: null, label: "Select Manager" },
@@ -124,6 +124,10 @@ const EditUserComponent = () => {
         textAlign={"center"}
         color={"#12596B"}
         marginBottom={2}
+        sx={{
+          fontSize: languange === "en" ? 28 : 32,
+          fontWeight: languange === "en" ? 500 : 700,
+        }}
       >
         {t("userlist.updateuser")}
       </Typography>
@@ -258,6 +262,10 @@ const EditUserComponent = () => {
         size="large"
         onClick={handleEditUser}
         fullWidth
+        sx={{
+          fontSize: languange === "en" ? 18 : 20,
+          fontWeight: languange === "en" ? 500 : 500,
+        }}
       >
         {t("userlist.updateuser")}
       </EditUserButton>

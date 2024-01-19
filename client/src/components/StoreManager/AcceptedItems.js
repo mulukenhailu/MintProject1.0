@@ -52,15 +52,15 @@ const DetailButton = styled(Button)({
 
 const AcceptedItemsComponent = () => {
   const { t } = useTranslation("global");
-  const [detailModals, setDetailModals] = useState([]);
   const dispatch = useDispatch();
+  const [detailModals, setDetailModals] = useState([]);
+  const { allRequest } = useSelector((state) => state.request);
+  const { languange } = useSelector((state) => state.languange);
 
   useEffect(() => {
     dispatch(removeAllRequest());
     dispatch({ type: GET_ALL_ACCEPTED_REQUEST_FOR_STOREHEAD });
   }, [dispatch]);
-
-  const { allRequest } = useSelector((state) => state.request);
 
   const handleDetailModalOpen = (index) => {
     const updatedDetailModals = [...detailModals];
@@ -105,7 +105,7 @@ const AcceptedItemsComponent = () => {
                   alt="green iguana"
                   height="250"
                   image={`${PF}${item?.item?.productphoto}`}
-                  sx={{ objectFit: "fill", padding: "5px 10px 0px 10px" }}
+                  sx={{ objectFit: "fill", padding: "15px 15px 0px 15px" }}
                 />
                 <CardContent sx={{ padding: "0px" }}>
                   <List>
@@ -113,23 +113,28 @@ const AcceptedItemsComponent = () => {
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "5px",
+                        gap: "15px",
                       }}
                     >
                       <Typography
                         variant="h6"
-                        marginRight={1}
-                        sx={{ color: "#12596B" }}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 18 : 22,
+                        }}
                         flex={1}
-                        fontWeight={900}
                       >
                         {t("storehead.firstname")}
                       </Typography>
                       <Typography
-                        variant="body1"
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
                         flex={1}
+                        variant="body1"
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 400 : 400,
+                          fontSize: languange === "en" ? 18 : 20,
+                        }}
                       >
                         {item?.User?.first_name}
                       </Typography>
@@ -138,23 +143,28 @@ const AcceptedItemsComponent = () => {
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "5px",
+                        gap: "15px",
                       }}
                     >
                       <Typography
                         variant="h6"
-                        marginRight={1}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 18 : 22,
+                        }}
                         flex={1}
                       >
                         {t("storehead.lastname")}
                       </Typography>
                       <Typography
-                        variant="body1"
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
                         flex={1}
+                        variant="body1"
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 400 : 400,
+                          fontSize: languange === "en" ? 18 : 20,
+                        }}
                       >
                         {item?.User?.last_name}
                       </Typography>
@@ -163,23 +173,28 @@ const AcceptedItemsComponent = () => {
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "5px",
+                        gap: "15px",
                       }}
                     >
                       <Typography
                         variant="h6"
-                        marginRight={1}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 18 : 22,
+                        }}
                         flex={1}
                       >
                         {t("storehead.propertyname")}
                       </Typography>
                       <Typography
-                        variant="body1"
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
                         flex={1}
+                        variant="body1"
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 400 : 400,
+                          fontSize: languange === "en" ? 18 : 20,
+                        }}
                       >
                         {item?.item?.productname}
                       </Typography>
@@ -188,39 +203,49 @@ const AcceptedItemsComponent = () => {
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "5px",
+                        gap: "15px",
                       }}
                     >
                       <Typography
                         variant="h6"
-                        marginRight={1}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 18 : 22,
+                        }}
                         flex={1}
                       >
                         {t("storehead.quantity")}
                       </Typography>
                       <Typography
-                        variant="body1"
-                        sx={{ color: "#12596B" }}
-                        fontWeight={400}
                         flex={1}
+                        variant="body1"
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 400 : 400,
+                          fontSize: languange === "en" ? 18 : 20,
+                        }}
                       >
                         {item?.quantity_requested}
                       </Typography>
                     </ListItem>
                   </List>
                 </CardContent>
-                <CardActions>
-                  <DetailButton
-                    variant="contained"
-                    sx={{ fontSize: "20px", textTransform: "capitalize" }}
+                <CardActions sx={{ padding: "0px 15px 15px 15px" }}>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      fontSize: "20px",
+                      textTransform: "capitalize",
+                      borderWidth: "2px",
+                    }}
                     fullWidth
+                    color="warning"
                     type="small"
                     onClick={() => handleDetailModalOpen(index)}
                   >
                     {t("storehead.detail")}
-                  </DetailButton>
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -247,7 +272,11 @@ const AcceptedItemsComponent = () => {
                     variant="h4"
                     textAlign={"center"}
                     marginBottom={"20px"}
-                    sx={{ color: "#12596B" }}
+                    sx={{
+                      color: "#12596B",
+                      fontWeight: languange === "en" ? 900 : 900,
+                      fontSize: languange === "en" ? 24 : 28,
+                    }}
                   >
                     {t("storehead.requestdetail")}
                   </Typography>
@@ -256,7 +285,7 @@ const AcceptedItemsComponent = () => {
                       height: "80%",
                       overflowY: "scroll",
                       "&::-webkit-scrollbar": {
-                        width: "0px",
+                        width: "1px",
                       },
                       "&::-webkit-scrollbar-track": {
                         boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
@@ -274,15 +303,21 @@ const AcceptedItemsComponent = () => {
                       <Typography
                         variant="body1"
                         flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 20 : 24,
+                        }}
                       >
                         {t("storehead.firstname")}
                       </Typography>
                       <Typography
                         variant="body2"
                         flex={4}
-                        sx={{ color: "#12596B" }}
+                        sx={{
+                          color: "#12596B",
+                          fontSize: languange === "en" ? 16 : 18,
+                        }}
                         fontWeight={400}
                       >
                         {item?.User?.first_name}
@@ -294,15 +329,21 @@ const AcceptedItemsComponent = () => {
                       <Typography
                         variant="body1"
                         flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 20 : 24,
+                        }}
                       >
                         {t("storehead.lastname")}
                       </Typography>
                       <Typography
                         variant="body2"
                         flex={4}
-                        sx={{ color: "#12596B" }}
+                        sx={{
+                          color: "#12596B",
+                          fontSize: languange === "en" ? 16 : 18,
+                        }}
                         fontWeight={400}
                       >
                         {item?.User?.last_name}
@@ -314,15 +355,21 @@ const AcceptedItemsComponent = () => {
                       <Typography
                         variant="body1"
                         flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 20 : 24,
+                        }}
                       >
                         {t("storehead.email")}
                       </Typography>
                       <Typography
                         variant="body2"
                         flex={4}
-                        sx={{ color: "#12596B" }}
+                        sx={{
+                          color: "#12596B",
+                          fontSize: languange === "en" ? 16 : 18,
+                        }}
                         fontWeight={400}
                       >
                         {item?.User?.email
@@ -336,15 +383,21 @@ const AcceptedItemsComponent = () => {
                       <Typography
                         variant="body1"
                         flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 20 : 24,
+                        }}
                       >
                         {t("storehead.phonenumber")}
                       </Typography>
                       <Typography
                         variant="body2"
                         flex={4}
-                        sx={{ color: "#12596B" }}
+                        sx={{
+                          color: "#12596B",
+                          fontSize: languange === "en" ? 16 : 18,
+                        }}
                         fontWeight={400}
                       >
                         {item?.User?.phone_number
@@ -358,15 +411,21 @@ const AcceptedItemsComponent = () => {
                       <Typography
                         variant="body1"
                         flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 20 : 24,
+                        }}
                       >
                         {t("storehead.department")}
                       </Typography>
                       <Typography
                         variant="body2"
                         flex={4}
-                        sx={{ color: "#12596B" }}
+                        sx={{
+                          color: "#12596B",
+                          fontSize: languange === "en" ? 16 : 18,
+                        }}
                         fontWeight={400}
                       >
                         {item?.User?.department
@@ -380,15 +439,21 @@ const AcceptedItemsComponent = () => {
                       <Typography
                         variant="body1"
                         flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 20 : 24,
+                        }}
                       >
                         {t("storehead.propertyname")}
                       </Typography>
                       <Typography
                         variant="body2"
                         flex={4}
-                        sx={{ color: "#12596B" }}
+                        sx={{
+                          color: "#12596B",
+                          fontSize: languange === "en" ? 16 : 18,
+                        }}
                         fontWeight={400}
                       >
                         {item?.item?.productname}
@@ -400,15 +465,21 @@ const AcceptedItemsComponent = () => {
                       <Typography
                         variant="body1"
                         flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 20 : 24,
+                        }}
                       >
                         {t("storehead.propertymodel")}
                       </Typography>
                       <Typography
                         variant="body2"
                         flex={4}
-                        sx={{ color: "#12596B" }}
+                        sx={{
+                          color: "#12596B",
+                          fontSize: languange === "en" ? 16 : 18,
+                        }}
                         fontWeight={400}
                       >
                         {item?.item?.productmodel}
@@ -420,15 +491,21 @@ const AcceptedItemsComponent = () => {
                       <Typography
                         variant="body1"
                         flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 20 : 24,
+                        }}
                       >
                         {t("storehead.description")}
                       </Typography>
                       <Typography
                         variant="body2"
                         flex={4}
-                        sx={{ color: "#12596B" }}
+                        sx={{
+                          color: "#12596B",
+                          fontSize: languange === "en" ? 16 : 18,
+                        }}
                         fontWeight={400}
                       >
                         {item?.item?.productdescription}
@@ -440,15 +517,21 @@ const AcceptedItemsComponent = () => {
                       <Typography
                         variant="body1"
                         flex={2}
-                        sx={{ color: "#12596B" }}
-                        fontWeight={900}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 20 : 24,
+                        }}
                       >
                         {t("storehead.quantity")}
                       </Typography>
                       <Typography
                         variant="body2"
                         flex={4}
-                        sx={{ color: "#12596B" }}
+                        sx={{
+                          color: "#12596B",
+                          fontSize: languange === "en" ? 16 : 18,
+                        }}
                         fontWeight={400}
                       >
                         {item?.quantity_requested}

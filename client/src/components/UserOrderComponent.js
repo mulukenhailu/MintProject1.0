@@ -19,6 +19,7 @@ import React, { useState, useEffect } from "react";
 import SettingsAccessibilityIcon from "@mui/icons-material/SettingsAccessibility";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { format } from "timeago.js";
 
 const UserDetailModalContainer = styled(Modal)({
   display: "flex",
@@ -55,10 +56,11 @@ const Value = styled(Typography)({
 });
 
 const UserOrderComponent = () => {
+  const { t } = useTranslation("global");
   const [orders, setOrders] = useState([]);
   const [selectedOrderIndex, setSelectedOrderIndex] = useState(null);
   const { role_name } = useSelector((state) => state?.user?.user?.Role);
-  const { t } = useTranslation("global");
+  const { languange } = useSelector((state) => state.languange);
 
   const openDetailModal = (index) => {
     setSelectedOrderIndex(index);
@@ -128,8 +130,9 @@ const UserOrderComponent = () => {
               <TableCell
                 sx={{
                   color: "#12596B",
-                  width: "20%",
-                  fontSize: "20px",
+                  width: "18%",
+                  fontSize: languange === "en" ? 17 : 20,
+                  fontWeight: languange === "en" ? 500 : 700,
                 }}
               >
                 {t("userorder.propertyname")}
@@ -138,9 +141,10 @@ const UserOrderComponent = () => {
                 sx={{
                   color: "#12596B",
                   width: "20%",
-                  fontSize: "20px",
                   textAlign: "center",
                   display: { xs: "none", sm: "table-cell" },
+                  fontSize: languange === "en" ? 17 : 20,
+                  fontWeight: languange === "en" ? 500 : 700,
                 }}
               >
                 {t("userorder.propertymodel")}
@@ -149,9 +153,10 @@ const UserOrderComponent = () => {
                 sx={{
                   color: "#12596B",
                   width: "20%",
-                  fontSize: "20px",
                   textAlign: "center",
                   display: { xs: "none", md: "table-cell" },
+                  fontSize: languange === "en" ? 17 : 20,
+                  fontWeight: languange === "en" ? 500 : 700,
                 }}
               >
                 {t("userorder.quantity")}
@@ -160,9 +165,10 @@ const UserOrderComponent = () => {
                 sx={{
                   color: "#12596B",
                   width: "20%",
-                  fontSize: "20px",
                   textAlign: "center",
                   display: { xs: "none", md: "table-cell" },
+                  fontSize: languange === "en" ? 17 : 20,
+                  fontWeight: languange === "en" ? 500 : 700,
                 }}
               >
                 {t("userorder.confirmation")}
@@ -171,8 +177,9 @@ const UserOrderComponent = () => {
                 sx={{
                   color: "#12596B",
                   width: "20%",
-                  fontSize: "20px",
                   textAlign: "center",
+                  fontSize: languange === "en" ? 17 : 20,
+                  fontWeight: languange === "en" ? 500 : 700,
                 }}
               >
                 {t("userorder.detail")}
@@ -234,14 +241,17 @@ const UserOrderComponent = () => {
                     aria-describedby="modal-modal-description"
                   >
                     <UserDetailModalWrapper
-                      width={{ xs: "80%", sm: "70%", md: "50%", lg: "55%" }}
+                      width={{ xs: "80%", sm: "70%", md: "50%", lg: "70%" }}
                     >
                       <List>
                         <Typography
                           variant="h4"
                           textAlign={"center"}
                           marginBottom={"10px"}
-                          sx={{ color: "#12596B" }}
+                          sx={{
+                            color: "#12596B",
+                            fontWeight: languange === "en" ? 500 : 700,
+                          }}
                         >
                           {t("userorder.requestdetail")}
                         </Typography>
@@ -251,7 +261,12 @@ const UserOrderComponent = () => {
                             textAlign: { xs: "center", sm: "start" },
                           }}
                         >
-                          <Label sx={{ fontSize: "20px" }}>
+                          <Label
+                            sx={{
+                              fontSize: "20px",
+                              fontWeight: languange === "en" ? 500 : 700,
+                            }}
+                          >
                             {t("userorder.propertyname")}
                           </Label>
                           <Value>{item?.Item?.productname}</Value>
@@ -262,7 +277,12 @@ const UserOrderComponent = () => {
                             textAlign: { xs: "center", sm: "start" },
                           }}
                         >
-                          <Label sx={{ fontSize: "20px" }}>
+                          <Label
+                            sx={{
+                              fontSize: "20px",
+                              fontWeight: languange === "en" ? 500 : 700,
+                            }}
+                          >
                             {t("userorder.propertymodel")}
                           </Label>
                           <Value>{item?.Item?.productmodel}</Value>
@@ -273,7 +293,12 @@ const UserOrderComponent = () => {
                             textAlign: { xs: "center", sm: "start" },
                           }}
                         >
-                          <Label sx={{ fontSize: "20px" }}>
+                          <Label
+                            sx={{
+                              fontSize: "20px",
+                              fontWeight: languange === "en" ? 500 : 700,
+                            }}
+                          >
                             {t("userorder.quantity")}
                           </Label>
                           <Value>{item?.quantity_requested}</Value>
@@ -284,7 +309,12 @@ const UserOrderComponent = () => {
                             textAlign: { xs: "center", sm: "start" },
                           }}
                         >
-                          <Label sx={{ fontSize: "20px" }}>
+                          <Label
+                            sx={{
+                              fontSize: "20px",
+                              fontWeight: languange === "en" ? 500 : 700,
+                            }}
+                          >
                             {t("userorder.confirmation")}
                           </Label>
                           <Value>{item?.confirmation_number}</Value>
@@ -295,7 +325,12 @@ const UserOrderComponent = () => {
                             textAlign: { xs: "center", sm: "start" },
                           }}
                         >
-                          <Label sx={{ fontSize: "20px" }}>
+                          <Label
+                            sx={{
+                              fontSize: "20px",
+                              fontWeight: languange === "en" ? 500 : 700,
+                            }}
+                          >
                             {t("userorder.approvedbymanager")}
                           </Label>
                           <Value>
@@ -308,7 +343,12 @@ const UserOrderComponent = () => {
                             textAlign: { xs: "center", sm: "start" },
                           }}
                         >
-                          <Label sx={{ fontSize: "20px" }}>
+                          <Label
+                            sx={{
+                              fontSize: "20px",
+                              fontWeight: languange === "en" ? 500 : 700,
+                            }}
+                          >
                             {t("userorder.rejectedbymanager")}
                           </Label>
                           <Value>
@@ -321,7 +361,12 @@ const UserOrderComponent = () => {
                             textAlign: { xs: "center", sm: "start" },
                           }}
                         >
-                          <Label sx={{ fontSize: "20px" }}>
+                          <Label
+                            sx={{
+                              fontSize: "20px",
+                              fontWeight: languange === "en" ? 500 : 700,
+                            }}
+                          >
                             {t("userorder.approvedbystorehead")}
                           </Label>
                           <Value>
@@ -334,12 +379,33 @@ const UserOrderComponent = () => {
                             textAlign: { xs: "center", sm: "start" },
                           }}
                         >
-                          <Label sx={{ fontSize: "20px" }}>
+                          <Label
+                            sx={{
+                              fontSize: "20px",
+                              fontWeight: languange === "en" ? 500 : 700,
+                            }}
+                          >
                             {t("userorder.rejectedbystorehead")}
                           </Label>
                           <Value>
                             {item?.isRejectedByStoreHead ? "Yes" : "No"}
                           </Value>
+                        </ListItemForModal>
+                        <ListItemForModal
+                          sx={{
+                            display: { xs: "block", sm: "flex" },
+                            textAlign: { xs: "center", sm: "start" },
+                          }}
+                        >
+                          <Label
+                            sx={{
+                              fontSize: "20px",
+                              fontWeight: languange === "en" ? 500 : 700,
+                            }}
+                          >
+                            Ordered Date
+                          </Label>
+                          <Value>{`${format(item?.created_at)}`}</Value>
                         </ListItemForModal>
                       </List>
                     </UserDetailModalWrapper>

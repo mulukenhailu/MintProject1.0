@@ -40,12 +40,9 @@ const ListItemForModalDescription = styled(ListItem)({
   gap: "20px",
 });
 const DetailButton = styled(Button)({
-  marginRight: "10px",
-  background: "#E5953D",
   borderRadius: "2px",
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
-    background: "#E5953D",
     transform: "scale(0.99)",
   },
 });
@@ -62,6 +59,7 @@ const ManagerRequestAccepted = () => {
   const { loadingRequest, errorRequest, allRequest } = useSelector(
     (state) => state.request
   );
+  const { languange } = useSelector((state) => state.languange);
 
   const handleDetailModalOpen = (index) => {
     const updatedDetailModals = [...detailModals];
@@ -107,94 +105,131 @@ const ManagerRequestAccepted = () => {
                 alt="green iguana"
                 height="250"
                 image={`${PF}${item.Item.productphoto}`}
-                sx={{ objectFit: "fill", padding: "10px 5px 10px 5px" }}
+                sx={{ objectFit: "fill", padding: "15px 15px 0px 15px" }}
               />
               <CardContent sx={{ padding: "0px" }}>
                 <List>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{ display: "flex", alignItems: "center", gap: "15px" }}
+                  >
                     <Typography
                       variant="h6"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 18 : 22,
+                      }}
                       flex={1}
                     >
                       {t("manager.firstname")}
                     </Typography>
                     <Typography
-                      variant="body1"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
                       flex={1}
+                      variant="body1"
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 400 : 400,
+                        fontSize: languange === "en" ? 18 : 20,
+                      }}
                     >
                       {item.User.first_name}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{ display: "flex", alignItems: "center", gap: "15px" }}
+                  >
                     <Typography
                       variant="h6"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 18 : 22,
+                      }}
                       flex={1}
                     >
                       {t("manager.lastname")}
                     </Typography>
                     <Typography
-                      variant="body1"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
                       flex={1}
+                      variant="body1"
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 400 : 400,
+                        fontSize: languange === "en" ? 18 : 20,
+                      }}
                     >
                       {item.User.last_name}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{ display: "flex", alignItems: "center", gap: "15px" }}
+                  >
                     <Typography
                       variant="h6"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 18 : 22,
+                      }}
                       flex={1}
                     >
                       {t("manager.propertyname")}
                     </Typography>
                     <Typography
-                      variant="body1"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
                       flex={1}
+                      variant="body1"
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 400 : 400,
+                        fontSize: languange === "en" ? 18 : 20,
+                      }}
                     >
                       {item.Item.productname}
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ display: "flex", alignItems: "center" }}>
+                  <ListItem
+                    sx={{ display: "flex", alignItems: "center", gap: "15px" }}
+                  >
                     <Typography
                       variant="h6"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 18 : 22,
+                      }}
                       flex={1}
                     >
                       {t("manager.quantity")}
                     </Typography>
                     <Typography
-                      variant="body1"
-                      sx={{ color: "#12596B" }}
-                      fontWeight={400}
                       flex={1}
+                      variant="body1"
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 400 : 400,
+                        fontSize: languange === "en" ? 18 : 20,
+                      }}
                     >
                       {item.quantity_requested}
                     </Typography>
                   </ListItem>
                 </List>
               </CardContent>
-              <CardActions>
-                <DetailButton
-                  variant="contained"
+              <CardActions sx={{ padding: "0px 15px 15px 15px" }}>
+                <Button
+                  variant="outlined"
                   fullWidth
                   type="small"
-                  sx={{ fontSize: "20px", textTransform: "capitalize" }}
+                  color="warning"
+                  sx={{
+                    fontSize: "20px",
+                    textTransform: "capitalize",
+                    borderWidth: "2px",
+                  }}
                   onClick={() => handleDetailModalOpen(index)}
                 >
                   {t("manager.detail")}
-                </DetailButton>
+                </Button>
               </CardActions>
             </Card>
           </Grid>
@@ -207,13 +242,16 @@ const ManagerRequestAccepted = () => {
             <DetailModalWrapper
               width={{ xs: "90%", sm: "70%", md: "50%", lg: "60%" }}
             >
-              {console.log(item.User.first_name)}
               <List>
                 <Typography
                   variant="h4"
                   textAlign={"center"}
                   marginBottom={"20px"}
-                  sx={{ color: "#12596B" }}
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 900 : 900,
+                    fontSize: languange === "en" ? 24 : 28,
+                  }}
                 >
                   {t("manager.requestdetail")}
                 </Typography>
@@ -225,7 +263,7 @@ const ManagerRequestAccepted = () => {
                       lg: "55vh",
                       overflowY: "scroll",
                       "&::-webkit-scrollbar": {
-                        width: "0px",
+                        width: "1px",
                       },
                       "&::-webkit-scrollbar-track": {
                         boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
@@ -244,18 +282,24 @@ const ManagerRequestAccepted = () => {
                     <Typography
                       variant="body1"
                       flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
                     >
                       {t("manager.firstname")}
                     </Typography>
                     <Typography
                       variant="body2"
                       flex={4}
-                      sx={{ color: "#12596B" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
                       fontWeight={400}
                     >
-                      {item.User.first_name}
+                      {item?.User?.first_name}
                     </Typography>
                   </ListItemForModal>
                   <ListItemForModal
@@ -264,18 +308,24 @@ const ManagerRequestAccepted = () => {
                     <Typography
                       variant="body1"
                       flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
                     >
                       {t("manager.lastname")}
                     </Typography>
                     <Typography
                       variant="body2"
                       flex={4}
-                      sx={{ color: "#12596B" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
                       fontWeight={400}
                     >
-                      {item.User.last_name}
+                      {item?.User?.last_name}
                     </Typography>
                   </ListItemForModal>
                   <ListItemForModal
@@ -284,18 +334,26 @@ const ManagerRequestAccepted = () => {
                     <Typography
                       variant="body1"
                       flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
                     >
                       {t("manager.email")}
                     </Typography>
                     <Typography
                       variant="body2"
                       flex={4}
-                      sx={{ color: "#12596B" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
                       fontWeight={400}
                     >
-                      {item.User.email ? item.User.email : "Email not provided"}
+                      {item?.User?.email
+                        ? item?.User?.email
+                        : "Email not provided"}
                     </Typography>
                   </ListItemForModal>
                   <ListItemForModal
@@ -304,19 +362,25 @@ const ManagerRequestAccepted = () => {
                     <Typography
                       variant="body1"
                       flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
                     >
                       {t("manager.phonenumber")}
                     </Typography>
                     <Typography
                       variant="body2"
                       flex={4}
-                      sx={{ color: "#12596B" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
                       fontWeight={400}
                     >
-                      {item.User.phone_number
-                        ? item.User.phone_number
+                      {item?.User?.phone_number
+                        ? item?.User?.phone_number
                         : "Phone not provided"}
                     </Typography>
                   </ListItemForModal>
@@ -326,19 +390,25 @@ const ManagerRequestAccepted = () => {
                     <Typography
                       variant="body1"
                       flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
                     >
                       {t("manager.department")}
                     </Typography>
                     <Typography
                       variant="body2"
                       flex={4}
-                      sx={{ color: "#12596B" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
                       fontWeight={400}
                     >
-                      {item.User.department
-                        ? item.User.department
+                      {item?.User?.department
+                        ? item?.User?.department
                         : "Depar... not provided"}
                     </Typography>
                   </ListItemForModal>
@@ -348,18 +418,24 @@ const ManagerRequestAccepted = () => {
                     <Typography
                       variant="body1"
                       flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
                     >
                       {t("manager.propertyname")}
                     </Typography>
                     <Typography
                       variant="body2"
                       flex={4}
-                      sx={{ color: "#12596B" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
                       fontWeight={400}
                     >
-                      {item.Item.productname}
+                      {item?.Item?.productname}
                     </Typography>
                   </ListItemForModal>
                   <ListItemForModal
@@ -368,18 +444,24 @@ const ManagerRequestAccepted = () => {
                     <Typography
                       variant="body1"
                       flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
                     >
                       {t("manager.propertymodel")}
                     </Typography>
                     <Typography
                       variant="body2"
                       flex={4}
-                      sx={{ color: "#12596B" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
                       fontWeight={400}
                     >
-                      {item.Item.productmodel}
+                      {item?.Item?.productmodel}
                     </Typography>
                   </ListItemForModal>
                   <ListItemForModalDescription
@@ -388,18 +470,24 @@ const ManagerRequestAccepted = () => {
                     <Typography
                       variant="body1"
                       flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
                     >
                       {t("manager.description")}
                     </Typography>
                     <Typography
                       variant="body2"
                       flex={4}
-                      sx={{ color: "#12596B" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
                       fontWeight={400}
                     >
-                      {item.Item.productdescription}
+                      {item?.Item?.productdescription}
                     </Typography>
                   </ListItemForModalDescription>
                   <ListItemForModal
@@ -408,18 +496,24 @@ const ManagerRequestAccepted = () => {
                     <Typography
                       variant="body1"
                       flex={2}
-                      sx={{ color: "#12596B" }}
-                      fontWeight={900}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
                     >
                       {t("manager.quantity")}
                     </Typography>
                     <Typography
                       variant="body2"
                       flex={4}
-                      sx={{ color: "#12596B" }}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
                       fontWeight={400}
                     >
-                      {item.quantity_requested}
+                      {item?.quantity_requested}
                     </Typography>
                   </ListItemForModal>
                 </Box>
