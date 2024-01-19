@@ -9,7 +9,7 @@ const user = createSlice({
     singleUser: null,
     allUser: [],
     loadingUser: false,
-    errorUser: false,
+    errorUser: "",
   },
   reducers: {
     createUserStart: (state) => {
