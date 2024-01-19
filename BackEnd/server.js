@@ -104,7 +104,7 @@ app.post(
   resetPassword.resetPassword
 );
 
-app.get(
+app.post(
   "/oldpassword/confirm",
   verifyAccessToken.verifyAccessToken,
   confirmOldPassword.confirmOldPassword

@@ -37,11 +37,11 @@ const requestHeaders = {
 async function resetPassword(req, res) {
 
   
-  let {newPassword, conNewPassword}=req.body
+  let {newPassword}=req.body
 
-  if(newPassword != conNewPassword){
-    res.send({"message":"Password do not Match"});
-  }
+  // if(newPassword != conNewPassword){
+  //   res.send({"message":"Password do not Match"});
+  // }
 
   const hash = bcrypt.hashSync(newPassword, saltRounds);
 
