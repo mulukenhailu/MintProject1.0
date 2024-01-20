@@ -7,9 +7,18 @@ const client = new GraphQLClient(endpoint, {
     },
   })
 
-  const document=gql`
-    query MyQuery @cached {
-        Item (where: {productstatus: {_eq: "available"}}) {
+  let document
+
+  const requestHeaders = {
+    'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
+  }
+
+    async function getAllItemsUtility(all){
+      console.log(arguments[0])
+      if(arguments[0]=="all"){
+        document=gql`
+        query MyQuery @cached {
+          Item {
             productname
             item_number
             productstatus
@@ -20,18 +29,33 @@ const client = new GraphQLClient(endpoint, {
             productPrice
             created_at
             updated_at
+          }
         }
-    }
-  `
+      `
+      }
 
-  const requestHeaders = {
-    'x-hasura-admin-secret': `Wx30jjFtSFPHm50cjzQHSOtOdvGLwsY26svisTrYnuc2gdZmqEo2LEFwWveqq1sF`,
-  }
+      else if (arguments[0]=="available"){
+        document=gql`
+        query MyQuery @cached {
+            Item (where: {productstatus: {_eq: "available"}}) {
+                productname
+                item_number
+                productstatus
+                productquantitynumber
+                productphoto
+                productdescription
+                productmodel
+                productPrice
+                created_at
+                updated_at
+            }
+        }
+      `
 
-    async function getAllItemsUtility(){
+      }
         try{
             const data = await client.request(document,{},requestHeaders);
-            console.log("From get all item", data);
+            console.log("From get all item", data.Item.length);
             return data
         }catch(error){
             throw error

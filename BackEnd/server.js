@@ -198,9 +198,6 @@ app.get(
   managerOwnRequest.managerPastRequest
 );
 
-
-
-
 app.get(
   "/storehead/acceptedrequest",
   verifyAccessToken.verifyAccessToken,
@@ -248,7 +245,7 @@ app.get(
 );
 
 app.get(
-  "/storekeeper/getallitem",
+  "/storekeeper/getallitem/:status",
   verifyAccessToken.verifyAccessToken,
   getAllItem.getAllItem
 );
