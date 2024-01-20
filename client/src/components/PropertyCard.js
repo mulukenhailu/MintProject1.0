@@ -8,7 +8,6 @@ import {
   Box,
   Typography,
   Modal,
-  List,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
@@ -30,22 +29,16 @@ const OrderFormModalContainer = styled(Modal)({
 const OrderFormModalWrapper = styled(Box)({
   width: "100%",
 });
-const CreateButton = styled(Button)({
-  background: "#12596B",
-  "&:hover": {
-    background: "#0F4F5F",
-  },
-});
 
 const PropertyCard = ({
   productname,
   item_number,
   productphoto,
   productquantitynumber,
-  productdescription,
   productmodel,
 }) => {
   const { role_name } = useSelector((state) => state.user.user.Role);
+  const { languange } = useSelector((state) => state.languange);
   const [openOrderModal, setOpenOrderModal] = useState(false);
   const { t } = useTranslation("global");
 
@@ -59,7 +52,7 @@ const PropertyCard = ({
     <Card
       sx={{
         padding: "15px 2px 20px 2px",
-        height: "500px",
+        height: "400px",
         background: "#fff",
         boxShadow: "5px 10px 10px rgba(0, 0, 0, 0.2)",
         border: "1px solid #12596B",
@@ -132,43 +125,57 @@ const PropertyCard = ({
           </Typography>
         </CardContentItem>
       </CardContent>
-      <CardActions>
+      <CardActions
+        sx={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          gap: "15px",
+        }}
+      >
         {role_name === "employee" || role_name === "manager" ? (
-          <CreateButton
-            size="medium"
+          <Button
+            size="small"
+            fullWidth
             sx={{
-              color: "#fff",
               fontSize: { xs: "12px", md: "16px" },
-              marginRight: "5px",
-              width: "100px",
               textTransform: "capitalize",
+              flex: "1",
+              color: "#12596B",
+              border: "2px solid #12596B",
+              fontWeight: languange === "en" ? null : 600,
             }}
-            variant="contained"
+            variant="outlined"
             onClick={() => handleClickModal()}
           >
             {t("home.order")}
-          </CreateButton>
-        ) : null}
-
-        <Link to={`/details/${item_number}`}>
-          <Button
-            size="medium"
-            sx={{
-              color: "#fff",
-              fontSize: { xs: "12px", md: "16px" },
-              width:
-                role_name === "employee" || role_name === "manager"
-                  ? "100px"
-                  : "320px",
-              textTransform: "capitalize",
-            }}
-            variant="contained"
-            color="warning"
-          >
-            {t("home.detail")}
           </Button>
-        </Link>
+        ) : null}
+        <Box
+          sx={{
+            flex:
+              role_name === "employee" || role_name === "manager" ? "1.3" : "1",
+          }}
+        >
+          <Box component={Link} to={`/details/${item_number}`}>
+            <Button
+              size="small"
+              fullWidth
+              sx={{
+                fontSize: { xs: "12px", md: "18px" },
+                textTransform: "capitalize",
+                fontWeight: languange === "en" ? null : 600,
+                borderWidth: "2px",
+              }}
+              variant="outlined"
+              color="warning"
+            >
+              {t("home.detail")}
+            </Button>
+          </Box>
+        </Box>
       </CardActions>
+
       <OrderFormModalContainer
         open={openOrderModal}
         onClose={() => setOpenOrderModal(false)}

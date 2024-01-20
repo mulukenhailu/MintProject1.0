@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Box, Button, ButtonGroup, styled } from "@mui/material";
 import AcceptedItemsComponent from "./AcceptedItems";
 import PendingItemComponent from "./PendingItem";
@@ -7,34 +7,49 @@ import PendingIcon from "@mui/icons-material/Pending";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  removeCurrentRequestPage,
+  setCurrentRequestPage,
+} from "../../State/ReduxToolkit/Slices/requestSlice";
 
+const ButtonContainer = styled(ButtonGroup)({
+  position: "sticky",
+  top: "73px",
+  height: "35px",
+  marginBottom: "30px",
+  zIndex: "10",
+});
 const AllStoreRequest = () => {
-  const [activeItem, setActiveItem] = useState("pending");
+  const dispatch = useDispatch();
+  const { currentRequestPage } = useSelector((state) => state.request);
   const { t } = useTranslation("global");
-  const ButtonContainer = styled(ButtonGroup)({
-    position: "sticky",
-    top: "73px",
-    height: "35px",
-    marginBottom: "30px",
-    zIndex: "10",
-  });
+
+  useEffect(() => {
+    dispatch(removeCurrentRequestPage());
+  }, []);
+
   const PendingButton = styled(Button)(({ theme }) => ({
     fontSize: "16px",
     borderRadius: "0px",
     background:
-      activeItem === "pending" ? theme.palette.primary.main : "#666666",
+      currentRequestPage === "pending" ? theme.palette.primary.main : "#666666",
     color: "#fff",
   }));
   const AcceptButton = styled(Button)(({ theme }) => ({
     fontSize: "16px",
     background:
-      activeItem === "accepted" ? theme.palette.primary.main : "#666666",
+      currentRequestPage === "accepted"
+        ? theme.palette.primary.main
+        : "#666666",
     color: "#fff",
   }));
   const DeclineButton = styled(Button)(({ theme }) => ({
     fontSize: "16px",
     background:
-      activeItem === "declined" ? theme.palette.primary.main : "#666666",
+      currentRequestPage === "declined"
+        ? theme.palette.primary.main
+        : "#666666",
     color: "#fff",
   }));
 
@@ -49,7 +64,7 @@ const AllStoreRequest = () => {
           fullWidth
         >
           <PendingButton
-            onClick={() => setActiveItem("pending")}
+            onClick={() => dispatch(setCurrentRequestPage("pending"))}
             startIcon={<PendingIcon />}
             sx={{ fontSize: "20px" }}
           >
@@ -59,7 +74,7 @@ const AllStoreRequest = () => {
             </Box>
           </PendingButton>
           <AcceptButton
-            onClick={() => setActiveItem("accepted")}
+            onClick={() => dispatch(setCurrentRequestPage("accepted"))}
             startIcon={<ThumbUpAltIcon />}
             sx={{ fontSize: "20px" }}
           >
@@ -68,7 +83,7 @@ const AllStoreRequest = () => {
             </Box>
           </AcceptButton>
           <DeclineButton
-            onClick={() => setActiveItem("declined")}
+            onClick={() => dispatch(setCurrentRequestPage("declined"))}
             startIcon={<ThumbDownAltIcon />}
             sx={{ fontSize: "20px" }}
           >
@@ -78,9 +93,9 @@ const AllStoreRequest = () => {
           </DeclineButton>
         </ButtonContainer>
         <Box>
-          {activeItem === "pending" ? (
+          {currentRequestPage === "pending" ? (
             <PendingItemComponent />
-          ) : activeItem === "accepted" ? (
+          ) : currentRequestPage === "accepted" ? (
             <AcceptedItemsComponent />
           ) : (
             <DeclinedItemsComponent />

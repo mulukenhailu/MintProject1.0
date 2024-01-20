@@ -27,6 +27,7 @@ export const UserDetailsModal = ({ userId, userName }) => {
           withCredentials: true,
         })
         .then((response) => {
+          console.log("specific user for the user", response.data);
           setUser(response.data);
           setLoading(false);
         })

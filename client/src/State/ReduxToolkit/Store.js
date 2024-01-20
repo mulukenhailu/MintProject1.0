@@ -14,6 +14,7 @@ import requestReducer from "./Slices/requestSlice";
 import uploadReducer from "./Slices/uploadImageSlice";
 import orderReducer from "./Slices/orderSlice";
 import languangeReducer from "./Slices/languange";
+import notificationReducer from "./Slices/notificationSlice";
 
 const persistConfig = {
   key: "root",
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   upload: uploadReducer,
   order: orderReducer,
   languange: languangeReducer,
+  notification: notificationReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -43,6 +43,7 @@ const UserDetailModal = ({ detailModal, setDetailModal, currentUserId }) => {
   const [userManager, setUserManager] = useState({});
   const { allUser } = useSelector((state) => state.user);
   const currentUser = allUser.find((user) => user.user_name === currentUserId);
+  const { languange } = useSelector((state) => state.languange);
 
   useEffect(() => {
     dispatch({ type: GET_ALL_MANAGERS });
@@ -71,7 +72,7 @@ const UserDetailModal = ({ detailModal, setDetailModal, currentUserId }) => {
         aria-describedby="modal-modal-description"
       >
         <UserDetailModalWrapper
-          width={{ xs: "90%", sm: "70%", md: "50%", lg: "40%" }}
+          width={{ xs: "90%", sm: "70%", md: "50%", lg: "60%" }}
         >
           <List sx={{ width: "100%", padding: "10px 20px 30px 20px" }}>
             <Typography
@@ -99,39 +100,204 @@ const UserDetailModal = ({ detailModal, setDetailModal, currentUserId }) => {
                 },
               }}
             >
-              <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
-                <Label>{t("userlist.firstname")}</Label>
-                <Value>{currentUser?.first_name || "Not Available"}</Value>
+              <ListItemForModal
+                sx={{
+                  display: {
+                    xs: "block",
+                    sm: "flex",
+                  },
+                }}
+              >
+                <Label
+                  flex={1}
+                  variant="body1"
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
+                >
+                  {t("userlist.firstname")}
+                </Label>
+                <Value
+                  variant="body2"
+                  flex={1}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
+                  fontWeight={400}
+                >
+                  {currentUser?.first_name || "Not Available"}
+                </Value>
               </ListItemForModal>
               <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
-                <Label>{t("userlist.lastname")}</Label>
-                <Value>{currentUser?.last_name || "Not Available"}</Value>
+                <Label
+                  flex={1}
+                  variant="body1"
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
+                >
+                  {t("userlist.lastname")}
+                </Label>
+                <Value
+                  variant="body2"
+                  flex={1}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
+                  fontWeight={400}
+                >
+                  {currentUser?.last_name || "Not Available"}
+                </Value>
               </ListItemForModal>
               <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
-                <Label>{t("userlist.username")}</Label>
-                <Value>{currentUser?.user_name || "Not Available"}</Value>
+                <Label
+                  flex={1}
+                  variant="body1"
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
+                >
+                  {t("userlist.username")}
+                </Label>
+                <Value
+                  variant="body2"
+                  flex={1}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
+                  fontWeight={400}
+                >
+                  {currentUser?.user_name || "Not Available"}
+                </Value>
               </ListItemForModal>
               <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
-                <Label>{t("userlist.email")}</Label>
-                <Value>{currentUser?.email || "Not Available"}</Value>
+                <Label
+                  flex={1}
+                  variant="body1"
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
+                >
+                  {t("userlist.email")}
+                </Label>
+                <Value
+                  variant="body2"
+                  flex={1}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
+                  fontWeight={400}
+                >
+                  {currentUser?.email || "Not Available"}
+                </Value>
               </ListItemForModal>
               <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
-                <Label>{t("userlist.phonenumber")}</Label>
-                <Value>{currentUser?.phone_number || "Not Available"}</Value>
+                <Label
+                  flex={1}
+                  variant="body1"
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
+                >
+                  {t("userlist.phonenumber")}
+                </Label>
+                <Value
+                  variant="body2"
+                  flex={1}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
+                  fontWeight={400}
+                >
+                  {currentUser?.phone_number || "Not Available"}
+                </Value>
               </ListItemForModal>
               <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
-                <Label>{t("userlist.department")}</Label>
-                <Value>{currentUser?.department || "Not Available"}</Value>
+                <Label
+                  flex={1}
+                  variant="body1"
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
+                >
+                  {t("userlist.department")}
+                </Label>
+                <Value
+                  variant="body2"
+                  flex={1}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
+                  fontWeight={400}
+                >
+                  {currentUser?.department || "Not Available"}
+                </Value>
               </ListItemForModal>
               <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
-                <Label>{t("userlist.position")}</Label>
-                <Value>{currentUser?.Role.role_name || "Not Available"}</Value>
+                <Label
+                  flex={1}
+                  variant="body1"
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
+                >
+                  {t("userlist.position")}
+                </Label>
+                <Value
+                  variant="body2"
+                  flex={1}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
+                  fontWeight={400}
+                >
+                  {currentUser?.Role.role_name || "Not Available"}
+                </Value>
               </ListItemForModal>
               <ListItemForModal sx={{ display: { xs: "block", sm: "flex" } }}>
-                <Label>{t("userlist.manager")}</Label>
-                <Value>
+                <Label
+                  flex={1}
+                  variant="body1"
+                  sx={{
+                    color: "#12596B",
+                    fontWeight: languange === "en" ? 500 : 900,
+                    fontSize: languange === "en" ? 20 : 24,
+                  }}
+                >
+                  {t("userlist.manager")}
+                </Label>
+                <Value
+                  variant="body2"
+                  flex={1}
+                  sx={{
+                    color: "#12596B",
+                    fontSize: languange === "en" ? 16 : 18,
+                  }}
+                  fontWeight={400}
+                >
                   {userManager
-                    ? userManager.first_name + userManager.last_name
+                    ? userManager.first_name + " " + userManager.last_name
                     : "Manager not assigned"}
                 </Value>
               </ListItemForModal>

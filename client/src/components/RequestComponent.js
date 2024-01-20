@@ -3,10 +3,16 @@ import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { setNotificationId } from "../State/ReduxToolkit/Slices/notificationSlice";
 
 const RequestComponent = () => {
-  const [notifications, setNotifications] = useState([]);
   const { t } = useTranslation("global");
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const dispatch = useDispatch();
+  const [notifications, setNotifications] = useState([]);
+  const { languange } = useSelector((state) => state.languange);
+
   useEffect(() => {
     {
       const getAllNotificationList = () => {
@@ -41,7 +47,9 @@ const RequestComponent = () => {
     (a, b) => new Date(b.created_at) - new Date(a.created_at)
   );
 
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  };
 
   if (notifications.length === 0) {
     return (
@@ -77,7 +85,10 @@ const RequestComponent = () => {
             component={Link}
             to={`/notification/${item?.Notify_Id}`}
             key={index}
-            onClick={() => handleUpdateNotification(item?.Notify_Id)}
+            onClick={() => {
+              handleUpdateNotification(item?.Notify_Id);
+              dispatch(setNotificationId(item?.Notify_Id));
+            }}
           >
             {item?.isViwed ? null : (
               <Box
@@ -127,7 +138,12 @@ const RequestComponent = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography flex={2} color={"#12596B"} variant="h6">
+                <Typography
+                  flex={2}
+                  color={"#12596B"}
+                  variant="h6"
+                  sx={{ fontWeight: languange === "en" ? 500 : 700 }}
+                >
                   {t("notification.from")}
                 </Typography>
                 <Typography flex={5} color={"#12596B"} variant="body1">
@@ -137,15 +153,20 @@ const RequestComponent = () => {
               <Box
                 sx={{
                   display: { xs: "block", md: "flex" },
-                  gap: "4%",
+                  gap: "2%",
                   alignItems: "center",
                 }}
               >
-                <Typography flex={2} color={"#12596B"} variant="h6">
+                <Typography
+                  flex={2}
+                  color={"#12596B"}
+                  variant="h6"
+                  sx={{ fontWeight: languange === "en" ? 500 : 700 }}
+                >
                   {t("notification.message")}
                 </Typography>
                 <Typography flex={5} color={"#12596B"} variant="body1">
-                  {item?.description}
+                  {truncateText(item?.description, 30)}
                 </Typography>
               </Box>
             </Box>

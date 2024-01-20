@@ -30,6 +30,7 @@ import { useAppStore } from "../appStore";
 import { useSelector, useDispatch } from "react-redux";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { useTranslation } from "react-i18next";
+import { removeCurrentRequestPage } from "../State/ReduxToolkit/Slices/requestSlice";
 
 const drawerWidth = "fit-content";
 
@@ -90,13 +91,13 @@ const LogOutContainer = styled(ListItem)({
 
 export default function Sidebar() {
   const theme = useTheme();
+  const { t } = useTranslation("global");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const open = useAppStore((state) => state.dopen);
   const location = useLocation();
-  const { t } = useTranslation("global");
-
-  const isActive = (route) => location.pathname === `/${route}`;
+  const { languange } = useSelector((state) => state.languange);
+  const isActive = (route) => location.pathname.startsWith(`/${route}`);
   const user = useSelector((state) => state.user.user);
   const role_name = user.Role ? user.Role.role_name : null;
 
@@ -165,7 +166,7 @@ export default function Sidebar() {
                 }}
                 primaryTypographyProps={{
                   fontSize: "20px",
-                  fontWeight: "900",
+                  fontWeight: languange === "en" ? 400 : 900,
                 }}
               />
             </ListItemButton>
@@ -207,7 +208,7 @@ export default function Sidebar() {
                 }}
                 primaryTypographyProps={{
                   fontSize: "20px",
-                  fontWeight: "900",
+                  fontWeight: languange === "en" ? 400 : 900,
                 }}
               />
             </ListItemButton>
@@ -252,7 +253,7 @@ export default function Sidebar() {
                   }}
                   primaryTypographyProps={{
                     fontSize: "20px",
-                    fontWeight: "900",
+                    fontWeight: languange === "en" ? 400 : 900,
                   }}
                 />
               </ListItemButton>
@@ -298,7 +299,7 @@ export default function Sidebar() {
                   }}
                   primaryTypographyProps={{
                     fontSize: "20px",
-                    fontWeight: "900",
+                    fontWeight: languange === "en" ? 400 : 900,
                   }}
                 />
               </ListItemButton>
@@ -345,7 +346,7 @@ export default function Sidebar() {
                   }}
                   primaryTypographyProps={{
                     fontSize: "20px",
-                    fontWeight: "900",
+                    fontWeight: languange === "en" ? 400 : 900,
                   }}
                 />
               </ListItemButton>
@@ -394,7 +395,7 @@ export default function Sidebar() {
                   }}
                   primaryTypographyProps={{
                     fontSize: "20px",
-                    fontWeight: "900",
+                    fontWeight: languange === "en" ? 400 : 900,
                   }}
                 />
               </ListItemButton>
@@ -438,7 +439,7 @@ export default function Sidebar() {
                   }}
                   primaryTypographyProps={{
                     fontSize: "20px",
-                    fontWeight: "900",
+                    fontWeight: languange === "en" ? 400 : 900,
                   }}
                 />
               </ListItemButton>
@@ -461,6 +462,7 @@ export default function Sidebar() {
               }}
               component={Link}
               to="/storemanager"
+              onClick={() => dispatch(removeCurrentRequestPage())}
             >
               <ListItemButton
                 sx={{
@@ -487,7 +489,7 @@ export default function Sidebar() {
                   }}
                   primaryTypographyProps={{
                     fontSize: "20px",
-                    fontWeight: "900",
+                    fontWeight: languange === "en" ? 400 : 900,
                   }}
                 />
               </ListItemButton>
@@ -510,6 +512,7 @@ export default function Sidebar() {
               }}
               component={Link}
               to="/storekeeper"
+              onClick={() => dispatch(removeCurrentRequestPage())}
             >
               <ListItemButton
                 sx={{
@@ -536,7 +539,7 @@ export default function Sidebar() {
                   }}
                   primaryTypographyProps={{
                     fontSize: "20px",
-                    fontWeight: "900",
+                    fontWeight: languange === "en" ? 400 : 900,
                   }}
                 />
               </ListItemButton>
@@ -555,6 +558,7 @@ export default function Sidebar() {
               }}
               component={Link}
               to="/manager"
+              onClick={() => dispatch(removeCurrentRequestPage())}
             >
               <ListItemButton
                 sx={{
@@ -581,7 +585,7 @@ export default function Sidebar() {
                   }}
                   primaryTypographyProps={{
                     fontSize: "20px",
-                    fontWeight: "900",
+                    fontWeight: languange === "en" ? 400 : 900,
                   }}
                 />
               </ListItemButton>
@@ -630,7 +634,7 @@ export default function Sidebar() {
                   }}
                   primaryTypographyProps={{
                     fontSize: "20px",
-                    fontWeight: "900",
+                    fontWeight: languange === "en" ? 400 : 900,
                   }}
                 />
               </ListItemButton>
@@ -668,7 +672,7 @@ export default function Sidebar() {
                 }}
                 primaryTypographyProps={{
                   fontSize: "20px",
-                  fontWeight: "900",
+                  fontWeight: languange === "en" ? 400 : 900,
                 }}
               />
             </ListItemButton>
