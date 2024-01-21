@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { GET_SINGLE_USER } from "../State/ReduxSaga/Types/userTypes";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AppBar = styled(
   MuiAppBar,
@@ -26,6 +27,7 @@ const AppBar = styled(
 
 export default function Header() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -92,6 +94,12 @@ export default function Header() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogOut = () => {
+    navigate("/");
+    localStorage.removeItem("persist:root");
+    localStorage.removeItem("my_app_store");
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -115,7 +123,7 @@ export default function Header() {
       <MenuItem onClick={handleMenuClose} component={Link} to="/resetpassword">
         Reset Password
       </MenuItem>
-      <MenuItem onClick={handleMenuClose} component={Link} to="/resetpassword">
+      <MenuItem onClick={handleLogOut} component={Link} to="/">
         Logout
       </MenuItem>
     </Menu>
@@ -185,7 +193,7 @@ export default function Header() {
         </IconButton>
         <p>Reset Password</p>
       </MenuItem>
-      <MenuItem component={Link} to="/profile" onClick={handleProfileMenuOpen}>
+      <MenuItem component={Link} to="/" onClick={handleLogOut}>
         <IconButton
           size="large"
           aria-label="account of current user"

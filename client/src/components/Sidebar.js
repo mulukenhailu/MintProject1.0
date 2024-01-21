@@ -24,6 +24,8 @@ import ListItemText from "@mui/material/ListItemText";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import RequestPageIcon from "@mui/icons-material/RequestPage";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
+import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
+import InventoryIcon from "@mui/icons-material/Inventory";
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "../appStore";
@@ -242,7 +244,7 @@ export default function Sidebar() {
                     justifyContent: "center",
                   }}
                 >
-                  <BorderColorIcon sx={{ color: "#12596B" }} />
+                  <LocalGroceryStoreIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary={t("sidebar.order")}
@@ -428,7 +430,7 @@ export default function Sidebar() {
                     justifyContent: "center",
                   }}
                 >
-                  <StoreIcon sx={{ color: "#12596B" }} />
+                  <InventoryIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
                   primary={t("sidebar.history")}
@@ -673,10 +675,10 @@ export default function Sidebar() {
                     justifyContent: "center",
                   }}
                 >
-                  <RequestPageIcon sx={{ color: "#12596B" }} />
+                  <StoreIcon sx={{ color: "#12596B" }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Properties"
+                  primary={t("sidebar.properties")}
                   sx={{
                     opacity: open ? 1 : 0,
                     display: { xs: "none", md: "block" },
