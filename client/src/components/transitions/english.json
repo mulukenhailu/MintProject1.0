@@ -2,7 +2,8 @@
   "login": {
     "username": "User Name",
     "password": "Password",
-    "login": "Login"
+    "login": "Login",
+    "logging": "Logging..."
   },
   "sidebar": {
     "home": "Home",
@@ -36,6 +37,7 @@
     "ordertitle": "Order Request",
     "quantity": "Quantity",
     "order": "Order",
+    "orderloading": "Putting to database...",
     "error": "Error while requesting please try again",
     "create": "Order request done successfully"
   },

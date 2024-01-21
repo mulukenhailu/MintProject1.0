@@ -10,6 +10,8 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import BeatLoader from "react-spinners/BeatLoader";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const SetPasswordButton = styled(Button)({
@@ -31,6 +33,7 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
   const [response, setResponse] = useState("");
+  const { languange } = useSelector((state) => state.languange);
 
   useEffect(() => {
     if (error || response || errorModal) {
@@ -98,8 +101,9 @@ const ResetPassword = () => {
         setResponse(true);
         console.log(response.data);
         setTimeout(() => {
+          setResponse("");
           setResetPasswordModal(false);
-        }, 5000);
+        }, 60000);
       })
       .catch((error) => {
         setLoadingModal(false);
@@ -179,7 +183,17 @@ const ResetPassword = () => {
           />
           <SetPasswordButton
             variant="contained"
-            sx={{ marginTop: "20px" }}
+            disabled={loading}
+            sx={{
+              marginTop: "20px",
+              color: "white",
+              "&:disabled": {
+                cursor: "not-allowed",
+                pointerEvents: "all !important",
+                color: "#fff",
+                background: "#12596b",
+              },
+            }}
             onClick={handleSetOldPassword}
           >
             Set Password
@@ -246,18 +260,36 @@ const ResetPassword = () => {
             </Typography>
           )}
           {response && (
-            <Typography
-              variant="body1"
-              color={"white"}
-              textAlign={"center"}
+            <Box
               sx={{
-                background: "#12596b",
-                padding: "5px 10px",
-                margin: "10px 0px 10px 0px",
+                backgroundColor: "#12596B",
+                color: "white",
+                width: "100%",
+                marginBottom: "20px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "5px",
               }}
             >
-              Password reset successfully
-            </Typography>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <Typography
+                  sx={{
+                    fontSize: languange === "en" ? 16 : 18,
+                    padding: "15px 0px",
+                  }}
+                >
+                  Processing takes some time
+                </Typography>
+                <BeatLoader
+                  color={"#fff"}
+                  loading={response}
+                  size={10}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </Box>
+            </Box>
           )}
           <TextField
             required
@@ -279,7 +311,17 @@ const ResetPassword = () => {
           />
           <SetPasswordButton
             variant="contained"
-            sx={{ marginTop: "20px" }}
+            disabled={loadingModal}
+            sx={{
+              marginTop: "20px",
+              color: "white",
+              "&:disabled": {
+                cursor: "not-allowed",
+                pointerEvents: "all !important",
+                color: "#fff",
+                background: "#12596b",
+              },
+            }}
             onClick={handlePasswordReset}
           >
             Submit

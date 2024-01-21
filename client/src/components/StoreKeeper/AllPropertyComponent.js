@@ -26,6 +26,8 @@ import { UserDetailsModal } from "./UserDetailsModal";
 import PropertyDetails from "./PropertyDetails";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ProductDetailContainer = styled(Modal)({
   display: "flex",
@@ -53,6 +55,7 @@ const UserDetailModalWrapper = styled(Box)({
 
 const AllPropertyComponent = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { t } = useTranslation("global");
   const [userDetail, setUserDetail] = useState(false);
   const [propertyDetail, setPropertyDetail] = useState(false);
@@ -60,16 +63,25 @@ const AllPropertyComponent = () => {
   const [userName, setUserName] = useState("");
   const [itemNo, setItemNo] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [allPropeperties, setAllProperties] = useState([]);
   const { languange } = useSelector((state) => state.languange);
   const { allRequest } = useSelector((state) => state.request);
 
   useEffect(() => {
-    dispatch({ type: GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER });
+    axios
+      .get("/storekeeper/getallitem/all", { withCredentials: true })
+      .then((response) => {
+        console.log("get all properties", response);
+        setAllProperties(response.data.Item);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
-  const sortedRequest = [...allRequest]
-    .filter((user) =>
-      user.employee_username.toLowerCase().includes(searchTerm.toLowerCase())
+  const sortedRequest = [...allPropeperties]
+    .filter((property) =>
+      property?.productname.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
@@ -202,67 +214,29 @@ const AllPropertyComponent = () => {
             <TableBody>
               {sortedRequest?.map((item, index) => (
                 <TableRow key={index}>
-                  <TableCell
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setUserDetail(true);
-                      setUserName(item?.employee_username);
-                      setUserId(1);
-                    }}
-                  >
-                    {item?.employee_username}
-                  </TableCell>
-                  <TableCell
-                    sx={{ textAlign: "center", cursor: "pointer" }}
-                    onClick={() => {
-                      setUserDetail(true);
-                      setUserName(item?.manager_username);
-                      setUserId(2);
-                    }}
-                  >
-                    {item?.manager_username}
-                  </TableCell>
-                  <TableCell
-                    sx={{ textAlign: "center", cursor: "pointer" }}
-                    onClick={() => {
-                      setUserDetail(true);
-                      setUserName(item?.storehead_username);
-                      setUserId(3);
-                    }}
-                  >
-                    {item?.storehead_username}
-                  </TableCell>
-                  <TableCell
-                    sx={{ textAlign: "center", cursor: "pointer" }}
-                    onClick={() => {
-                      setUserDetail(true);
-                      setUserName(item?.storekeeper_username);
-                      setUserId(4);
-                    }}
-                  >
-                    {item?.storekeeper_username}
-                  </TableCell>
-                  <TableCell
-                    sx={{ textAlign: "center", cursor: "pointer" }}
-                    onClick={() => {
-                      setUserDetail(true);
-                      setUserName(item?.storekeeper_username);
-                      setUserId(4);
-                    }}
-                  >
-                    {item?.storekeeper_username}
+                  <TableCell>{item?.productname}</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {item?.productmodel}
                   </TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
-                    {item?.confirmation_number}
+                    {item?.productPrice}
                   </TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
-                    <SettingsAccessibilityIcon
-                      sx={{ color: "blue" }}
-                      onClick={() => {
-                        setItemNo(item.item_no);
-                        setPropertyDetail(true);
-                      }}
-                    />
+                    {item?.productquantitynumber}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {item?.productstatus}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <IconButton
+                      sx={{ color: "#EF9630", textAlign: "center" }}
+                      onClick={() => navigate(`/allproperty/editproperty`)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <SettingsAccessibilityIcon sx={{ color: "blue" }} />
                   </TableCell>
                 </TableRow>
               ))}
