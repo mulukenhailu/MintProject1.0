@@ -73,6 +73,7 @@ const UserOrderComponent = () => {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (role_name === "employee") {
       const getAllOrderList = () => {
         setLoading(true);

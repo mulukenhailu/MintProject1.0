@@ -46,6 +46,7 @@ const ProfilePage = () => {
   const { languange } = useSelector((state) => state.languange);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch(removeUploadImage());
   }, []);
   const [profileInfo, setProfileInfo] = useState({

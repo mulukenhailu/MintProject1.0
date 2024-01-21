@@ -185,8 +185,7 @@ const RequestDetailPageComponent = () => {
                 style={{
                   width: "100%",
                   height: "100%",
-                  objectFit: "cover",
-                  border: "1px solid #12596B",
+                  objectFit: "fill",
                 }}
               />
             </Box>
