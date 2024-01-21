@@ -2,7 +2,8 @@
   "login": {
     "username": "መለያ ስም",
     "password": "የይለፍ ቃል",
-    "login": "ይግቡ"
+    "login": "ይግቡ",
+    "logging": "በመግባት ላይ..."
   },
   "sidebar": {
     "home": "መግቢያ",
@@ -39,6 +40,7 @@
     "ordertitle": "ማዘዣ ቅጽ",
     "quantity": "መጠኑን አስገባ",
     "order": "ዕዘዝ",
+    "orderloading": "ወደ ዳታቤዝ በማስገባት ላይ...",
     "error": "ትዕዛዙን ማስተናገድ አልተቻለም እንደገና ይሞክሩ",
     "create": "ትዕዛዙ ተቀባይነት አግኝቷል"
   },

@@ -20,6 +20,7 @@ import RequestPage from "./pages/RequestPage";
 import RequestPageDetail from "./pages/RequestPageDetail";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import AllPropertyPage from "./pages/StoreKeeper/AllPropertyPage";
+import PropertyEditComponent from "./pages/StoreKeeper/PropertyEdit";
 import global_en from "./components/transitions/english.json";
 import global_am from "./components/transitions/amharic.json";
 import { useTranslation, initReactI18next } from "react-i18next";
@@ -85,6 +86,12 @@ function App() {
         )}
         {role_name === "storekeeper" && (
           <Route path="/allproperty" element={<AllPropertyPage />} />
+        )}
+        {role_name === "storekeeper" && (
+          <Route
+            path="/allproperty/editproperty"
+            element={<PropertyEditComponent />}
+          />
         )}
         <Route path="/resetpassword" element={<ResetPasswordPage />} />
         <Route path="*" element={<ErrorPage />} />
