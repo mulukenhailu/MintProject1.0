@@ -178,6 +178,21 @@
     "available": "መውጣት ይችላል",
     "unavailable": "መውጣት የማይችል"
   },
+  "updateproduct": {
+    "update": "ዕቃ ማዘመን",
+    "propertyname": "የዕቃው ስም",
+    "propertymodel": "የዕቃው ሞዴል",
+    "productsource": "የዕቃው ምንጭ",
+    "productstandardtype": "የዕቃው የሞፌድ ቁጥር",
+    "productmodelnumber": "የዕቃው ሞዴል ቁጥር",
+    "productstatus": "የዕቃው ሁኔታ",
+    "quantity": "የዕቃው መጠን",
+    "productintialserialnumber": "የዕቃው የመጨረሻ ቁጥር",
+    "productprice": "የዕቃው ዋጋ",
+    "description": "የዕቃው መግለጫ",
+    "available": "መውጣት ይችላል",
+    "unavailable": "መውጣት የማይችል"
+  },
   "createuser": {
     "firstname": "የመጀመሪያ ስም",
     "lastname": "የአባት ስም",

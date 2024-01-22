@@ -1,26 +1,25 @@
+import React, { useState, useEffect } from "react";
 import {
-  Box,
-  Button,
   MenuItem,
-  Paper,
   TextField,
+  Button,
+  Paper,
   Typography,
+  Box,
   styled,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { EDIT_USER_BY_ADMIN } from "../../State/ReduxSaga/Types/userTypes";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  removeUserError,
-  removeEditUser,
-} from "../../State/ReduxToolkit/Slices/userSlice";
-import { useParams, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { GET_ALL_MANAGERS } from "../../State/ReduxSaga/Types/mangerType";
+import { UPLOAD_IMAGE } from "../../State/ReduxSaga/Types/uploadImageType";
+import { removeUploadImage } from "../../State/ReduxToolkit/Slices/uploadImageSlice";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import BeatLoader from "react-spinners/BeatLoader";
+import toast from "react-hot-toast";
 
-const EditUserButton = styled(Button)({
-  marginTop: "20px",
+const CreateButton = styled(Button)({
   background: "#12596B",
   "&:hover": {
     background: "#0F4F5F",
@@ -29,122 +28,219 @@ const EditUserButton = styled(Button)({
 
 const PropertyEditComponent = () => {
   const dispatch = useDispatch();
-  const params = useParams();
   const { t } = useTranslation("global");
-  const navigate = useNavigate();
-
-  const username = params.username;
-
-  const { allUser, editUser, errorUser, loadingUser } = useSelector(
-    (state) => state.user
-  );
-  const { allManagers } = useSelector((state) => state.manager);
+  const params = useParams();
+  const itemnumber = params.itemnumber;
   const { languange } = useSelector((state) => state.languange);
+  const [loadingProperty, setLoadingProperty] = useState(false);
+  const [image, setImage] = useState(null);
+  const [fileName, setFileName] = useState("Non Selected");
+  const [error, setError] = useState(false);
+  const [response, setResponse] = useState(false);
 
-  const currentUser = allUser.find((user) => user.user_name === username);
-  const [buttonClicked, setButtonClicked] = useState(false);
+  const { uploadedImage, errorImage, loadingUploadingImage } = useSelector(
+    (state) => state.upload
+  );
 
-  useEffect(() => {
-    dispatch({ type: GET_ALL_MANAGERS });
-  }, []);
-
-  const managersList = [
-    { value: null, label: "Select Manager" },
-    ...allManagers?.map((item) => ({
-      value: `${item.user_name}`,
-      label: `${item.first_name} ${item.last_name}`,
-    })),
+  const Sources = [
+    { value: 101, label: "101" },
+    { value: 103, label: "103" },
+  ];
+  const ProductMainType = [
+    { value: 4531, label: "4531" },
+    { value: 4529, label: "4529" },
+    { value: 4521, label: "4521" },
+  ];
+  const productStatus = [
+    { value: "available", label: t("updateproduct.available") },
+    { value: "unavailable", label: t("updateproduct.unavailable") },
   ];
 
-  useEffect(() => {
-    if (errorUser || editUser) {
-      setTimeout(() => {
-        dispatch(removeEditUser());
-        dispatch(removeUserError());
-      }, 5000);
-    }
-  }, [errorUser, editUser]);
-
-  const [user, setUser] = useState({
-    first_name: currentUser ? currentUser.first_name : "",
-    last_name: currentUser ? currentUser.last_name : "",
-    Password: "",
-    user_name: currentUser ? currentUser.user_name : "",
-    // role: currentUser ? currentUser.Role.role_name : "",
-    department: currentUser ? currentUser.department : "",
-    email: currentUser ? currentUser.email : "",
-    phone_number: currentUser ? currentUser.phone_number : "",
-    manager_username: managersList ? managersList.manager_username : null,
+  const [property, setProperty] = useState({
+    productname: "",
+    productmodel: "",
+    productsource: "",
+    productstandardtype: "",
+    productmodelnumber: "",
+    productstatus: "",
+    productquantitynumber: "",
+    productdescription: "",
+    productphoto: "",
+    productPrice: "",
+    productserialnumbers: [],
+    Oldproductmodelnumber: "",
+    Newproductmodelnumber: "",
+    ItemNumber: "",
   });
 
-  console.log("user", user);
-
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setProperty({
+      ...property,
       [name]: value,
     });
   };
-
-  const handleEditUser = (e) => {
-    e.preventDefault();
-    dispatch({ type: EDIT_USER_BY_ADMIN, user });
-    setButtonClicked(true);
-  };
+  useEffect(() => {
+    dispatch(removeUploadImage());
+  }, [itemnumber]);
 
   useEffect(() => {
-    if (!errorUser && !loadingUser && buttonClicked && editUser) {
-      setUser({
-        first_name: "",
-        last_name: "",
-        email: "",
-        phone_number: "",
-        department: "",
-        manager_username: "",
-        Password: "",
+    axios
+      .get(`/storekeeper/getitem/${itemnumber}`, { withCredentials: true })
+      .then((response) => {
+        console.log("single element", response);
+        setProperty({
+          productname: response.data.productname,
+          productmodel: response.data.productmodel,
+          productsource: response.data.productsource,
+          productstandardtype: response.data.productstandardtype,
+          productstatus: response.data.productstatus,
+          productquantitynumber: response.data.productquantitynumber,
+          productdescription: response.data.productdescription,
+          productphoto: response.data.productphoto,
+          productPrice: response.data.productPrice,
+          productserialnumbers: response.data.productserialnumbers,
+          Oldproductmodelnumber: response.data.productmodelnumber,
+          Newproductmodelnumber: response.data.productmodelnumber,
+          itemNumber: itemnumber,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      setTimeout(() => {
-        navigate("/usersList");
-      }, 6000);
+  }, []);
+
+  const handleImageUpload = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (!file) {
+      return;
     }
-  }, [editUser]);
+    setFileName(file?.name);
+    const formData = new FormData();
+    formData.append("image", file);
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const imageUrl = event.target.result;
+        setImage(imageUrl);
+      };
+
+      reader.readAsDataURL(file);
+    }
+    const sendImage = formData.get("image");
+    dispatch({ type: UPLOAD_IMAGE, sendImage });
+  };
+
+  const handleUpdateProperty = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    const productSerialNumbers = [];
+    const productintialserialnumber = 0;
+    const {
+      productsource,
+      productstandardtype,
+      productmodelnumber,
+      productquantitynumber,
+      Oldproductmodelnumber,
+      Newproductmodelnumber,
+    } = property;
+
+    if (property.productquantitynumber) {
+      for (let i = 1; i <= parseInt(property.productquantitynumber); i++) {
+        productSerialNumbers.push((productintialserialnumber + i).toString());
+      }
+    }
+
+    setProperty({
+      ...property,
+      productsource: parseInt(productsource),
+      productstandardtype: parseInt(productstandardtype),
+      Newproductmodelnumber: parseInt(productmodelnumber),
+      productquantitynumber: parseInt(productquantitynumber),
+      Oldproductmodelnumber: parseInt(Oldproductmodelnumber),
+      productserialnumbers: productSerialNumbers,
+      ItemNumber: parseInt(itemnumber),
+      productphoto: uploadedImage || property.productphoto,
+    });
+    console.log(property);
+    const updatedProperty = {
+      ItemNumber: parseInt(itemnumber),
+      productPrice: parseInt(property.productPrice),
+      productdescription: property.productdescription,
+      productmodel: property.productmodel,
+      Oldproductmodelnumber: parseInt(Oldproductmodelnumber),
+      Newproductmodelnumber: parseInt(Newproductmodelnumber),
+      productname: property.productname,
+      productphoto: uploadedImage || property.productphoto,
+      productquantitynumber: parseInt(property.productquantitynumber),
+      productsource: parseInt(property.productsource),
+      productstandardtype: parseInt(property.productstandardtype),
+      productstatus: property.productstatus,
+    };
+    console.log("item to be updated", updatedProperty);
+    setLoadingProperty(true);
+    axios
+      .post("/storekeeper/updateItem", updatedProperty, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setResponse(true);
+        setLoadingProperty(false);
+        setTimeout(() => {
+          setResponse(false);
+          toast.success("Request done successfully.");
+        }, 60000);
+        console.log(response);
+      })
+      .catch((error) => {
+        setTimeout(() => {
+          setError(false);
+        }, 5000);
+      });
+  };
 
   return (
-    <Box padding={6}>
+    <Box paddingLeft={{ xs: 5, md: 20 }} paddingTop={5} paddingBottom={5}>
       <Paper
         elevation={3}
         sx={{
-          padding: 5,
-          width: { xs: "100%", sm: "70%", md: "60%", lg: "40%" },
+          padding: { xs: 1, sm: 4, md: 5 },
+          width: { xs: "100%", sm: "70%", md: "60%", lg: "70%" },
           margin: "auto",
         }}
       >
         <Typography
           variant="h4"
           textAlign={"center"}
-          color={"#12596B"}
-          marginBottom={2}
-          sx={{
-            fontSize: languange === "en" ? 28 : 32,
-            fontWeight: languange === "en" ? 500 : 700,
-          }}
+          gutterBottom
+          sx={{ color: "#12596B", fontWeight: languange === "en" ? 500 : 700 }}
         >
-          Update Property
+          {t("updateproduct.update")}
         </Typography>
-        {loadingUser && (
+        {loadingProperty && (
           <Box sx={{ textAlign: "center" }}>
             <ClipLoader
               color={"#36d7b7"}
-              loading={loadingUser}
+              loading={loadingProperty}
               size={50}
               aria-label="Loading Spinner"
               data-testid="loader"
             />
           </Box>
         )}
-
-        {errorUser && (
+        {loadingUploadingImage && (
+          <Box sx={{ textAlign: "center" }}>
+            <ClipLoader
+              color={"#36d7b7"}
+              loading={loadingUploadingImage}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </Box>
+        )}
+        {error && (
           <Box
             sx={{
               backgroundColor: "red",
@@ -155,13 +251,13 @@ const PropertyEditComponent = () => {
               textAlign: "center",
             }}
           >
-            Error while edit
+            Error While Creating Property
           </Box>
         )}
-        {editUser && (
+        {errorImage && (
           <Box
             sx={{
-              backgroundColor: "#12596B",
+              backgroundColor: "red",
               color: "white",
               fontSize: " 18px",
               padding: " 5px 15px",
@@ -169,107 +265,254 @@ const PropertyEditComponent = () => {
               textAlign: "center",
             }}
           >
-            User Updated Successfully
+            Error While Uploading Image
           </Box>
         )}
+        {response && (
+          <Box
+            sx={{
+              backgroundColor: "#12596B",
+              color: "white",
+              width: "100%",
+              height: "15%",
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "10px",
+              justifyContent: "center",
+              borderRadius: "5px",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  fontSize: languange === "en" ? 16 : 18,
+                  padding: "15px 0px",
+                }}
+              >
+                Processing takes some time
+              </Typography>
+              <BeatLoader
+                color={"#fff"}
+                loading={response}
+                size={10}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </Box>
+          </Box>
+        )}
+        <TextField
+          label={t("updateproduct.propertyname")}
+          name="productname"
+          value={property.productname}
+          onChange={handleFormChange}
+          fullWidth
+          margin="normal"
+          sx={{ backgroundColor: "#f7f7f7" }}
+        />
+        <TextField
+          label={t("updateproduct.propertymodel")}
+          name="productmodel"
+          value={property.productmodel}
+          onChange={handleFormChange}
+          fullWidth
+          margin="normal"
+          sx={{ backgroundColor: "#f7f7f7" }}
+        />
+        <Box sx={{ display: { xs: "block", md: "flex" }, gap: "15px" }}>
+          <TextField
+            label={t("updateproduct.productsource")}
+            name="productsource"
+            value={property.productsource}
+            onChange={handleFormChange}
+            fullWidth
+            margin="normal"
+            sx={{ backgroundColor: "#f7f7f7", flex: 1.1 }}
+            select
+          >
+            {Sources.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
 
-        <TextField
-          id="first_name"
-          type="text"
-          label={t("userlist.firstname")}
-          name="first_name"
-          value={user.first_name}
-          onChange={(e) => handleFormChange(e)}
-          fullWidth
-          margin="normal"
-          sx={{ backgroundColor: "#f7f7f7" }}
-        />
-        <TextField
-          id="last_name"
-          type="text"
-          label={t("userlist.lastname")}
-          name="last_name"
-          value={user.last_name}
-          onChange={handleFormChange}
-          fullWidth
-          margin="normal"
-          sx={{ backgroundColor: "#f7f7f7" }}
-        />
-        <TextField
-          id="email"
-          type="email"
-          label={t("userlist.email")}
-          name="email"
-          value={user.email}
-          onChange={handleFormChange}
-          fullWidth
-          margin="normal"
-          sx={{ backgroundColor: "#f7f7f7" }}
-        />
-        <TextField
-          id="phone_number"
-          type="text"
-          label={t("userlist.phonenumber")}
-          name="phone_number"
-          value={user.phone_number}
-          onChange={handleFormChange}
-          fullWidth
-          margin="normal"
-          sx={{ backgroundColor: "#f7f7f7" }}
-        />
-        <TextField
-          id="department"
-          type="text"
-          label={t("userlist.department")}
-          name="department"
-          value={user.department}
-          onChange={handleFormChange}
-          fullWidth
-          margin="normal"
-          sx={{ backgroundColor: "#f7f7f7" }}
-        />
-        <TextField
-          id="password"
-          type="text"
-          label={t("userlist.password")}
-          name="Password"
-          value={user.Password}
-          onChange={handleFormChange}
-          fullWidth
-          margin="normal"
-          sx={{ backgroundColor: "#f7f7f7" }}
-        />
-        <TextField
-          id="manager"
-          type="text"
-          label={t("userlist.manager")}
-          name="manager_username"
-          value={user.manager_username}
-          onChange={handleFormChange}
-          fullWidth
-          margin="normal"
-          sx={{ backgroundColor: "#f7f7f7" }}
-          select
-        >
-          {managersList?.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+          <TextField
+            label={t("updateproduct.productstandardtype")}
+            name="productstandardtype"
+            value={property.productstandardtype}
+            onChange={handleFormChange}
+            fullWidth
+            margin="normal"
+            sx={{ backgroundColor: "#f7f7f7", flex: 1.5 }}
+            select
+          >
+            {ProductMainType.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
 
-        <EditUserButton
-          variant="contained"
-          size="large"
-          onClick={handleEditUser}
-          fullWidth
+          <TextField
+            label={t("updateproduct.productmodelnumber")}
+            name="Newproductmodelnumber"
+            value={property.Newproductmodelnumber}
+            onChange={handleFormChange}
+            fullWidth
+            margin="normal"
+            sx={{ backgroundColor: "#f7f7f7", flex: 2 }}
+          />
+        </Box>
+        <Box
           sx={{
-            fontSize: languange === "en" ? 18 : 20,
-            fontWeight: languange === "en" ? 500 : 500,
+            display: { xs: "block", md: "flex" },
+            alignItems: "center",
+            gap: "20px",
           }}
         >
-          {t("userlist.updateuser")}
-        </EditUserButton>
+          <TextField
+            label={t("updateproduct.productstatus")}
+            name="productstatus"
+            value={property.productstatus}
+            onChange={handleFormChange}
+            fullWidth
+            margin="normal"
+            sx={{ backgroundColor: "#f7f7f7" }}
+            select
+          >
+            {productStatus.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            label={t("updateproduct.quantity")}
+            name="productquantitynumber"
+            value={property.productquantitynumber}
+            onChange={handleFormChange}
+            fullWidth
+            margin="normal"
+            sx={{ backgroundColor: "#f7f7f7" }}
+          />
+          <TextField
+            label={t("updateproduct.productprice")}
+            name="productPrice"
+            value={property.productPrice}
+            onChange={handleFormChange}
+            fullWidth
+            margin="normal"
+            sx={{ backgroundColor: "#f7f7f7" }}
+          />
+        </Box>
+        <TextField
+          label={t("updateproduct.description")}
+          name="productdescription"
+          value={property.productdescription}
+          onChange={handleFormChange}
+          fullWidth
+          multiline
+          rows={6}
+          margin="normal"
+          sx={{ backgroundColor: "#f7f7f7" }}
+        />
+
+        <div
+          style={{
+            padding: "2rem",
+            background: "#f0f0f0",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            alignItems: "center",
+            border: "2px dashed #97dce6",
+            height: "130px",
+            width: "130px",
+            cursor: "pointer",
+            borderRadius: "5px",
+            cursor: "pointer",
+            margin: "1.5rem auto",
+          }}
+          onMouseEnter={(event) => {
+            event.target.style.border = "2px solid #97dce6";
+          }}
+          onMouseLeave={(event) => {
+            event.target.style.border = "2px dashed #97dce6";
+          }}
+        >
+          <label
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                handleImageUpload(e);
+              }}
+            />
+            {image ? (
+              <img
+                src={image}
+                width={150}
+                height={150}
+                alt="fileName"
+                style={{ objectFit: "cover" }}
+              />
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <CloudUploadIcon
+                  style={{
+                    color: "#12596B",
+                    fontSize: 50,
+                    cursor: "pointer",
+                  }}
+                />
+                <span
+                  style={{
+                    fontSize: 10,
+                    marginTop: 5,
+                    cursor: "pointer",
+                  }}
+                >
+                  Upload Image
+                </span>
+              </div>
+            )}
+          </label>
+        </div>
+
+        <CreateButton
+          variant="contained"
+          size="small"
+          onClick={handleUpdateProperty}
+          fullWidth
+          sx={{
+            marginTop: "20px",
+            background: "#12596B",
+            fontSize: languange === "en" ? 18 : 22,
+          }}
+        >
+          {t("updateproduct.update")}
+        </CreateButton>
       </Paper>
     </Box>
   );

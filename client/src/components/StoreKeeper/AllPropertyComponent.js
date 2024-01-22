@@ -97,7 +97,7 @@ const AllPropertyComponent = () => {
       >
         <Box
           sx={{
-            width: "60%",
+            width: { xs: "90%", md: "60%" },
             margin: "auto",
             marginBottom: "10px",
             display: "flex",
@@ -135,6 +135,18 @@ const AllPropertyComponent = () => {
                     fontWeight: languange === "en" ? 500 : 700,
                   }}
                 >
+                  Model Number
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#12596B",
+                    width: "15%",
+                    textAlign: "center",
+                    display: { xs: "none", md: "table-cell" },
+                    fontSize: languange === "en" ? 17 : 20,
+                    fontWeight: languange === "en" ? 500 : 700,
+                  }}
+                >
                   Name
                 </TableCell>
                 <TableCell
@@ -152,7 +164,7 @@ const AllPropertyComponent = () => {
                 <TableCell
                   sx={{
                     color: "#12596B",
-                    width: "18%",
+                    width: "10%",
                     textAlign: "center",
                     display: { xs: "none", md: "table-cell" },
                     fontSize: languange === "en" ? 17 : 20,
@@ -176,7 +188,7 @@ const AllPropertyComponent = () => {
                 <TableCell
                   sx={{
                     color: "#12596B",
-                    width: "15%",
+                    width: "10%",
                     textAlign: "center",
                     display: { xs: "none", md: "table-cell" },
                     fontSize: languange === "en" ? 17 : 20,
@@ -188,9 +200,8 @@ const AllPropertyComponent = () => {
                 <TableCell
                   sx={{
                     color: "#12596B",
-                    width: "15%",
+                    width: "5%",
                     textAlign: "center",
-                    display: { xs: "none", md: "table-cell" },
                     fontSize: languange === "en" ? 17 : 20,
                     fontWeight: languange === "en" ? 500 : 700,
                   }}
@@ -200,9 +211,8 @@ const AllPropertyComponent = () => {
                 <TableCell
                   sx={{
                     color: "#12596B",
-                    width: "24%",
+                    width: "5%",
                     textAlign: "center",
-                    display: { xs: "none", md: "table-cell" },
                     fontSize: languange === "en" ? 17 : 20,
                     fontWeight: languange === "en" ? 500 : 700,
                   }}
@@ -214,29 +224,68 @@ const AllPropertyComponent = () => {
             <TableBody>
               {sortedRequest?.map((item, index) => (
                 <TableRow key={index}>
-                  <TableCell>{item?.productname}</TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
+                  <TableCell>{item?.productmodelnumber}</TableCell>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                    }}
+                  >
+                    {item?.productname}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                    }}
+                  >
                     {item?.productmodel}
                   </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                    }}
+                  >
                     {item?.productPrice}
                   </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                    }}
+                  >
                     {item?.productquantitynumber}
                   </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                    }}
+                  >
                     {item?.productstatus}
                   </TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
                     <IconButton
                       sx={{ color: "#EF9630", textAlign: "center" }}
-                      onClick={() => navigate(`/allproperty/editproperty`)}
+                      onClick={() =>
+                        navigate(
+                          `/allproperty/editproperty/${item?.item_number}`
+                        )
+                      }
                     >
                       <EditIcon />
                     </IconButton>
                   </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <SettingsAccessibilityIcon sx={{ color: "blue" }} />
+                  <TableCell>
+                    <IconButton
+                      sx={{ textAlign: "center", color: "blue" }}
+                      onClick={() =>
+                        navigate(`/allproperty/detail/${item?.item_number}`)
+                      }
+                    >
+                      <SettingsAccessibilityIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
