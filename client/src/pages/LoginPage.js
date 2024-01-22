@@ -225,7 +225,20 @@ function LoginPage() {
             )}
           </EyeSpan>
         </TextFieldWrapper>
-        <ButtonStyled type="submit">{t("login.login")}</ButtonStyled>
+        <ButtonStyled
+          disabled={loadingUser}
+          type="submit"
+          sx={{
+            color: "white",
+            "&:disabled": {
+              cursor: "not-allowed",
+              pointerEvents: "all !important",
+              color: "#fff",
+            },
+          }}
+        >
+          {loadingUser ? t("login.logging") : t("login.login")}
+        </ButtonStyled>
         <select
           label={t("login.language")}
           value={i18n.language}

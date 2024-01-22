@@ -9,7 +9,7 @@ import {
 import Card from "./PropertyCard";
 import { GET_PROPERTIES } from "../State/ReduxSaga/Types/propertyType";
 import { useDispatch, useSelector } from "react-redux";
-import ClipLoader from "react-spinners/ClipLoader";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTranslation } from "react-i18next";
 
@@ -75,10 +75,10 @@ const PropertyList = () => {
             justifyContent: "center",
           }}
         >
-          <ClipLoader
+          <ScaleLoader
             color={"#36d7b7"}
             loading={loadingProperty}
-            size={150}
+            size={200}
             aria-label="Loading Spinner"
             data-testid="loader"
           />

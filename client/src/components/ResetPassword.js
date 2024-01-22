@@ -10,6 +10,9 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import BeatLoader from "react-spinners/BeatLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const SetPasswordButton = styled(Button)({
   transition: "transform 0.3s ease-in-out",
@@ -26,45 +29,89 @@ const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [errorModal, setErrorModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadingModal, setLoadingModal] = useState(false);
+  const [response, setResponse] = useState("");
+  const { languange } = useSelector((state) => state.languange);
 
   useEffect(() => {
-    if (error) {
+    if (error || response || errorModal) {
       setTimeout(() => {
         setError("");
+        setResponse("");
+        setErrorModal("");
       }, 5000);
     }
-  }, [error]);
+  }, [error, response, errorModal]);
 
   const handleSetOldPassword = () => {
+    setLoading(true);
     if (!password) {
       setError("Password required");
+      setLoading(false);
       return;
     }
     axios
-      .post("/oldpassword/confirm", { password }, { withCredentials: true })
+      .post(
+        "/oldpassword/confirm",
+        { oldpassword: password },
+        { withCredentials: true }
+      )
       .then((response) => {
-        console.log("reset pasword", response);
-        setResetPasswordModal(true);
+        setLoading(false);
+        setPassword("");
+        if (response.data === true) {
+          setResetPasswordModal(true);
+        } else {
+          setError("Password incorrect");
+        }
       })
       .catch((error) => {
+        setLoading(false);
+        setError("Password incorrect");
         console.log(error);
       });
   };
 
   const handlePasswordReset = () => {
     if (!newPassword) {
-      toast.error("New password is required");
+      setErrorModal("New password is required");
       return;
     }
     if (!confirmPassword) {
-      toast.error("Please set password again");
+      setErrorModal("Please set password again");
       return;
     }
     if (newPassword !== confirmPassword) {
-      toast.error("Passwords don't match");
+      setErrorModal("Password does not match");
       return;
     }
-    setResetPasswordModal(false);
+    setLoadingModal(true);
+    axios
+      .post(
+        "/resetpassword",
+        { newPassword: newPassword },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        setNewPassword("");
+        setConfirmPassword("");
+        setLoadingModal(false);
+        setResponse(true);
+        console.log(response.data);
+        setTimeout(() => {
+          setResponse("");
+          setResetPasswordModal(false);
+        }, 60000);
+      })
+      .catch((error) => {
+        setLoadingModal(false);
+        setTimeout(() => {
+          setResetPasswordModal(false);
+        }, 5000);
+        setErrorModal("Retry again");
+      });
   };
 
   return (
@@ -107,6 +154,24 @@ const ResetPassword = () => {
               {error}
             </Typography>
           )}
+          {loading && (
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <ClipLoader
+                color={"#36d7b7"}
+                loading={loading}
+                size={50}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </Box>
+          )}
           <TextField
             required
             id="password"
@@ -118,7 +183,17 @@ const ResetPassword = () => {
           />
           <SetPasswordButton
             variant="contained"
-            sx={{ marginTop: "20px" }}
+            disabled={loading}
+            sx={{
+              marginTop: "20px",
+              color: "white",
+              "&:disabled": {
+                cursor: "not-allowed",
+                pointerEvents: "all !important",
+                color: "#fff",
+                background: "#12596b",
+              },
+            }}
             onClick={handleSetOldPassword}
           >
             Set Password
@@ -152,6 +227,70 @@ const ResetPassword = () => {
           <Typography variant="h5" textAlign={"center"} color={"#12596b"}>
             Reset Password
           </Typography>
+          {loadingModal && (
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <ClipLoader
+                color={"#36d7b7"}
+                loading={loadingModal}
+                size={50}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </Box>
+          )}
+          {errorModal && (
+            <Typography
+              variant="body1"
+              color={"white"}
+              textAlign={"center"}
+              sx={{
+                background: "red",
+                padding: "5px 10px",
+                margin: "10px 0px 10px 0px",
+              }}
+            >
+              {errorModal}
+            </Typography>
+          )}
+          {response && (
+            <Box
+              sx={{
+                backgroundColor: "#12596B",
+                color: "white",
+                width: "100%",
+                marginBottom: "20px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "5px",
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <Typography
+                  sx={{
+                    fontSize: languange === "en" ? 16 : 18,
+                    padding: "15px 0px",
+                  }}
+                >
+                  Processing takes some time
+                </Typography>
+                <BeatLoader
+                  color={"#fff"}
+                  loading={response}
+                  size={10}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </Box>
+            </Box>
+          )}
           <TextField
             required
             id="newPassword"
@@ -172,7 +311,17 @@ const ResetPassword = () => {
           />
           <SetPasswordButton
             variant="contained"
-            sx={{ marginTop: "20px" }}
+            disabled={loadingModal}
+            sx={{
+              marginTop: "20px",
+              color: "white",
+              "&:disabled": {
+                cursor: "not-allowed",
+                pointerEvents: "all !important",
+                color: "#fff",
+                background: "#12596b",
+              },
+            }}
             onClick={handlePasswordReset}
           >
             Submit

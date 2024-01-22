@@ -128,7 +128,10 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
           gutterBottom
           textAlign={"center"}
           color={"#12596B"}
-          sx={{ fontWeight: languange === "en" ? null : 700 }}
+          sx={{
+            fontWeight: languange === "en" ? 500 : 700,
+            fontSize: languange === "en" ? 24 : 28,
+          }}
         >
           {t("moveorder.ordertitle")}
         </Typography>
@@ -187,23 +190,37 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
             sx={{
               backgroundColor: "#12596B",
               color: "white",
-              fontSize: " 18px",
-              padding: " 5px 15px",
+              width: "100%",
               marginBottom: "20px",
-              textAlign: "center",
               display: "flex",
               alignItems: "center",
-              gap: "55px",
+              justifyContent: "center",
+              borderRadius: "5px",
             }}
           >
-            <Typography>Database updates incur a delay</Typography>
-            <BeatLoader
-              color={"#fff"}
-              loading={newOrder}
-              size={10}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: languange === "en" ? 16 : 18,
+                  padding: "15px 0px",
+                }}
+              >
+                Processing takes some time
+              </Typography>
+              <BeatLoader
+                color={"#fff"}
+                loading={newOrder}
+                size={10}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </Box>
           </Box>
         )}
         {orderNew && (
@@ -211,22 +228,31 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
             sx={{
               backgroundColor: "#12596B",
               color: "white",
-              fontSize: " 18px",
-              padding: " 5px 15px",
+              width: "100%",
               marginBottom: "20px",
               display: "flex",
               alignItems: "center",
-              gap: "27px",
+              justifyContent: "center",
+              borderRadius: "5px",
             }}
           >
-            <Typography>Database updates incur a delay</Typography>
-            <BeatLoader
-              color={"#fff"}
-              loading={orderNew}
-              size={10}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
+            <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <Typography
+                sx={{
+                  fontSize: languange === "en" ? 16 : 18,
+                  padding: "15px 0px",
+                }}
+              >
+                Processing takes some time
+              </Typography>
+              <BeatLoader
+                color={"#fff"}
+                loading={orderNew}
+                size={10}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </Box>
           </Box>
         )}
         <FormGroup>
@@ -244,13 +270,24 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
           variant="contained"
           onClick={handleOrder}
           fullWidth
+          disabled={newOrder || orderNew || loadingOrder}
           sx={{
             marginTop: "10px",
             background: "#12596B",
             fontSize: languange === "en" ? 16 : 20,
+            padding: " 5px 15px",
+            color: "white",
+            "&:disabled": {
+              cursor: "not-allowed",
+              pointerEvents: "all !important",
+              color: "#fff",
+              background: "#12596b",
+            },
           }}
         >
-          {t("moveorder.order")}
+          {newOrder || orderNew
+            ? t("moveorder.orderloading")
+            : t("moveorder.order")}
         </OrderButton>
       </Box>
     </Box>
