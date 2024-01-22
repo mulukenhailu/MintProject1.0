@@ -19,6 +19,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { setNewPropertyList } from "../State/ReduxToolkit/Slices/propertySlice";
+import toast from "react-hot-toast";
 
 const OrderButton = styled(Button)({
   background: "#12596B",
@@ -75,6 +76,7 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
           setLoading(false);
           setOrderNew(true);
           setTimeout(() => {
+            toast.success("Request done successfully.");
             navigate(`/details/${item_number}`);
           }, 60000);
         })
@@ -109,6 +111,7 @@ const OrderComponent = ({ productname, item_number, setOpenOrderModal }) => {
   useEffect(() => {
     if (newOrder) {
       setTimeout(() => {
+        toast.success("Request done successfully.");
         navigate(`/details/${item_number}`);
       }, 60000);
     }

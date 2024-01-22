@@ -29,6 +29,7 @@ const PropertyList = () => {
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch({ type: GET_PROPERTIES });
   }, [dispatch]);
 

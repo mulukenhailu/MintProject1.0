@@ -36,14 +36,13 @@ const ResetPassword = () => {
   const { languange } = useSelector((state) => state.languange);
 
   useEffect(() => {
-    if (error || response || errorModal) {
+    if (error || errorModal) {
       setTimeout(() => {
         setError("");
-        setResponse("");
         setErrorModal("");
       }, 5000);
     }
-  }, [error, response, errorModal]);
+  }, [error, errorModal]);
 
   const handleSetOldPassword = () => {
     setLoading(true);
@@ -63,8 +62,6 @@ const ResetPassword = () => {
         setPassword("");
         if (response.data === true) {
           setResetPasswordModal(true);
-        } else {
-          setError("Password incorrect");
         }
       })
       .catch((error) => {
@@ -95,10 +92,10 @@ const ResetPassword = () => {
         { withCredentials: true }
       )
       .then((response) => {
+        setResponse(true);
+        setLoadingModal(false);
         setNewPassword("");
         setConfirmPassword("");
-        setLoadingModal(false);
-        setResponse(true);
         console.log(response.data);
         setTimeout(() => {
           setResponse("");
@@ -311,7 +308,7 @@ const ResetPassword = () => {
           />
           <SetPasswordButton
             variant="contained"
-            disabled={loadingModal}
+            disabled={loadingModal || response}
             sx={{
               marginTop: "20px",
               color: "white",

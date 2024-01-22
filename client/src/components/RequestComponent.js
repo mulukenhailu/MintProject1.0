@@ -18,6 +18,7 @@ const RequestComponent = () => {
   useEffect(() => {
     {
       const getAllNotificationList = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setLoading(true);
         axios
           .get("/employee/notifications", {
