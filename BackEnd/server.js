@@ -45,6 +45,7 @@ const storeheadRejection = require("./handler/storeHead/allRejectedRequests");
 
 const validateRequestForStoreKeeper = require("./handler/storeKeeper/storeKeeperBlessing");
 const transactions = require("./handler/storeKeeper/pastTransaction");
+const updateItem = require("./handler/item/updateItem")
 
 const path = require("path");
 const multer = require("multer");
@@ -261,7 +262,18 @@ app.get(
   transactions.history
 );
 
-app.post("/createitem", createItem.createItem);
+app.post(
+  "/storekeeper/createitem", 
+  verifyAccessToken.verifyAccessToken,
+  createItem.createItem
+  );
+
+app.post(
+  "/storekeeper/updateItem", 
+  verifyAccessToken.verifyAccessToken,
+  updateItem.generalUpdate
+)
+
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {

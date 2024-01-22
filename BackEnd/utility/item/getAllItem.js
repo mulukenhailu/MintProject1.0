@@ -37,18 +37,18 @@ const client = new GraphQLClient(endpoint, {
       else if (arguments[0]=="available"){
         document=gql`
         query MyQuery @cached {
-            Item (where: {productstatus: {_eq: "available"}}) {
-                productname
-                item_number
-                productstatus
-                productquantitynumber
-                productphoto
-                productdescription
-                productmodel
-                productPrice
-                created_at
-                updated_at
-            }
+          Item(where: {_and: {productstatus: {_eq: "available"}, productquantitynumber: {_gt: 0}}}) {
+            productname
+            item_number
+            productstatus
+            productquantitynumber
+            productphoto
+            productdescription
+            productmodel
+            productPrice
+            created_at
+            updated_at
+          }
         }
       `
 

@@ -25,7 +25,8 @@ async function createItem(req, res){
           productquantitynumber, 
           productdescription, 
           productmodel,
-          productserialnumbers
+          productserialnumbers,
+          productPrice
         }= req.body
 
 
@@ -39,7 +40,8 @@ async function createItem(req, res){
           productquantitynumber, 
           productdescription, 
           productmodel,
-          productserialnumbers
+          productserialnumbers,
+          productPrice
         )
 
         bulkinsert=[]
@@ -50,13 +52,36 @@ async function createItem(req, res){
         console.log({"bulk":bulkinsert}.bulk)
 
   doc=gql`
-  mutation MyMutation($productsource: Int!, $productstandardtype: Int!, $productmodelnumber: Int!, $productmodel: String!, $productname: String!, $productphoto: String!, $productstatus: String!, $productquantitynumber: Int!, $productdescription: String!, $bulk: [ItemsserialNumber_insert_input!]!) {
-    insert_Item(objects: {productsource: $productsource, productstandardtype: $productstandardtype, productmodelnumber: $productmodelnumber, productmodel: $productmodel, productname: $productname, productphoto: $productphoto, productstatus: $productstatus, productquantitynumber: $productquantitynumber, productdescription: $productdescription}) {
+  mutation MyMutation(
+    $productsource: Int!, 
+    $productstandardtype: Int!, 
+    $productmodelnumber: Int!, 
+    $productmodel: String!, 
+    $productname: String!, 
+    $productphoto: String!, 
+    $productstatus: String!, 
+    $productquantitynumber: Int!, 
+    $productdescription: String!, 
+    $productPrice:bigint!
+    $bulk: [ItemsserialNumber_insert_input!]!) {
+              insert_Item(objects: {
+                productsource: $productsource, 
+                productstandardtype: $productstandardtype, 
+                productmodelnumber: $productmodelnumber, 
+                productmodel: $productmodel, 
+                productname: $productname, 
+                productphoto: $productphoto, 
+                productstatus: $productstatus, 
+                productquantitynumber: $productquantitynumber, 
+                productdescription: $productdescription,
+                productPrice:$productPrice
+              }) {
       returning {
         productdescription
         productname
         productmodelnumber
         item_number
+        productPrice
         created_at
         updated_at
       }
@@ -81,6 +106,7 @@ async function createItem(req, res){
     "productstatus": productstatus,
     "productquantitynumber": productquantitynumber,
     "productdescription": productdescription,
+    "productPrice":productPrice,
     "bulk": {"bulk":bulkinsert}.bulk
   }
 
