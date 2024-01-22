@@ -19,6 +19,8 @@ import {
 import { UPLOAD_IMAGE } from "../../State/ReduxSaga/Types/uploadImageType";
 import { removeUploadImage } from "../../State/ReduxToolkit/Slices/uploadImageSlice";
 import { useTranslation } from "react-i18next";
+import BeatLoader from "react-spinners/BeatLoader";
+import toast from "react-hot-toast";
 
 const CreateButton = styled(Button)({
   background: "#12596B",
@@ -64,10 +66,9 @@ const CreateProduct = () => {
     productmodelnumber: "",
     productstatus: "",
     productquantitynumber: "",
-    productintialserialnumber: "",
     productdescription: "",
     productphoto: "",
-    price: "",
+    productPrice: "",
     productserialnumbers: [],
   });
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -95,14 +96,14 @@ const CreateProduct = () => {
           productmodelnumber: "",
           productstatus: "",
           productquantitynumber: "",
-          productintialserialnumber: "",
           productdescription: "",
           productphoto: "",
-          price: "",
+          productPrice: "",
           productserialnumbers: [],
         });
         setImage("");
-      }, 5000);
+        toast.success("Request done successfully.");
+      }, 60000);
     }
     if (errorProperty) {
       setTimeout(() => {
@@ -137,6 +138,7 @@ const CreateProduct = () => {
   const handleCreateProduct = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     const productSerialNumbers = [];
+    const productintialserialnumber = 0;
     const {
       productsource,
       productstandardtype,
@@ -144,11 +146,9 @@ const CreateProduct = () => {
       productquantitynumber,
     } = property;
 
-    if (property.productintialserialnumber && property.productquantitynumber) {
+    if (property.productquantitynumber) {
       for (let i = 1; i <= parseInt(property.productquantitynumber); i++) {
-        productSerialNumbers.push(
-          (parseInt(property.productintialserialnumber) + i).toString()
-        );
+        productSerialNumbers.push((productintialserialnumber + i).toString());
       }
     }
 
@@ -243,13 +243,39 @@ const CreateProduct = () => {
             sx={{
               backgroundColor: "#12596B",
               color: "white",
-              fontSize: " 18px",
-              padding: " 5px 15px",
-              marginTop: "20px",
-              textAlign: "center",
+              width: "100%",
+              height: "15%",
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "10px",
+              justifyContent: "center",
+              borderRadius: "5px",
             }}
           >
-            New Property Created Successfully
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  fontSize: languange === "en" ? 16 : 18,
+                  padding: "15px 0px",
+                }}
+              >
+                Processing takes some time
+              </Typography>
+              <BeatLoader
+                color={"#fff"}
+                loading={newProperty}
+                size={10}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </Box>
           </Box>
         )}
         <TextField
@@ -278,7 +304,7 @@ const CreateProduct = () => {
             onChange={handleFormChange}
             fullWidth
             margin="normal"
-            sx={{ backgroundColor: "#f7f7f7", flex: 1.1 }}
+            sx={{ backgroundColor: "#f7f7f7", flex: 1 }}
             select
           >
             {Sources.map((option) => (
@@ -295,7 +321,7 @@ const CreateProduct = () => {
             onChange={handleFormChange}
             fullWidth
             margin="normal"
-            sx={{ backgroundColor: "#f7f7f7", flex: 1.5 }}
+            sx={{ backgroundColor: "#f7f7f7", flex: 1 }}
             select
           >
             {ProductMainType.map((option) => (
@@ -312,7 +338,7 @@ const CreateProduct = () => {
             onChange={handleFormChange}
             fullWidth
             margin="normal"
-            sx={{ backgroundColor: "#f7f7f7", flex: 2 }}
+            sx={{ backgroundColor: "#f7f7f7", flex: 1 }}
           />
         </Box>
         <Box
@@ -348,18 +374,9 @@ const CreateProduct = () => {
             sx={{ backgroundColor: "#f7f7f7" }}
           />
           <TextField
-            label={t("createproduct.productintialserialnumber")}
-            name="productintialserialnumber"
-            value={property.productintialserialnumber}
-            onChange={handleFormChange}
-            fullWidth
-            margin="normal"
-            sx={{ backgroundColor: "#f7f7f7" }}
-          />
-          <TextField
             label={t("createproduct.productprice")}
-            name="price"
-            value={property.price}
+            name="productPrice"
+            value={property.productPrice}
             onChange={handleFormChange}
             fullWidth
             margin="normal"

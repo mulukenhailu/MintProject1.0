@@ -176,6 +176,21 @@
     "available": "Available",
     "unavailable": "Unavailable"
   },
+  "updateproduct": {
+    "update": "Update Product",
+    "propertyname": "Property Name",
+    "propertymodel": "Property Model",
+    "productsource": "PropertySource",
+    "productstandardtype": "PropertyStandardType",
+    "productmodelnumber": "PropertyModelNumber",
+    "productstatus": "PropertyStatus",
+    "quantity": "Quantity",
+    "productintialserialnumber": "ProductIntialSerialNumber",
+    "productprice": "PropertyPrice",
+    "description": "Description",
+    "available": "Available",
+    "unavailable": "Unavailable"
+  },
   "createuser": {
     "firstname": "First Name",
     "lastname": "Last Name",

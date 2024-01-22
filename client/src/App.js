@@ -21,7 +21,7 @@ import RequestPageDetail from "./pages/RequestPageDetail";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import AllPropertyPage from "./pages/StoreKeeper/AllPropertyPage";
 import PropertyEditComponent from "./pages/StoreKeeper/PropertyEdit";
-import Hero from "./pages/LandingPage";
+import PropertyDetail from "./pages/StoreKeeper/PropertyDetail";
 import global_en from "./components/transitions/english.json";
 import global_am from "./components/transitions/amharic.json";
 import { useTranslation, initReactI18next } from "react-i18next";
@@ -52,7 +52,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Hero />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
@@ -90,8 +90,14 @@ function App() {
         )}
         {role_name === "storekeeper" && (
           <Route
-            path="/allproperty/editproperty"
+            path="/allproperty/editproperty/:itemnumber"
             element={<PropertyEditComponent />}
+          />
+        )}
+        {role_name === "storekeeper" && (
+          <Route
+            path="/allproperty/detail/:itemnumber"
+            element={<PropertyDetail />}
           />
         )}
         <Route path="/resetpassword" element={<ResetPasswordPage />} />
