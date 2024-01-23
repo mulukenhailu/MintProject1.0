@@ -186,7 +186,7 @@ const ManagerRequestDeclined = () => {
                             fontSize: languange === "en" ? 18 : 20,
                           }}
                         >
-                          {item.User.last_name}
+                          {item?.User?.last_name}
                         </Typography>
                       </ListItem>
                       <ListItem
@@ -216,7 +216,7 @@ const ManagerRequestDeclined = () => {
                             fontSize: languange === "en" ? 18 : 20,
                           }}
                         >
-                          {item.Item.productname}
+                          {item?.Item?.productname}
                         </Typography>
                       </ListItem>
                       <ListItem
@@ -246,7 +246,7 @@ const ManagerRequestDeclined = () => {
                             fontSize: languange === "en" ? 18 : 20,
                           }}
                         >
-                          {item.quantity_requested}
+                          {item?.quantity_requested}
                         </Typography>
                       </ListItem>
                     </List>
