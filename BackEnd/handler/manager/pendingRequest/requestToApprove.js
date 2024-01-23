@@ -74,12 +74,7 @@ async function requestToApprove(req, res){
 
         const data = await client.request(document,variables,requestHeaders);
         console.log(data.Employee_Request);
-        if (data.Employee_Request.length===0){
-            res.send(data)
-        }
-          else{
-            res.send(data);
-        }
+        res.send(data)
         
     }catch(err){
         console.log("Error while fetching request for the manager");
