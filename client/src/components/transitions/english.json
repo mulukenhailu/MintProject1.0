@@ -220,5 +220,38 @@
     "detail": "Detail",
     "userdetail": "User Detail",
     "updateuser": "Update User"
+  },
+  "storekeeperallproduct": {
+    "create": "Create Product",
+    "propertyname": "Property Name",
+    "propertymodel": "Property Model",
+    "productsource": "PropertySource",
+    "productstandardtype": "PropertyStandardType",
+    "productmodelnumber": "Model Number",
+    "productstatus": "PropertyStatus",
+    "quantity": "Quantity",
+    "productintialserialnumber": "ProductIntialSerialNumber",
+    "productprice": "PropertyPrice",
+    "description": "Description",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "quantityremainig": "quantity Remainig",
+    "edit": "Edit",
+    "detail": "Detail"
+  },
+  "detailproperty": {
+    "detail": "Property Detail",
+    "create": "Create Product",
+    "propertyname": "Property Name",
+    "propertymodel": "Property Model",
+    "productsource": "PropertySource",
+    "productstandardtype": "PropertyStandardType",
+    "productmodelnumber": "PropertyModelNumber",
+    "productstatus": "PropertyStatus",
+    "quantity": "Quantity",
+    "productintialserialnumber": "ProductIntialSerialNumber",
+    "productprice": "PropertyPrice",
+    "description": "Description",
+    "createdat": "Create At"
   }
 }
