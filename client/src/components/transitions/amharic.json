@@ -222,5 +222,39 @@
     "detail": "ዝርዝር",
     "userdetail": "የግለሰቡ መረጃ",
     "updateuser": "ተጠቃሚውን አዘምን"
+  },
+  "storekeeperallproduct": {
+    "create": "ዕቃ ማስገባት",
+    "propertyname": "የዕቃው ስም",
+    "propertymodel": "የዕቃው ሞዴል",
+    "productsource": "የዕቃው ምንጭ",
+    "productstandardtype": "የዕቃው የሞፌድ ቁጥር",
+    "productmodelnumber": "ሞዴል ቁጥር",
+    "productstatus": "የዕቃው ሁኔታ",
+    "quantity": "የዕቃው መጠን",
+    "productintialserialnumber": "የዕቃው የመጨረሻ ቁጥር",
+    "productprice": "የዕቃው ዋጋ",
+    "description": "የዕቃው መግለጫ",
+    "available": "መውጣት ይችላል",
+    "unavailable": "መውጣት የማይችል",
+    "quantityremainig": "የቀረው ዕቃ መጠን",
+    "edit": "አርትዕ",
+    "detail": "ዝርዝር"
+  },
+  "detailproperty": {
+    "detail": "የዕቃው ዝርዝር",
+    "propertyname": "የዕቃው ስም",
+    "propertyphoto": "የዕቃው ፎቶ",
+    "propertymodel": "የዕቃው ሞዴል",
+    "productsource": "የዕቃው ምንጭ",
+    "productstandardtype": "የዕቃው የሞፌድ ቁጥር",
+    "productmodelnumber": "የዕቃው ሞዴል ቁጥር",
+    "productstatus": "የዕቃው ሁኔታ",
+    "quantity": "የዕቃው መጠን",
+    "quantityremainig": "የቀረው ዕቃ መጠን",
+    "productintialserialnumber": "የዕቃው የመጨረሻ ቁጥር",
+    "productprice": "የዕቃው ዋጋ",
+    "description": "የዕቃው መግለጫ",
+    "createdat": "የገባበት ቀን"
   }
 }

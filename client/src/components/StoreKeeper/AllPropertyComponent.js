@@ -28,6 +28,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 const ProductDetailContainer = styled(Modal)({
   display: "flex",
@@ -64,235 +65,260 @@ const AllPropertyComponent = () => {
   const [itemNo, setItemNo] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [allPropeperties, setAllProperties] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { languange } = useSelector((state) => state.languange);
   const { allRequest } = useSelector((state) => state.request);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get("/storekeeper/getallitem/all", { withCredentials: true })
       .then((response) => {
         console.log("get all properties", response);
+        setLoading(false);
         setAllProperties(response.data.Item);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   }, []);
 
   const sortedRequest = [...allPropeperties]
     .filter((property) =>
-      property?.productname.toLowerCase().includes(searchTerm.toLowerCase())
+      property?.productmodelnumber.toString().includes(searchTerm)
     )
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-  if (allRequest.length === 0 || allRequest === "Empty") {
-    return <Box>No order requested</Box>;
-  }
+  // if (allRequest.length === 0 || allRequest === "Empty") {
+  //   return <Box>No order requested</Box>;
+  // }
   return (
-    <Box>
-      <Box
-        paddingLeft={{ xs: 5, md: 19, lg: 17 }}
-        paddingTop={4}
-        paddingBottom={5}
-      >
+    <Box
+      paddingLeft={{ xs: 5, md: 19, lg: 17 }}
+      paddingTop={4}
+      paddingBottom={5}
+    >
+      {loading ? (
         <Box
           sx={{
-            width: { xs: "90%", md: "60%" },
-            margin: "auto",
-            marginBottom: "10px",
+            width: "100%",
+            height: "calc(100vh - 60px)",
             display: "flex",
-            alignItems: "center",
+            alignItems: "start",
             justifyContent: "center",
           }}
         >
-          <TextField
-            type="text"
-            fullWidth
-            placeholder={t("history.searchbyusername")}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment>
-                  <IconButton>
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
+          <ScaleLoader
+            color={"#36d7b7"}
+            loading={loading}
+            size={200}
+            aria-label="Loading Spinner"
+            data-testid="loader"
           />
         </Box>
-        <TableContainer component={Paper} sx={{ bgcolor: "#f7f7f7" }}>
-          <Table>
-            <TableHead sx={{ background: "#bbb", color: "#fff" }}>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    width: "15%",
-                    textAlign: "left",
-                    fontSize: languange === "en" ? 17 : 20,
-                    fontWeight: languange === "en" ? 500 : 700,
-                  }}
-                >
-                  Model Number
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    width: "15%",
-                    textAlign: "center",
-                    display: { xs: "none", md: "table-cell" },
-                    fontSize: languange === "en" ? 17 : 20,
-                    fontWeight: languange === "en" ? 500 : 700,
-                  }}
-                >
-                  Name
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    width: "18%",
-                    textAlign: "center",
-                    display: { xs: "none", md: "table-cell" },
-                    fontSize: languange === "en" ? 17 : 20,
-                    fontWeight: languange === "en" ? 500 : 700,
-                  }}
-                >
-                  Model
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    width: "10%",
-                    textAlign: "center",
-                    display: { xs: "none", md: "table-cell" },
-                    fontSize: languange === "en" ? 17 : 20,
-                    fontWeight: languange === "en" ? 500 : 700,
-                  }}
-                >
-                  Price
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    width: "18%",
-                    textAlign: "center",
-                    display: { xs: "none", md: "table-cell" },
-                    fontSize: languange === "en" ? 17 : 20,
-                    fontWeight: languange === "en" ? 500 : 700,
-                  }}
-                >
-                  Quantity Remain
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    width: "10%",
-                    textAlign: "center",
-                    display: { xs: "none", md: "table-cell" },
-                    fontSize: languange === "en" ? 17 : 20,
-                    fontWeight: languange === "en" ? 500 : 700,
-                  }}
-                >
-                  Status
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    width: "5%",
-                    textAlign: "center",
-                    fontSize: languange === "en" ? 17 : 20,
-                    fontWeight: languange === "en" ? 500 : 700,
-                  }}
-                >
-                  Edit
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#12596B",
-                    width: "5%",
-                    textAlign: "center",
-                    fontSize: languange === "en" ? 17 : 20,
-                    fontWeight: languange === "en" ? 500 : 700,
-                  }}
-                >
-                  Details
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {sortedRequest?.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell>{item?.productmodelnumber}</TableCell>
-                  <TableCell
-                    sx={{
-                      textAlign: "center",
-                      display: { xs: "none", md: "table-cell" },
-                    }}
-                  >
-                    {item?.productname}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      textAlign: "center",
-                      display: { xs: "none", md: "table-cell" },
-                    }}
-                  >
-                    {item?.productmodel}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      textAlign: "center",
-                      display: { xs: "none", md: "table-cell" },
-                    }}
-                  >
-                    {item?.productPrice}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      textAlign: "center",
-                      display: { xs: "none", md: "table-cell" },
-                    }}
-                  >
-                    {item?.productquantitynumber}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      textAlign: "center",
-                      display: { xs: "none", md: "table-cell" },
-                    }}
-                  >
-                    {item?.productstatus}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <IconButton
-                      sx={{ color: "#EF9630", textAlign: "center" }}
-                      onClick={() =>
-                        navigate(
-                          `/allproperty/editproperty/${item?.item_number}`
-                        )
-                      }
-                    >
-                      <EditIcon />
+      ) : (
+        <Box>
+          <Box
+            sx={{
+              width: { xs: "90%", md: "60%" },
+              margin: "auto",
+              marginBottom: "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <TextField
+              type="text"
+              fullWidth
+              placeholder={t("history.searchbyusername")}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment>
+                    <IconButton>
+                      <SearchIcon />
                     </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+          <TableContainer component={Paper} sx={{ bgcolor: "#f7f7f7" }}>
+            <Table>
+              <TableHead sx={{ background: "#bbb", color: "#fff" }}>
+                <TableRow>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: languange === "en" ? "15%" : "10%",
+                      textAlign: "left",
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
+                    {t("storekeeperallproduct.productmodelnumber")}
                   </TableCell>
-                  <TableCell>
-                    <IconButton
-                      sx={{ textAlign: "center", color: "blue" }}
-                      onClick={() =>
-                        navigate(`/allproperty/detail/${item?.item_number}`)
-                      }
-                    >
-                      <SettingsAccessibilityIcon />
-                    </IconButton>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: "15%",
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
+                    {t("storekeeperallproduct.propertyname")}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: "18%",
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
+                    {t("storekeeperallproduct.propertymodel")}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: "10%",
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
+                    {t("storekeeperallproduct.productprice")}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: "10%",
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
+                    {t("storekeeperallproduct.productprice")}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: "15%",
+                      textAlign: "center",
+                      display: { xs: "none", md: "table-cell" },
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
+                    {t("storekeeperallproduct.productstatus")}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: "5%",
+                      textAlign: "center",
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
+                    {t("storekeeperallproduct.edit")}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: "#12596B",
+                      width: "5%",
+                      textAlign: "center",
+                      fontSize: languange === "en" ? 17 : 20,
+                      fontWeight: languange === "en" ? 500 : 700,
+                    }}
+                  >
+                    {t("storekeeperallproduct.detail")}
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+              </TableHead>
+              <TableBody>
+                {sortedRequest?.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{item?.productmodelnumber}</TableCell>
+                    <TableCell
+                      sx={{
+                        textAlign: "center",
+                        display: { xs: "none", md: "table-cell" },
+                      }}
+                    >
+                      {item?.productname}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        textAlign: "center",
+                        display: { xs: "none", md: "table-cell" },
+                      }}
+                    >
+                      {item?.productmodel}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        textAlign: "center",
+                        display: { xs: "none", md: "table-cell" },
+                      }}
+                    >
+                      {item?.productPrice}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        textAlign: "center",
+                        display: { xs: "none", md: "table-cell" },
+                      }}
+                    >
+                      {item?.productquantitynumber}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        textAlign: "center",
+                        display: { xs: "none", md: "table-cell" },
+                      }}
+                    >
+                      {item?.productstatus}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      <IconButton
+                        sx={{ color: "#EF9630", textAlign: "center" }}
+                        onClick={() =>
+                          navigate(
+                            `/allproperty/editproperty/${item?.item_number}`
+                          )
+                        }
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell>
+                      <IconButton
+                        sx={{ textAlign: "center", color: "blue" }}
+                        onClick={() =>
+                          navigate(`/allproperty/detail/${item?.item_number}`)
+                        }
+                      >
+                        <SettingsAccessibilityIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      )}
+
       <ProductDetailContainer
         open={propertyDetail}
         onClose={() => setPropertyDetail(false)}
