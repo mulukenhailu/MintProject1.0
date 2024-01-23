@@ -10,7 +10,10 @@ const client = new GraphQLClient(endpoint, {
 
 
   const doc=gql`
-  mutation MyMutation($OldmodelNumber: Int!, $NewmodelNumber: Int!, $Created_at:timestamptz) {
+  mutation MyMutation(
+    $OldmodelNumber: Int!, 
+    $NewmodelNumber: Int!, 
+    $Created_at:timestamptz) {
     update_ItemsserialNumber(where: {_and: {
       modelNumber: {_eq:$OldmodelNumber}, 
       created_at: {_eq:  $Created_at}}}, 
@@ -23,7 +26,6 @@ const client = new GraphQLClient(endpoint, {
       }
     }
   }
-  
   `
 
 

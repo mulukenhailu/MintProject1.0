@@ -93,7 +93,6 @@ async function createItem(req, res){
       }
     }
   }
-  
   `
 
   const variables={

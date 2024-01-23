@@ -56,4 +56,8 @@ const client = new GraphQLClient(endpoint, {
 
   }
 
+
+
+  
+
   module.exports={updateQuantity}

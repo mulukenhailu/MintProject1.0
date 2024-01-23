@@ -1,5 +1,6 @@
 const { ItemUpdate } = require("../../utility/item/update/ItemUpdate");
 const { updateSerial } = require("../../utility/item/update/updateSerialNumber");
+const { quantityOffset } = require("../../utility/item/update/quantityOffset")
 
 async function generalUpdate(req, res) {
 
@@ -11,7 +12,8 @@ async function generalUpdate(req, res) {
         Oldproductmodelnumber,
         productname, 
         productphoto, 
-        productquantitynumber, 
+        oldproductquantitynumber, 
+        newproductquantitynumber, 
         productsource, 
         productstandardtype, 
         productstatus}=req.body
@@ -25,7 +27,7 @@ async function generalUpdate(req, res) {
             Newproductmodelnumber,
             productname, 
             productphoto, 
-            productquantitynumber, 
+            newproductquantitynumber,  
             productsource, 
             productstandardtype, 
             productstatus
@@ -35,7 +37,30 @@ async function generalUpdate(req, res) {
 
             try {
                 const Data2 = await updateSerial( Oldproductmodelnumber, Newproductmodelnumber, data.update_Item.returning[0].created_at);
-                res.send(Data2)
+
+                console.log(oldproductquantitynumber, newproductquantitynumber)
+
+                if(oldproductquantitynumber != newproductquantitynumber){
+
+                    try{
+                        const Data3= await quantityOffset(
+                            oldproductquantitynumber,
+                            newproductquantitynumber,
+                            Newproductmodelnumber,
+                            data.update_Item.returning[0].created_at
+                            )
+                        res.send(Data3)
+    
+                    }catch(error){
+                        res.status(501).send({ error: "Retry Again." });
+                    }
+
+                }
+
+                else{
+                    res.send(Data2)
+                }
+
             } catch (serialError) {
                 console.log("Error While updating serial number:", serialError);
                 res.status(501).send({ error: "Retry Again." });

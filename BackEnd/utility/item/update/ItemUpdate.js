@@ -53,7 +53,6 @@ mutation MyMutation(
     }
   }
 }
-
 `
 
 const requestHeaders = {
