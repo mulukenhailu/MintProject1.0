@@ -26,14 +26,14 @@ const PropertyList = () => {
     .filter((property) =>
       property?.productname.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    .slice(3);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch({ type: GET_PROPERTIES });
   }, [dispatch]);
 
-  console.log("sortedProperty", sortedProperty);
   return (
     <Box paddingLeft={{ xs: 5, md: 18.5 }} paddingTop={5} paddingBottom={5}>
       <Box>

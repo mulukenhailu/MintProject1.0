@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { GET_ALL_ACCEPTED_REQUEST_FOR_STOREKEPPER } from "../../State/ReduxSaga/Types/storeKeeperRequestType";
 import { useTranslation } from "react-i18next";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { format } from "timeago.js";
 
 const DetailModalContainer = styled(Modal)({
   display: "flex",
@@ -482,6 +483,30 @@ const StoreKeeperAcceptedItems = () => {
                         fontWeight={400}
                       >
                         {item.quantity_requested}
+                      </Typography>
+                    </ListItemForModal>
+                    <ListItemForModal>
+                      <Typography
+                        variant="body1"
+                        flex={2}
+                        sx={{
+                          color: "#12596B",
+                          fontWeight: languange === "en" ? 500 : 900,
+                          fontSize: languange === "en" ? 20 : 24,
+                        }}
+                      >
+                        {t("storekeeper.accepteddate")}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        flex={4}
+                        sx={{
+                          color: "#12596B",
+                          fontSize: languange === "en" ? 16 : 18,
+                        }}
+                        fontWeight={400}
+                      >
+                        {format(`${item.created_at}`)}
                       </Typography>
                     </ListItemForModal>
                   </List>

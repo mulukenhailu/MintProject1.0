@@ -103,6 +103,8 @@ const PropertyEditComponent = () => {
           Oldproductmodelnumber: response.data.productmodelnumber,
           Newproductmodelnumber: response.data.productmodelnumber,
           itemNumber: itemnumber,
+          oldproductquantitynumber: response.data.productquantitynumber,
+          newproductquantitynumber: response.data.productquantitynumber,
         });
       })
       .catch((error) => {
@@ -144,6 +146,8 @@ const PropertyEditComponent = () => {
       productquantitynumber,
       Oldproductmodelnumber,
       Newproductmodelnumber,
+      newproductquantitynumber,
+      oldproductquantitynumber,
     } = property;
 
     if (property.productquantitynumber) {
@@ -162,6 +166,8 @@ const PropertyEditComponent = () => {
       productserialnumbers: productSerialNumbers,
       ItemNumber: parseInt(itemnumber),
       productphoto: uploadedImage || property.productphoto,
+      newproductquantitynumber: parseInt(newproductquantitynumber),
+      oldproductquantitynumber: parseInt(oldproductquantitynumber),
     });
     console.log(property);
     const updatedProperty = {
@@ -171,9 +177,10 @@ const PropertyEditComponent = () => {
       productmodel: property.productmodel,
       Oldproductmodelnumber: parseInt(Oldproductmodelnumber),
       Newproductmodelnumber: parseInt(Newproductmodelnumber),
+      newproductquantitynumber: parseInt(newproductquantitynumber),
+      oldproductquantitynumber: parseInt(oldproductquantitynumber),
       productname: property.productname,
       productphoto: uploadedImage || property.productphoto,
-      productquantitynumber: parseInt(property.productquantitynumber),
       productsource: parseInt(property.productsource),
       productstandardtype: parseInt(property.productstandardtype),
       productstatus: property.productstatus,
@@ -396,8 +403,8 @@ const PropertyEditComponent = () => {
           </TextField>
           <TextField
             label={t("updateproduct.quantity")}
-            name="productquantitynumber"
-            value={property.productquantitynumber}
+            name="newproductquantitynumber"
+            value={property.newproductquantitynumber}
             onChange={handleFormChange}
             fullWidth
             margin="normal"

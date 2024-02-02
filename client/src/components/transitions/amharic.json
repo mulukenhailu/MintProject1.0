@@ -18,7 +18,11 @@
     "logout": "ውጣ"
   },
   "navbar": {
-    "title": ""
+    "title": "",
+    "profile": "ግላዊ መግለጫ",
+    "resetpassword": "ማለፊያ መቀየር",
+    "logout": "ውጣ",
+    "notification": "መልእክት"
   },
   "home": {
     "searchbyproductname": "በዕቃው ስም ፈልግ",
@@ -67,7 +71,8 @@
     "approvedbymanager": "በማናጀሩ ተፈቅዷል",
     "approvedbystorehead": "በስቶር ማናጀሩ የተፈቀደ",
     "rejectedbymanager": "በማናጀሩ የተከለከለ",
-    "rejectedbystorehead": "በስቶር ማናጀሩ የተከለከለ"
+    "rejectedbystorehead": "በስቶር ማናጀሩ የተከለከለ",
+    "ordereddate": "የተጠየቀበት ቀን"
   },
   "notification": {
     "from": "የላኪው ስም",
@@ -102,8 +107,11 @@
     "department": "የስራ ክፍል",
     "description": "የዕቃው ማብራሪያ",
     "requestdetail": "የትዕዛዙ ዝርዝር",
+    "requestdate": "የተጠየቀበት ቀን",
     "declinefrom": "ትዕዛዙን አለመቀበል",
-    "declinereason": "ምክንያቱን አስገባ"
+    "declinereason": "ምክንያቱን አስገባ",
+    "accepteddate": "የተፈቀደበት ቀን",
+    "declinedate": "የተከለከለበት ቀን"
   },
   "storehead": {
     "firstname": "የመጀመሪያ ስም",
@@ -120,7 +128,10 @@
     "description": "የዕቃው ማብራሪያ",
     "requestdetail": "የትዕዛዙ ዝርዝር",
     "declinefrom": "ትዕዛዙን አለመቀበል",
-    "declinereason": "ምክንያቱን አስገባ"
+    "declinereason": "ምክንያቱን አስገባ",
+    "createdat": "የገባበት ቀን",
+    "accepteddate": "የተፈቀደበት ቀን",
+    "declinedate": "የተከለከለበት ቀን"
   },
   "history": {
     "requestedby": "የጠያቂው ስም",
@@ -140,7 +151,8 @@
     "propertymodel": "የዕቃው ሞዴል",
     "description": "የዕቃው ማብራሪያ",
     "quantity": "የዕቃው መጠን",
-    "searchbyusername": "በመለያ ስም መፈለግ"
+    "searchbyusername": "በመለያ ስም መፈለግ",
+    "searchbymodelnumber": "በእቃው ሞዴል ቁጥር መፈለግ"
   },
   "storekeeper": {
     "firstname": "የመጀመሪያ ስም",
@@ -161,7 +173,9 @@
     "requestedby": "የጠያቂው ስም",
     "approvedmanager": "የኀላፊው ስም",
     "approvedstorehead": "የስቶር ኀላፊ",
-    "recievedfrom": "ዕቃውን ያስረከበው"
+    "recievedfrom": "ዕቃውን ያስረከበው",
+    "createdat": "የገባበት ቀን",
+    "accepteddate": "የተፈቀደበት ቀን"
   },
   "createproduct": {
     "create": "ዕቃ ማስገባት",
@@ -256,5 +270,13 @@
     "productprice": "የዕቃው ዋጋ",
     "description": "የዕቃው መግለጫ",
     "createdat": "የገባበት ቀን"
+  },
+  "resetpassword": {
+    "resetpassword": "ማለፊያ መቀየር",
+    "enter": "ማለፊያ አስገባ",
+    "reset": "ቀይር",
+    "newpassword": "አዲሱን ማለፊያ አስገባ",
+    "confirmpassword": "እንደገና አስገባ",
+    "submit": "ቀይር"
   }
 }

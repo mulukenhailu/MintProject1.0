@@ -31,6 +31,7 @@ import {
 } from "../../State/ReduxToolkit/Slices/requestSlice";
 import BeatLoader from "react-spinners/BeatLoader";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { format } from "timeago.js";
 
 const AcceptButton = styled(Button)({
   marginRight: "10px",
@@ -689,6 +690,32 @@ const StorekeeperPendingItems = () => {
                       {selectedItem?.quantity_requested}
                     </Typography>
                   </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
+                    >
+                      {t("storekeeper.createdat")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
+                      fontWeight={400}
+                    >
+                      {format(`${selectedItem?.created_at}`)}
+                    </Typography>
+                  </ListItemForModal>
                 </Box>
               </List>
             </DetailModalWrapper>
@@ -700,7 +727,7 @@ const StorekeeperPendingItems = () => {
             aria-describedby="modal-modal-description"
           >
             <AcceptModalWrapper
-              width={{ xs: "90%", sm: "50%", md: "50%", lg: "30%" }}
+              width={{ xs: "90%", sm: "50%", md: "50%", lg: "35%" }}
             >
               {loading && (
                 <Box sx={{ textAlign: "center" }}>
@@ -741,7 +768,7 @@ const StorekeeperPendingItems = () => {
                   }}
                 >
                   <Typography variant="h6" sx={{ flex: "2" }}>
-                    Database updating
+                    Processing takes some time
                   </Typography>
                   <Box
                     sx={{

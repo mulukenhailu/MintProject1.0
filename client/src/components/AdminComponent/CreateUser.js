@@ -60,6 +60,7 @@ const CreateUser = () => {
 
   const handleCreateUser = (e) => {
     console.log(user);
+    window.scrollTo({ top: 0, behavior: "smooth" });
     e.preventDefault();
     dispatch({ type: CREATE_USER, user });
   };
