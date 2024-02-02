@@ -102,8 +102,6 @@ const History = () => {
             data-testid="loader"
           />
         </Box>
-      ) : allRequest?.length === 0 ? (
-        <Box>No order requested</Box>
       ) : (
         <Box>
           <Box

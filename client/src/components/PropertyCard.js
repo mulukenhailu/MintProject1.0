@@ -52,7 +52,7 @@ const PropertyCard = ({
     <Card
       sx={{
         padding: "15px 2px 20px 2px",
-        height: "400px",
+        height: "490px",
         background: "#fff",
         boxShadow: "5px 10px 10px rgba(0, 0, 0, 0.2)",
         border: "1px solid #12596B",
@@ -67,7 +67,7 @@ const PropertyCard = ({
           borderRadius: "5px",
           padding: "5px 10px 0px 10px",
           objectFit: "fill",
-          height: "70%",
+          height: "100%",
           width: "100%",
           overflow: "hidden",
         }}

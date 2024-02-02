@@ -132,7 +132,7 @@ const AllPropertyComponent = () => {
             <TextField
               type="text"
               fullWidth
-              placeholder={t("history.searchbyusername")}
+              placeholder={t("history.searchbymodelnumber")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               InputProps={{
@@ -207,7 +207,7 @@ const AllPropertyComponent = () => {
                       fontWeight: languange === "en" ? 500 : 700,
                     }}
                   >
-                    {t("storekeeperallproduct.productprice")}
+                    {t("storekeeperallproduct.quantity")}
                   </TableCell>
                   <TableCell
                     sx={{

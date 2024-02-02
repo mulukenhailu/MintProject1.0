@@ -17,6 +17,12 @@
     "properties": "Properties",
     "logout": "Logout"
   },
+  "navbar": {
+    "profile": "Profile",
+    "resetpassword": "Reset Password",
+    "logout": "Logout",
+    "notification": "Notification"
+  },
   "home": {
     "searchbyproductname": "Search by product name",
     "name": "Property Name",
@@ -64,7 +70,8 @@
     "approvedbymanager": "Approved by manager",
     "approvedbystorehead": "Approved by store head",
     "rejectedbymanager": "Rejected by manager",
-    "rejectedbystorehead": "Rejected by store head"
+    "rejectedbystorehead": "Rejected by store head",
+    "ordereddate": "Ordered date"
   },
   "notification": {
     "from": "From",
@@ -101,7 +108,10 @@
     "description": "Description",
     "requestdetail": "Request Details",
     "declinefrom": "Reject Form",
-    "declinereason": "Enter rejection reason"
+    "requestdate": "Request date",
+    "declinereason": "Enter rejection reason",
+    "accepteddate": "Accepted date",
+    "declinedate": "Decline date"
   },
   "storehead": {
     "firstname": "First Name",
@@ -118,7 +128,10 @@
     "description": "Description",
     "requestdetail": "Request Details",
     "declinefrom": "Reject Form",
-    "declinereason": "Enter rejection reason"
+    "declinereason": "Enter rejection reason",
+    "createdat": "Create date",
+    "accepteddate": "Accepted date",
+    "declinedate": "Decline date"
   },
   "history": {
     "requestedby": "Requestedby",
@@ -138,7 +151,8 @@
     "propertymodel": "Property Model",
     "description": "Description",
     "quantity": "Quantity",
-    "searchbyusername": "Search by username"
+    "searchbyusername": "Search by username",
+    "searchbymodelnumber": "Search by model number"
   },
   "storekeeper": {
     "firstname": "First Name",
@@ -159,7 +173,9 @@
     "requestedby": "Requestedby",
     "approvedmanager": "Approvedmanager",
     "approvedstorehead": "Approvedstorehead",
-    "recievedfrom": "Recievedfrom"
+    "recievedfrom": "Recievedfrom",
+    "createdat": "Create date",
+    "accepteddate": "Accepted date"
   },
   "createproduct": {
     "create": "Create Product",
@@ -253,5 +269,13 @@
     "productprice": "PropertyPrice",
     "description": "Description",
     "createdat": "Create At"
+  },
+  "resetpassword": {
+    "resetpassword": "Reset Password",
+    "enter": "Enter your password",
+    "reset": "Reset",
+    "newpassword": "Enter new password",
+    "confirmpassword": "Confirm password",
+    "submit": "Submit"
   }
 }
