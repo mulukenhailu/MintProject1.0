@@ -63,6 +63,7 @@ var whitelist = [
   "http://localhost:3000",
   "https://mint-s0j6.onrender.com",
   "http://localhost:3001/uploads",
+  "https://mint-private-deploy.vercel.app/"
 ];
 
 const corsOptions = {
