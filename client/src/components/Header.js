@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { GET_SINGLE_USER } from "../State/ReduxSaga/Types/userTypes";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const AppBar = styled(
   MuiAppBar,
@@ -30,6 +31,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { t } = useTranslation("global");
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [notification, setNotification] = useState([]);
   const [notificationLength, setNotificationLength] = useState(0);
@@ -118,13 +120,13 @@ export default function Header() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose} component={Link} to="/profile">
-        Profile
+        {t("navbar.profile")}
       </MenuItem>
       <MenuItem onClick={handleMenuClose} component={Link} to="/resetpassword">
-        Reset Password
+        {t("navbar.resetpassword")}
       </MenuItem>
       <MenuItem onClick={handleLogOut} component={Link} to="/">
-        Logout
+        {t("navbar.logout")}
       </MenuItem>
     </Menu>
   );
@@ -161,7 +163,7 @@ export default function Header() {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <p>Notifications</p>
+          <p>{t("navbar.notification")}</p>
         </MenuItem>
       ) : null}
 
@@ -175,7 +177,7 @@ export default function Header() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>{t("navbar.profile")}</p>
       </MenuItem>
       <MenuItem
         component={Link}
@@ -191,7 +193,7 @@ export default function Header() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Reset Password</p>
+        <p>{t("navbar.resetpassword")}</p>
       </MenuItem>
       <MenuItem component={Link} to="/" onClick={handleLogOut}>
         <IconButton
@@ -203,7 +205,7 @@ export default function Header() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Logout</p>
+        <p>{t("navbar.logout")}</p>
       </MenuItem>
     </Menu>
   );

@@ -89,6 +89,7 @@ const EditUserComponent = () => {
 
   const handleEditUser = (e) => {
     e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch({ type: EDIT_USER_BY_ADMIN, user });
     setButtonClicked(true);
   };

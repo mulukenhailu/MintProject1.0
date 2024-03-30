@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import BeatLoader from "react-spinners/BeatLoader";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useTranslation } from "react-i18next";
 
 const SetPasswordButton = styled(Button)({
   transition: "transform 0.3s ease-in-out",
@@ -24,6 +25,7 @@ const SetPasswordButton = styled(Button)({
 });
 
 const ResetPassword = () => {
+  const { t } = useTranslation("global");
   const [password, setPassword] = useState("");
   const [resetPasswordModal, setResetPasswordModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
@@ -135,7 +137,7 @@ const ResetPassword = () => {
             color="#12596b"
             marginBottom={1}
           >
-            Reset Password
+            {t("resetpassword.resetpassword")}
           </Typography>
           {error && (
             <Typography
@@ -172,7 +174,7 @@ const ResetPassword = () => {
           <TextField
             required
             id="password"
-            label="Enter your password"
+            label={t("resetpassword.enter")}
             type="text"
             variant="standard"
             value={password}
@@ -193,7 +195,7 @@ const ResetPassword = () => {
             }}
             onClick={handleSetOldPassword}
           >
-            Set Password
+            {t("resetpassword.reset")}
           </SetPasswordButton>
         </Paper>
       </Box>
@@ -222,7 +224,7 @@ const ResetPassword = () => {
           }}
         >
           <Typography variant="h5" textAlign={"center"} color={"#12596b"}>
-            Reset Password
+            {t("resetpassword.resetpassword")}
           </Typography>
           {loadingModal && (
             <Box
@@ -291,7 +293,7 @@ const ResetPassword = () => {
           <TextField
             required
             id="newPassword"
-            label="Enter new password"
+            label={t("resetpassword.newpassword")}
             type="text"
             variant="outlined"
             value={newPassword}
@@ -300,7 +302,7 @@ const ResetPassword = () => {
           <TextField
             required
             id="confirmPassword"
-            label="Enter password again"
+            label={t("resetpassword.confirmpassword")}
             type="text"
             variant="outlined"
             value={confirmPassword}
@@ -321,7 +323,7 @@ const ResetPassword = () => {
             }}
             onClick={handlePasswordReset}
           >
-            Submit
+            {t("resetpassword.submit")}
           </SetPasswordButton>
         </Box>
       </Modal>

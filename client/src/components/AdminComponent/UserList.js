@@ -24,6 +24,7 @@ import { GET_ALL_USERS } from "../../State/ReduxSaga/Types/userTypes";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTranslation } from "react-i18next";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 const UserList = () => {
   const dispatch = useDispatch();
@@ -67,10 +68,10 @@ const UserList = () => {
             height: "70vh",
           }}
         >
-          <ClipLoader
+          <ScaleLoader
             color={"#36d7b7"}
             loading={loadingUser}
-            size={150}
+            size={200}
             aria-label="Loading Spinner"
             data-testid="loader"
           />

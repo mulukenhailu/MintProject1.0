@@ -18,6 +18,7 @@ import { GET_ALL_ACCEPTED_REQUEST_FOR_MANAGER } from "../../State/ReduxSaga/Type
 import { removeAllRequest } from "../../State/ReduxToolkit/Slices/requestSlice";
 import { useTranslation } from "react-i18next";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { format } from "timeago.js";
 
 const DetailModalContainer = styled(Modal)({
   display: "flex",
@@ -554,6 +555,32 @@ const ManagerRequestAccepted = () => {
                           fontWeight={400}
                         >
                           {item?.quantity_requested}
+                        </Typography>
+                      </ListItemForModal>
+                      <ListItemForModal
+                        sx={{ display: { xs: "block", sm: "flex" } }}
+                      >
+                        <Typography
+                          variant="body1"
+                          flex={2}
+                          sx={{
+                            color: "#12596B",
+                            fontWeight: languange === "en" ? 500 : 900,
+                            fontSize: languange === "en" ? 20 : 24,
+                          }}
+                        >
+                          {t("manager.accepteddate")}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          flex={4}
+                          sx={{
+                            color: "#12596B",
+                            fontSize: languange === "en" ? 16 : 18,
+                          }}
+                          fontWeight={400}
+                        >
+                          {format(`${item?.updated_at}`)}
                         </Typography>
                       </ListItemForModal>
                     </Box>

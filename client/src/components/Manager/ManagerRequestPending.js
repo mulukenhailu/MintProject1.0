@@ -32,6 +32,7 @@ import { useTranslation } from "react-i18next";
 import BeatLoader from "react-spinners/BeatLoader";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import toast from "react-hot-toast";
+import { format } from "timeago.js";
 
 const SendButton = styled(Button)({
   background: "#12596B",
@@ -741,6 +742,32 @@ const ManagerRequestPending = () => {
                       fontWeight={400}
                     >
                       {selectedItem?.quantity_requested}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
+                    >
+                      {t("manager.requestdate")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
+                      fontWeight={400}
+                    >
+                      {format(`${selectedItem?.created_at}}`)}
                     </Typography>
                   </ListItemForModal>
                 </Box>

@@ -81,10 +81,10 @@ const DetailsProductPage = () => {
                       sx={{
                         borderRadius: "15px",
                         padding: "20px",
-                        height: "70%",
+                        height: "90%",
                         width: "100%",
                         overflow: "hidden",
-                        objectFit: "contail",
+                        objectFit: "fill",
                       }}
                       component="img"
                       image={`${PF}${singleProperty.productphoto}`}

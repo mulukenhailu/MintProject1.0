@@ -29,6 +29,7 @@ import {
 import BeatLoader from "react-spinners/BeatLoader";
 import toast from "react-hot-toast";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { format } from "timeago.js";
 
 const SendButton = styled(Button)({
   background: "#12596B",
@@ -164,7 +165,7 @@ const PendingItemComponent = () => {
     setLoading(true);
     await axios
       .post(
-        `/storehea/rejectedrequest/${request.id}/${request.item_no}/${request.quantity_requested}`,
+        `/storehead/rejectedrequest/${request.id}/${request.item_no}/${request.quantity_requested}`,
         newData,
         { withCredentials: true }
       )
@@ -735,6 +736,32 @@ const PendingItemComponent = () => {
                       fontWeight={400}
                     >
                       {selectedItem?.quantity_requested}
+                    </Typography>
+                  </ListItemForModal>
+                  <ListItemForModal
+                    sx={{ display: { xs: "block", sm: "flex" } }}
+                  >
+                    <Typography
+                      variant="body1"
+                      flex={2}
+                      sx={{
+                        color: "#12596B",
+                        fontWeight: languange === "en" ? 500 : 900,
+                        fontSize: languange === "en" ? 20 : 24,
+                      }}
+                    >
+                      {t("storehead.createdat")}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      flex={4}
+                      sx={{
+                        color: "#12596B",
+                        fontSize: languange === "en" ? 16 : 18,
+                      }}
+                      fontWeight={400}
+                    >
+                      {format(`${selectedItem?.created_at}`)}
                     </Typography>
                   </ListItemForModal>
                 </Box>
