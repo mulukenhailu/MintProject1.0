@@ -57,7 +57,6 @@ const client = new GraphQLClient(endpoint, {
           }
         }
       `
-
       }
         try{
             const data = await client.request(document,{},requestHeaders);

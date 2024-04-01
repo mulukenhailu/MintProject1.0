@@ -63,7 +63,8 @@ var whitelist = [
   "http://localhost:3000",
   "https://mint-s0j6.onrender.com",
   "http://localhost:3001/uploads",
-  "https://mint-project1-0.vercel.app/"
+  "https://mint-project1-0.vercel.app/",
+  "https://mint-private-deploy.vercel.app/"
 ];
 
 const corsOptions = {
@@ -150,9 +151,12 @@ app.get(
   allOrdersMade.getAllRequestMade
 );
 
-app.post("/getuserinfo/:username", userInfo.userInfo);
+app.post("/getuserinfo/:username", 
+userInfo.userInfo);
 
-app.post("/register", verifyAccessToken.verifyAccessToken, register.register);
+app.post("/register", 
+verifyAccessToken.verifyAccessToken, 
+register.register);
 
 app.post(
   "/manager/makeRequest",
