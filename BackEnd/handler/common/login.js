@@ -7,7 +7,7 @@ function login(req, res){
     let{user_name, password} = req.body;
 
     if (!(user_name && password )) {
-        res.status(400).send("Please inset the required information");
+        res.status(400).send("Please insert the required information");
       }
 
     console.log(user_name, password);
