@@ -154,9 +154,7 @@ app.get(
 app.post("/getuserinfo/:username", 
 userInfo.userInfo);
 
-app.post("/register", 
-verifyAccessToken.verifyAccessToken, 
-register.register);
+app.post("/register", verifyAccessToken.verifyAccessToken, register.register);
 
 app.post(
   "/manager/makeRequest",

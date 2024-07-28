@@ -1,5 +1,5 @@
 const  { gql, GraphQLClient  }=require('graphql-request');
-
+const validator = require("validator")
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -42,6 +42,10 @@ async function resetPassword(req, res) {
   // if(newPassword != conNewPassword){
   //   res.send({"message":"Password do not Match"});
   // }
+
+  if (!validator.isStrongPassword(newPassword)){
+    res.status(400).send({error:"use Strong Password"});
+}
 
   const hash = bcrypt.hashSync(newPassword, saltRounds);
 
