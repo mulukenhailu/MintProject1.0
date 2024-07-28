@@ -11,7 +11,7 @@ function register(req, res) {
   // console.log(user_name, password, first_name, last_name, role, manager_username, department);
 
         if (!validator.isStrongPassword(password)){
-          res.status(400).send("use Strong Password");
+          res.status(400).send({error:"use Strong Password"});
       }
  
       if (role === "employee"){
