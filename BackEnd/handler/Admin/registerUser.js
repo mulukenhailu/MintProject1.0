@@ -1,13 +1,18 @@
 const addNewUser = require("../../utility/common/addNewUser");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const validator = require("validator")
 
 function register(req, res) {
   let { user_name, password, first_name, last_name, role, manager_username, department} = req.body;
 
-  console.log(req.body)
+  // console.log(req.body)
 
-  console.log(user_name, password, first_name, last_name, role, manager_username, department);
+  // console.log(user_name, password, first_name, last_name, role, manager_username, department);
+
+        if (!validator.isStrongPassword(password)){
+          res.status(400).send("use Strong Password");
+      }
  
       if (role === "employee"){
         role = 1

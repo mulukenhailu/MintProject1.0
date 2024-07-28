@@ -2,9 +2,11 @@ const { validateLogin } = require("../../utility/Auth/validateLogin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+
 function login(req, res){
 
     let{user_name, password} = req.body;
+
 
     if (!(user_name && password )) {
         res.status(400).send("Please insert the required information");
