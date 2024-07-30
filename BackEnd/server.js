@@ -78,7 +78,7 @@ const app = express();
 app.use(cookieParser());
 
 // app.use(cors(corsOptions));
-app.use(cors())
+app.options('*', cors())
 // app.use(credentials);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
