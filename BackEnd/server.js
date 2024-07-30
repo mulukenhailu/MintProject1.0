@@ -58,28 +58,38 @@ const cors = require("cors");
 
 const adminupdateProfile = require("./handler/Admin/adminUpdateProfile");
 
-// var whitelist = [
-//   "http://localhost:3001",
-//   "http://localhost:3000",
-//   "https://mint-s0j6.onrender.com",
-//   "http://localhost:3001/uploads",
-//   "https://mint-project1-0.vercel.app",
-//   "https://mint-private-deploy.vercel.app/"
-// ];
+var whitelist = [
+  "http://localhost:3001",
+  "http://localhost:3000",
+  "https://mint-s0j6.onrender.com",
+  "http://localhost:3001/uploads",
+  "https://mint-project1-0.vercel.app/",
+  "https://mint-private-deploy.vercel.app/"
+];
 
 // const corsOptions = {
 //   origin: whitelist,
 //   credentials: true,
 // };
 
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+
+
 PORT = 3001;
 const app = express();
 
 app.use(cookieParser());
-
-// app.use(cors(corsOptions));
-app.options('*', cors())
-// app.use(credentials);
+app.use(cors(corsOptions));
+app.use(credentials);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
